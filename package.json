@@ -1,0 +1,22 @@
+{
+  "name": "LevelPad",
+  "version": "0.0.1",
+  "description": "Node.js App zur Unterstützung einer Bewertung nach dem Niveaustufenmodell",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fh-koeln/LevelPad"
+  },
+  "keywords": [
+    "FH",
+    "Köln"
+  ],
+  "author": "fh-koeln",
+  "bugs": {
+    "url": "https://github.com/fh-koeln/LevelPad/issues"
+  },
+  "homepage": "https://github.com/fh-koeln/LevelPad"
+}
