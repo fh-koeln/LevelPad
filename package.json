@@ -18,5 +18,12 @@
   "bugs": {
     "url": "https://github.com/fh-koeln/LevelPad/issues"
   },
-  "homepage": "https://github.com/fh-koeln/LevelPad"
+  "homepage": "https://github.com/fh-koeln/LevelPad",
+  "engines": {
+    "node": "0.10.x"
+  },
+  "dependencies": {
+    "logfmt": "^1.1.2",
+    "express": "^3.5.1"
+  }
 }

@@ -1,14 +1,14 @@
-var http = require('http');
+var express = require("express");
+var logfmt = require("logfmt");
+var app = express();
+
+app.use(logfmt.requestLogger());
+
+app.get('/', function(req, res) {
+  res.send('Hello World!');
+});
+
 var port = Number(process.env.PORT || 5000);
-var userCount = 0;
-http.createServer(function (request, response) {
-	console.log('New connection');
-	userCount++;
-
-	response.writeHead(200, {'Content-Type': 'text/plain'});
-	response.write('Hello!\n');
-	response.write('We have had '+userCount+' visits!\n');
-	response.end();
-}).listen(port);
-
-console.log('Server started');
+app.listen(port, function() {
+  console.log("Listening on " + port);
+});
