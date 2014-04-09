@@ -1,0 +1,34 @@
+<!doctype html>
+<html class="no-js">
+	<head>
+		<title>LevelPad</title>
+		<base href="/">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="bootstrap/dist/css/bootstrap.css">
+		<link rel="stylesheet" href="bootstrap/dist/css/bootstrap-theme.css">
+		<link rel="stylesheet" href="pace/themes/pace-theme-flash.css">
+		
+		<!-- TODO replace this with an minified version and/or require js -->
+
+		<!-- Basics -->
+		<script src="jquery/dist/jquery.js"></script>
+		<script src="bootstrap/dist/js/bootstrap.js"></script>
+		
+		<!-- AngularJS -->
+		<script src="angular/angular.js"></script>
+		<script src="angular-i18n/angular-locale_de-de.js"></script>
+		<script src="angular-animate/angular-animate.js"></script>
+		<script src="angular-route/angular-route.js"></script>
+		<script src="angular-resource/angular-resource.js"></script>
+		<script src="angular-cookies/angular-cookies.js"></script>
+		<script src="angular-sanitize/angular-sanitize.js"></script>
+	</head>
+	<body ng-app="levelPad">
+		<div class="container" ng-view=""></div>
+
+		<script src="app.js"></script>
+		<script src="controllers/MainController.js"></script>
+	</body>
+</html>

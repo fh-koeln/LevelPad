@@ -1,0 +1,23 @@
+{
+	"name": "LevelPad",
+	"version": "0.0.1",
+	"description": "Webapp zur Unterstützung einer Bewertung nach dem Niveaustufenmodell",
+	"private": true,
+	"dependencies": {
+		"angular": "*",
+		"angular-i18n": "*",
+		"angular-animate": "*",
+		"angular-route": "*",
+		"angular-resource": "*",
+		"angular-cookies": "*",
+		"angular-sanitize": "*",
+		"bootstrap": "~3.1.1",
+		"bootstrap-sass-official": "~3.1.1",
+		"pace": "0.4.17"
+	},
+	"devDependencies": {
+		"angular-mocks": "*",
+		"angular-scenario": "*"
+	},
+	"testPath": "test/client/spec"  
+}
