@@ -29,7 +29,6 @@ module.exports = function(app) {
 	});
 
 	app.configure(function(){
-		app.engine('html', require('ejs').renderFile);
 		app.set('view engine', 'html');
 		app.set('views', path.join(__dirname, '../views'));
 
