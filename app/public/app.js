@@ -11,7 +11,12 @@ module.config(function ($routeProvider, $locationProvider) {
 	$routeProvider.when('/', {
 		templateUrl: 'views/main.html',
 		controller: 'MainController'
-	}).otherwise({
+	});
+	$routeProvider.when('/chat', {
+		templateUrl: 'views/chat.html',
+		controller: 'ChatController'
+	});
+	$routeProvider.otherwise({
 		redirectTo: '/'
 	});
 	

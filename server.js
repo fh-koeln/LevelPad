@@ -24,6 +24,6 @@ require('./app/config/express')(app);
 require('./app/config/routes')(app, io);
 
 // Start server
-app.listen(port, function() {
+server.listen(port, function() {
 	console.info('Server started! Waiting for requests...');
 });
