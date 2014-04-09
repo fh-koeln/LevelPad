@@ -2,6 +2,8 @@
 
 Webapp zur Unterstützung einer Bewertung nach dem Niveaustufenmodell
 
+**Status**: In Entwicklung.
+
 ## Niveaustufenmodell
 
 ## Technik
@@ -13,3 +15,15 @@ Dieses Projekt ist umgesetzt als Node.JS / AngularJS webapp. Verwendete Software
 * [Bootstrap](http://getbootstrap.com/)
 * [AngularJS](http://www.angularjs.org/)
 * [socket.io](http://socket.io/)
+
+## Commandline hints
+
+*Run server:*
+
+	npm run-script run
+
+(will update this to use grunt or gulpjs soon...)
+
+*Push new version to heroku:*
+
+	git push heroku master && heroku logs -t
