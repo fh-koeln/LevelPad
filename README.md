@@ -16,6 +16,12 @@ Dieses Projekt ist umgesetzt als Node.JS / AngularJS webapp. Verwendete Software
 * [AngularJS](http://www.angularjs.org/)
 * [socket.io](http://socket.io/)
 
+## Heroku installation
+
+Heroku version runs in production mode:
+
+	heroku config:set NODE_ENV=production
+
 ## Commandline hints
 
 *Run server:*

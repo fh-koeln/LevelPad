@@ -4,6 +4,7 @@
 	"description": "Webapp zur Unterstützung einer Bewertung nach dem Niveaustufenmodell",
 	"private": true,
 	"scripts": {
+		"postinstall": "npm install bower && bower install",
 		"run": "node server.js",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
