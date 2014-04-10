@@ -9,11 +9,20 @@ var path = require('path');
 module.exports = function(app) {
 	var env = app.get('env');
 
-	if (env == 'development') {
-		app.use(require('morgan')('dev'));
-		app.use(require('connect-livereload')());
+	// Logging
+	app.use(require('morgan')(env == 'development' ? 'dev' : undefined));
 
-		// Disable caching of scripts for easier testing
+	// Basic request processing:
+	app.use(require('body-parser')());
+	app.use(require('method-override')());
+
+	// Live reload
+	if (env == 'development') {
+		app.use(require('connect-livereload')());
+	}
+
+	// Disable caching of scripts for easier testing
+	if (env == 'development') {
 		app.use(function noCache(req, res, next) {
 			if (req.url.indexOf('/views/') === 0 || req.url.indexOf('/controllers/') === 0) {
 				res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
@@ -24,16 +33,10 @@ module.exports = function(app) {
 		});
 	}
 
+	// Compression
 	if (env == 'production') {
-		app.use(require('morgan')());
 		app.use(require('compression')());
 	}
-
-	app.use(require('body-parser')());
-	app.use(require('method-override')());
-
-	// Routes the API calls
-//		app.use(app.router);
 
 	// Static resources
 	//app.use(express.favicon(path.join(__dirname, '../public', 'favicon.ico')));
