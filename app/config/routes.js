@@ -33,7 +33,9 @@ module.exports = function(app, io) {
 		}
 	});*/
 	
+	app.route('/chat').all(redirectBrowsersToIndex);
 	app.route('/users').all(redirectBrowsersToIndex);
+	app.route('/subject').all(redirectBrowsersToIndex);
 
 	// Server API Routes
 	app.get('/api/example/awesomeThings', ExampleController.awesomeThings);
