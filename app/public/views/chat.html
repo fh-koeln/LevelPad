@@ -12,7 +12,7 @@
 	
 	<form data-ng-submit="sendMessage()">
 		<input type="text" data-ng-model="text"/>
-		<input type="submit" data-ng-disabled="!text && !connected"/>
+		<input type="submit" data-ng-disabled="!text || !connected" />
 	</form>
 
 </div>

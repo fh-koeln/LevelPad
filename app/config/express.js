@@ -14,7 +14,7 @@ module.exports = function(app) {
 
 		// Disable caching of scripts for easier testing
 		app.use(function noCache(req, res, next) {
-			if (req.url.indexOf('/scripts/') === 0) {
+			if (req.url.indexOf('/views/') === 0 || req.url.indexOf('/controllers/') === 0) {
 				res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
 				res.header('Pragma', 'no-cache');
 				res.header('Expires', 0);
@@ -29,14 +29,11 @@ module.exports = function(app) {
 	});
 
 	app.configure(function(){
-		app.set('view engine', 'html');
-		app.set('views', path.join(__dirname, '../views'));
-
 		app.use(express.json());
 		app.use(express.urlencoded());
 		app.use(express.methodOverride());
 
-		// Router (only error handlers should come after this)
+		// Routes the API calls
 		app.use(app.router);
 
 		// Static resources

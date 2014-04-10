@@ -10,6 +10,9 @@ var ChatController = require('../api/ChatController');
 module.exports = function(app, io) {
 
 	// For URL changes when we switch the view/controller
+	app.get('/', function(req, res) {
+		res.sendfile('index.html', { root: __dirname + '/../public' });
+	});
 	app.get('/chat', function(req, res) {
 		res.sendfile('index.html', { root: __dirname + '/../public' });
 	});

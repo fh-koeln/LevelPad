@@ -15,6 +15,7 @@ Dieses Projekt ist umgesetzt als Node.JS / AngularJS webapp. Verwendete Software
 * [Bootstrap](http://getbootstrap.com/)
 * [AngularJS](http://www.angularjs.org/)
 * [socket.io](http://socket.io/)
+* [Passport](http://passportjs.org/)
 
 ## Heroku installation
 

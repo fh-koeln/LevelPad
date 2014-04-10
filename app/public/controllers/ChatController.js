@@ -5,6 +5,13 @@ angular.module('levelPad').controller('ChatController', function ($scope, $http)
 	$scope.messages = [];
 	$scope.connected = false;
 
+	// Maybe we should reconfigure the defaults for heroku later???
+	// From https://devcenter.heroku.com/articles/realtime-polyglot-app-node-ruby-mongodb-socketio#pushing-messages-to-the-browser-with-socket-io
+//	io.configure(function () {
+//		io.set("transports", ["xhr-polling"]);
+//		io.set("polling duration", 10);
+//	});
+
 	var socket = io.connect();
 
 	socket.on('connect', function() {
