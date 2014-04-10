@@ -6,10 +6,10 @@
 	<input type="text" placeholder="Filter" data-ng-model="filter"/>
 	<ol>
 		<li data-ng-repeat="message in messages | filter: filter">
-			<span data-ng-bind="message.text"></span>
+			<span data-ng-bind="message"></span>
 		</li>
 	</ol>
-	
+
 	<form data-ng-submit="sendMessage()">
 		<input type="text" data-ng-model="text"/>
 		<input type="submit" data-ng-disabled="!text || !connected" />

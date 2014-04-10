@@ -16,10 +16,13 @@ module.exports = function(app, io) {
 	app.get('/chat', function(req, res) {
 		res.sendfile('index.html', { root: __dirname + '/../public' });
 	});
-	
+
 	// Server API Routes
-	app.get('/api/example/awesomeThings', ExampleController.awesomeThings);
-	
+	//app.get('/api/example/awesomeThings', ExampleController.awesomeThings);
+	app.resource( 'users', require( '../resources/Users'  ) );
+	app.resource( 'subjects', require( '../resources/Subjects'  ) );
+	app.resource( 'subjects/:subject/artifacts', require( '../resources/Artifacts'  ) );
+
 	// All undefined api routes should return a 404
 	app.get('/api/*', function(req, res) {
 		res.send(404);

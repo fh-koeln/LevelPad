@@ -1,6 +1,7 @@
-'use strict';
+/* global angular, console, io */
 
 angular.module('levelPad').controller('ChatController', function ($scope, $http) {
+	'use strict';
 
 	$scope.messages = [];
 	$scope.connected = false;
@@ -37,7 +38,7 @@ angular.module('levelPad').controller('ChatController', function ($scope, $http)
 	};
 
 	socket.on('chat_message', function(data) {
-		$scope.messages.push(data)
+		$scope.messages.push(data.text);
 		$scope.$apply();
 	});
 
