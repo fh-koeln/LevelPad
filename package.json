@@ -4,7 +4,7 @@
 	"description": "Webapp zur Unterstützung einer Bewertung nach dem Niveaustufenmodell",
 	"private": true,
 	"scripts": {
-		"postinstall": "npm install bower && bower install",
+		"postinstall": "bower install",
 		"run": "node server.js",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
@@ -25,17 +25,20 @@
 		"node": "0.10.x"
 	},
 	"dependencies": {
-		"express": "*",
-		"express-resource": "*",
-		"morgan": "*",
-		"body-parser": "*",
-		"method-override": "*",
-		"compression": "*",
-		"errorhandler": "*",
+		"express": "~4.0.0",
+		"morgan": "~1.0.0",
+		"body-parser": "~1.0.0",
+		"cookie-parser": "~1.0.0",
+		"express-session": "~1.0.0",
+		"connect-timeout": "~1.0.0",
+		"express-resource": "~1.0.0",
+		"compression": "~1.0.0",
+		"errorhandler": "~1.0.0",
 		
-		"socket.io": "*"
+		"socket.io": "1.0.0-pre"
 	},
 	"devDependencies": {
+		"bower": "*",
 		"connect-livereload": "*"
 	}
 }

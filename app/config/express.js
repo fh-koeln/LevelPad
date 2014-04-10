@@ -13,8 +13,12 @@ module.exports = function(app) {
 	app.use(require('morgan')(env == 'development' ? 'dev' : undefined));
 
 	// Basic request processing:
+	// TODO secrets
+	app.use(require('cookie-parser')('cookie secret'));
+	app.use(require('express-session')({ secret: 'session secret' }));
 	app.use(require('body-parser')());
-	app.use(require('method-override')());
+	app.use(require('connect-timeout')(500));
+//	app.use(require('method-override')());
 
 	// Live reload
 	if (env == 'development') {
