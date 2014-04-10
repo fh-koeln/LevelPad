@@ -25,9 +25,14 @@
 		"node": "0.10.x"
 	},
 	"dependencies": {
-		"express": "~3",
-		"express-resource": "^1.0.0",
-		"logfmt": "*",
+		"express": "*",
+		"express-resource": "*",
+		"morgan": "*",
+		"body-parser": "*",
+		"method-override": "*",
+		"compression": "*",
+		"errorhandler": "*",
+		
 		"socket.io": "*"
 	},
 	"devDependencies": {

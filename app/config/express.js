@@ -2,14 +2,15 @@
 
 var express = require('express');
 var path = require('path');
-var logfmt = require("logfmt");
 
 /**
  * Express configuration
  */
 module.exports = function(app) {
-	app.configure('development', function(){
-		app.use(express.logger('dev'));
+	var env = app.get('env');
+
+	if (env == 'development') {
+		app.use(require('morgan')('dev'));
 		app.use(require('connect-livereload')());
 
 		// Disable caching of scripts for easier testing
@@ -21,29 +22,26 @@ module.exports = function(app) {
 			}
 			next();
 		});
-	});
+	}
 
-	app.configure('production', function(){
-		app.use(logfmt.requestLogger());
-		app.use(express.compress());
-	});
+	if (env == 'production') {
+		app.use(require('morgan')());
+		app.use(require('compression')());
+	}
 
-	app.configure(function(){
-		app.use(express.json());
-		app.use(express.urlencoded());
-		app.use(express.methodOverride());
+	app.use(require('body-parser')());
+	app.use(require('method-override')());
 
-		// Routes the API calls
-		app.use(app.router);
+	// Routes the API calls
+//		app.use(app.router);
 
-		// Static resources
-		//app.use(express.favicon(path.join(__dirname, '../public', 'favicon.ico')));
-		app.use(express.static(path.join(__dirname, '../public')));
-		app.use(express.static(path.join(__dirname, '../../bower_components')));
-	});
+	// Static resources
+	//app.use(express.favicon(path.join(__dirname, '../public', 'favicon.ico')));
+	app.use(express.static(path.join(__dirname, '../public')));
+	app.use(express.static(path.join(__dirname, '../../bower_components')));
 
 	// Error handler
-	app.configure('development', function(){
-		app.use(express.errorHandler());
-	});
+	if (env == 'development') {
+		app.use(require('errorhandler')());
+	}
 };

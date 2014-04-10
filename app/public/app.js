@@ -16,9 +16,16 @@ module.config(function ($routeProvider, $locationProvider) {
 		templateUrl: 'views/chat.html',
 		controller: 'ChatController'
 	});
-	$routeProvider.otherwise({
-		redirectTo: '/'
+	$routeProvider.when('/users', {
+		templateUrl: 'views/users.html',
+		controller: 'UserController'
 	});
+	$routeProvider.otherwise({
+		templateUrl: 'views/404.html'
+	});
+//	$routeProvider.otherwise({
+//		redirectTo: '/'
+//	});
 	
 	$locationProvider.html5Mode(true);
 });
