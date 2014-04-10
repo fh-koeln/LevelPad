@@ -3,6 +3,10 @@
 angular.module('levelPad').controller('ChatController', function ($scope, $http) {
 	'use strict';
 
+	$http.get('/chat').success(function(json) {
+		$scope.json = json;
+	});
+
 	$scope.messages = [];
 	$scope.connected = false;
 
