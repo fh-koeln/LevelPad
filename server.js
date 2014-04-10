@@ -9,8 +9,9 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var port = process.env.PORT || 5000;
 
 // Load and initialize express
-var express = require('express');
-var app = express();
+var express = require('express'),
+	Resource = require('express-resource'),
+	app = express();
 console.info('Will start server on port %d in %s mode...', port, app.get('env'));
 
 // Socket.io
