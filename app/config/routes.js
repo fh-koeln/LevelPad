@@ -27,6 +27,10 @@ module.exports = function(app, io) {
 
 	// We could extend this routes later here..
 	
+	app.route('/account').all(redirectBrowsersToIndex);
+	app.route('/login').all(redirectBrowsersToIndex);
+	app.route('/logout').all(redirectBrowsersToIndex);
+	
 	app.route('/chat').all(redirectBrowsersToIndex);
 	app.route('/users').all(redirectBrowsersToIndex);
 	app.route('/subject').all(redirectBrowsersToIndex);

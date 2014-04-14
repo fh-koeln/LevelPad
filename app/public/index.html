@@ -26,12 +26,15 @@
 		<script src="angular-cookies/angular-cookies.js"></script>
 		<script src="angular-sanitize/angular-sanitize.js"></script>
 	</head>
-	<body ng-app="levelPad">
-		<div class="container" ng-view=""></div>
+	<body data-ng-app="levelPad">
+		<div class="container" data-ng-include="'partials/navbar.html'"></div>
+		<div class="container" data-ng-view=""></div>
 
 		<script src="app.js"></script>
 		<script src="controllers/MainController.js"></script>
 		<script src="controllers/ChatController.js"></script>
 		<script src="controllers/UserController.js"></script>
+		<script src="controllers/AuthController.js"></script>
+		<script src="controllers/AccountController.js"></script>
 	</body>
 </html>

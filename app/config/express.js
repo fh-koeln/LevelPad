@@ -17,7 +17,7 @@ module.exports = function(app) {
 	app.use(require('cookie-parser')('cookie secret'));
 	app.use(require('express-session')({ secret: 'session secret' }));
 	app.use(require('body-parser')());
-	app.use(require('connect-timeout')(500));
+	app.use(require('connect-timeout')(10 * 1000));
 //	app.use(require('method-override')());
 
 	// Live reload
@@ -36,6 +36,9 @@ module.exports = function(app) {
 			next();
 		});
 	}
+
+	// Authentification
+	require('./auth')(app);
 
 	// Compression
 	if (env == 'production') {

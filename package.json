@@ -35,7 +35,11 @@
 		"compression": "~1.0.0",
 		"errorhandler": "~1.0.0",
 		
-		"socket.io": "1.0.0-pre"
+		"socket.io": "1.0.0-pre",
+
+		"passport": "*",
+		"passport-local": "*",
+		"imap": "*"
 	},
 	"devDependencies": {
 		"bower": "*",

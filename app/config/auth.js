@@ -1,6 +1,5 @@
-var express = require('express'),
-	passport = require('passport'),
-	flash = require('connect-flash'),
+
+var passport = require('passport'),
 	LocalStrategy = require('passport-local').Strategy,
 	Imap = require('imap');
 
@@ -18,6 +17,11 @@ var users = [
 		username: 'joe',
 		password: 'birthday',
 		email: 'joe@example.com'
+	}
+  , {
+		id: 3,
+		username: 'cjerolim',
+		email: 'bob@example.com'
 	}
 ];
 
@@ -61,8 +65,10 @@ passport.deserializeUser(function (id, done) {
 //   credentials (in this case, a username and password), and invoke a callback
 //   with a user object.  In the real world, this would query a database;
 //   however, in this example we are using a baked-in set of users.
-passport.use(new LocalStrategy(
+passport.use('fh-imap', new LocalStrategy(
 	function (username, password, done) {
+		console.log('Verify imap user: ' + username + ' / ' + password);
+
 		// asynchronous verification, for effect...
 		process.nextTick(function () {
 
@@ -103,103 +109,9 @@ passport.use(new LocalStrategy(
 					message: 'Invalid username or password.'
 				});
 			});
-			
-
-		})
+		});
 	}
 ));
-
-
-
-
-var app = express();
-
-// configure Express
-	app.set('views', __dirname + '/views');
-	app.set('view engine', 'ejs');
-	app.engine('ejs', require('ejs-locals'));
-	app.use(express.logger());
-	app.use(express.cookieParser());
-	app.use(express.bodyParser());
-	app.use(express.methodOverride());
-	app.use(express.session({
-		secret: 'keyboard cat'
-	}));
-
-	app.use(flash());
-
-	// Initialize Passport!  Also use passport.session() middleware, to support
-	// persistent login sessions (recommended).
-	app.use(passport.initialize());
-	app.use(passport.session());
-	app.use(app.router);
-	app.use(express.static(__dirname + '/../../public'));
-});
-
-
-app.get('/', function (req, res) {
-	res.render('index', {
-		user: req.user
-	});
-});
-
-app.get('/account', ensureAuthenticated, function (req, res) {
-	res.render('account', {
-		user: req.user
-	});
-});
-
-app.get('/login', function (req, res) {
-	res.render('login', {
-		user: req.user,
-		message: req.flash('error')
-	});
-});
-
-// POST /login
-//   Use passport.authenticate() as route middleware to authenticate the
-//   request.  If authentication fails, the user will be redirected back to the
-//   login page.  Otherwise, the primary route function function will be called,
-//   which, in this example, will redirect the user to the home page.
-//
-//   curl -v -d "username=bob&password=secret" http://127.0.0.1:3000/login
-app.post('/login',
-	passport.authenticate('local', {
-		failureRedirect: '/login',
-		failureFlash: true
-	}),
-	function (req, res) {
-		res.redirect('/');
-	});
-
-// POST /login
-//   This is an alternative implementation that uses a custom callback to
-//   acheive the same functionality.
-/*
-app.post('/login', function(req, res, next) {
-  passport.authenticate('local', function(err, user, info) {
-    if (err) { return next(err) }
-    if (!user) {
-      req.flash('error', info.message);
-      return res.redirect('/login')
-    }
-    req.logIn(user, function(err) {
-      if (err) { return next(err); }
-      return res.redirect('/users/' + user.username);
-    });
-  })(req, res, next);
-});
-*/
-
-app.get('/logout', function (req, res) {
-	req.logout();
-	res.redirect('/');
-});
-
-app.listen(3000, function () {
-	console.log('Express server listening on port 3000');
-});
-
 
 // Simple route middleware to ensure user is authenticated.
 //   Use this route middleware on any resource that needs to be protected.  If
@@ -210,5 +122,52 @@ function ensureAuthenticated(req, res, next) {
 	if (req.isAuthenticated()) {
 		return next();
 	}
-	res.redirect('/login')
+	res.send(403, 'Sorry! you cant see that.');
+}
+
+module.exports = function(app) {
+
+	// Initialize Passport!  Also use passport.session() middleware, to support
+	// persistent login sessions (recommended).
+	app.use(passport.initialize());
+	app.use(passport.session());
+
+	app.get('/user/me', ensureAuthenticated, function (req, res) {
+		res.json(req.user);
+	});
+
+	// POST /login
+	//   Use passport.authenticate() as route middleware to authenticate the
+	//   request.  If authentication fails, the user will be redirected back to the
+	//   login page.  Otherwise, the primary route function function will be called,
+	//   which, in this example, will redirect the user to the home page.
+	//
+	//   curl -v -d "username=bob&password=secret" http://127.0.0.1:3000/login
+	app.post('/login', passport.authenticate('fh-imap'), function (req, res) {
+		res.json(req.user);
+	});
+
+	// POST /login
+	//   This is an alternative implementation that uses a custom callback to
+	//   acheive the same functionality.
+	/*
+	app.post('/login', function(req, res, next) {
+	  passport.authenticate('local', function(err, user, info) {
+	    if (err) { return next(err) }
+	    if (!user) {
+	      req.flash('error', info.message);
+	      return res.redirect('/login')
+	    }
+	    req.logIn(user, function(err) {
+	      if (err) { return next(err); }
+	      return res.redirect('/users/' + user.username);
+	    });
+	  })(req, res, next);
+	});
+	*/
+
+	app.post('/logout', function (req, res) {
+		req.logout();
+		res.json({});
+	});
 }

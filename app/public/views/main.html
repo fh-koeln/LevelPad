@@ -1,15 +1,12 @@
-<div ng-include="'partials/navbar'"></div>
-
 <div class="jumbotron">
 	<h1>LevelPad</h1>
 	<p>
 		Webapp zur Unterstützung einer Bewertung nach dem Niveaustufenmodell
 	</p>
-	<p><a class="btn btn-lg btn-success" ng-href="#chat">Zum Demo-Chat</a></p>
 
 	<p>Ein wenig REST:</p>
 	<ul>
-		<li ng-repeat="thing in awesomeThings">
+		<li data-ng-repeat="thing in awesomeThings">
 			<h4>{{thing.name}}</h4>
 			<p>{{thing.info}}</p>
 		</li>
