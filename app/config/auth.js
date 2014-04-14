@@ -67,7 +67,7 @@ passport.deserializeUser(function (id, done) {
 //   however, in this example we are using a baked-in set of users.
 passport.use('fh-imap', new LocalStrategy(
 	function (username, password, done) {
-		console.log('Verify imap user: ' + username + ' / ' + password);
+		console.log('Verify imap user: ' + username);
 
 		// asynchronous verification, for effect...
 		process.nextTick(function () {
