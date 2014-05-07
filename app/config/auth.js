@@ -11,17 +11,22 @@ var users = [
 		username: 'vschaef1',
 		password: 'secret',
 		email: 'bob@example.com'
-	}
-  , {
+	},
+	{
 		id: 2,
 		username: 'joe',
 		password: 'birthday',
 		email: 'joe@example.com'
-	}
-  , {
+	},
+	{
 		id: 3,
 		username: 'cjerolim',
-		email: 'bob@example.com'
+		email: 'peter@example.com'
+	},
+	{
+		id: 4,
+		username: 'dschilli',
+		email: 'max@example.com'
 	}
 ];
 
@@ -81,11 +86,11 @@ passport.use('fh-imap', new LocalStrategy(
 				keepalive: false,
 				tls: true,
 			});
-			
+
 			//Connect to IMAP-Server
 			imap.connect();
 
-			
+
 			//Promise-Handler if login successful
 			imap.once('ready', function () {
 				imap.end();
@@ -102,7 +107,7 @@ passport.use('fh-imap', new LocalStrategy(
 					return done(null, user);
 				})
 			});
-			
+
 			//Promise-Handler if login failed
 			imap.once('error', function (error) {
 				return done(null, false, {
