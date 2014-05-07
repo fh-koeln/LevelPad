@@ -33,7 +33,23 @@ var auth = function(req, res, next) {
 module.exports = function(app, io) {
 
 	// We could extend this routes later here..
+	app.route('/account').all(redirectBrowsersToIndex);
+	app.route('/login').all(redirectBrowsersToIndex);
+	app.route('/logout').all(redirectBrowsersToIndex);
 
+	app.route('/chat').all(redirectBrowsersToIndex);
+	app.route('/users').all(redirectBrowsersToIndex);
+	app.route('/subject').all(redirectBrowsersToIndex);
+
+	// Server API Routes
+	app.get('/api/example/awesomeThings', ExampleController.awesomeThings);
+	app.get('/chat', ChatController.index);
+
+	app.resource( 'users', require( '../resources/Users'  ) );
+	app.resource( 'subjects', require( '../resources/Subjects'  ) );
+	app.resource( 'subjects/:subject/artifacts', require( '../resources/Artifacts'  ) );
+
+	/*
 	app.route('/users/*')
 		.all(auth)
 		.get(redirectBrowsersToIndex)
@@ -44,10 +60,11 @@ module.exports = function(app, io) {
 		.get(redirectBrowsersToIndex)
 		.all(require('../resources/Subjects').subjects);
 
-	/*app.route('/subjects/:subject/artifacts/*')
+	app.route('/subjects/:subject/artifacts/*')
 		.all(auth)
 		.get(redirectBrowsersToIndex)
-		.all(require('../resources/Artifacts').artifacts);*/
+		.all(require('../resources/Artifacts').artifacts);
+	*/
 
 	io.sockets.on('connection', function (socket) {
 		console.log('new connection...');

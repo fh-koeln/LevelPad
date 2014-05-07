@@ -12,6 +12,20 @@ module.config(function ($routeProvider, $locationProvider) {
 		templateUrl: 'views/main.html',
 		controller: 'MainController'
 	});
+
+	$routeProvider.when('/login', {
+		templateUrl: 'views/auth/login.html',
+		controller: 'AuthController'
+	});
+	$routeProvider.when('/logout', {
+		templateUrl: 'views/auth/logout.html',
+		controller: 'AuthController'
+	});
+	$routeProvider.when('/account', {
+		templateUrl: 'views/auth/account.html',
+		controller: 'AccountController'
+	});
+
 	$routeProvider.when('/chat', {
 		templateUrl: 'views/chat.html',
 		controller: 'ChatController'
