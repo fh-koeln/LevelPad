@@ -13,11 +13,18 @@ var ChatController = require('../api/ChatController');
 // * The accept header does NOT contain a JSON accept header.
 //
 var redirectBrowsersToIndex = function(req, res, next) {
+	console.log( "Hey, redirectBrowsersToIndex." );
 	if (req.accepts('json', 'html') == 'html' && !req.path.match('.json$')) {
 		res.sendfile('index.html', { root: __dirname + '/../public' });
 	} else {
 		next();
 	}
+};
+
+
+var auth = function(req, res, next) {
+	console.log( "Hey, authentifiziert." );
+	next();
 };
 
 /**
@@ -26,18 +33,21 @@ var redirectBrowsersToIndex = function(req, res, next) {
 module.exports = function(app, io) {
 
 	// We could extend this routes later here..
-	
-	app.route('/chat').all(redirectBrowsersToIndex);
-	app.route('/users').all(redirectBrowsersToIndex);
-	app.route('/subject').all(redirectBrowsersToIndex);
 
-	// Server API Routes
-	app.get('/api/example/awesomeThings', ExampleController.awesomeThings);
-	app.get('/chat', ChatController.index);
-	
-	app.resource( 'users', require( '../resources/Users'  ) );
-	app.resource( 'subjects', require( '../resources/Subjects'  ) );
-	app.resource( 'subjects/:subject/artifacts', require( '../resources/Artifacts'  ) );
+	app.route('/users/*')
+		.all(auth)
+		.get(redirectBrowsersToIndex)
+		.all(require('../resources/Users').users);
+
+	app.route('/subjects/*')
+		.all(auth)
+		.get(redirectBrowsersToIndex)
+		.all(require('../resources/Subjects').subjects);
+
+	/*app.route('/subjects/:subject/artifacts/*')
+		.all(auth)
+		.get(redirectBrowsersToIndex)
+		.all(require('../resources/Artifacts').artifacts);*/
 
 	io.sockets.on('connection', function (socket) {
 		console.log('new connection...');

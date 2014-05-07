@@ -25,3 +25,30 @@ exports.update = function(req, res){
 exports.destroy = function(req, res){
 	res.send('destroy artifact ' + req.params.artifact);
 };
+
+var express = require('express');
+
+
+var artifacts = express.Router();
+
+artifacts.get('/', function(req, res, next) {
+	res.send('artifact index');
+});
+
+artifacts.post('/', function(req, res, next) {
+	res.send('create artifact');
+});
+
+artifacts.get('/:id', function(req, res, next) {
+	res.send('update artifact ' + req.params.artifact);
+});
+
+artifacts.put('/:id', function(req, res, next) {
+	res.send('update artifact ' + req.params.artifact);
+});
+
+artifacts.delete('/:id', function(req, res, next) {
+	res.send('destroy artifact ' + req.params.artifact);
+});
+
+module.exports.artifacts = artifacts;

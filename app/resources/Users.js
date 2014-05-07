@@ -18,23 +18,27 @@ exports.destroy = function(req, res){
 	res.send('destroy user ' + req.params.user);
 };
 
-/* ????
-var people = express.Router();
+var express = require('express');
+var users = express.Router();
 
-people.get(function(req, res, next) {
+users.get('/', function(req, res, next) {
+	res.send('user index');
 });
 
-people.post(function(req, res, next) {
+users.post('/', function(req, res, next) {
+	res.send('create user');
 });
 
-people.get('/:id', function(req, res, next) {
+users.get('/:id', function(req, res, next) {
+	res.send('update user ' + req.params.user);
 });
 
-people.put('/:id', function(req, res, next) {
+users.put('/:id', function(req, res, next) {
+	res.send('update user ' + req.params.user);
 });
 
-people.delete('/:id', function(req, res, next) {
+users.delete('/:id', function(req, res, next) {
+	res.send('destroy user ' + req.params.user);
 });
 
-module.exports.people = people;
-*/
+module.exports.users = users;

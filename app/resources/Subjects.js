@@ -25,3 +25,30 @@ exports.update = function(req, res){
 exports.destroy = function(req, res){
 	res.send('destroy subject ' + req.params.subject);
 };
+
+var express = require('express');
+
+
+var subjects = express.Router();
+
+subjects.get('/', function(req, res, next) {
+	res.send('subject index');
+});
+
+subjects.post('/', function(req, res, next) {
+	res.send('create subject');
+});
+
+subjects.get('/:id', function(req, res, next) {
+	res.send('update subject ' + req.params.subject);
+});
+
+subjects.put('/:id', function(req, res, next) {
+	res.send('update subject ' + req.params.subject);
+});
+
+subjects.delete('/:id', function(req, res, next) {
+	res.send('destroy subject ' + req.params.subject);
+});
+
+module.exports.subjects = subjects;
