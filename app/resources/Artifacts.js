@@ -1,38 +1,8 @@
-exports.index = function(req, res){
-	res.send('artifact index');
-};
-
-exports.new = function(req, res){
-	res.send('new artifact');
-};
-
-exports.create = function(req, res){
-	res.send('create artifact');
-};
-
-exports.show = function(req, res){
-	res.send('show artifact ' + req.params.artifact + ' of subject ' + req.params.subject );
-};
-
-exports.edit = function(req, res){
-	res.send('edit artifact ' + req.params.artifact);
-};
-
-exports.update = function(req, res){
-	res.send('update artifact ' + req.params.artifact);
-};
-
-exports.destroy = function(req, res){
-	res.send('destroy artifact ' + req.params.artifact);
-};
-
-var express = require('express');
-
-
-var artifacts = express.Router();
+var express = require('express'),
+	artifacts = express.Router();
 
 artifacts.get('/', function(req, res, next) {
-	res.send('artifact index');
+	res.send('artifact index for subject' + req.params.subject );
 });
 
 artifacts.post('/', function(req, res, next) {

@@ -34,12 +34,20 @@ module.config(function ($routeProvider, $locationProvider) {
 		templateUrl: 'views/users.html',
 		controller: 'UserController'
 	});
+	$routeProvider.when('/subjects', {
+		templateUrl: 'views/subjects.html',
+		controller: 'SubjectController'
+	});
+	$routeProvider.when('/subjects/:subject/artifacts', {
+		templateUrl: 'views/artifacts.html',
+		controller: 'ArtifactController'
+	});
 	$routeProvider.otherwise({
 		templateUrl: 'views/404.html'
 	});
 //	$routeProvider.otherwise({
 //		redirectTo: '/'
 //	});
-	
+
 	$locationProvider.html5Mode(true);
 });
