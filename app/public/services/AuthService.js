@@ -61,12 +61,12 @@ angular.module('levelPad').service('AuthService', ['$rootScope', '$log', '$http'
     };
 
     $scope.login = function(username, password, callback) {
-        $log.log('Login user ' + username + ' in the background...');
+        $log.log('Login user ' + username + '...');
 
         $http({
             method: 'POST',
             url: '/api/login',
-            params: { username: username, password: password }
+            data: { username: username, password: password }
         }).success(function() {
             // We will receive the login mask here if the login failed.
             // So we also check if we could get the current user information now...
@@ -81,7 +81,7 @@ angular.module('levelPad').service('AuthService', ['$rootScope', '$log', '$http'
     };
 
     $scope.logout = function(callback) {
-        $log.log('Handle manual logout in the background...');
+        $log.log('Logout...');
 
         $http({
             method: 'POST',

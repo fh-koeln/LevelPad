@@ -84,10 +84,6 @@ module.exports = function(app) {
 	app.use(passport.initialize());
 	app.use(passport.session());
 
-	app.get('/api/user/account', function (req, res) {
-		res.json(req.user);
-	});
-
 	// POST /login
 	//   Use passport.authenticate() as route middleware to authenticate the
 	//   request.  If authentication fails, the user will be redirected back to the
