@@ -1,33 +1,34 @@
 var express = require('express'),
-	users = express.Router();
+	users = express.Router(),
+	User = require('../models/User.js');
 
-users.param('user_id', function(req, res, next, userId) {
-    // sample user, would actually fetch from DB, etc...
-    req.user = {
-        id: userId,
-        name: 'TJ'
-    };
-    next();
+users.param('user', function(req, res, next, username) {
+	User.findByUsername(username, function(err, user) {
+		req.user = user;
+		next();
+	});
 });
 
 users.get('/', function(req, res, next) {
-	res.send('user index');
+	User.find(function(err, users) {
+		res.json(users);
+	});
 });
 
 users.post('/', function(req, res, next) {
 	res.send('create user');
 });
 
-users.get('/:user_id', function(req, res, next) {
-	res.send('update user ' + req.user.id);
+users.get('/:user', function(req, res, next) {
+	res.json(req.user);
 });
 
-users.put('/:user_id', function(req, res, next) {
-	res.send('update user ' + req.params.user);
+users.put('/:user', function(req, res, next) {
+	res.send('update user ' + req.user._id);
 });
 
-users.delete('/:user_id', function(req, res, next) {
-	res.send('destroy user ' + req.params.user);
+users.delete('/:user', function(req, res, next) {
+	res.send('destroy user ' + req.user._id);
 });
 
 module.exports = users;

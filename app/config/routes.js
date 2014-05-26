@@ -20,7 +20,7 @@ api.use('/users', require('../resources/Users'));
 api.use('/account', require('../resources/Account'));
 
 var routes = express.Router();
-routes.use(isAuthenticated);
+//routes.use(isAuthenticated);
 routes.use('/api', api);
 
 /* GET home page for. */
