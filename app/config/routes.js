@@ -3,7 +3,10 @@
 var express = require('express');
 
 var isAuthenticated = function(req, res, next) {
-	return next(); // @todo remove
+	if (req.path == '/login')
+		return next();
+
+	//return next(); // @todo remove
 	if (req.isAuthenticated()) {
 		return next();
 	} else {
@@ -11,35 +14,18 @@ var isAuthenticated = function(req, res, next) {
 	}
 };
 
-/**
- * Application routes
- */
-module.exports = function(app, io) {
+var api = express.Router();
+api.use('/subjects', require('../resources/Subjects'));
+api.use('/users', require('../resources/Users'));
+api.use('/accounts', require('../resources/Account'));
 
-    var api = express.Router();
-    api.use(isAuthenticated);
+var routes = express.Router();
+routes.use(isAuthenticated);
+routes.use('/api', api);
 
-    app.use('/api', api);
+/* GET home page for. */
+routes.get('/*', function(req, res) {
+    res.sendfile('index.html', { root: __dirname + '/../public' });
+});
 
-    api.use('/subjects', require('../resources/Subjects'));
-    api.use('/users', require('../resources/Users'));
-    api.use('/accounts', require('../resources/Account'));
-
-    /* GET home page for. */
-    app.get('/*', function(req, res) {
-        res.sendfile('index.html', { root: __dirname + '/../public' });
-    });
-
-	io.sockets.on('connection', function (socket) {
-		console.log('new connection...');
-
-		socket.broadcast.emit('chat_message', {
-			type: 'message',
-			text: 'hallo!'
-		});
-
-		socket.on('chat_message', function (data) {
-			ChatController.receiveMessageIO(io, socket, data);
-		});
-	});
-};
+module.exports = routes;

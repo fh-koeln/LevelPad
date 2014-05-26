@@ -14,15 +14,29 @@ var express = require('express'),
 
 console.info('Will start server on port %d in %s mode...', port, app.get('env'));
 
-// Socket.io
-var server = require('http').createServer(app);
-var io = require('socket.io').listen(server);
-
 // Express settings
 require('./app/config/express')(app);
 
 // Routing
-require('./app/config/routes')(app, io);
+app.use(require('./app/config/routes'));
+
+// @todo
+// Socket.io
+var server = require('http').createServer(app);
+var io = require('socket.io').listen(server);
+io.sockets.on('connection', function (socket) {
+	console.log('new connection...');
+
+	socket.broadcast.emit('chat_message', {
+		type: 'message',
+		text: 'hallo!'
+	});
+
+	socket.on('chat_message', function (data) {
+		console.log(data);
+	});
+});
+
 
 // Start server
 server.listen(port, function() {

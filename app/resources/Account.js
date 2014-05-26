@@ -2,7 +2,7 @@ var express = require('express'),
 	account = express.Router();
 
 account.get('/', function(req, res, next) {
-	res.send('account index');
+	res.json(req.user);
 });
 
 account.get('/edit', function(req, res, next) {

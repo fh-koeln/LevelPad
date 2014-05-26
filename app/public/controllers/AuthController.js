@@ -5,7 +5,7 @@ angular.module('levelPad').controller('AuthController', function ($scope, $http,
 
 	$scope.login = function() {
 		console.log('Login... ' + $scope.username);
-		$http.post('/login', $.param({
+		$http.post('/api/login', $.param({
 			username: $scope.username,
 			password: $scope.password
 		}), {
@@ -24,11 +24,11 @@ angular.module('levelPad').controller('AuthController', function ($scope, $http,
 
 	$scope.logout = function() {
 		console.log('Logout...');
-		$http.post('/logout').success(function() {
+		$http.post('/api/logout').success(function() {
 			$scope.message = "Logout success!";
 			console.log('Logout result:');
 			console.log(arguments);
-			$location.path('/');
+			$location.path('/account');
 		}).error(function() {
 			$scope.message = "Logout error!";
 		});
