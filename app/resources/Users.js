@@ -10,6 +10,7 @@ users.param('user', function(req, res, next, username) {
 });
 
 users.get('/', function(req, res, next) {
+
 	User.find(function(err, users) {
 		res.json(users);
 	});
