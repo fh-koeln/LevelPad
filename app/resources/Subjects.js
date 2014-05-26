@@ -2,6 +2,14 @@ var express = require('express'),
 	subjects = express.Router(),
 	Subject = require('../models/Subject.js');
 
+subjects.use(function(req, res, next) {
+	if (!req.isAuthenticated()) {
+		res.json(401, {error: 'Not authenticated'});
+	} else {
+		next();
+	}
+});
+
 subjects.use('/artifacts', require('./Artifacts'));
 
 subjects.get('/', function(req, res, next) {
@@ -15,7 +23,7 @@ subjects.post('/', function(req, res, next) {
 });
 
 subjects.get('/:subject', function(req, res, next) {
-	Subject.findByName(function(err, subject) {
+	Subject.findByName(req.params.subject, function(err, subject) {
 		res.json(subject);
 	});
 });

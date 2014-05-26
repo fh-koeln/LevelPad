@@ -4,7 +4,7 @@ var express = require('express'),
 
 users.use(function(req, res, next) {
 	if (!req.isAuthenticated()) {
-		res.status(401).end();
+		res.json(401, {error: 'Not authenticated'});
 	} else {
 		next();
 	}
@@ -13,12 +13,10 @@ users.use(function(req, res, next) {
 users.param('user', function(req, res, next, username) {
 	User.findByUsername(username, function(err, user) {
 		req.user = user;
-		next();
 	});
 });
 
 users.get('/', function(req, res, next) {
-
 	User.find(function(err, users) {
 		res.json(users);
 	});
