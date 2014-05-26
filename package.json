@@ -34,12 +34,14 @@
 		"express-resource": "~1.0.0",
 		"compression": "~1.0.2",
 		"errorhandler": "~1.0.1",
-		
+
 		"socket.io": "1.0.0-pre",
 
 		"passport": "~0.2.0",
 		"passport-local": "~1.0.0",
-		"imap": "~0.8.10"
+		"imap": "~0.8.10",
+
+		"mongoose": "3.8.11"
 	},
 	"devDependencies": {
 		"bower": "*",

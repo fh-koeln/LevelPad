@@ -1,53 +1,10 @@
+"use strict";
 
 var passport = require('passport'),
 	LocalStrategy = require('passport-local').Strategy,
-	Imap = require('imap');
+	Imap = require('imap'),
+	User = require('../models/User.js');
 
-
-
-var users = [
-	{
-		id: 1,
-		username: 'vschaef1',
-		password: 'secret',
-		email: 'bob@example.com'
-	},
-	{
-		id: 2,
-		username: 'joe',
-		password: 'birthday',
-		email: 'joe@example.com'
-	},
-	{
-		id: 3,
-		username: 'cjerolim',
-		email: 'peter@example.com'
-	},
-	{
-		id: 4,
-		username: 'dschilli',
-		email: 'max@example.com'
-	}
-];
-
-function findById(id, callbackFn) {
-	var idx = id - 1;
-	if (users[idx]) {
-		callbackFn(null, users[idx]);
-	} else {
-		callbackFn(new Error('User ' + id + ' does not exist'));
-	}
-}
-
-function findByUsername(username, callbackFn) {
-	for (var i = 0, len = users.length; i < len; i++) {
-		var user = users[i];
-		if (user.username === username) {
-			return callbackFn(null, user);
-		}
-	}
-	return callbackFn(null, null);
-}
 
 // Passport session setup.
 //   To support persistent login sessions, Passport needs to be able to
@@ -55,11 +12,11 @@ function findByUsername(username, callbackFn) {
 //   this will be as simple as storing the user ID when serializing, and finding
 //   the user by ID when deserializing.
 passport.serializeUser(function (user, done) {
-	done(null, user.id);
+	done(null, user.username);
 });
 
-passport.deserializeUser(function (id, done) {
-	findById(id, function (err, user) {
+passport.deserializeUser(function (username, done) {
+	User.findByUsername(username, function (err, user) {
 		done(err, user);
 	});
 });
@@ -90,22 +47,24 @@ passport.use('fh-imap', new LocalStrategy(
 			//Connect to IMAP-Server
 			imap.connect();
 
-
 			//Promise-Handler if login successful
 			imap.once('ready', function () {
 				imap.end();
 
-				findByUsername(username, function (err, user) {
-					if (err) {
-						return done(err);
+				User.findByUsername(username, function(error, user) {
+					if (error) {
+						return done(error);
 					}
+
 					if (!user) {
 						return done(null, false, {
 							message: 'Unknown user ' + username
 						});
 					}
+
 					return done(null, user);
-				})
+				});
+
 			});
 
 			//Promise-Handler if login failed

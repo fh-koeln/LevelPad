@@ -17,6 +17,9 @@ console.info('Will start server on port %d in %s mode...', port, app.get('env'))
 // Express settings
 require('./app/config/express')(app);
 
+// Database
+require('./app/config/db');
+
 // Authentification
 require('./app/config/auth')(app);
 
