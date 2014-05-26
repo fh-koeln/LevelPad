@@ -34,7 +34,7 @@ var isAuthenticated = function(req, res, next) {
 module.exports = function(app, io) {
 
 	app.use('/api', routesApi);
-	app.use('/*', routesIndex);
+	app.use('/', routesIndex);
 
 	// We could extend this routes later here..
 	/*app.route('/login').all(redirectBrowsersToIndex);
