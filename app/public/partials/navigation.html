@@ -26,9 +26,13 @@
 				data-ng-class="{ active: $location.path() == '/signup' }"
 				data-toggle="collapse"
 				data-target="#navigation-collapse"><a href="/signup" data-ng-click="signup(); $event.preventDefault();">Register</a></li>
+			<li class="navbar-text"
+				data-ng-show="loggedIn === true"
+				data-toggle="collapse"
+				data-target="#navigation-collapse">Hello <span data-ng-bind="user.firstname"></span></li>
             <li data-ng-show="loggedIn === true"
 				data-toggle="collapse"
-				data-target="#navigation-collapse"><a href="/logout" data-ng-click="logout(); $event.preventDefault();">Logout</a></li>
+				data-target="#navigation-collapse"><a href="/logout" class="navbar-link" data-ng-click="logout(); $event.preventDefault();">Logout</a></li>
         </ul>
     </div>
 </nav>

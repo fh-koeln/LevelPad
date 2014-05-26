@@ -36,15 +36,15 @@ module.config(function ($routeProvider, $locationProvider) {
 	});
 	$routeProvider.when('/signup', {
 		templateUrl: 'views/auth/signup-page.html',
-		controller: 'AuthController'
+		controller: 'AccountController'
 	});
 	$routeProvider.when('/login', {
 		templateUrl: 'views/auth/login-page.html',
-		controller: 'AuthController'
+		controller: 'AccountController'
 	});
 	$routeProvider.when('/logout', {
 		templateUrl: 'views/auth/logout-page.html',
-		controller: 'AuthController'
+		controller: 'AccountController'
 	});
 	$routeProvider.otherwise({
 		templateUrl: 'views/errors/404.html'

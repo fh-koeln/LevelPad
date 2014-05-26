@@ -4,7 +4,7 @@
 		   name="username" value=""
 		   required="required" autofocus="autofocus"
 		   class="form-control"
-		   data-ng-model="username" />
+		   data-ng-model="$parent.$parent.username" />
 </div>
 <div class="form-group">
 	<label for="password" class="control-label">Passwort:</label>
@@ -12,5 +12,5 @@
 		   name="password" value=""
 		   required="required"
 		   class="form-control"
-		   data-ng-model="password" />
+		   data-ng-model="$parent.$parent.password" />
 </div>

@@ -28,7 +28,7 @@
 	</head>
 	<body data-ng-app="levelPad">
 		<div data-ng-controller="NavigationController" data-ng-include="'partials/navigation.html'" class="container"></div>
-		<div data-ng-controller="AuthController">
+		<div data-ng-controller="AccountController">
 			<div data-ng-include="'views/auth/login-dialog.html'"></div>
 			<div data-ng-include="'views/auth/signup-dialog.html'"></div>
 		</div>
@@ -40,7 +40,6 @@
         <script src="controllers/NavigationController.js"></script>
 		<script src="controllers/MainController.js"></script>
 		<script src="controllers/UserController.js"></script>
-		<script src="controllers/AuthController.js"></script>
 		<script src="controllers/AccountController.js"></script>
 	</body>
 </html>
