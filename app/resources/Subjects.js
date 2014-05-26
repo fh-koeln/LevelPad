@@ -29,10 +29,55 @@ subjects.post('/', function(req, res, next) {
 	res.send('create subject');
 });
 
-subjects.get('/:subject', function(req, res, next) {
-	Subject.findByName(req.params.subject, function(err, subject) {
-		res.json(subject);
+subjects.get('/:year(\\d{4})/:semester(ss|ws)/:module', function(req, res, next) {
+	Subject.find( {
+		year: req.params.year,
+		semester: req.params.semester === 'ss' ? 'Sommersemester' : 'Wintersemester',
+		moduleShort: req.params.module
+	}, function(err, subjects) {
+		if (!err && subjects) {
+			res.json(subjects);
+		} else if (!err) {
+			res.json(404, {error: 'Not found'});
+		} else {
+			console.log(err);
+			next();
+		}
 	});
+});
+
+subjects.get('/:year(\\d{4})/:semester(ss|ws)', function(req, res, next) {
+	Subject.find( {
+		year: req.params.year,
+		semester: req.params.semester === 'ss' ? 'Sommersemester' : 'Wintersemester'
+	}, function(err, subjects) {
+		if (!err && subjects) {
+			res.json(subjects);
+		} else if (!err) {
+			res.json([]);
+		} else {
+			console.log(err);
+			next();
+		}
+	});
+});
+
+subjects.get('/:year(\\d{4})', function(req, res, next) {
+	Subject.find( {year: req.params.year}, function(err, subjects) {
+		if (!err && subjects) {
+			res.json(subjects);
+		} else if (!err) {
+			res.json([]);
+		} else {
+			console.log(err);
+			next();
+		}
+	});
+});
+
+subjects.get('/:subject', function(req, res, next) {
+	// Catch for a bad request
+	res.json(400, {error: 'Bad Request'});
 });
 
 subjects.put('/:subject', function(req, res, next) {
