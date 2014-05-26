@@ -137,7 +137,7 @@ module.exports = function(app) {
 	app.use(passport.initialize());
 	app.use(passport.session());
 
-	app.get('/user/me', ensureAuthenticated, function (req, res) {
+	app.get('/api/user/account', ensureAuthenticated, function (req, res) {
 		res.json(req.user);
 	});
 
@@ -148,7 +148,7 @@ module.exports = function(app) {
 	//   which, in this example, will redirect the user to the home page.
 	//
 	//   curl -v -d "username=bob&password=secret" http://127.0.0.1:3000/login
-	app.post('/login', passport.authenticate('fh-imap'), function (req, res) {
+	app.post('/api/login', passport.authenticate('fh-imap'), function (req, res) {
 		res.json(req.user);
 	});
 
@@ -171,7 +171,7 @@ module.exports = function(app) {
 	});
 	*/
 
-	app.post('/logout', function (req, res) {
+	app.post('/api/logout', function (req, res) {
 		req.logout();
 		res.json({});
 	});

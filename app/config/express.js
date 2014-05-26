@@ -37,9 +37,6 @@ module.exports = function(app) {
 		});
 	}
 
-	// Authentification
-	require('./auth')(app);
-
 	// Compression
 	if (env == 'production') {
 		app.use(require('compression')());

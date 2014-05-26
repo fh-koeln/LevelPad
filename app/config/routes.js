@@ -17,7 +17,7 @@ var isAuthenticated = function(req, res, next) {
 var api = express.Router();
 api.use('/subjects', require('../resources/Subjects'));
 api.use('/users', require('../resources/Users'));
-api.use('/accounts', require('../resources/Account'));
+api.use('/account', require('../resources/Account'));
 
 var routes = express.Router();
 routes.use(isAuthenticated);
