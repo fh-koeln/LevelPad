@@ -118,18 +118,6 @@ passport.use('fh-imap', new LocalStrategy(
 	}
 ));
 
-// Simple route middleware to ensure user is authenticated.
-//   Use this route middleware on any resource that needs to be protected.  If
-//   the request is authenticated (typically via a persistent login session),
-//   the request will proceed.  Otherwise, the user will be redirected to the
-//   login page.
-function ensureAuthenticated(req, res, next) {
-	if (req.isAuthenticated()) {
-		return next();
-	}
-	res.send(403, 'Sorry! you cant see that.');
-}
-
 module.exports = function(app) {
 
 	// Initialize Passport!  Also use passport.session() middleware, to support
@@ -137,7 +125,7 @@ module.exports = function(app) {
 	app.use(passport.initialize());
 	app.use(passport.session());
 
-	app.get('/api/user/account', ensureAuthenticated, function (req, res) {
+	app.get('/api/user/account', function (req, res) {
 		res.json(req.user);
 	});
 

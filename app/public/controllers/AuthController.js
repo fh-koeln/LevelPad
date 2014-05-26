@@ -1,37 +1,31 @@
+'use strict';
 /* global angular, console, io */
 
-angular.module('levelPad').controller('AuthController', function ($scope, $http, $location) {
-	'use strict';
+angular.module('levelPad').controller('AuthController', ['$scope', '$route', '$location', '$log', 'AuthService', function ($scope, $route, $location, $log, authService) {
 
 	$scope.login = function() {
-		console.log('Login... ' + $scope.username);
-		$http.post('/api/login', $.param({
-			username: $scope.username,
-			password: $scope.password
-		}), {
-			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded'
-			}
-		}).success(function() {
-			$scope.message = "Login success!";
-			console.log('Login result:');
-			console.log(arguments);
-			$location.path('/account');
-		}).error(function() {
-			$scope.message = "Login error!";
-		});
+		// Workaround to ensure that angular js has the actual data when user
+		// user autofill in chrome! More about this topic could found in this
+		// bug report: https://github.com/angular/angular.js/issues/1072
+		$('input').trigger('change');
+
+		if (!$scope.username) {
+			alert('Bitte E-Mail-Adresse eingeben.');
+		} else if (!$scope.password) {
+			alert('Bitte Passwort eingeben.');
+		} else {
+			authService.login($scope.username, $scope.password, function(error, loggedIn) {
+				if (error) {
+					alert('Login fehlgeschlagen!');
+				} else {
+					if ($location.$path == '/login') {
+						$location.$path = '/';
+					} else {
+						$route.reload();
+					}
+				}
+			});
+		}
 	};
 
-	$scope.logout = function() {
-		console.log('Logout...');
-		$http.post('/api/logout').success(function() {
-			$scope.message = "Logout success!";
-			console.log('Logout result:');
-			console.log(arguments);
-			$location.path('/account');
-		}).error(function() {
-			$scope.message = "Logout error!";
-		});
-	};
-
-});
+}]);

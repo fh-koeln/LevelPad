@@ -7,28 +7,20 @@ var module = angular.module('levelPad', [
 	'ngRoute'
 ]);
 
+module.config(['$logProvider', function($logProvider) {
+	$logProvider.debugEnabled(true);
+}]);
+
 module.config(function ($routeProvider, $locationProvider) {
 	$routeProvider.when('/', {
+		title: 'Home',
 		templateUrl: 'views/main.html',
 		controller: 'MainController'
 	});
-
-	$routeProvider.when('/login', {
-		templateUrl: 'views/auth/login.html',
-		controller: 'AuthController'
-	});
-	$routeProvider.when('/logout', {
-		templateUrl: 'views/auth/logout.html',
-		controller: 'AuthController'
-	});
 	$routeProvider.when('/account', {
-		templateUrl: 'views/auth/account.html',
+		title: 'Account',
+		templateUrl: 'views/account.html',
 		controller: 'AccountController'
-	});
-
-	$routeProvider.when('/chat', {
-		templateUrl: 'views/chat.html',
-		controller: 'ChatController'
 	});
 	$routeProvider.when('/users', {
 		templateUrl: 'views/users.html',
@@ -42,12 +34,21 @@ module.config(function ($routeProvider, $locationProvider) {
 		templateUrl: 'views/artifacts.html',
 		controller: 'ArtifactController'
 	});
-	$routeProvider.otherwise({
-		templateUrl: 'views/404.html'
+	$routeProvider.when('/signup', {
+		templateUrl: 'views/auth/signup.html',
+		controller: 'AuthController'
 	});
-//	$routeProvider.otherwise({
-//		redirectTo: '/'
-//	});
+	$routeProvider.when('/login', {
+		templateUrl: 'views/auth/login.html',
+		controller: 'AuthController'
+	});
+	$routeProvider.when('/logout', {
+		templateUrl: 'views/auth/logout.html',
+		controller: 'AuthController'
+	});
+	$routeProvider.otherwise({
+		templateUrl: 'views/errors/404.html'
+	});
 
 	$locationProvider.html5Mode(true);
 });
