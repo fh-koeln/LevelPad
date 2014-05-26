@@ -4,7 +4,7 @@ angular.module('levelPad').controller('AccountController', function ($scope, $ht
 	'use strict';
 
 	console.log('Get account data...');
-	$http.get('/user/me').success(function(user) {
+	$http.get('/account').success(function(user) {
 		console.log('Get account data...');
 		$scope.user = user;
 	}).error(function(data, status, headers, config) {
