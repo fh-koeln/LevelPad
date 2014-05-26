@@ -1,4 +1,4 @@
-/* global angular, console, io */
+/* global io */
 
 angular.module('levelPad').controller('ChatController', function ($scope, $http) {
 	'use strict';

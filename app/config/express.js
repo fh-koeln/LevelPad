@@ -10,7 +10,7 @@ module.exports = function(app) {
 	var env = app.get('env');
 
 	// Logging
-	app.use(require('morgan')(env == 'development' ? 'dev' : undefined));
+	app.use(require('morgan')(env === 'development' ? 'dev' : undefined));
 
 	// Basic request processing:
 	// TODO secrets
@@ -21,12 +21,12 @@ module.exports = function(app) {
 //	app.use(require('method-override')());
 
 	// Live reload
-	if (env == 'development') {
+	if (env === 'development') {
 		app.use(require('connect-livereload')());
 	}
 
 	// Disable caching of scripts for easier testing
-	if (env == 'development') {
+	if (env === 'development') {
 		app.use(function noCache(req, res, next) {
 			if (req.url.indexOf('/views/') === 0 || req.url.indexOf('/controllers/') === 0) {
 				res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
@@ -38,7 +38,7 @@ module.exports = function(app) {
 	}
 
 	// Compression
-	if (env == 'production') {
+	if (env === 'production') {
 		app.use(require('compression')());
 	}
 
@@ -48,7 +48,7 @@ module.exports = function(app) {
 	app.use(express.static(path.join(__dirname, '../../bower_components')));
 
 	// Error handler
-	if (env == 'development') {
+	if (env === 'development') {
 		app.use(require('errorhandler')());
 	}
 };

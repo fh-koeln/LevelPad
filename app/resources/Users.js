@@ -13,12 +13,20 @@ users.use(function(req, res, next) {
 users.param('user', function(req, res, next, username) {
 	User.findByUsername(username, function(err, user) {
 		req.user = user;
+		next();
 	});
 });
 
 users.get('/', function(req, res, next) {
 	User.find(function(err, users) {
-		res.json(users);
+		if (!err && users) {
+			res.json(users);
+		} else if (!err) {
+			res.json([]);
+		} else {
+			console.log(err);
+			next();
+		}
 	});
 });
 

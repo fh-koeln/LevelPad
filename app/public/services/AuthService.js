@@ -3,6 +3,26 @@ angular.module('levelPad').service('AuthService', ['$rootScope', '$http', '$cook
 
 	var $scope = $rootScope;//.$new();
 
+	angular.module('levelPad').config(['$httpProvider', function($httpProvider) {
+		$httpProvider.interceptors.push(function($q) {
+			return {
+				'responseError': function(rejection) {
+					if (rejection.status === 401 || rejection.status === 403) {
+						console.error('Detect authentitication error '
+							+ rejection.status + ' in server response!'
+							+ ' Automatically logout the user!');
+						if (automaticallyLogout) {
+							automaticallyLogout();
+						} else {
+							window.location.href = 'logout';
+						}
+					}
+					return $q.reject(rejection);
+				}
+			};
+		});
+	}]);
+
 	// We don't know if we are already logged in!
 	$scope.loggedIn = null;
 	$scope.user = null;

@@ -1,7 +1,5 @@
-'use strict';
-/* global angular, console, io */
-
 angular.module('levelPad').controller('AuthController', ['$scope', '$route', '$location', '$http', '$log', 'AuthService', function ($scope, $route, $location, $http, $log, authService) {
+	'use strict';
 
 	$scope.login = function() {
 		// Workaround to ensure that angular js has the actual data when user
