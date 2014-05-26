@@ -6,7 +6,7 @@ var api = express.Router();
 
 api.use(function(req, res, next) {
 	if (!req.isAuthenticated()) {
-		res.status(401);
+		res.status(401).end();
 	} else {
 		next();
 	}
