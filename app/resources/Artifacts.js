@@ -1,5 +1,6 @@
 var express = require('express'),
-	artifacts = express.Router();
+	artifacts = express.Router(),
+	Subject = require('../models/Subject.js');
 
 artifacts.param('artifact', function(req, res, next, subject, artifact) {
 	Artifact.findBySubjectAndId(subject, artifact, function(err, artifact) {
@@ -9,7 +10,14 @@ artifacts.param('artifact', function(req, res, next, subject, artifact) {
 });
 
 artifacts.get('/', function(req, res, next) {
-	res.send('artifact index for subject' + req.params.subject );
+	console.log(req);
+	Subject.findOne({
+		year: req.params.year,
+		semester: req.params.semester === 'ss' ? 'Sommersemester' : 'Wintersemester',
+		moduleShort: req.params.module
+	}, function(err, subject) {
+		res.send(subject._id);
+	});
 });
 
 artifacts.post('/', function(req, res, next) {

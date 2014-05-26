@@ -10,7 +10,7 @@ subjects.use(function(req, res, next) {
 	}
 });
 
-subjects.use('/artifacts', require('./Artifacts'));
+subjects.use('/:year(\\d{4})/:semester(ss|ws)/:module/artifacts', require('./Artifacts'));
 
 subjects.get('/', function(req, res, next) {
 	Subject.find(function(err, subjects) {
@@ -75,17 +75,18 @@ subjects.get('/:year(\\d{4})', function(req, res, next) {
 	});
 });
 
-subjects.get('/:subject', function(req, res, next) {
+// @todo Support for GET subject/{subject_id}?
+subjects.get('/*', function(req, res, next) {
 	// Catch for a bad request
 	res.json(400, {error: 'Bad Request'});
 });
 
-subjects.put('/:subject', function(req, res, next) {
-	res.send('update subject ' + req.params.subject);
+subjects.put('/:subject_id', function(req, res, next) {
+	res.send('update subject ' + req.params.subject_id);
 });
 
-subjects.delete('/:subject', function(req, res, next) {
-	res.send('destroy subject ' + req.params.subject);
+subjects.delete('/:subject_id', function(req, res, next) {
+	res.send('destroy subject_id ' + req.params.subject_id);
 });
 
 module.exports = subjects;
