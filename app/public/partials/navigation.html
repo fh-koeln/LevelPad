@@ -1,13 +1,34 @@
 <nav data-ng-controller="NavigationController" class="navbar navbar-default" role="navigation">
-    <a class="navbar-brand" href="/">LevelPad</a>
-    <div class="collapse navbar-collapse">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="/">LevelPad</a>
+		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-collapse">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+	</div>
+    <div class="collapse navbar-collapse" id="navigation-collapse">
         <ul class="nav navbar-nav" data-ng-show="loggedIn">
-            <li data-ng-repeat="item in items" data-ng-class="{ active: $location.path() == item.path }"><a data-ng-href="#{{ item.path }}" data-ng-bind="item.title"></a></li>
+            <li data-ng-repeat="item in items"
+				data-ng-class="{ active: $location.path() == item.path }"
+				data-toggle="collapse"
+				data-target="#navigation-collapse"><a
+					data-ng-href="#{{ item.path }}"
+					data-ng-bind="item.title"></a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="/login" data-ng-show="loggedIn === false && $location.path() != '/login'">Login</a></li>
-			<li><a href="/signup" data-ng-show="loggedIn === false && $location.path() != '/signup'">Register</a></li>
-            <li><a href="/logout" data-ng-click="logout(); $event.preventDefault();" data-ng-show="loggedIn === true">Logout</a></li>
+            <li data-ng-show="loggedIn === false && $location.path() != '/login'"
+				data-ng-class="{ active: $location.path() == '/login' }"
+				data-toggle="collapse"
+				data-target="#navigation-collapse"><a href="/login">Login</a></li>
+			<li data-ng-show="loggedIn === false && $location.path() != '/signup'"
+				data-ng-class="{ active: $location.path() == '/signup' }"
+				data-toggle="collapse"
+				data-target="#navigation-collapse"><a href="/signup">Register</a></li>
+            <li data-ng-show="loggedIn === true"
+				data-toggle="collapse"
+				data-target="#navigation-collapse"><a href="/logout" data-ng-click="logout(); $event.preventDefault();">Logout</a></li>
         </ul>
     </div>
 </nav>
