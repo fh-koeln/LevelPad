@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 // The level model
 
@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
 
 var levelSchema = new Schema({
 	description: { type: String, default: '' },
-	level: {type: Number, enum: [1, 2, 3, 4, 5] },
+	level: {type: Number, enum: [1, 2, 3, 4, 5] }
 });
 
 

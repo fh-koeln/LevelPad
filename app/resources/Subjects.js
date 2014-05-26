@@ -14,7 +14,14 @@ subjects.use('/artifacts', require('./Artifacts'));
 
 subjects.get('/', function(req, res, next) {
 	Subject.find(function(err, subjects) {
-		res.json(subjects);
+		if (!err && subjects) {
+			res.json(subjects);
+		} else if (!err) {
+			res.json([]);
+		} else {
+			console.log(err);
+			next();
+		}
 	});
 });
 

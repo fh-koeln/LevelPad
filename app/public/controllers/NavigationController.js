@@ -1,5 +1,5 @@
-
 angular.module('levelPad').controller('NavigationController', ['$scope', '$route', '$location', 'AuthService', function ($scope, $route, $location, authService) {
+    'use strict';
 
     console.log('Current location: ' + $location.path());
 

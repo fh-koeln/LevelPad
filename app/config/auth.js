@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var passport = require('passport'),
 	LocalStrategy = require('passport-local').Strategy,
@@ -69,6 +69,7 @@ passport.use('fh-imap', new LocalStrategy(
 
 			//Promise-Handler if login failed
 			imap.once('error', function (error) {
+				console.log(error);
 				return done(null, false, {
 					message: 'Invalid username or password.'
 				});
@@ -95,27 +96,8 @@ module.exports = function(app) {
 		res.json(req.user);
 	});
 
-	// POST /login
-	//   This is an alternative implementation that uses a custom callback to
-	//   acheive the same functionality.
-	/*
-	app.post('/login', function(req, res, next) {
-	  passport.authenticate('local', function(err, user, info) {
-	    if (err) { return next(err) }
-	    if (!user) {
-	      req.flash('error', info.message);
-	      return res.redirect('/login')
-	    }
-	    req.logIn(user, function(err) {
-	      if (err) { return next(err); }
-	      return res.redirect('/users/' + user.username);
-	    });
-	  })(req, res, next);
-	});
-	*/
-
 	app.post('/api/logout', function (req, res) {
 		req.logout();
 		res.json({});
 	});
-}
+};

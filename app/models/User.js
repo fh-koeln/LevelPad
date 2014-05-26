@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 // The user model
 
@@ -18,7 +18,7 @@ function validateUsernameLength(username) {
 }
 
 var userNameValidations = [
-	{ validator: validateUsernameLength, msg: 'Username length is not valid' },
+	{ validator: validateUsernameLength, msg: 'Username length is not valid' }
 ];
 
 var userSchema = new Schema({
@@ -26,7 +26,7 @@ var userSchema = new Schema({
 	firstname: {type: String, required: true},
 	lastname: {type: String, required: true},
 	email: {type: String, required: true},
-	studentNumber: {type: Number, required: true},
+	studentNumber: {type: Number, required: true}
 });
 
 userSchema.statics.findByUsername = function (username, callback) {

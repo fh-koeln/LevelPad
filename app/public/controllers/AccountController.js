@@ -1,5 +1,3 @@
-/* global angular, console, io */
-
 angular.module('levelPad').controller('AccountController', function ($scope, $http) {
 	'use strict';
 
