@@ -1,4 +1,4 @@
-<nav data-ng-controller="NavigationController" class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-default" role="navigation">
 	<div class="navbar-header">
 		<a class="navbar-brand" href="/">LevelPad</a>
 		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-collapse">
@@ -18,14 +18,14 @@
 					data-ng-bind="item.title"></a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li data-ng-show="loggedIn === false && $location.path() != '/login'"
+            <li data-ng-show="loggedIn === false"
 				data-ng-class="{ active: $location.path() == '/login' }"
 				data-toggle="collapse"
-				data-target="#navigation-collapse"><a href="/login">Login</a></li>
-			<li data-ng-show="loggedIn === false && $location.path() != '/signup'"
+				data-target="#navigation-collapse"><a href="/login" data-ng-click="login(); $event.preventDefault();">Login</a></li>
+			<li data-ng-show="loggedIn === false"
 				data-ng-class="{ active: $location.path() == '/signup' }"
 				data-toggle="collapse"
-				data-target="#navigation-collapse"><a href="/signup">Register</a></li>
+				data-target="#navigation-collapse"><a href="/signup" data-ng-click="signup(); $event.preventDefault();">Register</a></li>
             <li data-ng-show="loggedIn === true"
 				data-toggle="collapse"
 				data-target="#navigation-collapse"><a href="/logout" data-ng-click="logout(); $event.preventDefault();">Logout</a></li>

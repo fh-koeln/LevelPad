@@ -1,0 +1,17 @@
+<div id="signupDialog" role="dialog" aria-labelledby="signupTitle" aria-hidden="true" class="modal fade">
+	<form role="form" data-ng-submit="signup()">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<header class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 id="loginTitle" class="modal-title">Signup</h4>
+				</header>
+				<div data-ng-include="'partials/signup.html'" class="modal-body"></div>
+				<footer class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button type="submit" class="btn btn-primary">Register</button>
+				</footer>
+			</div>
+		</div>
+	</form>
+</div>

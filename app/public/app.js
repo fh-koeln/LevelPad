@@ -35,15 +35,15 @@ module.config(function ($routeProvider, $locationProvider) {
 		controller: 'ArtifactController'
 	});
 	$routeProvider.when('/signup', {
-		templateUrl: 'views/auth/signup.html',
+		templateUrl: 'views/auth/signup-page.html',
 		controller: 'AuthController'
 	});
 	$routeProvider.when('/login', {
-		templateUrl: 'views/auth/login.html',
+		templateUrl: 'views/auth/login-page.html',
 		controller: 'AuthController'
 	});
 	$routeProvider.when('/logout', {
-		templateUrl: 'views/auth/logout.html',
+		templateUrl: 'views/auth/logout-page.html',
 		controller: 'AuthController'
 	});
 	$routeProvider.otherwise({

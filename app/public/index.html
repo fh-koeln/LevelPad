@@ -27,14 +27,10 @@
 		<script src="angular-sanitize/angular-sanitize.js"></script>
 	</head>
 	<body data-ng-app="levelPad">
-		<div data-ng-include="'partials/navigation.html'" class="container"></div>
-
-		<div class="modal fade" role="dialog" aria-labelledby="loginTitle" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div data-ng-include="'views/auth/login.html'"></div>
-				</div>
-			</div>
+		<div data-ng-controller="NavigationController" data-ng-include="'partials/navigation.html'" class="container"></div>
+		<div data-ng-controller="AuthController">
+			<div data-ng-include="'views/auth/login-dialog.html'"></div>
+			<div data-ng-include="'views/auth/signup-dialog.html'"></div>
 		</div>
 
 		<div class="container" data-ng-view=""></div>

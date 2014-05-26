@@ -1,64 +1,65 @@
 
-var automaticallyLogout;
+angular.module('levelPad').service('AuthService', ['$rootScope', '$http', '$cookieStore', '$log', function($rootScope, $http, $cookieStore, $log) {
 
-angular.module('levelPad').config(['$httpProvider', function($httpProvider) {
-    $httpProvider.interceptors.push(function($q) {
-        return {
-            'responseError': function(rejection) {
-                if (rejection.status == 401 || rejection.status == 403) {
-                    console.error('Detect authentitication error '
-                        + rejection.status + ' in server response!'
-                        + ' Automatically logout the user!');
-                    if (automaticallyLogout) {
-                        automaticallyLogout();
-                    } else {
-                        window.location.href = 'logout';
-                    }
-                }
-                return $q.reject(rejection);
-            }
-        };
-    });
-}]);
+	var $scope = $rootScope;//.$new();
 
-angular.module('levelPad').service('AuthService', ['$rootScope', '$log', '$http', function($rootScope, $log, $http) {
+	// We don't know if we are already logged in!
+	$scope.loggedIn = null;
+	$scope.user = null;
 
-    var $scope = $rootScope.$new();
-
-    // We don't know if we are already logged in!
-    $scope.loggedIn = null;
+	angular.module('levelPad').config(['$httpProvider', function($httpProvider) {
+		$httpProvider.interceptors.push(function($q) {
+			return {
+				'responseError': function(rejection) {
+					if (rejection.status == 401 || rejection.status == 403) {
+						console.error('Detect authentitication error '
+							+ rejection.status + ' in server response!'
+							+ ' Automatically logout the user!');
+						$scope.loggedIn = false;
+					}
+					return $q.reject(rejection);
+				}
+			};
+		});
+	}]);
 
 	$scope.showLogin = function() {
 		$log.info('Show modal login dialog...');
-		$('#login').modal();
+		$('#loginDialog').modal();
 	};
 
 	$scope.hideLogin = function() {
 		$log.info('Hide modal login dialog...');
-		$('#login').modal('hide');
+		$('#loginDialog').modal('hide');
 	};
 
-    $scope.verifyLogin = function(callback) {
-        $log.log('Verify login state...');
+	$scope.showSignup = function() {
+		$log.info('Show modal signup dialog...');
+		$('#signupDialog').modal();
+	};
+
+	$scope.hideLogin = function() {
+		$log.info('Hide modal signup dialog...');
+		$('#signupDialog').modal('hide');
+	};
+
+    $scope.loadUser = function() {
+        $log.log('Get current user...');
         $http({
             method: 'GET',
             url: '/api/account'
-        }).success(function() {
+        }).success(function(response) {
             $log.log('Authentification check was successful!');
-            console.log(arguments);
             $scope.loggedIn = true;
-            if (callback) {
-                callback(null, true);
-            }
+			$scope.user = response;
         }).error(function(response) {
             $log.error('Authentification check failed!');
             $log.error(response);
 			$scope.loggedIn = false;
-            if (callback) {
-                callback(response, false);
-            }
+			$scope.user = null;
         });
     };
+	$scope.loadUser();
 
     $scope.login = function(username, password, callback) {
         $log.log('Login user ' + username + '...');
@@ -100,14 +101,6 @@ angular.module('levelPad').service('AuthService', ['$rootScope', '$log', '$http'
             }
         });
     };
-
-    automaticallyLogout = function() {
-        $scope.loggedIn = false;
-    };
-
-	$scope.$watch('loggedIn', function(loggedIn) {
-		console.log('Logged in state changed: ' + loggedIn);
-	});
 
 	return $scope;
 }]);
