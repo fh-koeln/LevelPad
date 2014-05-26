@@ -1,19 +1,38 @@
 var express = require('express'),
-	account = express.Router();
+	account = express.Router(),
+	User = require('../models/User.js');
 
-account.get('/', function(req, res, next) {
+account.get('/', function(req, res) {
+	if (!req.isAuthenticated()) {
+		return res.json(401, { error: 'Not Authenticated!' });
+	}
+
 	res.json(req.user);
 });
 
-account.get('/edit', function(req, res, next) {
-	res.send('update account ' + req.params.artifact);
+account.post('/', function(req, res) {
+	if (req.isAuthenticated()) {
+		return res.json(400, { error: 'Already Authenticated!' });
+	}
+
+	var password = req.body.password;
+
+	delete req.body.password;
+	var user = new User(req.body);
+	user.save(function(err, user) {
+		if (err) {
+			res.send(500, { error: err });
+		} else {
+			res.send(200, user);
+		}
+	});
 });
 
-account.put('/', function(req, res, next) {
-	res.send('update account ' + req.params.artifact);
-});
+account.delete('/', function(req, res) {
+	if (!req.isAuthenticated()) {
+		return res.json(401, { error: 'Not Authenticated!' });
+	}
 
-account.delete('/', function(req, res, next) {
 	res.send('destroy account ' + req.params.artifact);
 });
 

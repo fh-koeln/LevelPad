@@ -2,6 +2,14 @@ var express = require('express'),
 	users = express.Router(),
 	User = require('../models/User.js');
 
+users.use(function(req, res, next) {
+	if (!req.isAuthenticated()) {
+		res.status(401).end();
+	} else {
+		next();
+	}
+});
+
 users.param('user', function(req, res, next, username) {
 	User.findByUsername(username, function(err, user) {
 		req.user = user;
@@ -13,10 +21,6 @@ users.get('/', function(req, res, next) {
 	User.find(function(err, users) {
 		res.json(users);
 	});
-});
-
-users.post('/', function(req, res, next) {
-	res.send('create user');
 });
 
 users.get('/:user', function(req, res, next) {

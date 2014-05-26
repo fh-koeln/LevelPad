@@ -4,13 +4,6 @@ var express = require('express');
 
 var api = express.Router();
 
-api.use(function(req, res, next) {
-	if (!req.isAuthenticated()) {
-		res.status(401).end();
-	} else {
-		next();
-	}
-});
 api.use('/subjects', require('../resources/Subjects'));
 api.use('/users', require('../resources/Users'));
 api.use('/account', require('../resources/Account'));
