@@ -17,4 +17,4 @@ account.delete('/', function(req, res, next) {
 	res.send('destroy account ' + req.params.artifact);
 });
 
-module.exports.account = account;
+module.exports = account;

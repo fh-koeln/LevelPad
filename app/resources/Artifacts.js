@@ -21,4 +21,4 @@ artifacts.delete('/:id', function(req, res, next) {
 	res.send('destroy artifact ' + req.params.artifact);
 });
 
-module.exports.artifacts = artifacts;
+module.exports = artifacts;

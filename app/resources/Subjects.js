@@ -1,6 +1,8 @@
 var express = require('express'),
 	subjects = express.Router();
 
+subjects.use('/artifacts', require('./Artifacts'));
+
 subjects.get('/', function(req, res, next) {
 	res.send('subject index');
 });
@@ -21,4 +23,4 @@ subjects.delete('/:id', function(req, res, next) {
 	res.send('destroy subject ' + req.params.subject);
 });
 
-module.exports.subjects = subjects;
+module.exports = subjects;
