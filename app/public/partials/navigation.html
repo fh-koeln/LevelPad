@@ -1,7 +1,7 @@
 <nav data-ng-controller="NavigationController" class="navbar navbar-default" role="navigation">
     <a class="navbar-brand" href="/">LevelPad</a>
     <div class="collapse navbar-collapse">
-        <ul class="nav navbar-nav" x-data-ng-show="loggedIn">
+        <ul class="nav navbar-nav" data-ng-show="loggedIn">
             <li data-ng-repeat="item in items" data-ng-class="{ active: $location.path() == item.path }"><a data-ng-href="#{{ item.path }}" data-ng-bind="item.title"></a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
