@@ -22,7 +22,12 @@ users.get('/', function(req, res) {
  * Get informations about the current user.
  */
 users.get('/me', function(req, res) {
-	res.json(200, req.user);
+	if (req.user) {
+		res.json(200, req.user);
+	} else {
+		console.error('Auth check is currently disabled. This must not happen later...');
+		res.json(401, { message: 'User not found...' });
+	}
 });
 
 users.get('/:username', function(req, res) {

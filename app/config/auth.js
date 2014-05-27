@@ -5,6 +5,34 @@ var passport = require('passport'),
 	Imap = require('imap'),
 	User = require('../models/User');
 
+var checkCredentials = function(username, password, callback) {
+	console.log('Check IMAP credentials for user ' + username + '...');
+
+	// Asynchronous verification, for effect...
+	process.nextTick(function () {
+		// Login via IMAP
+		var imap = new Imap({
+			user: username,
+			password: password,
+			host: 'imap.intranet.fh-koeln.de',
+			port: 993,
+			keepalive: false,
+			tls: true
+		});
+
+		// Connect to IMAP-Server
+		imap.connect();
+
+		// Promise-Handler if login successful
+		imap.once('ready', function() {
+			imap.end();
+			User.findByUsername(username, callback);
+		});
+
+		// Promise-Handler if login failed
+		imap.once('error', callback);
+	});
+};
 
 /**
  * Passport session setup.
@@ -33,45 +61,21 @@ passport.deserializeUser(function(username, done) {
  * with a user object.  In the real world, this would query a database;
  * however, in this example we are using a baked-in set of users.
  */
-passport.use('fh-imap', new LocalStrategy(function(username, password, next) {
-	console.log('Verify imap user: ' + username);
-
-	// Asynchronous verification, for effect...
-	process.nextTick(function () {
-		// Login via IMAP
-		var imap = new Imap({
-			user: username,
-			password: password,
-			host: 'imap.intranet.fh-koeln.de',
-			port: 993,
-			keepalive: false,
-			tls: true
-		});
-
-		// Connect to IMAP-Server
-		imap.connect();
-
-		// Promise-Handler if login successful
-		imap.once('ready', function () {
-			imap.end();
-
-			User.findByUsername(username, function(error, user) {
-				console.error(error);
-				if (error) {
-					next(error);
+passport.use('fh-imap', new LocalStrategy(function(username, password, done) {
+	checkCredentials(username, password, function(err) {
+		if (err) {
+			done(null, false, err);
+		} else {
+			User.findByUsername(username, function(err, user) {
+				if (err) {
+					done(null, false, err);
 				} else if (!user) {
-					next(null, false, { message: 'Unknown user ' + username });
+					done(null, false, { message: 'Unknown user ' + username });
 				} else {
-					next(null, user);
+					done(null, user);
 				}
 			});
-		});
-
-		// Promise-Handler if login failed
-		imap.once('error', function (error) {
-			console.error(error);
-			next(null, false, { message: 'Invalid username or password.' });
-		});
+		}
 	});
 }));
 
@@ -85,14 +89,33 @@ module.exports = function(app) {
 	/**
 	 * POST /api/signup create an new user (register the user itself).
 	 */
-	app.post('/api/signup', passport.authenticate('fh-imap'), function(req, res) {
-		var password = req.body.password;
+	app.post('/api/signup', function(req, res) {
+		console.log('Register: ' + req.body.username);
 
-		delete req.body.password;
+		// TODO: Simplify code with async.js!
 
-		var user = new User(req.body);
-
-		user.save(helpers.sendResult(res));
+		User.findByUsername(req.body.username, function(err, user) {
+			if (err) {
+				res.json(500, err);
+			} else if (user) {
+				res.json(400, { message: 'User already exist.' });
+			} else {
+				checkCredentials(req.body.username, req.body.password, function(err) {
+					if (err) {
+						res.json(403, err);
+					} else {
+						delete req.body.password;
+						new User(req.body).save(function(err, user) {
+							if (err) {
+								res.json(500, err);
+							} else {
+								res.json(200, user);
+							}
+						});
+					}
+				});
+			}
+		});
 	});
 
 	/**

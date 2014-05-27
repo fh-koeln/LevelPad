@@ -4,13 +4,15 @@ var express = require('express');
 var api = express.Router();
 
 // API is only avaiable for authenticated users.
+/*
 api.use(function(req, res, next) {
 	if (req.isAuthenticated()) {
-		next()
+		return next();
 	}
 
 	res.json(401, {error: 'Not authenticated'});
 });
+*/
 
 api.use('/modules', require('../resources/Modules'));
 api.use('/subjects', require('../resources/Subjects'));
