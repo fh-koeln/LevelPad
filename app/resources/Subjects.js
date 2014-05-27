@@ -4,7 +4,6 @@ var express = require('express'),
 	acl = require('../config/acl');
 
 subjects.use(function(req, res, next) {
-
 	if (!req.isAuthenticated()) {
 		res.json(401, {error: 'Not authenticated'});
 	}
@@ -21,7 +20,7 @@ subjects.use(function(req, res, next) {
 subjects.use('/:year(\\d{4})/:semester(ss|ws)/:module/artifacts', require('./Artifacts'));
 
 subjects.get('/', function(req, res, next) {
-	Subject.find(function(err, subjects) {
+	Subject.find().populate('module', 'name').exec(function(err, subjects) {
 		if (!err && subjects) {
 			res.json(subjects);
 		} else if (!err) {

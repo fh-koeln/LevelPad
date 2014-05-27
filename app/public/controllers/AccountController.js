@@ -14,28 +14,52 @@ angular.module('levelPad').controller('AccountController', ['$scope', 'AuthServi
 		$('input').trigger('change');
 	};
 
-	$scope.login = function() {
+	/**
+	 * Handles login / signup submit buttons.
+	 */
+
+	$scope.login = function($event) {
 		updateInputFields();
-		authService.login({
+		var user = {
 			username: $scope.username,
 			password: $scope.password
+		};
+
+		$($event.target).find('button[type=submit]').button('loading');
+		authService.login(user, function(err, user) {
+			$($event.target).find('button[type=submit]').button('reset');
+			if (!err) {
+				$location.path('/');
+			}
 		});
 	};
 
-	$scope.signup = function() {
+	$scope.signup = function($event) {
 		updateInputFields();
-		authService.signup({
+		var user = {
 			username: $scope.username,
 			password: $scope.password,
 			email: $scope.email,
 			studentNumber: $scope.studentNumber,
 			firstname: $scope.firstname,
 			lastname: $scope.lastname
+		};
+
+		$($event.target).find('button[type=submit]').button('loading');
+		authService.signup(user, function(err, user) {
+			$($event.target).find('button[type=submit]').button('reset');
+			if (!err) {
+				$location.path('/');
+			}
 		});
 	};
 
-	$scope.logout = function() {
-		authService.logout();
+	$scope.logout = function($event) {
+		authService.logout(function(err) {
+			if (!err) {
+				$location.path('/');
+			}
+		});
 	};
 
 }]);

@@ -26,7 +26,8 @@ var userSchema = new Schema({
 	firstname: {type: String, required: true},
 	lastname: {type: String, required: true},
 	email: {type: String, required: true},
-	studentNumber: {type: Number, required: true}
+	studentNumber: {type: Number, required: false},
+	role: {type: String, enum: ['student', 'lecturer', 'assistent', 'administrator'] } 
 });
 
 userSchema.statics.findByUsername = function (username, callback) {

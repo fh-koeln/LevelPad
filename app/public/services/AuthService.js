@@ -27,7 +27,7 @@ angular.module('levelPad').service('AuthService', ['$rootScope', '$http', '$cook
 		});
 	}]);
 
-    $scope.verifyStatus = function() {
+    $scope.verifyStatus = function(callback) {
         $log.log('Get current account...');
         $http({
             method: 'GET',
@@ -36,15 +36,21 @@ angular.module('levelPad').service('AuthService', ['$rootScope', '$http', '$cook
             $log.log('Authentification check was successful!');
             $scope.loggedIn = true;
 			$scope.user = response;
+			if (callback) {
+				callback(null, response);
+			}
         }).error(function(response) {
             $log.error('Authentification check failed!');
             $log.error(response);
 			$scope.loggedIn = false;
 			$scope.user = null;
+			if (callback) {
+				callback(response);
+			}
         });
     };
 
-	$scope.login = function(user) {
+	$scope.login = function(user, callback) {
 		$log.log('Login user ' + user.username + '...');
 
 		$http({
@@ -54,16 +60,19 @@ angular.module('levelPad').service('AuthService', ['$rootScope', '$http', '$cook
 		}).success(function() {
 			// We will receive the login mask here if the login failed.
 			// So we also check if we could get the current user information now...
-			$scope.verifyStatus();
+			$scope.verifyStatus(callback);
 		}).error(function(response) {
 			$log.error('Login failed!');
 			$log.error(response);
 			$scope.loggedIn = false;
 			$scope.user = null;
+			if (callback) {
+				callback(response);
+			}
 		});
 	};
 
-	$scope.signup = function(user) {
+	$scope.signup = function(user, callback) {
 		$log.log('Register user ' + user.username + '...');
 
 		$http({
@@ -73,16 +82,19 @@ angular.module('levelPad').service('AuthService', ['$rootScope', '$http', '$cook
 		}).success(function(response) {
 			// We will receive the login mask here if the login failed.
 			// So we also check if we could get the current user information now...
-			$scope.verifyStatus();
+			$scope.verifyStatus(callback);
 		}).error(function(response) {
 			$log.error('Signup failed!');
 			$log.error(response);
 			$scope.loggedIn = false;
 			$scope.user = null;
+			if (callback) {
+				callback(response);
+			}
 		});
 	};
 
-	$scope.logout = function() {
+	$scope.logout = function(callback) {
 		$log.log('Logout user ' + ($scope.user ? $scope.user.username : null) + '...');
 
 		$http({
@@ -92,9 +104,15 @@ angular.module('levelPad').service('AuthService', ['$rootScope', '$http', '$cook
 			$log.log('Logout was successful!');
 			$scope.loggedIn = false;
 			$scope.user = null;
+			if (callback) {
+				callback(null);
+			}
 		}).error(function(response) {
 			$log.error('Logout failed!');
 			$log.error(response);
+			if (callback) {
+				callback(response);
+			}
 		});
 	};
 
