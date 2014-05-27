@@ -12,6 +12,24 @@ module.config(['$logProvider', function($logProvider) {
 }]);
 
 module.config(function ($routeProvider, $locationProvider) {
+
+	// Login / Signup / Logout
+
+	$routeProvider.when('/signup', {
+		templateUrl: 'views/auth/signup-page.html',
+		controller: 'AccountController'
+	});
+	$routeProvider.when('/login', {
+		templateUrl: 'views/auth/login-page.html',
+		controller: 'AccountController'
+	});
+	$routeProvider.when('/logout', {
+		templateUrl: 'views/auth/logout-page.html',
+		controller: 'AccountController'
+	});
+
+	// Basics
+
 	$routeProvider.when('/', {
 		title: 'Home',
 		templateUrl: 'views/main.html',
@@ -34,18 +52,24 @@ module.config(function ($routeProvider, $locationProvider) {
 		templateUrl: 'views/artifacts.html',
 		controller: 'ArtifactController'
 	});
-	$routeProvider.when('/signup', {
-		templateUrl: 'views/auth/signup-page.html',
-		controller: 'AccountController'
+
+	// Admin
+
+	$routeProvider.when('/admin/modules', {
+		templateUrl: 'views/admin/modules.html',
+		controller: 'AdminModuleController'
 	});
-	$routeProvider.when('/login', {
-		templateUrl: 'views/auth/login-page.html',
-		controller: 'AccountController'
+	$routeProvider.when('/admin/students', {
+		templateUrl: 'views/admin/students.html',
+		controller: 'AdminStudentController'
 	});
-	$routeProvider.when('/logout', {
-		templateUrl: 'views/auth/logout-page.html',
-		controller: 'AccountController'
+	$routeProvider.when('/admin/subjects', {
+		templateUrl: 'views/admin/subjects.html',
+		controller: 'AdminSubjectController'
 	});
+
+	// Fallback
+
 	$routeProvider.otherwise({
 		templateUrl: 'views/errors/404.html'
 	});

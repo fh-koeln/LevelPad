@@ -75,18 +75,30 @@ subjects.get('/:year(\\d{4})', function(req, res, next) {
 	});
 });
 
-// @todo Support for GET subject/{subject_id}?
-subjects.get('/*', function(req, res, next) {
-	// Catch for a bad request
-	res.json(400, {error: 'Bad Request'});
+/**
+ * Create or update one module by short name.
+ */
+subjects.put('/:year(\\d{4})/:semester(ss|ws)/:module', function(req, res) {
+	Subject.findOneAndUpdate(req.params, req.body, { upsert: true }, function(err, module) {
+		if (err) {
+			res.json(500, err);
+		} else {
+			res.json(200, module);
+		}
+	});
 });
 
-subjects.put('/:subject_id', function(req, res, next) {
-	res.send('update subject ' + req.params.subject_id);
-});
-
-subjects.delete('/:subject_id', function(req, res, next) {
-	res.send('destroy subject_id ' + req.params.subject_id);
+/**
+ * Delete one module by short name.
+ */
+subjects.delete('/:year(\\d{4})/:semester(ss|ws)/:module', function(req, res) {
+	Subject.findOneAndRemove(req.params, req.body, function(err, module) {
+		if (err) {
+			res.json(500, err);
+		} else {
+			res.json(200, module);
+		}
+	});
 });
 
 module.exports = subjects;

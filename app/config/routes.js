@@ -3,6 +3,7 @@
 var express = require('express');
 var api = express.Router();
 
+api.use('/modules', require('../resources/Modules'));
 api.use('/subjects', require('../resources/Subjects'));
 api.use('/users', require('../resources/Users'));
 api.use('/account', require('../resources/Account'));
