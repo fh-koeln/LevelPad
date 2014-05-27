@@ -1,5 +1,5 @@
 <div id="loginDialog" role="dialog" aria-labelledby="loginTitle" aria-hidden="true" class="modal fade">
-	<form role="form" data-ng-submit="login()">
+	<form role="form" data-ng-submit="login($event)">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<header class="modal-header">
@@ -9,7 +9,7 @@
 				<div data-ng-include="'partials/login.html'" class="modal-body"></div>
 				<footer class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-					<button type="submit" class="btn btn-primary">Login</button>
+					<button type="submit" class="btn btn-primary" data-loading-text="Login...">Login</button>
 				</footer>
 			</div>
 		</div>
