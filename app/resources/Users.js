@@ -4,14 +4,6 @@ var express = require('express'),
 	User = require('../models/User'),
 	helpers = require('./_helpers');
 
-users.use(function(req, res, next) {
-	if (!req.isAuthenticated()) {
-		res.json(401, {error: 'Not authenticated'});
-	} else {
-		next();
-	}
-});
-
 users.param('user', function(req, res, next, username) {
 	User.findByUsername(username, function(err, user) {
 		req.user = user;

@@ -17,7 +17,7 @@ angular.module('levelPad').service('AuthService', ['$rootScope', '$http', '$cook
 				'responseError': function(response) {
 					if (response.status === 401 || response.status === 403) {
 						console.error('Detect authentitication error ' +
-								rejection.status + ' in server response!' +
+								response.status + ' in server response!' +
 								' Automatically logout the user!');
 						$scope.loggedIn = false;
 					}
