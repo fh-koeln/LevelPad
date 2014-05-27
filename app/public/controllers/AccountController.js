@@ -1,4 +1,4 @@
-angular.module('levelPad').controller('AccountController', ['$scope', 'AuthService', function ($scope, authService) {
+angular.module('levelPad').controller('AccountController', ['$scope', '$location', 'AuthService', function ($scope, $location, authService) {
 	'use strict';
 
 	/**

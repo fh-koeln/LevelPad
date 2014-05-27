@@ -6,7 +6,6 @@ var api = express.Router();
 api.use('/modules', require('../resources/Modules'));
 api.use('/subjects', require('../resources/Subjects'));
 api.use('/users', require('../resources/Users'));
-api.use('/account', require('../resources/Account'));
 
 var routes = express.Router();
 routes.use('/api', api);

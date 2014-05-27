@@ -31,7 +31,7 @@ angular.module('levelPad').service('AuthService', ['$rootScope', '$http', '$cook
         $log.log('Get current account...');
         $http({
             method: 'GET',
-            url: '/api/account'
+            url: '/api/users/me'
         }).success(function(response) {
             $log.log('Authentification check was successful!');
             $scope.loggedIn = true;
@@ -77,7 +77,7 @@ angular.module('levelPad').service('AuthService', ['$rootScope', '$http', '$cook
 
 		$http({
 			method: 'POST',
-			url: '/api/account',
+			url: '/api/signup',
 			data: user
 		}).success(function(response) {
 			// We will receive the login mask here if the login failed.

@@ -1,6 +1,8 @@
+
 var express = require('express'),
 	users = express.Router(),
-	User = require('../models/User.js');
+	User = require('../models/User'),
+	helpers = require('./_helpers');
 
 users.use(function(req, res, next) {
 	if (!req.isAuthenticated()) {
@@ -17,29 +19,30 @@ users.param('user', function(req, res, next, username) {
 	});
 });
 
-users.get('/', function(req, res, next) {
-	User.find(function(err, users) {
-		if (!err && users) {
-			res.json(users);
-		} else if (!err) {
-			res.json([]);
-		} else {
-			console.log(err);
-			next();
-		}
-	});
+/**
+ * Get all users
+ */
+users.get('/', function(req, res) {
+	User.find(helpers.sendResult(res));
 });
 
-users.get('/:user', function(req, res, next) {
-	res.json(req.user);
+/**
+ * Get informations about the current user.
+ */
+users.get('/me', function(req, res) {
+	res.json(200, req.user);
 });
 
-users.put('/:user', function(req, res, next) {
-	res.send('update user ' + req.user._id);
+users.get('/:username', function(req, res) {
+	User.findOne(req.params, helpers.sendResult(res));
 });
 
-users.delete('/:user', function(req, res, next) {
-	res.send('destroy user ' + req.user._id);
+users.put('/:username', function(req, res, next) {
+	User.findOneAndUpdate(req.params, req.body, { upsert: true }, helpers.sendResult(res));
+});
+
+users.delete('/:username', function(req, res) {
+	User.findOneAndRemove(req.params, req.body, helpers.sendResult(res));
 });
 
 module.exports = users;
