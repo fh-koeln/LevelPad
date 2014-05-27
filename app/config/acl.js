@@ -51,6 +51,8 @@ acl.allow([
 	}
 ])
 
-//acl.addUserRoles('dschilli', 'student')
+acl.addUserRoles('dschilli', 'admin');
+acl.addUserRoles('cjerolim', 'admin');
+acl.addUserRoles('vschaef1', 'admin');
 
 module.exports = acl;
