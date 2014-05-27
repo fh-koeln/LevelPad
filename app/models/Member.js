@@ -7,8 +7,8 @@ var mongoose = require('mongoose'),
 	ObjectId = Schema.ObjectId;
 
 var memberSchema = new Schema({
-	user: ObjectId, // User model
-	subject: ObjectId // Subject model
+	user: {type: ObjectId, ref: 'User', required: true}, // User model
+	subject: {type: ObjectId, ref: 'Subject', required: true} // Subject model
 });
 
 

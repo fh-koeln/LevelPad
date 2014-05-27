@@ -20,6 +20,9 @@ require('./app/config/express')(app);
 // Database
 require('./app/config/db');
 
+// Access Control Lists
+require('./app/config/acl');
+
 // Authentification
 require('./app/config/auth')(app);
 
