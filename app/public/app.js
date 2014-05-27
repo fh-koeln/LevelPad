@@ -31,12 +31,10 @@ module.config(function ($routeProvider, $locationProvider) {
 	// Basics
 
 	$routeProvider.when('/', {
-		title: 'Home',
 		templateUrl: 'views/main.html',
 		controller: 'MainController'
 	});
 	$routeProvider.when('/account', {
-		title: 'Account',
 		templateUrl: 'views/account.html',
 		controller: 'AccountController'
 	});

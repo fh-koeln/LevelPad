@@ -10,37 +10,28 @@
 	</div>
     <div class="collapse navbar-collapse" id="navigation-collapse">
         <ul class="nav navbar-nav" data-ng-show="loggedIn">
-            <li data-ng-repeat="item in items"
-				data-ng-class="{ active: $location.path() == item.path }"
-				data-toggle="collapse"
-				data-target="#navigation-collapse"><a
-					data-ng-href="#{{ item.path }}"
-					data-ng-bind="item.title"></a></li>
+			<li data-ng-class="{ active: $location.path() == '/1' }"><a data-ng-href="/">TODO 1</a></li>
+			<li data-ng-class="{ active: $location.path() == '/2' }"><a data-ng-href="/">TODO 2</a></li>
+			<li data-ng-class="{ active: $location.path() == '/3' }"><a data-ng-href="/">TODO 3</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
+			<li data-ng-show="loggedIn === false" data-ng-class="{ active: $location.path() == '/login' }"><a href="/login" data-ng-click="login(); $event.preventDefault();">Login</a></li>
+			<li data-ng-show="loggedIn === false" data-ng-class="{ active: $location.path() == '/signup' }"><a href="/signup" data-ng-click="signup(); $event.preventDefault();">Register</a></li>
+			<li class="dropdown" data-ng-show="loggedIn === true">
+				<a class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
 				<ul class="dropdown-menu">
-					<li><a href="/admin/modules">Modules</a></li>
-					<li><a href="/admin/subjects">Subjects</a></li>
-					<li><a href="/admin/students">Students</a></li>
+					<li data-ng-class="{ active: $location.path() == '/admin/modules' }"><a href="/admin/modules">Modules</a></li>
+					<li data-ng-class="{ active: $location.path() == '/admin/subjects' }"><a href="/admin/subjects">Subjects</a></li>
+					<li data-ng-class="{ active: $location.path() == '/admin/students' }"><a href="/admin/students">Students</a></li>
 				</ul>
 			</li>
-            <li data-ng-show="loggedIn === false"
-				data-ng-class="{ active: $location.path() == '/login' }"
-				data-toggle="collapse"
-				data-target="#navigation-collapse"><a href="/login" data-ng-click="login(); $event.preventDefault();">Login</a></li>
-			<li data-ng-show="loggedIn === false"
-				data-ng-class="{ active: $location.path() == '/signup' }"
-				data-toggle="collapse"
-				data-target="#navigation-collapse"><a href="/signup" data-ng-click="signup(); $event.preventDefault();">Register</a></li>
-			<li class="navbar-text"
-				data-ng-show="loggedIn === true"
-				data-toggle="collapse"
-				data-target="#navigation-collapse">Hello <span data-ng-bind="user.firstname"></span></li>
-            <li data-ng-show="loggedIn === true"
-				data-toggle="collapse"
-				data-target="#navigation-collapse"><a href="/logout" class="navbar-link" data-ng-click="logout(); $event.preventDefault();">Logout</a></li>
+			<li class="dropdown" data-ng-show="loggedIn === true">
+				<a class="dropdown-toggle" data-toggle="dropdown"><span data-ng-bind="user.firstname"></span> <b class="caret"></b></a>
+				<ul class="dropdown-menu">
+					<li data-ng-class="{ active: $location.path() == '/account' }"><a data-ng-href="/account">Account</a></li>
+					<li><a href="/logout" data-ng-click="logout(); $event.preventDefault();">Logout</a></li>
+				</ul>
+			</li>
         </ul>
     </div>
 </nav>
