@@ -1,17 +1,46 @@
-angular.module('levelPad').controller('AccountController', ['$scope', '$location', 'AuthService', function ($scope, $location, authService) {
+angular.module('levelPad').controller('AccountController', ['$scope', '$resource', '$location', 'AuthService', function ($scope, $resource, $location, authService) {
 	'use strict';
 
 	/**
-	 * Note: The user is available in the rootScope!
+	 * IMPORTANT NOTE: The user is already available in the rootScope!
+	 * See AccountService for more details, the origin instance was also used in the
+	 * navigation partial for example.
 	 *
-	 * See AccountService for more details. This was also used in the navigation partial.
+	 * But we copy them here to the current scope so that the user could change
+	 * here an independent model! ;-)
+	 */
+	$scope.user = angular.copy($scope.$parent.user);
+
+	/**
+	 * Handles logged in "save account" button.
 	 */
 
-	// Workaround to ensure that angular js has the actual data when user
-	// user autofill in chrome! More about this topic could found in this
-	// bug report: https://github.com/angular/angular.js/issues/1072
-	var updateInputFields = function() {
-		$('input').trigger('change');
+	$scope.save = function($event) {
+
+		var User = $resource('/api/users/:username', {
+			username: '@username'
+		}, {
+			save: { method: 'PUT' }
+		});
+
+		// TODO verify which fields could be saved here...
+		var user = {
+			username: $scope.user.username,
+			email: $scope.user.email,
+			studentNumber: $scope.user.studentNumber,
+			firstname: $scope.user.firstname,
+			lastname: $scope.user.lastname
+		};
+
+		$($event.target).find('button[type=submit]').button('loading');
+		new User(user).$save(function() {
+			$($event.target).find('button[type=submit]').button('reset');
+			alert('OK');
+		}, function() {
+			$($event.target).find('button[type=submit]').button('reset');
+			alert('Error!');
+		});
+
 	};
 
 	/**
@@ -19,7 +48,11 @@ angular.module('levelPad').controller('AccountController', ['$scope', '$location
 	 */
 
 	$scope.login = function($event) {
-		updateInputFields();
+		// Workaround to ensure that angular js has the actual data when user
+		// user autofill in chrome! More about this topic could found in this
+		// bug report: https://github.com/angular/angular.js/issues/1072
+		$('input').trigger('change');
+
 		var user = {
 			username: $scope.username,
 			password: $scope.password
@@ -35,7 +68,11 @@ angular.module('levelPad').controller('AccountController', ['$scope', '$location
 	};
 
 	$scope.signup = function($event) {
-		updateInputFields();
+		// Workaround to ensure that angular js has the actual data when user
+		// user autofill in chrome! More about this topic could found in this
+		// bug report: https://github.com/angular/angular.js/issues/1072
+		$('input').trigger('change');
+
 		var user = {
 			username: $scope.username,
 			password: $scope.password,
