@@ -1,17 +1,6 @@
 angular.module('levelPad').controller('NavigationController', ['$scope', '$route', '$location', '$log', 'AuthService', function ($scope, $route, $location, $log, authService) {
     'use strict';
 
-    $scope.items = [];
-
-    for (var route in $route.routes) {
-        if ($route.routes[route].title) {
-            $scope.items.push({
-                title: $route.routes[route].title,
-                path: route
-            });
-        }
-    }
-
     $scope.$location = $location;
 
 	/**
