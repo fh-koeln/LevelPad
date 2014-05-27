@@ -14,14 +14,14 @@ angular.module('levelPad').service('AuthService', ['$rootScope', '$http', '$cook
 	angular.module('levelPad').config(['$httpProvider', function($httpProvider) {
 		$httpProvider.interceptors.push(function($q) {
 			return {
-				'responseError': function(rejection) {
-					if (rejection.status === 401 || rejection.status === 403) {
+				'responseError': function(response) {
+					if (response.status === 401 || response.status === 403) {
 						console.error('Detect authentitication error ' +
 								rejection.status + ' in server response!' +
 								' Automatically logout the user!');
 						$scope.loggedIn = false;
 					}
-					return $q.reject(rejection);
+					return $q.reject(response);
 				}
 			};
 		});
