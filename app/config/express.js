@@ -15,10 +15,14 @@ module.exports = function(app) {
 	// Basic request processing:
 	// TODO secrets
 	app.use(require('cookie-parser')('cookie secret'));
-	app.use(require('express-session')({ secret: 'session secret' }));
+	var session = require('express-session');
+	var MongoStore = require('connect-mongo')(session);
+	app.use(session({
+		secret: 'session secret',
+		store: new MongoStore({ url: require('./db').url })
+	}));
 	app.use(require('body-parser')());
 	app.use(require('connect-timeout')(10 * 1000));
-//	app.use(require('method-override')());
 
 	// Live reload
 	if (env === 'development') {
