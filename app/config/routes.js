@@ -3,7 +3,7 @@
 var express = require('express');
 var api = express.Router();
 
-// API is only avaiable for authenticated users.
+// API is only available for authenticated users.
 api.use(function(req, res, next) {
 	if (req.isAuthenticated()) {
 		return next();

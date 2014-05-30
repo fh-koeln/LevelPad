@@ -43,7 +43,7 @@ subjects.get('/:year(\\d{4})/:semester(ss|ws)/:module', function(req, res) {
 /**
  * Get all subjects for the given year and semester (multiple modules).
  */
-subjects.get('/:year(\\d{4})/:semester(ss|ws)', function(req, res, next) {
+subjects.get('/:year(\\d{4})/:semester(ss|ws)', function(req, res) {
 	Subject.find({
 		year: req.params.year,
 		semester: req.params.semester === 'ss' ? 'Sommersemester' : 'Wintersemester'
@@ -53,7 +53,7 @@ subjects.get('/:year(\\d{4})/:semester(ss|ws)', function(req, res, next) {
 /**
  * Get all subjects for the given year (multiple semesters and modules).
  */
-subjects.get('/:year(\\d{4})', function(req, res, next) {
+subjects.get('/:year(\\d{4})', function(req, res) {
 	Subject.find({ year: req.params.year }, helpers.sendResult(res));
 });
 
