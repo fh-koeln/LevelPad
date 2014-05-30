@@ -29,7 +29,7 @@ modules.put('/:shortName', function(req, res) {
  * Delete one module by short name.
  */
 modules.delete('/:shortName', function(req, res) {
-	Module.findOneAndRemove(req.params, req.body, helpers.sendResult(res));
+	Module.findOneAndRemove(req.params, helpers.sendResult(res));
 });
 
 module.exports = modules;
