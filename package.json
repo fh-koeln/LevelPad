@@ -42,7 +42,7 @@
 		"imap": "~0.8.10",
 
 		"mongoose": "~3.8.11",
-		"acl": "~0.4.0"
+		"acl": "~0.4.1"
 	},
 	"devDependencies": {
 		"bower": "*",
