@@ -42,18 +42,38 @@ app.config(function ($routeProvider, $locationProvider) {
 		templateUrl: 'views/users.html',
 		controller: 'UserController'
 	});
-	$routeProvider.when('/subjects', {
+	// Maybe we could make this later part of the homescreen...
+	// Or we show a "whats new" timeline there?
+	$routeProvider.when('/modules', {
+		templateUrl: 'views/modules.html',
+		controller: 'ModuleController'
+	});
+	$routeProvider.when('/:module', {
 		templateUrl: 'views/subjects.html',
 		controller: 'SubjectController'
 	});
-	$routeProvider.when('/subjects/:subject', {
+	$routeProvider.when('/:module/:subject', {
 		templateUrl: 'views/subject.html',
 		controller: 'SubjectController'
 	});
-	$routeProvider.when('/subjects/:subject/artifacts', {
-		templateUrl: 'views/artifacts.html',
-		controller: 'ArtifactController'
+	/*
+	$routeProvider.when('/:module/:subject/tasks', {
+		templateUrl: 'views/subjects.html',
+		controller: 'SubjectController'
 	});
+	$routeProvider.when('/:module/:subject/teams', {
+		templateUrl: 'views/subjects.html',
+		controller: 'SubjectController'
+	});
+	$routeProvider.when('/:module/:subject/students', {
+		templateUrl: 'views/subjects.html',
+		controller: 'SubjectController'
+	});
+	$routeProvider.when('/:module/:subject/assistants', {
+		templateUrl: 'views/subjects.html',
+		controller: 'SubjectController'
+	});
+	*/
 
 	// Admin
 

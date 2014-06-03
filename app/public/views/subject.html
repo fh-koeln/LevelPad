@@ -1,11 +1,8 @@
 <ol class="breadcrumb">
 	<li><a href="/">Home</a></li>
-	<li><a href="/subjects">Subjects</a></li>
-	<li class="active">{{ subject.name }}</li>
+	<li><a href="/{{ subject.module.slug }}">{{ subject.module.name }}</a></li>
+	<li class="active">{{ subject.semester }} {{ subject.year }}</li>
 </ol>
-
-<h1>{{ subject.name }}</h1>
-
 
 <ul class="nav nav-tabs">
 	<li class="active"><a href="#tasks" target="_self" data-toggle="tab">Tasks</a></li>

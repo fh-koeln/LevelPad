@@ -2,6 +2,8 @@
 
 // The member model
 
+// TODO: Could we implement this as embedded resource instead of an n-m relation?
+
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
 	ObjectId = Schema.ObjectId;

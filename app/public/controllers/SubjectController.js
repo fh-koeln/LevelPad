@@ -11,7 +11,7 @@ angular.module('levelPad').controller('SubjectController', ['$scope', '$location
 
 	$scope.update = function() {
 		$scope.subjects = Subject.query(function() {
-
+			$scope.subject = $scope.subjects[0];
 		}, function() {
 			alert('Could not load subjects.');
 		});
