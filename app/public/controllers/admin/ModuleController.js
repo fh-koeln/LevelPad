@@ -1,13 +1,7 @@
 /* global angular, alert */
 
-angular.module('levelPad').controller('AdminModuleController', ['$scope', '$log', '$resource', function ($scope, $log, $resource) {
+angular.module('levelPad').controller('AdminModuleController', ['$scope', 'Module', function ($scope, Module) {
 	'use strict';
-
-	var Module = $resource('/api/modules/:shortName', {
-		shortName: '@shortName'
-	}, {
-		save: { method: 'PUT' }
-	});
 
 	$scope.update = function() {
 		$scope.modules = Module.query(function() {

@@ -25,9 +25,9 @@ module.exports = function(app) {
 	app.use(require('connect-timeout')(10 * 1000));
 
 	// Live reload
-	if (env === 'development') {
-		app.use(require('connect-livereload')());
-	}
+//	if (env === 'development') {
+//		app.use(require('connect-livereload')());
+//	}
 
 	// Disable caching of scripts for easier testing
 	if (env === 'development') {
