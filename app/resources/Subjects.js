@@ -10,8 +10,10 @@ subjects.use(function(req, res, next) {
 	if (!req.isAuthenticated()) {
 		res.json(401, {error: 'Not authenticated'});
 	}
-
+	console.log('authenticated');
 	acl.isAllowed(req.user.username, 'subjects', req.method, function(err, result) {
+		console.log('isAllowed');
+
 		if (result) {
 			next();
 		} else {
