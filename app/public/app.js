@@ -43,12 +43,28 @@ app.config(function ($routeProvider, $locationProvider) {
 		controller: 'UserController'
 	});
 
+	// Admin
+
+	$routeProvider.when('/admin/modules', {
+		templateUrl: 'views/admin/modules.html',
+		controller: 'AdminModuleController'
+	});
+	$routeProvider.when('/admin/students', {
+		templateUrl: 'views/admin/students.html',
+		controller: 'AdminStudentController'
+	});
+	$routeProvider.when('/admin/subjects', {
+		templateUrl: 'views/admin/subjects.html',
+		controller: 'AdminSubjectController'
+	});
+
 	// Maybe we could make this later part of the homescreen...
 	// Or we show a "whats new" timeline there?
 	$routeProvider.when('/modules', {
 		templateUrl: 'views/modules.html',
 		controller: 'ModuleController'
 	});
+	// MAGIC RULES!!!!!!!
 	$routeProvider.when('/:module', {
 		templateUrl: 'views/subjects.html',
 		controller: 'SubjectController'
@@ -89,21 +105,6 @@ app.config(function ($routeProvider, $locationProvider) {
 	$routeProvider.when('/:module/:subject/assistants/:assistant', {
 		templateUrl: 'views/subject.html',
 		controller: 'SubjectController'
-	});
-
-	// Admin
-
-	$routeProvider.when('/admin/modules', {
-		templateUrl: 'views/admin/modules.html',
-		controller: 'AdminModuleController'
-	});
-	$routeProvider.when('/admin/students', {
-		templateUrl: 'views/admin/students.html',
-		controller: 'AdminStudentController'
-	});
-	$routeProvider.when('/admin/subjects', {
-		templateUrl: 'views/admin/subjects.html',
-		controller: 'AdminSubjectController'
 	});
 
 	// Fallback
