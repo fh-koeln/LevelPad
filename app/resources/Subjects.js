@@ -81,9 +81,11 @@ subjects.get('/:year(\\d{4})', function (req, res) {
 
 subjects.post('/', function (req, res) {
 	//generate slug
-	req.body.slug = (req.body.year + '-' + req.body.semester + '-' + req.body.module).toLowerCase;
+	req.body.module = req.body.module._id;
+	req.body.semester = req.body.semester === 'ss' ? 'Sommersemester' : 'Wintersemester';
+	req.body.slug = (req.body.year + '-' + req.body.semester + '-' + req.body.module).toLowerCase();
 
-	Subject.save(req.body, helpers.sendResult(res));
+	new Subject(req.body).save(helpers.sendResult(res));
 });
 
 
