@@ -10,7 +10,10 @@ var subjectSchema = new Schema({
 	year: { type: Number, required: true },
 	semester: { type: String, enum: ['Wintersemester', 'Sommersemester'], required: true },
 	module: {type: ObjectId, ref: 'Module', required: true},
-	artifacts: [{type: ObjectId, ref: 'Artifact'}]						   
+	tasks: [{type: ObjectId, ref: 'Artifact'}],
+	registration_active: {type: Boolean, default: false},
+	registration_expires_at: Date,
+	registration_password: String
 });
 
 module.exports = mongoose.model('Subject', subjectSchema);
