@@ -1,17 +1,11 @@
 'use strict';
 
-var express = require('express');
-var api = express.Router();
+var express = require('express'),
+	api = express.Router(),
+	acl = require('../config/acl');
 
 // API is only available for authenticated users.
-api.use(function(req, res, next) {
-	if (req.isAuthenticated()) {
-		return next();
-	}
-
-	res.json(401, {error: 'Not authenticated'});
-});
-
+api.use(acl.middleware);
 
 api.use('/modules', require('../resources/Modules'));
 api.use('/subjects', require('../resources/Subjects'));

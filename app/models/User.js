@@ -27,7 +27,7 @@ var userSchema = new Schema({
 	lastname: {type: String, required: true},
 	email: {type: String, required: true},
 	studentNumber: {type: Number, required: false},
-	role: {type: String, enum: ['student', 'lecturer', 'assistent', 'administrator'] } 
+	role: {type: String, enum: ['guest', 'student', 'lecturer', 'assistent', 'administrator'], default: 'student'} // TODO: Set default to guest
 });
 
 userSchema.statics.findByUsername = function (username, callback) {

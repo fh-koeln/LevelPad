@@ -1,6 +1,7 @@
 var express = require('express'),
 	artifacts = express.Router(),
 	Subject = require('../models/Subject.js');
+	var acl = require('../config/acl');
 
 artifacts.param('artifact', function(req, res, next, subject, artifact) {
 	Artifact.findBySubjectAndId(subject, artifact, function(err, artifact) {
@@ -9,15 +10,15 @@ artifacts.param('artifact', function(req, res, next, subject, artifact) {
 	});
 });
 
-artifacts.get('/', function(req, res, next) {
-	console.log(req);
-	Subject.findOne({
+artifacts.get('/', acl.middleware, function(req, res, next) {
+	res.json('200', {message: 'jo'});
+	/*Subject.findOne({
 		year: req.params.year,
 		semester: req.params.semester === 'ss' ? 'Sommersemester' : 'Wintersemester',
 		moduleShort: req.params.module
 	}, function(err, subject) {
 		res.send(subject._id);
-	});
+	});*/
 });
 
 artifacts.post('/', function(req, res, next) {

@@ -6,7 +6,7 @@ module.exports.url = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mon
 
 // Connect to our database
 mongoose.connect(module.exports.url);
-console.log('hello');
+
 // If the connection throws an error
 mongoose.connection.on('error',function (err) {
 	console.log('Mongoose connection error: ' + err + '\nMongo server started?');

@@ -3,32 +3,20 @@ var express = require('express'),
 	subjects = express.Router(),
 	Module = require('../models/Module'),
 	Subject = require('../models/Subject'),
-	helpers = require('./_helpers'),
-	acl = require('../config/acl');
+	helpers = require('./_helpers');
 
-subjects.use(function(req, res, next) {
-	if (!req.isAuthenticated()) {
-		res.json(401, {error: 'Not authenticated'});
-	}
-	console.log('authenticated');
-	acl.isAllowed(req.user.username, 'subjects', req.method, function(err, result) {
-		console.log('isAllowed');
 
-		if (result) {
-			next();
-		} else {
-			res.json(403, {error: 'Forbidden'});
-		}
-	});
-});
-
-subjects.use('/:year(\\d{4})/:semester(ss|ws)/:module/artifacts', require('./Artifacts'));
+subjects.use('/:slug/artifacts', require('./Artifacts'));
 
 /**
  * Get all subjects
  */
 subjects.get('/', function(req, res) {
 	Subject.find().populate('module').exec(helpers.sendResult(res));
+});
+
+subjects.get('/:slug', function(req, res) {
+	res.json(200, {message: 'jo'});
 });
 
 /**
