@@ -42,6 +42,7 @@ app.config(function ($routeProvider, $locationProvider) {
 		templateUrl: 'views/users.html',
 		controller: 'UserController'
 	});
+
 	// Maybe we could make this later part of the homescreen...
 	// Or we show a "whats new" timeline there?
 	$routeProvider.when('/modules', {
@@ -56,24 +57,39 @@ app.config(function ($routeProvider, $locationProvider) {
 		templateUrl: 'views/subject.html',
 		controller: 'SubjectController'
 	});
-	/*
+
 	$routeProvider.when('/:module/:subject/tasks', {
-		templateUrl: 'views/subjects.html',
+		templateUrl: 'views/subject.html',
+		controller: 'SubjectController'
+	});
+	$routeProvider.when('/:module/:subject/tasks/:task', {
+		templateUrl: 'views/subject.html',
 		controller: 'SubjectController'
 	});
 	$routeProvider.when('/:module/:subject/teams', {
-		templateUrl: 'views/subjects.html',
+		templateUrl: 'views/subject.html',
+		controller: 'SubjectController'
+	});
+	$routeProvider.when('/:module/:subject/teams/:team', {
+		templateUrl: 'views/subject.html',
 		controller: 'SubjectController'
 	});
 	$routeProvider.when('/:module/:subject/students', {
-		templateUrl: 'views/subjects.html',
+		templateUrl: 'views/subject.html',
+		controller: 'SubjectController'
+	});
+	$routeProvider.when('/:module/:subject/students/:student', {
+		templateUrl: 'views/subject.html',
 		controller: 'SubjectController'
 	});
 	$routeProvider.when('/:module/:subject/assistants', {
-		templateUrl: 'views/subjects.html',
+		templateUrl: 'views/subject.html',
 		controller: 'SubjectController'
 	});
-	*/
+	$routeProvider.when('/:module/:subject/assistants/:assistant', {
+		templateUrl: 'views/subject.html',
+		controller: 'SubjectController'
+	});
 
 	// Admin
 
