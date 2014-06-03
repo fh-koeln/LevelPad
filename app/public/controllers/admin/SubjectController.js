@@ -5,10 +5,8 @@ angular.module('levelPad').controller('AdminSubjectController', ['$scope', '$log
 
 	var Module = $resource('/api/modules');
 
-	var Subject = $resource('/api/subjects/:year/:semester/:module', {
-		year: '@year',
-		semester: '@semester',
-		module: '@module.shortName'
+	var Subject = $resource('/api/subjects/:slug', {
+		slug: '@slug',
 	}, {
 		save: { method: 'PUT' }
 	});

@@ -3,8 +3,8 @@
 angular.module('levelPad').controller('AdminModuleController', ['$scope', '$log', '$resource', function ($scope, $log, $resource) {
 	'use strict';
 
-	var Module = $resource('/api/modules/:shortName', {
-		shortName: '@shortName'
+	var Module = $resource('/api/modules/:slug', {
+		slug: '@slug'
 	}, {
 		save: { method: 'PUT' }
 	});

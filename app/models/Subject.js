@@ -11,10 +11,15 @@ var subjectSchema = new Schema({
 	tasks: [{type: ObjectId, ref: 'Artifact'}],
 	registration_active: {type: Boolean, default: false},
 	registration_expires_at: Date,
-	registration_password: String
+	registration_password: String,
 	semester: { type: String, enum: ['Wintersemester', 'Sommersemester'], required: true },
 	slug: {type: String, require: true, unique: true},
-	year: { type: Number, required: true },
+	year: { type: Number, required: true }
 });
+
+subjectSchema.statics.findBySlug = function (slug, callback) {
+	this.findOne({ slug: slug }, callback);
+};
+
 
 module.exports = mongoose.model('Subject', subjectSchema);
