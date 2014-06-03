@@ -27,12 +27,12 @@ subjects.use(function (req, res, next) {
 
 
 
-//subjects.use('/:slug/artifacts', require('./Artifacts'));
+subjects.use('/:slug/artifacts', require('./Artifacts'));
 
 /**
  * Get all subjects
  */
-/*subjects.get('/', function (req, res) {
+subjects.get('/', function (req, res) {
 	if (req.query.year || req.query.semester || req.query.shortname) {
 		var params = {path: 'module'};
 		if(req.query.shortName) {
@@ -49,7 +49,7 @@ subjects.use(function (req, res, next) {
 	} else {
 		Subject.find().populate('module').exec(helpers.sendResult(res));
 	}
-});*/
+});
 
 /**
  * Get one specific subject by slug (year-semester-module).
