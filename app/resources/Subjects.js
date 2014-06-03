@@ -10,8 +10,10 @@ subjects.use(function(req, res, next) {
 	if (!req.isAuthenticated()) {
 		res.json(401, {error: 'Not authenticated'});
 	}
-
+	console.log('authenticated');
 	acl.isAllowed(req.user.username, 'subjects', req.method, function(err, result) {
+		console.log('isAllowed');
+
 		if (result) {
 			next();
 		} else {
@@ -57,20 +59,24 @@ subjects.get('/:year(\\d{4})', function(req, res) {
 	Subject.find({ year: req.params.year }, helpers.sendResult(res));
 });
 
+subjects.post(function(req, res) {
+	
+	//generate slug
+	req.body.slug = (req.body.year + '-' + req.body.semester + '-' + req.body.module).toLowerCase;
+	Subject.save(req.body, helpers.sendResult(res)));
+	
+}
+
 /**
  * Create or update one module by short name.
  */
 subjects.put('/:year(\\d{4})/:semester(ss|ws)/:module', function(req, res) {
-	// Variante 1
-//	req.params.module = req.body.module._id;
-//	req.body.module = req.body.module._id;
-//	Subject.findOneAndUpdate(req.params, req.body, { upsert: true }, helpers.sendResult(res));
 
 	// Variante 2
 	Module.findByShortName(req.params.module, function(err, module) {
 		req.params.module = module._id;
 		req.body.module = module._id;
-		Subject.findOneAndUpdate(req.params, req.body, { upsert: true }, helpers.sendResult(res));
+		Subject.findOneAndUpdate(req.params, req.body, { upsert: true }, helpers));endResult(res));
 	});
 });
 
