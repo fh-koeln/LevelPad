@@ -1,6 +1,7 @@
 
 var express = require('express'),
 	subjects = express.Router(),
+	Module = require('../models/Module'),
 	Subject = require('../models/Subject'),
 	helpers = require('./_helpers'),
 	acl = require('../config/acl');
@@ -25,7 +26,7 @@ subjects.use('/:year(\\d{4})/:semester(ss|ws)/:module/artifacts', require('./Art
  * Get all subjects
  */
 subjects.get('/', function(req, res) {
-	Subject.find().populate('module', 'name').exec(helpers.sendResult(res));
+	Subject.find().populate('module').exec(helpers.sendResult(res));
 });
 
 /**
@@ -42,7 +43,7 @@ subjects.get('/:year(\\d{4})/:semester(ss|ws)/:module', function(req, res) {
 /**
  * Get all subjects for the given year and semester (multiple modules).
  */
-subjects.get('/:year(\\d{4})/:semester(ss|ws)', function(req, res, next) {
+subjects.get('/:year(\\d{4})/:semester(ss|ws)', function(req, res) {
 	Subject.find({
 		year: req.params.year,
 		semester: req.params.semester === 'ss' ? 'Sommersemester' : 'Wintersemester'
@@ -52,7 +53,7 @@ subjects.get('/:year(\\d{4})/:semester(ss|ws)', function(req, res, next) {
 /**
  * Get all subjects for the given year (multiple semesters and modules).
  */
-subjects.get('/:year(\\d{4})', function(req, res, next) {
+subjects.get('/:year(\\d{4})', function(req, res) {
 	Subject.find({ year: req.params.year }, helpers.sendResult(res));
 });
 
@@ -60,14 +61,27 @@ subjects.get('/:year(\\d{4})', function(req, res, next) {
  * Create or update one module by short name.
  */
 subjects.put('/:year(\\d{4})/:semester(ss|ws)/:module', function(req, res) {
-	Subject.findOneAndUpdate(req.params, req.body, { upsert: true }, helpers.sendResult(res));
+	// Variante 1
+//	req.params.module = req.body.module._id;
+//	req.body.module = req.body.module._id;
+//	Subject.findOneAndUpdate(req.params, req.body, { upsert: true }, helpers.sendResult(res));
+
+	// Variante 2
+	Module.findByShortName(req.params.module, function(err, module) {
+		req.params.module = module._id;
+		req.body.module = module._id;
+		Subject.findOneAndUpdate(req.params, req.body, { upsert: true }, helpers.sendResult(res));
+	});
 });
 
 /**
  * Delete one module by short name.
  */
 subjects.delete('/:year(\\d{4})/:semester(ss|ws)/:module', function(req, res) {
-	Subject.findOneAndRemove(req.params, req.body, helpers.sendResult(res));
+	Module.findByShortName(req.params.module, function(err, module) {
+		req.params.module = module._id;
+		Subject.findOneAndRemove(req.params, helpers.sendResult(res));
+	});
 });
 
 module.exports = subjects;

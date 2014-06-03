@@ -10,4 +10,8 @@ var moduleSchema = new Schema({
 	name: { type: String, required: true }
 });
 
+moduleSchema.statics.findByShortName = function (shortName, callback) {
+	this.findOne({ shortName: shortName }, callback);
+};
+
 module.exports = mongoose.model('Module', moduleSchema);

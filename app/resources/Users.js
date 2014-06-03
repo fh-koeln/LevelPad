@@ -39,7 +39,7 @@ users.put('/:username', function(req, res, next) {
 });
 
 users.delete('/:username', function(req, res) {
-	User.findOneAndRemove(req.params, req.body, helpers.sendResult(res));
+	User.findOneAndRemove(req.params, helpers.sendResult(res));
 });
 
 module.exports = users;
