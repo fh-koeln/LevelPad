@@ -44,4 +44,9 @@ modules.delete('/:slug', function(req, res) {
 	Module.findOneAndRemove(req.params, helpers.sendResult(res));
 });
 
+modules.use('/:subjectSlug/tasks', require('./subjects/tasks'));
+modules.use('/:subjectSlug/teams', require('./subjects/teams'));
+modules.use('/:subjectSlug/students', require('./subjects/students'));
+modules.use('/:subjectSlug/assistants', require('./subjects/assistants'));
+
 module.exports = modules;
