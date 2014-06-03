@@ -9,8 +9,6 @@ api.use(function(req, res, next) {
 		return next();
 	}
 
-	console.log(req.path);
-
 	res.json(401, {error: 'Not authenticated'});
 });
 

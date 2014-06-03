@@ -10,6 +10,16 @@ acl = new acl(new acl.memoryBackend());
 
 acl.allow([
 	{
+		roles: ['guest'],
+		allows: [
+			{resources: 'account', permissions: []},
+			{resources: 'users', permissions: ['POST']},
+			{resources: 'subjects', permissions: []},
+			{resources: 'modules', permissions: []},
+			{resources: 'artifacts', permissions: []},
+		]
+	},
+	{
 		roles: ['student'],
 		allows: [
 			{resources: 'account', permissions: ['GET', 'PUT']},
