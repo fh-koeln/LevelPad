@@ -12,5 +12,6 @@ angular.module('levelPad').controller('AdminStudentController', ['$scope', '$log
 			alert('Es ist ein Fehler während des Laden aufgetreten.');
 		});
 	};
+	$scope.update();
 
 }]);

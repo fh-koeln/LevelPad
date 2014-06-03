@@ -10,9 +10,7 @@
 	</div>
     <div class="collapse navbar-collapse" id="navigation-collapse">
         <ul class="nav navbar-nav" data-ng-show="loggedIn">
-			<li data-ng-class="{ active: $location.path() == '/1' }"><a data-ng-href="/">TODO 1</a></li>
-			<li data-ng-class="{ active: $location.path() == '/2' }"><a data-ng-href="/">TODO 2</a></li>
-			<li data-ng-class="{ active: $location.path() == '/3' }"><a data-ng-href="/">TODO 3</a></li>
+			<li data-ng-class="{ active: $location.path() == '/subjects' }"><a data-ng-href="/subjects">Subjects</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
 			<li data-ng-show="loggedIn === false" data-ng-class="{ active: $location.path() == '/login' }"><a href="/login" data-ng-click="login(); $event.preventDefault();">Login</a></li>
