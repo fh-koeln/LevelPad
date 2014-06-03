@@ -12,11 +12,11 @@ var levelSchema = new Schema({
 });
 
 
-var artifactSchema = new Schema({
+var taskSchema = new Schema({
 	title: {type: String, default: 'no title', required: true },
 	description: {type: String, default: '' },
 	levels: [levelSchema]
 	
 });
 
-module.exports = mongoose.model('Artifact', artifactSchema);
+module.exports = mongoose.model('Artifact', taskSchema);

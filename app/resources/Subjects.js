@@ -63,10 +63,6 @@ subjects.get('/:year(\\d{4})', function(req, res) {
  * Create or update one module by short name.
  */
 subjects.put('/:year(\\d{4})/:semester(ss|ws)/:module', function(req, res) {
-	// Variante 1
-//	req.params.module = req.body.module._id;
-//	req.body.module = req.body.module._id;
-//	Subject.findOneAndUpdate(req.params, req.body, { upsert: true }, helpers.sendResult(res));
 
 	// Variante 2
 	Module.findByShortName(req.params.module, function(err, module) {
