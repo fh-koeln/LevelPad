@@ -12,23 +12,35 @@ modules.get('/', function(req, res) {
 });
 
 /**
- * Get one module by short name.
+ * Get one module.
  */
-modules.get('/:shortName', function(req, res) {
+modules.get('/:slug', function(req, res) {
 	Module.findOne(req.params, helpers.sendResult(res));
 });
 
 /**
- * Create or update one module by short name.
+ * Create a new module.
  */
-modules.put('/:shortName', function(req, res) {
-	Module.findOneAndUpdate(req.params, req.body, { upsert: true }, helpers.sendResult(res));
+modules.post('/', function(req, res) {
+	req.body.slug = (req.body.shortName).replace(/[^A-Za-z0-9]/, '').toLowerCase();
+
+	new Module(req.body).save(helpers.sendResult(res));
 });
 
 /**
- * Delete one module by short name.
+ * Update one module.
  */
-modules.delete('/:shortName', function(req, res) {
+modules.put('/:slug', function(req, res) {
+	// TODO: Verify that the ID and the slug is not changed!?
+	req.body.slug = req.params.slug;
+
+	Module.findOneAndUpdate(req.params, req.body, helpers.sendResult(res));
+});
+
+/**
+ * Delete one module.
+ */
+modules.delete('/:slug', function(req, res) {
 	Module.findOneAndRemove(req.params, helpers.sendResult(res));
 });
 
