@@ -10,3 +10,7 @@ body {
 .navbar-brand {
     padding-left: 0;
 }
+
+.table-hover {
+    cursor: pointer;
+}

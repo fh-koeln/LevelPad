@@ -46,6 +46,10 @@ module.config(function ($routeProvider, $locationProvider) {
 		templateUrl: 'views/subjects.html',
 		controller: 'SubjectController'
 	});
+	$routeProvider.when('/subjects/:subject', {
+		templateUrl: 'views/subject.html',
+		controller: 'SubjectController'
+	});
 	$routeProvider.when('/subjects/:subject/artifacts', {
 		templateUrl: 'views/artifacts.html',
 		controller: 'ArtifactController'

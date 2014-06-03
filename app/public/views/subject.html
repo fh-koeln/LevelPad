@@ -1,0 +1,66 @@
+<ol class="breadcrumb">
+	<li><a href="/">Home</a></li>
+	<li><a href="/subjects">Subjects</a></li>
+	<li class="active">{{ subject.name }}</li>
+</ol>
+
+<h1>{{ subject.name }}</h1>
+
+
+<ul class="nav nav-tabs">
+	<li class="active"><a href="#tasks" target="_self" data-toggle="tab">Tasks</a></li>
+	<li><a href="#teams" target="_self" data-toggle="tab">Teams</a></li>
+	<li><a href="#students" target="_self" data-toggle="tab">Students</a></li>
+	<li><a href="#assistants" target="_self" data-toggle="tab">Assistants</a></li>
+</ul>
+
+<p></p>
+
+<div class="tab-content">
+	<div class="tab-pane fade in active" id="tasks">
+		<table class="table table-striped table-hover">
+			<tr data-ng-repeat="task in tasks">
+				<td data-ng-click="go(  '/subjects/' + subject.slug + '/tasks/' + task.slug )">
+					<a data-ng-href="{{ '/subjects/' + subject.slug + '/tasks/' + task.slug }}">
+						<span data-ng-bind="task.title"></span>
+					</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="tab-pane fade" id="teams">
+		<table class="table table-striped table-hover">
+			<tr data-ng-repeat="team in teams">
+				<td data-ng-click="go(  '/subjects/' + subject.slug + '/teams/' + team.slug )">
+					<a data-ng-href="{{ '/subjects/' + subject.slug + '/teams/' + team.slug }}">
+						<span data-ng-repeat="student in team.students">
+							{{ student.name }}{{ $last ? '' : ', ' }}
+						</span>
+					</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="tab-pane fade" id="students">
+		<table class="table table-striped table-hover">
+			<tr data-ng-repeat="student in students">
+				<td data-ng-click="go(  '/subjects/' + subject.slug + '/students/' + student.slug )">
+					<a data-ng-href="{{ '/subjects/' + subject.slug + '/students/' + student.slug }}">
+						<span data-ng-bind="student.name"></span>
+					</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="tab-pane fade" id="assistants">
+		<table class="table table-striped table-hover">
+			<tr data-ng-repeat="assistant in assistants">
+				<td data-ng-click="go(  '/subjects/' + subject.slug + '/assistants/' + assistant.slug )">
+					<a data-ng-href="{{ '/subjects/' + subject.slug + '/assistants/' + assistant.slug }}">
+						<span data-ng-bind="assistant.name"></span>
+					</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>

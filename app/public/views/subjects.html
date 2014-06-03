@@ -1,3 +1,45 @@
-<h1>Subjects</h1>
+<ol class="breadcrumb">
+	<li><a href="/">Home</a></li>
+	<li class="active">Subjects</li>
+</ol>
 
-<p>Subjects:<strong data-ng-bind="subjects"></strong></p>
+<!--
+<div class="row">
+<div class="col-md-4">
+<select class="form-control">
+	<option>Shortname</option>
+	<option>Name</option>
+	<option>Semester</option>
+	<option>Year</option>
+</select>
+</div>
+</div>
+-->
+
+<div class="row" ng-init="predicate='name'; reverse=false;">
+	<div class="col-md-6">
+		Name
+	</div>
+	<div class="col-md-6">
+		Semester / Jahr
+	</div>
+</div>
+
+<div class="table table-striped">
+	<div class="row" data-ng-repeat="subject in subjects | filter:searchText">
+		<a data-ng-href="/subjects/{{ subject.slug }}">
+			<div class="col-md-6">
+				<h3 style="margin: 0;">
+					<span data-ng-bind="subject.module.shortName"></span> -
+					<span data-ng-bind="subject.module.name"></span>
+				</h3>
+			</div>
+			<div class="col-md-6">
+				<span class="label label-success">active</span>
+				<span class="label label-warning">inactive</span>
+				<span data-ng-bind="subject.semester"></span>
+				<span data-ng-bind="subject.year"></span>
+			</div>
+		</a>
+	</div>
+</div>
