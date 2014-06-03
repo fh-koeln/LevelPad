@@ -1,15 +1,7 @@
 /* global angular, alert */
 
-angular.module('levelPad').controller('AdminSubjectController', ['$scope', '$log', '$resource', function ($scope, $log, $resource) {
+angular.module('levelPad').controller('AdminSubjectController', ['$scope', 'Module', 'Subject', function ($scope, Module, Subject) {
 	'use strict';
-
-	var Module = $resource('/api/modules');
-
-	var Subject = $resource('/api/subjects/:slug', {
-		slug: '@slug',
-	}, {
-		save: { method: 'PUT' }
-	});
 
 	$scope.update = function() {
 		$scope.modules = Module.query(function() {

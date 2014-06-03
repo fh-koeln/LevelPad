@@ -1,17 +1,17 @@
 'use strict';
 
-var module = angular.module('levelPad', [
+var app = angular.module('levelPad', [
 	'ngCookies',
 	'ngResource',
 	'ngSanitize',
 	'ngRoute'
 ]);
 
-module.config(['$logProvider', function($logProvider) {
+app.config(['$logProvider', function($logProvider) {
 	$logProvider.debugEnabled(true);
 }]);
 
-module.config(function ($routeProvider, $locationProvider) {
+app.config(function ($routeProvider, $locationProvider) {
 
 	// Login / Signup / Logout
 
