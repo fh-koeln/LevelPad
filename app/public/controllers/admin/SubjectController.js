@@ -11,8 +11,8 @@ angular.module('levelPad').controller('AdminSubjectController', ['$scope', 'Modu
 		});
 
 		$scope.semester = [
-			{ key: 'ss', name: 'Sommersemester' },
-			{ key: 'ws', name: 'Wintersemester' }
+			{ key: 'sose', name: 'Sommersemester' },
+			{ key: 'wise', name: 'Wintersemester' }
 		];
 
 		$scope.subjects = Subject.query(function() {

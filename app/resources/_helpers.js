@@ -6,7 +6,9 @@ module.exports = {
 				console.error(err);
 				res.json(500, err);
 			} else {
-				res.json(200, response);
+				console.log(res.json);
+				//res.json(200, response);
+				res.status(200).json(response)
 			}
 		};
 	}

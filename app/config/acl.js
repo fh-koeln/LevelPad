@@ -86,6 +86,7 @@ db.connection.on('connected', function() {
 				{resources: 'users/:username', permissions: ['GET', 'PUT', 'POST']},
 				{resources: 'subjects', permissions: ['GET']},
 				{resources: 'modules', permissions: ['GET']},
+				{resources: 'modules/:slug', permissions: ['GET']},
 				{resources: 'artifacts', permissions: ['GET']},
 			]
 		},
@@ -99,6 +100,7 @@ db.connection.on('connected', function() {
 				{resources: 'subjects', permissions: ['GET', 'PUT']},
 				{resources: 'subjects/:slug', permissions: ['GET', 'POST']},
 				{resources: 'modules', permissions: ['GET']},
+				{resources: 'modules/:slug', permissions: ['GET', 'POST']},
 				{resources: 'artifacts', permissions: ['GET']},
 			]
 		},
@@ -112,6 +114,7 @@ db.connection.on('connected', function() {
 				{resources: 'subjects', permissions: ['GET', 'POST',]},
 				{resources: 'subjects/:slug', permissions: ['GET', 'POST']},
 				{resources: 'modules', permissions: ['GET', 'POST', 'PUT', 'DELETE']},
+				{resources: 'modules/:slug', permissions: ['GET', 'POST']},
 				{resources: 'subjects', permissions: ['GET', 'POST', 'PUT', 'DELETE']},
 			]
 		},
@@ -125,6 +128,7 @@ db.connection.on('connected', function() {
 				{resources: 'subjects', permissions: ['GET', 'POST', 'PUT', 'DELETE']},
 				{resources: 'subjects/:slug', permissions: ['GET', 'POST', 'PUT', 'DELETE']},
 				{resources: 'modules', permissions: ['GET', 'POST', 'PUT', 'DELETE']},
+				{resources: 'modules/:slug', permissions: ['GET', 'POST', 'PUT', 'DELETE']},
 				{resources: 'artifacts', permissions: ['GET', 'POST', 'PUT', 'DELETE']},
 			]
 		}

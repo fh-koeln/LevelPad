@@ -1,27 +1,42 @@
 var express = require('express'),
 	subjects = express.Router(),
-	Module = require('../models/Module'),
 	Subject = require('../models/Subject'),
 	helpers = require('./_helpers');
+	require('url');
 
 
-subjects.use('/:slug/artifacts', require('./Artifacts'));
+//subjects.use('/:slug/artifacts', require('./Artifacts'));
 
 /**
  * Get all subjects
  */
 subjects.get('/', function (req, res) {
+	
+	//req.query.* doesn't work. Don't know the reason :(
+	console.log(req.query.year);
+	
 	if (req.query.year || req.query.semester || req.query.shortname) {
-		var params = {path: 'module'};
-		if(req.query.shortName) {
-			params.match = {shortName: req.query.shortName};
-		}
 
-		Subject.find({
-			year: req.query.year,
-			semester: req.query.semester === 'sose' ? 'Sommersemester' : 'Wintersemester',
-			//shortName: req.query.shortName
-		}).populate(
+		if (req.query.shortName) {
+			
+			//prepare parameter for subject-population
+			delete req.query.shortName;
+
+			params.match = {
+				shortName: req.query.shortName
+			};
+		}
+		
+		if (req.query.semester === 'sose')
+			req.query.semester = 'Sommersemester';
+		else if(req.query.semester === 'wise')
+			req.query.semester = 'Wintersemester';
+		else
+			delete req.query.semester;	
+
+		Subject.find(
+			req.query
+		).populate(
 			params
 		).exec(helpers.sendResult(res));
 	} else {
@@ -29,15 +44,11 @@ subjects.get('/', function (req, res) {
 	}
 });
 
-subjects.get('/:slug', function(req, res) {
-	res.json(200, {message: 'jo'});
-});
-
 /**
  * Get one specific subject by slug (year-semester-module).
  */
 subjects.get('/:slug', function (req, res) {
-	Subject.findBySlug(req.params.slug).populate('module').exec(helpers.sendResult(res));
+	Subject.findOne(req.params.slug, helpers.sendResult(res));
 });
 
 /*subjects.get('/', function (req, res) {
@@ -49,43 +60,14 @@ subjects.get('/:slug', function (req, res) {
 });*/
 
 
-/**
- * Get one specific subject for the module, semester, year-combination.
- */
-subjects.get('/:year(\\d{4})/:semester(ss|ws)/:module', function (req, res) {
-	Subject.findOne({
-		year: req.params.year,
-		semester: req.params.semester === 'ss' ? 'Sommersemester' : 'Wintersemester',
-		moduleShort: req.params.module
-	}, helpers.sendResult(res));
-});
-
-/**
- * Get all subjects for the given year and semester (multiple modules).
- */
-subjects.get('/:year(\\d{4})/:semester(ss|ws)', function (req, res) {
-	Subject.find({
-		year: req.params.year,
-		semester: req.params.semester === 'ss' ? 'Sommersemester' : 'Wintersemester'
-	}, helpers.sendResult(res));
-});
-
-/**
- * Get all subjects for the given year (multiple semesters and modules).
- */
-subjects.get('/:year(\\d{4})', function (req, res) {
-	Subject.find({
-		year: req.params.year
-	}, helpers.sendResult(res));
-});
 
 subjects.post('/', function (req, res) {
 	//generate slug
 	var moduleSlug = req.body.module.slug;
 
 	req.body.module = req.body.module._id;
-	req.body.semester = req.body.semester === 'ss' ? 'Sommersemester' : 'Wintersemester';
 	req.body.slug = (req.body.year + '-' + req.body.semester + '-' + moduleSlug).toLowerCase();
+	req.body.semester = req.body.semester === 'sose' ? 'Sommersemester' : 'Wintersemester';
 
 	new Subject(req.body).save(helpers.sendResult(res));
 });
@@ -108,13 +90,10 @@ subjects.put('/:year(\\d{4})/:semester(ss|ws)/:module', function (req, res) {
 });
 
 /**
- * Delete one module by short name.
+ * Delete one subject by slug
  */
-subjects.delete('/:year(\\d{4})/:semester(ss|ws)/:module', function (req, res) {
-	Module.findByShortName(req.params.module, function (err, module) {
-		req.params.module = module._id;
-		Subject.findOneAndRemove(req.params, helpers.sendResult(res));
-	});
+subjects.delete('/:slug', function (req, res) {
+	Subject.findOneAndRemove(req.params.slug, helpers.sendResult(res));
 });
 
 module.exports = subjects;
