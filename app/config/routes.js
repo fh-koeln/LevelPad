@@ -37,7 +37,7 @@ var explorer = function(router) {
 		url = url.replace(/\\\/?/g, '/').replace(/\\\//g, '/');
 
 		for (var i = 0; i < keys.length; i++) {
-			url = url.replace('(?:([^/]+?))', keys[i].name);
+			url = url.replace('(?:([^/]+?))', ':' + keys[i].name);
 		}
 
 		return url;
@@ -61,16 +61,25 @@ var explorer = function(router) {
 				console.log('add route');
 				console.log(router.stack[i]);
 
-				var route = {
-					url: urlPrefix + urlPart
-				};
-
-				if (router.stack[i].route && router.stack[i].route.methods) {
-					console.log(router.stack[i].route.methods);
-					route.methods = router.stack[i].route.methods;
+				var route;
+				for (var j = 0; j < routes.length; j++) {
+					if (routes[j].url == urlPrefix + urlPart) {
+						route = routes[j];
+					}
 				}
 
-				routes.push(route);
+				if (!route) {
+					route = { url: urlPrefix + urlPart, methods: [] };
+					routes.push(route);
+				}
+
+				if (router.stack[i].route && router.stack[i].route.methods) {
+					for (var method in router.stack[i].route.methods) {
+						if (route.methods.indexOf(method) === -1 && router.stack[i].route.methods[method]) {
+							route.methods.push(method);
+						}
+					}
+				}
 			}
 		}
 
