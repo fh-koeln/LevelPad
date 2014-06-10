@@ -46,7 +46,7 @@ app.config(function ($routeProvider, $locationProvider) {
 	// Admin
 
 	$routeProvider.when('/admin/modules', {
-		templateUrl: 'views/admin/moduleList.html',
+		templateUrl: 'views/admin/modules.html',
 		controller: 'AdminModuleController'
 	});
 	$routeProvider.when('/admin/students', {
@@ -61,51 +61,52 @@ app.config(function ($routeProvider, $locationProvider) {
 	// Maybe we could make this later part of the homescreen...
 	// Or we show a "whats new" timeline there?
 	$routeProvider.when('/modules', {
-		templateUrl: 'views/modules/moduleList.html',
-		controller: 'ModuleListController'
+		templateUrl: 'views/modules/index.html',
+		controller: 'ModulesController'
 	});
 
 	// MAGIC RULES!!!!!!!
 	$routeProvider.when('/:module', {
-		templateUrl: 'views/modules/moduleDetail.html',
-		controller: 'ModuleDetailController'
+		templateUrl: 'views/modules/show.html',
+		controller: 'ModulesController'
 	});
+
 	$routeProvider.when('/:module/:subject', {
-		templateUrl: 'views/modules/moduleDetail.html',
-		controller: 'ModuleDetailController'
+		templateUrl: 'views/subjects/index.html',
+		controller: 'SubjectsController'
 	});
 
 	$routeProvider.when('/:module/:subject/tasks', {
-		templateUrl: 'views/modules/moduleDetail.html',
-		controller: 'ModuleDetailController'
+		templateUrl: 'views/subjects/index.html',
+		controller: 'SubjectsController'
 	});
 	$routeProvider.when('/:module/:subject/tasks/:task', {
-		templateUrl: 'views/modules/moduleDetail.html',
-		controller: 'ModuleDetailController'
+		templateUrl: 'views/subjects/index.html',
+		controller: 'SubjectsController'
 	});
 	$routeProvider.when('/:module/:subject/teams', {
-		templateUrl: 'views/modules/moduleDetail.html',
-		controller: 'ModuleDetailController'
+		templateUrl: 'views/subjects/index.html',
+		controller: 'SubjectsController'
 	});
 	$routeProvider.when('/:module/:subject/teams/:team', {
-		templateUrl: 'views/modules/moduleDetail.html',
-		controller: 'ModuleDetailController'
+		templateUrl: 'views/subjects/index.html',
+		controller: 'SubjectsController'
 	});
 	$routeProvider.when('/:module/:subject/students', {
-		templateUrl: 'views/modules/moduleDetail.html',
-		controller: 'ModuleDetailController'
+		templateUrl: 'views/subjects/index.html',
+		controller: 'SubjectsController'
 	});
 	$routeProvider.when('/:module/:subject/students/:student', {
-		templateUrl: 'views/modules/moduleDetail.html',
-		controller: 'ModuleDetailController'
+		templateUrl: 'views/subjects/index.html',
+		controller: 'SubjectsController'
 	});
 	$routeProvider.when('/:module/:subject/assistants', {
-		templateUrl: 'views/modules/moduleDetail.html',
-		controller: 'ModuleDetailController'
+		templateUrl: 'views/subjects/index.html',
+		controller: 'SubjectsController'
 	});
 	$routeProvider.when('/:module/:subject/assistants/:assistant', {
-		templateUrl: 'views/modules/moduleDetail.html',
-		controller: 'ModuleDetailController'
+		templateUrl: 'views/subjects/index.html',
+		controller: 'SubjectsController'
 	});
 
 	// Fallback

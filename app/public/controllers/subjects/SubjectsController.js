@@ -1,9 +1,9 @@
 /* global angular, alert */
 
-angular.module('levelPad').controller('ModuleDetailController', ['$scope', '$routeParams', '$location', '$log', 'Module', 'Subject', function ($scope, $routeParams, $location, $log, Module, Subject) {
+angular.module('levelPad').controller('SubjectsController', ['$scope', '$routeParams', '$location', '$log', 'Module', 'Subject', function ($scope, $routeParams, $location, $log, Module, Subject) {
 	'use strict';
 
-	console.log('ModuleDetailController: routeParams:', $routeParams);
+	console.log('SubjectsController: routeParams:', $routeParams);
 
 	$scope.go = function(path) {
 		$location.path(path);
@@ -15,16 +15,16 @@ angular.module('levelPad').controller('ModuleDetailController', ['$scope', '$rou
 		}, function(module) {
 			$scope.module = module;
 		}, function() {
-			alert('Could not load subjects.');
+			alert('Could not load module.');
 		});
 
-		Subject.query({
-			module: $routeParams.module
-		}, function(subjects) {
-			$scope.subjects = subjects;
-			$scope.subject = subjects[0];
+		Subject.get({
+			module: $routeParams.module,
+			subject: $routeParams.subject
+		}, function(subject) {
+			$scope.subject = subject;
 		}, function() {
-			alert('Could not load subjects.');
+			alert('Could not load subject.');
 		});
 	};
 	$scope.update();
