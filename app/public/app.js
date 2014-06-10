@@ -80,6 +80,10 @@ app.config(function ($routeProvider, $locationProvider) {
 		templateUrl: 'views/subjects/index.html',
 		controller: 'SubjectsController'
 	});
+	$routeProvider.when('/:module/:subject/tasks/new', {
+		templateUrl: 'views/tasks/edit.html',
+		controller: 'TasksController'
+	});
 	$routeProvider.when('/:module/:subject/tasks/:task', {
 		templateUrl: 'views/subjects/index.html',
 		controller: 'SubjectsController'
