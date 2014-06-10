@@ -1,4 +1,4 @@
-angular.module('levelPad').controller('AccountController', ['$scope', '$resource', '$location', 'AuthService', function ($scope, $resource, $location, authService) {
+angular.module('levelPad').controller('AccountController', ['$scope', '$location', 'AuthService', 'User', function ($scope, $location, authService, User) {
 	'use strict';
 
 	/**
@@ -16,12 +16,6 @@ angular.module('levelPad').controller('AccountController', ['$scope', '$resource
 	 */
 
 	$scope.save = function($event) {
-
-		var User = $resource('/api/users/:username', {
-			username: '@username'
-		}, {
-			save: { method: 'PUT' }
-		});
 
 		// TODO verify which fields could be saved here...
 		var user = {

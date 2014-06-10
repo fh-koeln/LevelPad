@@ -57,47 +57,6 @@ function findSubjects(req, res) {
 
 }
 
-/**
- * Get one specific subject by slug (year-semester-module).
- */
-subjects.get('/:slug', function (req, res) {
-	Subject.findOne(req.params.slug, helpers.sendResult(res));
-});
 
-
-subjects.post('/', function (req, res) {
-	//generate slug
-	var moduleSlug = req.body.module.slug;
-
-	req.body.module = req.body.module._id;
-	req.body.slug = (req.body.year + '-' + req.body.semester + '-' + moduleSlug).toLowerCase();
-	req.body.semester = req.body.semester === 'sose' ? 'Sommersemester' : 'Wintersemester';
-
-	new Subject(req.body).save(helpers.sendResult(res));
-});
-
-
-
-/**
- * Create or update one module by short name.
- */
-subjects.put('/:year(\\d{4})/:semester(ss|ws)/:module', function (req, res) {
-
-	// Variante 2
-	Module.findByShortName(req.params.module, function (err, module) {
-		req.params.module = module._id;
-		req.body.module = module._id;
-		Subject.findOneAndUpdate(req.params, req.body, {
-			upsert: true
-		}, helper.sendResult(res));
-	});
-});
-
-/**
- * Delete one subject by slug
- */
-subjects.delete('/:slug', function (req, res) {
-	Subject.findOneAndRemove(req.params.slug, helpers.sendResult(res));
-});
 
 module.exports = subjects;

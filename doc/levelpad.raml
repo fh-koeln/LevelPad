@@ -1,0 +1,132 @@
+#%RAML 0.8
+title: Levelpad
+version: v1
+#baseUri: http://localhost:5000/api
+baseUri: http://mocksvc.mulesoft.com/mocks/346c583d-4b6e-4150-9dd6-f834f55a837b/api
+mediaType: application/json
+traits:
+  - secured:
+      usage: Apply this to any method that needs to be secured
+      description: Some requests require authentication.
+      queryParameters:
+        access_token:
+          description: Access Token
+          type: string
+          example: ACCESS_TOKEN
+          required: true
+/modules:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            schema: |
+              { "$schema": "http://json-schema.org/schema",
+                "type": "object",
+                "description": "Modul",
+                "properties": {
+                  "slug": { "type": "string" },
+                  "shortName": { "type": "string" },
+                  "name": { "type": "string" }
+                },
+                "required": [ "shortName", "name" ]
+              }
+  post:
+  /{module}:
+    uriParameters:
+     module:
+       description: |
+         Slug of module
+       type: string
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              schema: |
+                { "$schema": "http://json-schema.org/schema",
+                  "type": "object",
+                  "description": "Modul",
+                  "properties": {
+                    "slug": { "type": "string" },
+                    "shortName": { "type": "string" },
+                    "name": { "type": "string" }
+                  },
+                  "required": [ "shortName", "name" ]
+                }
+              example: |
+               {
+                 "data": {
+                   "slug": "wba1",
+                   "shortname": "WBA1",
+                   "name": "Web-basierte Webanwendungne,
+                 },
+                 "success": true,
+                 "status": 200
+               }
+    put:
+    delete:
+    patch:
+    /subjects:
+      get:
+      post:
+      /{subject}:
+        get:
+        put:
+        delete:
+        patch:
+        /tasks:
+          get:
+          post:
+          /{number}:
+            get:
+            put:
+            patch:
+            delete:
+            /teams:
+              get:
+              post:
+              /{team}:
+                get:
+                put:
+                patch:
+                delete:
+                /feedbacks:
+                  get:
+                  post:
+                  /{feedback}:
+                    get:
+                    put:
+                    patch:
+                    delete:
+
+/login:
+  post:
+
+/logout:
+   post:
+
+/users:
+  get:
+  post:
+  /{username}:
+    get:
+    put:
+    patch:
+    delete:
+    /subjects:
+      get:
+    /tasks:
+      get:
+
+/subjects:
+  get:
+    queryParameters:
+      module:
+        type: string
+      semester:
+        type: string
+      year:
+        type: integer
+
+

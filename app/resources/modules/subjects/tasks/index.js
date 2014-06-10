@@ -1,8 +1,8 @@
 
 var express = require('express'),
 	tasks = express.Router(),
-	Task = require('../../models/Task'),
-	helpers = require('../_helpers');
+	Task = require('../../../../models/Task'),
+	helpers = require('../../../_helpers');
 
 /**
  * Get all tasks for the current subject.
@@ -43,5 +43,7 @@ tasks.put('/:slug', function(req, res) {
 tasks.delete('/:slug', function(req, res) {
 	Task.findOneAndRemove(req.params, helpers.sendResult(res));
 });
+
+tasks.use('/:slug/teams', require('./teams'));
 
 module.exports = tasks;

@@ -1,10 +1,7 @@
 /* global angular, alert */
 
-angular.module('levelPad').controller('AdminStudentController', ['$scope', '$log', '$resource', function ($scope, $log, $resource) {
+angular.module('levelPad').controller('AdminStudentController', ['$scope', '$log', 'Student', function ($scope, $log, Student) {
 	'use strict';
-
-	var Student = $resource('/api/students');
-
 
 	$scope.update = function() {
 		$scope.students = Student.query(function() {

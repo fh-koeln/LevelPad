@@ -1,8 +1,11 @@
-var express = require('express'),
-	modules = express.Router(),
-	Module = require('../models/Module'),
-	Subject = require('../models/Subject'),
-	helpers = require('./_helpers');
+/**
+ * RESTful API for modules.
+ */
+
+var modules = require('express').Router(),
+	Module = require('../../models/Module'),
+	Subject = require('../../models/Subject'),
+	helpers = require('../_helpers');
 
 /**
  * Get all modules
@@ -39,7 +42,7 @@ modules.put('/:slug', function (req, res) {
 });
 
 /**
- * Delte one module.
+ * Delete one module.
  */
 modules.delete('/:slug', function (req, res) {
 
@@ -58,9 +61,22 @@ modules.delete('/:slug', function (req, res) {
 	});
 });
 
-modules.use('/:subjectSlug/tasks', require('./subjects/tasks'));
-modules.use('/:subjectSlug/teams', require('./subjects/teams'));
-modules.use('/:subjectSlug/students', require('./subjects/students'));
-modules.use('/:subjectSlug/assistants', require('./subjects/assistants'));
+
+/**
+ * Get all modules
+ */
+modules.param(':moduleSlug', function (req, res, next, moduleSlug) {
+	console.log('PARAMS !!!! ');
+	Module.find({ slug: moduleSlug }, function(err, module) {
+		if (err) {
+			next(err);
+		} else {
+			req.module = module;
+			next();
+		}
+	});
+});
+
+modules.use('/subjects', require('./subjects'));
 
 module.exports = modules;
