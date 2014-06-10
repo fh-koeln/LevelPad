@@ -21,5 +21,4 @@ subjectSchema.statics.findBySlug = function (slug, callback) {
 	this.findOne({ slug: slug }, callback);
 };
 
-
 module.exports = mongoose.model('Subject', subjectSchema);
