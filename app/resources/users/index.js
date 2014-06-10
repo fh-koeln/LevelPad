@@ -18,6 +18,18 @@ users.get('/', function(req, res) {
 	User.find(helpers.sendResult(res));
 });
 
+users.post('/', function(req, res) {
+	var user = new User(req.body);
+
+	user.save(function(err, user) {
+		if (err) {
+			res.json(500, err);
+		} else {
+			res.json(200, user);
+		}
+	});
+});
+
 /**
  * Get informations about the current user.
  */

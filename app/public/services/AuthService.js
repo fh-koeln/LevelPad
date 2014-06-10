@@ -57,10 +57,13 @@ angular.module('levelPad').service('AuthService', ['$rootScope', '$http', '$cook
 			method: 'POST',
 			url: '/api/login',
 			data: user
-		}).success(function() {
+		}).success(function(response) {
 			// We will receive the login mask here if the login failed.
 			// So we also check if we could get the current user information now...
-			$scope.verifyStatus(callback);
+			//$scope.verifyStatus(callback);
+			$log.log(response);
+			$('#loginDialog').modal('hide');
+			$('#signupDialog').modal();
 		}).error(function(response) {
 			$log.error('Login failed!');
 			$log.error(response);
@@ -75,14 +78,17 @@ angular.module('levelPad').service('AuthService', ['$rootScope', '$http', '$cook
 	$scope.signup = function(user, callback) {
 		$log.log('Register user ' + user.username + '...');
 
+		delete user.password;
+
 		$http({
 			method: 'POST',
-			url: '/api/signup',
+			url: '/api/users',
 			data: user
 		}).success(function(response) {
 			// We will receive the login mask here if the login failed.
 			// So we also check if we could get the current user information now...
-			$scope.verifyStatus(callback);
+			//$scope.verifyStatus(callback);
+			$log.log(response);
 		}).error(function(response) {
 			$log.error('Signup failed!');
 			$log.error(response);

@@ -10,7 +10,6 @@ acl = new acl(new acl.mongodbBackend(db.connection.db, 'acl-'));
 
 
 function middleware(req, res, next) {
-	console.log('ACL middleware called');
 	if (!req.isAuthenticated()) {
 		console.log('Not authenticated');
 		res.json(401, {error: 'Not authenticated'});
@@ -18,11 +17,16 @@ function middleware(req, res, next) {
 	}
 
 	// TODO: Move to model
-	req.user.role = req.user.role || 'guest';
+	req.user.role = req.user.role || 'public';
+	console.log( 'Access check for ' + req.user.username + ' with role ' + req.user.role );
 
 	// Get all resources by current user role and compare to current path
 	acl.whatResources(req.user.role, function(err, resources) {
-		console.log('get resources');
+		if (err) {
+			res.json(500, {error: 'Unexpected authorization error'});
+			return;
+		}
+
 		var keys, regexp, isMatch, resource, reqResource = '',
 			originalUrl = req.originalUrl,
 			apiPath = originalUrl.replace(/\/?api\/?/, '').split('?')[0];
@@ -31,6 +35,8 @@ function middleware(req, res, next) {
 			keys = [];
 			regexp = pathToRegexp(resource, keys);
 			isMatch = regexp.test(apiPath);
+			console.log( resource + ' ' + apiPath + ' ' + isMatch );
+
 
 			if (isMatch) {
 				reqResource = resource;
@@ -39,24 +45,27 @@ function middleware(req, res, next) {
 		}
 
 		if (!reqResource) {
-			console.log('no resources matched');
+			console.log( req.user.username + ' with role ' + req.user.role + ' has no permissions for ' + apiPath );
 			res.json(404, {error: 'Not found'});
 			return;
 		}
 
-		acl.isAllowed(req.user.username, reqResource, req.method, function(err, result) {
-			console.log('check resources permissions for ' + reqResource );
+		acl.allowedPermissions('gast', 'users', function(err, permissions){
+			console.log(permissions);
+		});
 
+		acl.isAllowed(req.user.username, reqResource, req.method, function(err, result) {
 			if (err) {
 				res.json(500, {error: 'Unexpected authorization error'});
+				return;
 			}
 
 			if (result) {
-				console.log('permissions okay');
 				next();
 			} else {
-				console.log('no permissions');
+				console.log(req.user.username + ' with role ' + req.user.role + ' is not allowed for resource ' + reqResource + ' via ' + req.method );
 				res.json(403, {error: 'Forbidden'});
+				return;
 			}
 		});
 	});
@@ -90,20 +99,6 @@ db.connection.on('connected', function() {
 			allows: [
 				{resources: 'login', permissions: ['POST']},
 				{resources: 'logout', permissions: ['POST']},
-				{resources: 'users'},
-				{resources: 'users/me'},
-				{resources: 'users/:user'},
-				{resources: 'subjects'},
-				{resources: 'modules'},
-				{resources: 'modules/:module'},
-				{resources: 'modules/:module/subjects'},
-				{resources: 'modules/:module/subjects/:subject'},
-				{resources: 'modules/:module/subjects/:subject/tasks'},
-				{resources: 'modules/:module/subjects/:subject/tasks/:task'},
-				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams'},
-				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team'},
-				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team/feedbacks'},
-				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team/feedbacks/:feedback'},
 			]
 		},
 		{
@@ -111,20 +106,7 @@ db.connection.on('connected', function() {
 			allows: [
 				{resources: 'login', permissions: ['POST']},
 				{resources: 'logout', permissions: ['POST']},
-				{resources: 'users', permissions: ['POST']},
-				{resources: 'users/me'},
-				{resources: 'users/:user'},
-				{resources: 'subjects'},
-				{resources: 'modules'},
-				{resources: 'modules/:module'},
-				{resources: 'modules/:module/subjects'},
-				{resources: 'modules/:module/subjects/:subject'},
-				{resources: 'modules/:module/subjects/:subject/tasks'},
-				{resources: 'modules/:module/subjects/:subject/tasks/:task'},
-				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams'},
-				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team'},
-				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team/feedbacks'},
-				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team/feedbacks/:feedback'},
+				{resources: 'users', permissions: ['POST', 'GET']},
 			]
 		},
 		{
@@ -132,20 +114,7 @@ db.connection.on('connected', function() {
 			allows: [
 				{resources: 'login', permissions: ['POST']},
 				{resources: 'logout', permissions: ['POST']},
-				{resources: 'users'},
 				{resources: 'users/me', permissions: ['GET', 'PUT']},
-				{resources: 'users/:user'},
-				{resources: 'subjects'},
-				{resources: 'modules'},
-				{resources: 'modules/:module'},
-				{resources: 'modules/:module/subjects'},
-				{resources: 'modules/:module/subjects/:subject'},
-				{resources: 'modules/:module/subjects/:subject/tasks'},
-				{resources: 'modules/:module/subjects/:subject/tasks/:task'},
-				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams'},
-				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team'},
-				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team/feedbacks'},
-				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team/feedbacks/:feedback'},
 			]
 		},
 		{
@@ -153,19 +122,7 @@ db.connection.on('connected', function() {
 			allows: [
 				{resources: 'login', permissions: ['POST']},
 				{resources: 'logout', permissions: ['POST']},
-				{resources: 'users'},
 				{resources: 'users/me', permissions: ['GET', 'PUT']},
-				{resources: 'users/:user'},
-				{resources: 'subjects'},
-				{resources: 'modules/:module'},
-				{resources: 'modules/:module/subjects'},
-				{resources: 'modules/:module/subjects/:subject'},
-				{resources: 'modules/:module/subjects/:subject/tasks'},
-				{resources: 'modules/:module/subjects/:subject/tasks/:task'},
-				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams'},
-				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team'},
-				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team/feedbacks'},
-				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team/feedbacks/:feedback'},
 			]
 		},
 		{
@@ -173,20 +130,7 @@ db.connection.on('connected', function() {
 			allows: [
 				{resources: 'login', permissions: ['POST']},
 				{resources: 'logout', permissions: ['POST']},
-				{resources: 'users'},
 				{resources: 'users/me', permissions: ['GET', 'PUT']},
-				{resources: 'users/:user'},
-				{resources: 'subjects'},
-				{resources: 'modules'},
-				{resources: 'modules/:module'},
-				{resources: 'modules/:module/subjects'},
-				{resources: 'modules/:module/subjects/:subject'},
-				{resources: 'modules/:module/subjects/:subject/tasks'},
-				{resources: 'modules/:module/subjects/:subject/tasks/:task'},
-				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams'},
-				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team'},
-				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team/feedbacks'},
-				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team/feedbacks/:feedback'},
 			]
 		},
 		{
@@ -213,7 +157,7 @@ db.connection.on('connected', function() {
 	]);
 
 	// TODO: Remove and fetch from DB/create on POST /api/user/
-	acl.addUserRoles('dschilli', 'administrator');
+	//acl.addUserRoles('dschilli', 'administrator');
 	acl.addUserRoles('cjerolim', 'administrator');
 	acl.addUserRoles('vschaef1', 'administrator');
 });

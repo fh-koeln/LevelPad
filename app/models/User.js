@@ -10,7 +10,7 @@ function validateUsernameLength(username) {
 		return false;
 	}
 
-	if (username.length <= 3 || username.length > 20 ) {
+	if (username.length <= 3 || username.length > 20) {
 		return false;
 	} else {
 		return true;
@@ -27,7 +27,7 @@ var userSchema = new Schema({
 	lastname: {type: String, required: true},
 	email: {type: String, required: true},
 	studentNumber: {type: Number, required: false},
-	role: {type: String, enum: ['guest', 'student', 'lecturer', 'assistent', 'administrator'], default: 'student'} // TODO: Set default to guest
+	role: {type: String, enum: ['guest', 'student', 'lecturer', 'assistent', 'administrator'], default: 'guest'}
 });
 
 userSchema.statics.findByUsername = function (username, callback) {

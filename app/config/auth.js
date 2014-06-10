@@ -3,7 +3,8 @@
 var passport = require('passport'),
 	LocalStrategy = require('passport-local').Strategy,
 	Imap = require('imap'),
-	User = require('../models/User');
+	User = require('../models/User'),
+	acl = require('acl').acl;
 
 var checkCredentials = function(username, password, callback) {
 	console.log('Check IMAP credentials for user ' + username + '...');
@@ -26,7 +27,21 @@ var checkCredentials = function(username, password, callback) {
 		// Promise-Handler if login successful
 		imap.once('ready', function() {
 			imap.end();
-			User.findByUsername(username, callback);
+
+			User.findByUsername(username, function(err, user) {
+				if (err) {
+					callback(null, false, err);
+				} else if (!user) {
+					// Create guest user which has to sign up
+					acl.addUserRoles(username, 'guest', function() {
+						user = new User();
+						user.username = username;
+						callback(null, user);
+					});
+				} else {
+					callback(null, user);
+				}
+			});
 		});
 
 		// Promise-Handler if login failed
@@ -48,7 +63,17 @@ passport.serializeUser(function(user, done) {
 
 passport.deserializeUser(function(username, done) {
 	User.findByUsername(username, function (err, user) {
-		done(err, user);
+
+		if (!user) {
+			// Create guest user which has to sign up
+			acl.addUserRoles(username, 'guest').then(function() {
+				user = new User();
+				user.username = username;
+				done(null, user);
+			});
+		} else {
+			done(err, user);
+		}
 	});
 });
 
@@ -70,7 +95,12 @@ passport.use('fh-imap', new LocalStrategy(function(username, password, done) {
 				if (err) {
 					done(null, false, err);
 				} else if (!user) {
-					done(null, false, { message: 'Unknown user ' + username });
+					// Create guest user which has to sign up
+					acl.addUserRoles(username, 'guest', function() {
+						user = new User();
+						user.username = username;
+						done(null, user);
+					});
 				} else {
 					done(null, user);
 				}
@@ -89,7 +119,7 @@ module.exports = function(app) {
 	/**
 	 * POST /api/signup create an new user (register the user itself).
 	 */
-	app.post('/api/signup', function(req, res) {
+	/*app.post('/api/signup', function(req, res) {
 		console.log('Register: ' + req.body.username);
 
 		// TODO: Simplify code with async.js!
@@ -116,7 +146,7 @@ module.exports = function(app) {
 				});
 			}
 		});
-	});
+	});*/
 
 	/**
 	 * POST /login validates the login

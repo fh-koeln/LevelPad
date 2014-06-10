@@ -14,7 +14,6 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
 			<li data-ng-show="loggedIn === false" data-ng-class="{ active: $location.path() == '/login' }"><a href="/login" data-ng-click="login(); $event.preventDefault();">Login</a></li>
-			<li data-ng-show="loggedIn === false" data-ng-class="{ active: $location.path() == '/signup' }"><a href="/signup" data-ng-click="signup(); $event.preventDefault();">Register</a></li>
 			<li class="dropdown" data-ng-show="loggedIn === true">
 				<a class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
 				<ul class="dropdown-menu">
