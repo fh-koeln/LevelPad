@@ -1,16 +1,17 @@
 /* global angular, alert */
 
-angular.module('levelPad').controller('SubjectController', ['$scope', '$location', '$log', '$resource', function ($scope, $location, $log, $resource) {
+angular.module('levelPad').controller('SubjectController', ['$scope', '$location', '$log', 'Subject', function ($scope, $location, $log, Subject) {
 	'use strict';
-
-	var Subject = $resource('/api/subjects/:slug', { slug: '@slug' });
 
 	$scope.go = function(path) {
 		$location.path(path);
 	};
 
 	$scope.update = function() {
-		$scope.subjects = Subject.query(function() {
+		console.log('x');
+		$scope.subjects = Subject.query({
+			module: 'wba1'
+		}, function() {
 			$scope.subject = $scope.subjects[0];
 		}, function() {
 			alert('Could not load subjects.');
