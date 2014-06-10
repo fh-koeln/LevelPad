@@ -1,8 +1,8 @@
 
 var express = require('express'),
 	teams = express.Router(),
-	Team = require('../../models/Team'),
-	helpers = require('../_helpers');
+	Team = require('../../../../../models/Team'),
+	helpers = require('../../../../_helpers');
 
 /**
  * Get all teams for the current subject.

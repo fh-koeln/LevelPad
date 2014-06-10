@@ -7,102 +7,13 @@ var express = require('express'),
 // API is only available for authenticated users.
 api.use(acl.middleware);
 
-api.use('/modules', require('../resources/Modules'));
+api.use('/modules', require('../resources/modules'));
 api.use('/subjects', require('../resources/Subjects'));
 api.use('/users', require('../resources/Users'));
 
 var routes = express.Router();
 routes.use('/api', api);
-
-
-var explorer = function(router) {
-	var simplifyRegexUrl = function(url, keys) {
-		// Convert regex to string
-		if ((typeof url) === 'object') {
-			url = url.toString();
-		}
-
-		// Remove regex prefix "/^" and optional slash suffx "\/?$/i" or "\/?(?=/|$)/i"
-		if (url.indexOf('/^') === 0) {
-			url = url.substring(2);
-		}
-		if (url.lastIndexOf('\\/?$/i') === url.length - 6) {
-			url = url.substring(0, url.length - 6);
-		}
-		if (url.lastIndexOf('\\/?(?=/|$)') === url.length - 12) {
-			url = url.substring(0, url.length - 12);
-		}
-
-		// Simplify "\/?" and "\/" to "/"
-		url = url.replace(/\\\/?/g, '/').replace(/\\\//g, '/');
-
-		for (var i = 0; i < keys.length; i++) {
-			url = url.replace('(?:([^/]+?))', ':' + keys[i].name);
-		}
-
-		return url;
-	};
-
-	var pushRoutes = function(urlPrefix, router, routes) {
-
-		for (var i = 0; i < router.stack.length; i++) {
-
-			var urlPart = simplifyRegexUrl(router.stack[i].regexp, router.stack[i].keys);
-
-			// Handle sub-router
-			if (router.stack[i].handle && router.stack[i].handle.stack) {
-				console.log('push routes');
-				pushRoutes(urlPrefix + urlPart, router.stack[i].handle, routes);
-				continue;
-			}
-
-			// Handle route handler
-			if (router.stack[i].route) {
-				console.log('add route');
-				console.log(router.stack[i]);
-
-				var route;
-				for (var j = 0; j < routes.length; j++) {
-					if (routes[j].url == urlPrefix + urlPart) {
-						route = routes[j];
-					}
-				}
-
-				if (!route) {
-					route = { url: urlPrefix + urlPart, methods: [] };
-					routes.push(route);
-				}
-
-				if (router.stack[i].route && router.stack[i].route.methods) {
-					for (var method in router.stack[i].route.methods) {
-						if (route.methods.indexOf(method) === -1 && router.stack[i].route.methods[method]) {
-							route.methods.push(method);
-						}
-					}
-				}
-			}
-		}
-
-	};
-
-	return function(req, res) {
-		var routes = [];
-		pushRoutes('', router,routes);
-		res.json(200, routes);
-	};
-};
-
-// debug globals
-routes.use('/explorer', function(req, res, next) {
-	console.log('api');
-	console.log(api);
-	console.log('routes');
-	console.log(routes);
-	next();
-});
-routes.get('/explorer', explorer(routes));
-routes.post('/explorer', function(req, res, next) { next(); });
-
+//routes.get('/explorer', require('../resources/explorer')('', routes));
 
 /* GET home page for. */
 routes.get('/*', function(req, res) {
