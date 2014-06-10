@@ -27,28 +27,28 @@ angular.module('levelPad').service('AuthService', ['$rootScope', '$http', '$cook
 		});
 	}]);
 
-    $scope.verifyStatus = function(callback) {
-        $log.log('Get current account...');
-        $http({
-            method: 'GET',
-            url: '/api/users/me'
-        }).success(function(response) {
-            $log.log('Authentification check was successful!');
-            $scope.loggedIn = true;
+	$scope.verifyStatus = function(callback) {
+		$log.log('Get current account...');
+		$http({
+			method: 'GET',
+			url: '/api/users/me'
+		}).success(function(response) {
+			$log.log('Authentification check was successful!');
+			$scope.loggedIn = true;
 			$scope.user = response;
 			if (callback) {
 				callback(null, response);
 			}
-        }).error(function(response) {
-            $log.error('Authentification check failed!');
-            $log.error(response);
+		}).error(function(response) {
+			$log.error('Authentification check failed!');
+			$log.error(response);
 			$scope.loggedIn = false;
 			$scope.user = null;
 			if (callback) {
 				callback(response);
 			}
-        });
-    };
+		});
+	};
 
 	$scope.login = function(user, callback) {
 		$log.log('Login user ' + user.username + '...');
