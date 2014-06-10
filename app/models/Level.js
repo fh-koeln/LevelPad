@@ -6,8 +6,9 @@ var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
 var levelSchema = new Schema({
-	description: { type: String, default: '' },
-	level: {type: Number, enum: [1, 2, 3, 4, 5] }
+	slug: { type: String, require: true, unique: true },
+	description: { type: String, required: true },
+	level: { type: Number, required: true }
 });
 
 
