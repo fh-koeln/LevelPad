@@ -11,8 +11,9 @@ var moduleSchema = new Schema({
 	name: { type: String, required: true }
 });
 
-moduleSchema.statics.findByShortName = function (shortName, callback) {
-	this.findOne({ shortName: shortName }, callback);
+moduleSchema.statics.findBySlug = function (slug, callback) {
+	this.findOne({ slug: slug }, callback);
+	
 };
 
 module.exports = mongoose.model('Module', moduleSchema);

@@ -12,9 +12,9 @@ require('url');
  * Get all subjects
  */
 subjects.get('/', function (req, res) {
-	if (req.query.year || req.query.semester || req.query.shortName) {
+	if (req.query.year || req.query.semester || req.query.module) {
 		
-		//convert Semester shortname to langname
+		//convert Semester shortname to longname
 		if (req.query.semester === 'sose')
 			req.query.semester = 'Sommersemester';
 		else if (req.query.semester === 'wise')
@@ -23,17 +23,16 @@ subjects.get('/', function (req, res) {
 			delete req.query.semester;
 
 		//Select ID from module-collection by shortname
-		if (req.query.shortName) {
-			Module.findByShortName(req.query.shortName, function (err, module) {
-				console.log('MODULE: ' + module);
+		if (req.query.module) {
+			Module.findBySlug(req.query.module, function (err, module) {
 				if (err) {
 					console.error(err);
 					res.json(500, err);
 				} 
 				
 				else if (module) {
+					console.log(module);
 					req.query.module = module._id;
-					delete req.query.shortName;
 
 				}
 				findSubjects(req, res);
