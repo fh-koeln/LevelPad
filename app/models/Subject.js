@@ -8,7 +8,7 @@ var mongoose = require('mongoose'),
 
 var subjectSchema = new Schema({
 	module: {type: ObjectId, ref: 'Module', required: true},
-	tasks: [{type: ObjectId, ref: 'Artifact'}],
+	tasks: [{type: ObjectId, ref: 'Task'}],
 	registration_active: {type: Boolean, default: false},
 	registration_expires_at: Date,
 	registration_password: String,
