@@ -4,19 +4,19 @@
 
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
-	ObjectId = Schema.ObjectId;
+	ObjectId = Schema.ObjectId,
+	levelSchema = require('./Level');
 
-var levelSchema = new Schema({
-	slug: { type: String, require: true, unique: true },
-	description: { type: String, required: true },
-	level: { type: Number, enum: [1, 2, 3, 4, 5] }
-});
 
 
 var taskSchema = new Schema({
-	title: { type: String, required: true },
+	levels: [levelSchema],
 	description: { type: String },
-	levels: [levelSchema]
+	slug: { type: Number, require: true},
+	title: { type: String, required: true },
+	threshold: {type: ObjectId, require: true},
+	weight: {type: Number, ref: 'Level', required:true}					
+	
 });
 
 module.exports = mongoose.model('Task', taskSchema);
