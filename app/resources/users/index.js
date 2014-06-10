@@ -2,7 +2,8 @@
 var express = require('express'),
 	users = express.Router(),
 	User = require('../../models/User'),
-	helpers = require('../_helpers');
+	helpers = require('../_helpers'),
+	acl = require('../../config/acl');
 
 users.param('user', function(req, res, next, username) {
 	User.findByUsername(username, function(err, user) {
@@ -21,11 +22,21 @@ users.get('/', function(req, res) {
 users.post('/', function(req, res) {
 	var user = new User(req.body);
 
+	// TODO: By default student
+	user.role = 'administrator';
+
 	user.save(function(err, user) {
 		if (err) {
 			res.json(500, err);
 		} else {
-			res.json(200, user);
+			acl.setRole( user.username, user.role, function(err) {
+				if (err) {
+					res.json(500, err);
+				} else {
+					res.json(200, user);
+
+				}
+			});
 		}
 	});
 });
@@ -46,7 +57,7 @@ users.get('/:username', function(req, res) {
 	User.findOne(req.params, helpers.sendResult(res));
 });
 
-users.put('/:username', function(req, res, next) {
+users.put('/:username', function(req, res) {
 	User.findOneAndUpdate(req.params, req.body, { upsert: true }, helpers.sendResult(res));
 });
 

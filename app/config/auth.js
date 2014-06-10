@@ -4,7 +4,7 @@ var passport = require('passport'),
 	LocalStrategy = require('passport-local').Strategy,
 	Imap = require('imap'),
 	User = require('../models/User'),
-	acl = require('acl').acl;
+	acl = require('./acl').acl;
 
 var checkCredentials = function(username, password, callback) {
 	console.log('Check IMAP credentials for user ' + username + '...');

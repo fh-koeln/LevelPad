@@ -4,12 +4,13 @@
 
 var acl = require('acl'),
 	db = require('./db'),
-	pathToRegexp = require('path-to-regexp');
+	pathToRegexp = require('path-to-regexp'),
+	async = require('async');
 
 acl = new acl(new acl.mongodbBackend(db.connection.db, 'acl-'));
 
 
-function middleware(req, res, next) {
+module.exports.middleware = function middleware(req, res, next) {
 	if (!req.isAuthenticated()) {
 		console.log('Not authenticated');
 		res.json(401, {error: 'Not authenticated'});
@@ -35,8 +36,6 @@ function middleware(req, res, next) {
 			keys = [];
 			regexp = pathToRegexp(resource, keys);
 			isMatch = regexp.test(apiPath);
-			console.log( resource + ' ' + apiPath + ' ' + isMatch );
-
 
 			if (isMatch) {
 				reqResource = resource;
@@ -46,13 +45,9 @@ function middleware(req, res, next) {
 
 		if (!reqResource) {
 			console.log( req.user.username + ' with role ' + req.user.role + ' has no permissions for ' + apiPath );
-			res.json(404, {error: 'Not found'});
+			res.json(403, {error: 'Forbidden'});
 			return;
 		}
-
-		acl.allowedPermissions('gast', 'users', function(err, permissions){
-			console.log(permissions);
-		});
 
 		acl.isAllowed(req.user.username, reqResource, req.method, function(err, result) {
 			if (err) {
@@ -63,13 +58,53 @@ function middleware(req, res, next) {
 			if (result) {
 				next();
 			} else {
-				console.log(req.user.username + ' with role ' + req.user.role + ' is not allowed for resource ' + reqResource + ' via ' + req.method );
+				console.log(req.user.username + ' with role ' + req.user.role + ' is not allowed for acess resource ' + reqResource + ' via ' + req.method );
 				res.json(403, {error: 'Forbidden'});
 				return;
 			}
 		});
 	});
-}
+};
+
+module.exports.setRole = function setRole(user, role, callback) {
+	/*var removeRole, addRole;
+
+	removeRole = function(roles, callback) {
+		console.log(roles);
+		acl.removeUserRoles(user, roles, callback);
+	};
+	addRole = function(callback) {
+		console.log(role);
+		acl.addUserRoles(user, role, callback);
+	};
+
+
+	async.waterfall([
+		function(cb) {
+			cb(null, user);
+		},
+		acl.userRoles,
+		removeRole,
+		addRole,
+		callback
+	]);*/
+
+	acl.userRoles(user, function(err, roles) {
+		if (err) {
+			callback(err);
+		} else {
+			acl.removeUserRoles(user, roles, function(err) {
+				if (err) {
+					callback(err);
+				} else {
+					acl.addUserRoles(user, role, function(err) {
+						callback(err);
+					});
+				}
+			});
+		}
+	});
+};
 
 db.connection.on('connected', function() {
 	/**
@@ -162,5 +197,4 @@ db.connection.on('connected', function() {
 	acl.addUserRoles('vschaef1', 'administrator');
 });
 
-module.exports.instance = acl;
-module.exports.middleware = middleware;
+module.exports.acl = acl;

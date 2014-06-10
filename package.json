@@ -44,7 +44,9 @@
 		"mongoose": "~3.8.11",
 		"acl": "0.4.1",
 
-		"path-to-regexp": "~0.1.2"
+		"path-to-regexp": "~0.1.2",
+
+		"async": "~0.9.0"
 	},
 	"devDependencies": {
 		"bower": "*",

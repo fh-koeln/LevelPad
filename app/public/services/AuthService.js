@@ -60,10 +60,14 @@ angular.module('levelPad').service('AuthService', ['$rootScope', '$http', '$cook
 		}).success(function(response) {
 			// We will receive the login mask here if the login failed.
 			// So we also check if we could get the current user information now...
-			//$scope.verifyStatus(callback);
+
 			$log.log(response);
-			$('#loginDialog').modal('hide');
-			$('#signupDialog').modal();
+			if (response && response.role === 'guest') {
+				$('#loginDialog').modal('hide');
+				$('#signupDialog').modal();
+			} else {
+				$scope.verifyStatus(callback);
+			}
 		}).error(function(response) {
 			$log.error('Login failed!');
 			$log.error(response);
@@ -89,6 +93,7 @@ angular.module('levelPad').service('AuthService', ['$rootScope', '$http', '$cook
 			// So we also check if we could get the current user information now...
 			//$scope.verifyStatus(callback);
 			$log.log(response);
+			$scope.verifyStatus(callback);
 		}).error(function(response) {
 			$log.error('Signup failed!');
 			$log.error(response);

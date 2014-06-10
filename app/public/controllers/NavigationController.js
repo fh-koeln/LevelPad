@@ -33,7 +33,8 @@ angular.module('levelPad').controller('NavigationController', ['$scope', '$route
 			// Is logged in
 			$scope.hideLoginDialog();
 			$scope.hideSignupDialog();
-			if ($location.path() === '/' || $location.path() === '/login' || $location.path() === '/signup' || $location.path() === '/logout') {
+			//if ($location.path() === '/' || $location.path() === '/login' || $location.path() === '/signup' || $location.path() === '/logout') {
+			if ($location.path() === '/' || $location.path() === '/login' || $location.path() === '/logout') {
 				$location.path('/');
 			}
 		} else if (authService.loggedIn && !authService.user) {
@@ -47,20 +48,21 @@ angular.module('levelPad').controller('NavigationController', ['$scope', '$route
 	 */
 
     $scope.login = function() {
-		if ($location.path() === '/login' || $location.path() === '/signup') {
+		//if ($location.path() === '/login' || $location.path() === '/signup') {
+		if ($location.path() === '/login') {
 			$location.path('/login');
 		} else {
 			$scope.showLoginDialog();
 		}
     };
 
-	$scope.signup = function() {
+	/*$scope.signup = function() {
 		if ($location.path() === '/login' || $location.path() === '/signup') {
 			$location.path('/signup');
 		} else {
 			$scope.showSignupDialog();
 		}
-	};
+	};*/
 
     $scope.logout = function() {
         authService.logout();
