@@ -1,8 +1,9 @@
 var express = require('express'),
 	subjects = express.Router(),
 	Subject = require('../models/Subject'),
+	Module = require('../models/Module'),
 	helpers = require('./_helpers');
-	require('url');
+require('url');
 
 
 //subjects.use('/:slug/artifacts', require('./Artifacts'));
@@ -11,38 +12,50 @@ var express = require('express'),
  * Get all subjects
  */
 subjects.get('/', function (req, res) {
-	
-	//req.query.* doesn't work. Don't know the reason :(
-	console.log(req.query.year);
-	
-	if (req.query.year || req.query.semester || req.query.shortname) {
-
-		if (req.query.shortName) {
-			
-			//prepare parameter for subject-population
-			delete req.query.shortName;
-
-			params.match = {
-				shortName: req.query.shortName
-			};
-		}
+	if (req.query.year || req.query.semester || req.query.shortName) {
 		
+		//convert Semester shortname to langname
 		if (req.query.semester === 'sose')
 			req.query.semester = 'Sommersemester';
-		else if(req.query.semester === 'wise')
+		else if (req.query.semester === 'wise')
 			req.query.semester = 'Wintersemester';
 		else
-			delete req.query.semester;	
+			delete req.query.semester;
 
-		Subject.find(
-			req.query
-		).populate(
-			params
-		).exec(helpers.sendResult(res));
+		//Select ID from module-collection by shortname
+		if (req.query.shortName) {
+			Module.findByShortName(req.query.shortName, function (err, module) {
+				console.log('MODULE: ' + module);
+				if (err) {
+					console.error(err);
+					res.json(500, err);
+				} 
+				
+				else if (module) {
+					req.query.module = module._id;
+					delete req.query.shortName;
+
+				}
+				findSubjects(req, res);
+			});
+		}
+		else
+			findSubjects(req,res);
+
 	} else {
 		Subject.find().populate('module').exec(helpers.sendResult(res));
 	}
 });
+
+//Helper-Function
+function findSubjects(req, res) {
+	Subject.find(
+		req.query
+	).populate({
+		path: 'module',
+	}).exec(helpers.sendResult(res));
+
+}
 
 /**
  * Get one specific subject by slug (year-semester-module).
@@ -50,15 +63,6 @@ subjects.get('/', function (req, res) {
 subjects.get('/:slug', function (req, res) {
 	Subject.findOne(req.params.slug, helpers.sendResult(res));
 });
-
-/*subjects.get('/', function (req, res) {
-	Subject.findOne({
-		year: req.query.year,
-		semester: req.query.semester === 'sose' ? 'Sommersemester' : 'Wintersemester',
-		moduleShort: req.query.module
-	}, helpers.sendResult(res));
-});*/
-
 
 
 subjects.post('/', function (req, res) {
