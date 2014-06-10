@@ -6,9 +6,10 @@ var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
 var levelSchema = new Schema({
-	slug: { type: String, require: true, unique: true },
 	description: { type: String, required: true },
-	level: { type: Number, required: true }
+	level: { type: Number, required: true },
+	slug: { type: String, require: true},
+	title: {type: String, require: true}
 });
 
 
