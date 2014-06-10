@@ -40,7 +40,7 @@ function middleware(req, res, next) {
 
 		if (!reqResource) {
 			console.log('no resources matched');
-			res.json(403, {error: 'Forbidden'});
+			res.json(404, {error: 'Not found'});
 			return;
 		}
 
@@ -63,73 +63,151 @@ function middleware(req, res, next) {
 }
 
 db.connection.on('connected', function() {
-	// Define default permissions for resources
+	/**
+	 * Define default permissions for resources
+	 *
+		{resources: 'login', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+		{resources: 'logout', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+		{resources: 'users', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+		{resources: 'users/me', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+		{resources: 'users/:user', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+		{resources: 'subjects', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+		{resources: 'modules', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+		{resources: 'modules/:module', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+		{resources: 'modules/:module/subjects', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+		{resources: 'modules/:module/subjects/:subject', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+		{resources: 'modules/:module/subjects/:subject/tasks', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+		{resources: 'modules/:module/subjects/:subject/tasks/:task', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+		{resources: 'modules/:module/subjects/:subject/tasks/:task/teams', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+		{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+		{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team/feedbacks', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+		{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team/feedbacks/:feedback', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+	 */
+
 	acl.allow([
+		{
+			roles: ['public'],
+			allows: [
+				{resources: 'login', permissions: ['POST']},
+				{resources: 'logout', permissions: ['POST']},
+				{resources: 'users'},
+				{resources: 'users/me'},
+				{resources: 'users/:user'},
+				{resources: 'subjects'},
+				{resources: 'modules'},
+				{resources: 'modules/:module'},
+				{resources: 'modules/:module/subjects'},
+				{resources: 'modules/:module/subjects/:subject'},
+				{resources: 'modules/:module/subjects/:subject/tasks'},
+				{resources: 'modules/:module/subjects/:subject/tasks/:task'},
+				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams'},
+				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team'},
+				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team/feedbacks'},
+				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team/feedbacks/:feedback'},
+			]
+		},
 		{
 			roles: ['guest'],
 			allows: [
-				{resources: 'account'},
+				{resources: 'login', permissions: ['POST']},
+				{resources: 'logout', permissions: ['POST']},
 				{resources: 'users', permissions: ['POST']},
 				{resources: 'users/me'},
-				{resources: 'users/:username'},
+				{resources: 'users/:user'},
 				{resources: 'subjects'},
 				{resources: 'modules'},
-				{resources: 'artifacts'},
+				{resources: 'modules/:module'},
+				{resources: 'modules/:module/subjects'},
+				{resources: 'modules/:module/subjects/:subject'},
+				{resources: 'modules/:module/subjects/:subject/tasks'},
+				{resources: 'modules/:module/subjects/:subject/tasks/:task'},
+				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams'},
+				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team'},
+				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team/feedbacks'},
+				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team/feedbacks/:feedback'},
 			]
 		},
 		{
 			roles: ['student'],
 			allows: [
-				{resources: 'account', permissions: ['GET', 'PUT']},
+				{resources: 'login', permissions: ['POST']},
+				{resources: 'logout', permissions: ['POST']},
 				{resources: 'users'},
-				{resources: 'users/me', permissions: ['GET', 'PUT', 'POST']},
-				{resources: 'users/:username', permissions: ['GET', 'PUT', 'POST']},
-				{resources: 'subjects', permissions: ['GET']},
-				{resources: 'modules', permissions: ['GET']},
-				{resources: 'modules/:slug', permissions: ['GET']},
-				{resources: 'artifacts', permissions: ['GET']},
+				{resources: 'users/me', permissions: ['GET', 'PUT']},
+				{resources: 'users/:user'},
+				{resources: 'subjects'},
+				{resources: 'modules'},
+				{resources: 'modules/:module'},
+				{resources: 'modules/:module/subjects'},
+				{resources: 'modules/:module/subjects/:subject'},
+				{resources: 'modules/:module/subjects/:subject/tasks'},
+				{resources: 'modules/:module/subjects/:subject/tasks/:task'},
+				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams'},
+				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team'},
+				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team/feedbacks'},
+				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team/feedbacks/:feedback'},
 			]
 		},
 		{
 			roles: ['assistant'],
 			allows: [
-				{resources: 'account', permissions: ['GET', 'PUT']},
-				{resources: 'users', permissions: ['GET']},
-				{resources: 'users/me', permissions: ['GET', 'PUT', 'POST']},
-				{resources: 'users/:username', permissions: ['GET', 'PUT', 'POST']},
-				{resources: 'subjects', permissions: ['GET', 'PUT']},
-				{resources: 'subjects/:slug', permissions: ['GET', 'POST']},
-				{resources: 'modules', permissions: ['GET']},
-				{resources: 'modules/:slug', permissions: ['GET', 'POST']},
-				{resources: 'artifacts', permissions: ['GET']},
+				{resources: 'login', permissions: ['POST']},
+				{resources: 'logout', permissions: ['POST']},
+				{resources: 'users'},
+				{resources: 'users/me', permissions: ['GET', 'PUT']},
+				{resources: 'users/:user'},
+				{resources: 'subjects'},
+				{resources: 'modules/:module'},
+				{resources: 'modules/:module/subjects'},
+				{resources: 'modules/:module/subjects/:subject'},
+				{resources: 'modules/:module/subjects/:subject/tasks'},
+				{resources: 'modules/:module/subjects/:subject/tasks/:task'},
+				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams'},
+				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team'},
+				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team/feedbacks'},
+				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team/feedbacks/:feedback'},
 			]
 		},
 		{
 			roles: ['lecturer'],
 			allows: [
-				{resources: 'account', permissions: ['GET', 'PUT']},
-				{resources: 'users', permissions: ['GET']},
-				{resources: 'users/me', permissions: ['GET', 'PUT', 'POST']},
-				{resources: 'users/:username', permissions: ['GET', 'PUT', 'POST']},
-				{resources: 'subjects', permissions: ['GET', 'POST',]},
-				{resources: 'subjects/:slug', permissions: ['GET', 'POST']},
-				{resources: 'modules', permissions: ['GET', 'POST', 'PUT', 'DELETE']},
-				{resources: 'modules/:slug', permissions: ['GET', 'POST']},
-				{resources: 'subjects', permissions: ['GET', 'POST', 'PUT', 'DELETE']},
+				{resources: 'login', permissions: ['POST']},
+				{resources: 'logout', permissions: ['POST']},
+				{resources: 'users'},
+				{resources: 'users/me', permissions: ['GET', 'PUT']},
+				{resources: 'users/:user'},
+				{resources: 'subjects'},
+				{resources: 'modules/'},
+				{resources: 'modules/:module'},
+				{resources: 'modules/:module/subjects'},
+				{resources: 'modules/:module/subjects/:subject'},
+				{resources: 'modules/:module/subjects/:subject/tasks'},
+				{resources: 'modules/:module/subjects/:subject/tasks/:task'},
+				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams'},
+				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team'},
+				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team/feedbacks'},
+				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team/feedbacks/:feedback'},
 			]
 		},
 		{
 			roles: ['administrator'],
 			allows: [
-				{resources: 'account', permissions: ['GET', 'PUT']},
-				{resources: 'users', permissions: ['GET', 'POST', 'PUT', 'DELETE']},
-				{resources: 'users/me', permissions: ['GET', 'PUT', 'POST']},
-				{resources: 'users/:username', permissions: ['GET', 'PUT', 'POST']},
-				{resources: 'subjects', permissions: ['GET', 'POST', 'PUT', 'DELETE']},
-				{resources: 'subjects/:slug', permissions: ['GET', 'POST', 'PUT', 'DELETE']},
-				{resources: 'modules', permissions: ['GET', 'POST', 'PUT', 'DELETE']},
-				{resources: 'modules/:slug', permissions: ['GET', 'POST', 'PUT', 'DELETE']},
-				{resources: 'artifacts', permissions: ['GET', 'POST', 'PUT', 'DELETE']},
+				{resources: 'login', permissions: ['POST']},
+				{resources: 'logout', permissions: ['POST']},
+				{resources: 'users', permissions: ['GET', 'POST']},
+				{resources: 'users/me', permissions: ['GET', 'PUT']},
+				{resources: 'users/:user', permissions: ['GET', 'PUT', 'DELETE']},
+				{resources: 'subjects', permissions: ['GET']},
+				{resources: 'modules/', permissions: ['GET', 'POST']},
+				{resources: 'modules/:module', permissions: ['GET', 'PUT', 'DELETE']},
+				{resources: 'modules/:module/subjects', permissions: ['GET', 'POST']},
+				{resources: 'modules/:module/subjects/:subject', permissions: ['GET', 'PUT', 'DELETE']},
+				{resources: 'modules/:module/subjects/:subject/tasks', permissions: ['GET', 'POST']},
+				{resources: 'modules/:module/subjects/:subject/tasks/:task', permissions: ['GET', 'PUT', 'DELETE']},
+				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams', permissions: ['GET', 'POST', 'DELETE']},
+				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team', permissions: ['GET', 'POST', 'DELETE']},
+				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team/feedbacks', permissions: ['GET', 'POST', 'DELETE']},
+				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team/feedbacks/:feedback', permissions: ['GET', 'PUT', 'DELETE']},
 			]
 		}
 	]);
