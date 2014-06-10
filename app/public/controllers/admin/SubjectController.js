@@ -44,6 +44,7 @@ angular.module('levelPad').controller('AdminSubjectController', ['$scope', 'Modu
 	};
 
 	$scope.save = function() {
+		console.log('save:', $scope.subject);
 		$scope.subject.$save(function() {
 			$scope.hideDialog();
 			$scope.update();

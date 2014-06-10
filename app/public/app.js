@@ -61,50 +61,56 @@ app.config(function ($routeProvider, $locationProvider) {
 	// Maybe we could make this later part of the homescreen...
 	// Or we show a "whats new" timeline there?
 	$routeProvider.when('/modules', {
-		templateUrl: 'views/modules.html',
-		controller: 'ModuleController'
+		templateUrl: 'views/modules/index.html',
+		controller: 'ModulesController'
 	});
+
 	// MAGIC RULES!!!!!!!
 	$routeProvider.when('/:module', {
-		templateUrl: 'views/subjects.html',
-		controller: 'SubjectController'
+		templateUrl: 'views/modules/show.html',
+		controller: 'ModulesController'
 	});
+
 	$routeProvider.when('/:module/:subject', {
-		templateUrl: 'views/subject.html',
-		controller: 'SubjectController'
+		templateUrl: 'views/subjects/index.html',
+		controller: 'SubjectsController'
 	});
 
 	$routeProvider.when('/:module/:subject/tasks', {
-		templateUrl: 'views/subject.html',
-		controller: 'SubjectController'
+		templateUrl: 'views/subjects/index.html',
+		controller: 'SubjectsController'
+	});
+	$routeProvider.when('/:module/:subject/tasks/new', {
+		templateUrl: 'views/tasks/edit.html',
+		controller: 'TasksController'
 	});
 	$routeProvider.when('/:module/:subject/tasks/:task', {
-		templateUrl: 'views/subject.html',
-		controller: 'SubjectController'
+		templateUrl: 'views/subjects/index.html',
+		controller: 'SubjectsController'
 	});
 	$routeProvider.when('/:module/:subject/teams', {
-		templateUrl: 'views/subject.html',
-		controller: 'SubjectController'
+		templateUrl: 'views/subjects/index.html',
+		controller: 'SubjectsController'
 	});
 	$routeProvider.when('/:module/:subject/teams/:team', {
-		templateUrl: 'views/subject.html',
-		controller: 'SubjectController'
+		templateUrl: 'views/subjects/index.html',
+		controller: 'SubjectsController'
 	});
 	$routeProvider.when('/:module/:subject/students', {
-		templateUrl: 'views/subject.html',
-		controller: 'SubjectController'
+		templateUrl: 'views/subjects/index.html',
+		controller: 'SubjectsController'
 	});
 	$routeProvider.when('/:module/:subject/students/:student', {
-		templateUrl: 'views/subject.html',
-		controller: 'SubjectController'
+		templateUrl: 'views/subjects/index.html',
+		controller: 'SubjectsController'
 	});
 	$routeProvider.when('/:module/:subject/assistants', {
-		templateUrl: 'views/subject.html',
-		controller: 'SubjectController'
+		templateUrl: 'views/subjects/index.html',
+		controller: 'SubjectsController'
 	});
 	$routeProvider.when('/:module/:subject/assistants/:assistant', {
-		templateUrl: 'views/subject.html',
-		controller: 'SubjectController'
+		templateUrl: 'views/subjects/index.html',
+		controller: 'SubjectsController'
 	});
 
 	// Fallback

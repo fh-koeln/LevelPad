@@ -9,7 +9,7 @@ api.use(acl.middleware);
 
 api.use('/modules', require('../resources/modules'));
 api.use('/subjects', require('../resources/Subjects'));
-api.use('/users', require('../resources/Users'));
+api.use('/users', require('../resources/users'));
 
 var routes = express.Router();
 routes.use('/api', api);

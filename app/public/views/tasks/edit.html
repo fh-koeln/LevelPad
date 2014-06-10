@@ -1,0 +1,65 @@
+<ol class="breadcrumb">
+	<li><a href="/modules">Modules</a></li>
+	<li><a href="/{{ module.slug }}">{{ module.name }}</a></li>
+	<li><a href="/{{ module.slug }}">{{ subject.semester }} {{ subject.year }}</a></li>
+	<li class="active">New Task</li>
+</ol>
+
+<ul class="nav nav-tabs">
+	<li class="active"><a href="#tasks" target="_self" data-toggle="tab">Tasks</a></li>
+	<li><a href="#teams" target="_self" data-toggle="tab">Teams</a></li>
+	<li><a href="#students" target="_self" data-toggle="tab">Students</a></li>
+	<li><a href="#assistants" target="_self" data-toggle="tab">Assistants</a></li>
+</ul>
+
+<p></p>
+
+<ul class="nav nav-pills">
+	<li class="active"><a data-ng-href="{{ '/' + module.slug + '/' + subject.slug + '/tasks' }}">New task</a></li>
+</ul>
+
+<p></p>
+
+<form role="form" data-ng-submit="login($event)">
+
+	<div class="form-group">
+		<label for="username" class="control-label">Title:</label>
+		<input type="text" id="username"
+			   name="username"
+			   required="required" autofocus="autofocus"
+			   class="form-control"
+			   data-ng-model="task.title" />
+	</div>
+	<div class="form-group">
+		<label for="description" class="control-label">Description:</label>
+		<textarea id="description"
+			   name="description"
+			   required="required"
+			   class="form-control"
+			   data-ng-model="task.description"></textarea>
+	</div>
+
+	<h4>Levels</h4>
+
+	<button type="button" class="btn btn-default" data-ng-click="levels.push({})">Add level</button>
+
+	<div data-ng-repeat="level in levels">
+		<div class="form-group">
+			<label for="username" class="control-label">Title:</label>
+			<input type="text" id="username"
+				   name="username"
+				   required="required" autofocus="autofocus"
+				   class="form-control"
+				   data-ng-model="level.title" />
+		</div>
+		<div class="form-group">
+			<label for="description" class="control-label">Description:</label>
+			<textarea id="description"
+					  name="description"
+					  required="required"
+					  class="form-control"
+					  data-ng-model="level.description"></textarea>
+		</div>
+	</div>
+
+</form>

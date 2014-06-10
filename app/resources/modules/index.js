@@ -65,9 +65,8 @@ modules.delete('/:slug', function (req, res) {
 /**
  * Get all modules
  */
-modules.param(':moduleSlug', function (req, res, next, moduleSlug) {
-	console.log('PARAMS !!!! ');
-	Module.find({ slug: moduleSlug }, function(err, module) {
+modules.param(':slug', function (req, res, next, slug) {
+	Module.find({ slug: slug }, function(err, module) {
 		if (err) {
 			next(err);
 		} else {
@@ -77,6 +76,6 @@ modules.param(':moduleSlug', function (req, res, next, moduleSlug) {
 	});
 });
 
-modules.use('/subjects', require('./subjects'));
+modules.use('/:slug/subjects', require('./subjects'));
 
 module.exports = modules;

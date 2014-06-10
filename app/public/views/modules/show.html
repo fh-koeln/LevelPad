@@ -1,6 +1,6 @@
 <ol class="breadcrumb">
 	<li><a href="/modules">Modules</a></li>
-	<li class="active">{{ subject.module.name }}</li>
+	<li class="active">{{ module.name }}</li>
 </ol>
 
 <!--
@@ -18,8 +18,8 @@
 
 <table class="table table-striped table-hover">
 	<tr data-ng-repeat="subject in subjects">
-		<td data-ng-click="go(  '/' + subject.module.slug + '/' + subject.slug )">
-			<h4><a data-ng-href="{{ '/' + subject.module.slug + '/' + subject.slug }}">{{ subject.semester }} {{ subject.year }}</a></h4>
+		<td data-ng-click="go(  '/' + module.slug + '/' + subject.slug )">
+			<h4><a data-ng-href="{{ '/' + module.slug + '/' + subject.slug }}">{{ subject.semester }} {{ subject.year }}</a></h4>
 			<span>44 Students</span>
 			<span class="label label-success" data-ng-show="subject.year == 2014">active</span>
 			<span class="label label-warning" data-ng-hide="subject.year == 2014">inactive</span>
