@@ -1,6 +1,6 @@
 /* global angular, alert */
 
-angular.module('levelPad').controller('ModuleController', ['$scope', 'Module', function ($scope, Module) {
+angular.module('levelPad').controller('ModuleListController', ['$scope', 'Module', function ($scope, Module) {
 	'use strict';
 
 	$scope.update = function() {
