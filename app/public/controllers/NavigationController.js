@@ -28,7 +28,7 @@ angular.module('levelPad').controller('NavigationController', ['$scope', '$route
 	};
 
 	authService.$watch(function(user) {
-		console.log('logged in: ' + authService.loggedIn + ' -- user: ' + authService.user)
+		console.log('logged in: ' + authService.loggedIn + ' -- user: ' + authService.user);
 		if (authService.loggedIn && authService.user) {
 			// Is logged in
 			$scope.hideLoginDialog();

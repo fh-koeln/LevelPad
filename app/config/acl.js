@@ -25,7 +25,7 @@ function middleware(req, res, next) {
 		console.log('get resources');
 		var keys, regexp, isMatch, resource, reqResource = '',
 			originalUrl = req.originalUrl,
-			apiPath = originalUrl.replace(/\/?api\/?/, '');
+			apiPath = originalUrl.replace(/\/?api\/?/, '').split('?')[0];
 
 		for (resource in resources) {
 			keys = [];
