@@ -1,31 +1,18 @@
 /* global angular, alert */
 
-angular.module('levelPad').controller('SubjectsController', ['$scope', '$routeParams', '$location', '$log', 'Module', 'Subject', function ($scope, $routeParams, $location, $log, Module, Subject) {
+angular.module('levelPad').controller('SubjectsController', [
+	'$scope', '$routeParams', '$location', '$log', 'Module', 'Subject', 'CurrentModule', 'CurrentSubject',
+	function ($scope, $routeParams, $location, $log, Module, Subject, CurrentModule, CurrentSubject) {
 	'use strict';
-
-	console.log('SubjectsController: routeParams:', $routeParams);
+	$scope.module = CurrentModule;
+	$scope.subject = CurrentSubject;
 
 	$scope.go = function(path) {
 		$location.path(path);
 	};
 
 	$scope.update = function() {
-		Module.get({
-			module: $routeParams.module
-		}, function(module) {
-			$scope.module = module;
-		}, function() {
-			alert('Could not load module.');
-		});
 
-		Subject.get({
-			module: $routeParams.module,
-			subject: $routeParams.subject
-		}, function(subject) {
-			$scope.subject = subject;
-		}, function() {
-			alert('Could not load subject.');
-		});
 	};
 	$scope.update();
 
