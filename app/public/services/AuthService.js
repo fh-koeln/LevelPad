@@ -1,34 +1,11 @@
 
-angular.module('levelPad').service('AuthService', ['$rootScope', '$http', '$cookieStore', '$log', function($rootScope, $http, $cookieStore, $log) {
+angular.module('levelPad').service('AuthService', ['$rootScope', '$http', '$log', function($rootScope, $http, $log) {
 
 	var $scope = $rootScope;//.$new();
 
 	// We don't know if we are already logged in!
 	$scope.loggedIn = null;
 	$scope.user = null;
-
-	/**
-	 * Monitor ALL AngularJS HTTP communication and trigger that we are logged out
-	 * if we receive an 401 or 403 status code on one these connections.
-	 */
-	angular.module('levelPad').config(['$httpProvider', function($httpProvider) {
-		$httpProvider.interceptors.push(function($q) {
-			return {
-				'responseError': function(response) {
-					if (response.status === 401) {
-						console.error('Detect authentitication error ' +
-								response.status + ' in server response!' +
-								' Automatically logout the user!');
-						$scope.loggedIn = false;
-					} else if ( response.status === 403) {
-						console.error('Detect access error ' +
-								response.status + ' in server response!');
-					}
-					return $q.reject(response);
-				}
-			};
-		});
-	}]);
 
 	$scope.verifyStatus = function(callback) {
 		$log.log('Get current account...');
