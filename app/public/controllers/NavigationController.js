@@ -36,11 +36,13 @@ angular.module('levelPad').controller('NavigationController', ['$scope', '$route
 			if (authService.user.role === 'guest') {
 				$scope.signup();
 			} else {
-				if ($location.path() === '/' || $location.path() === '/login' || $location.path() === '/signup' || $location.path() === '/logout') {
+				$scope.hideSignupDialog();
+
+				if ($location.path() === '/login' || $location.path() === '/signup') {
 					$location.path('/');
 				}
 			}
-		} else if (!authService.loggedIn || !authService.user) {
+		} else if ( (!authService.loggedIn || !authService.user) && $location.path() !== '/') {
 			// Should be logged in
 			$scope.login();
 		}
@@ -51,10 +53,6 @@ angular.module('levelPad').controller('NavigationController', ['$scope', '$route
 	 */
 
 	$scope.login = function() {
-		if ($location.path() === '/') {
-			return;
-		}
-
 		if ($location.path() === '/login' || $location.path() === '/signup') {
 			$location.path('/login');
 		} else {
@@ -72,6 +70,7 @@ angular.module('levelPad').controller('NavigationController', ['$scope', '$route
 
 	$scope.logout = function() {
 		authService.logout();
+		$location.path('/');
 	};
 
 	/**
