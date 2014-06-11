@@ -13,12 +13,11 @@ module.exports = function(app) {
 	app.use(require('morgan')(env === 'development' ? 'dev' : undefined));
 
 	// Basic request processing:
-	// TODO secrets
-	app.use(require('cookie-parser')('cookie secret'));
+	app.use(require('cookie-parser')(process.env.COOKIE_SECRET || 'H2YlmVI=srH5DCw4xKA(IA4YZ|Gr4gutt|Lh0WD:'));
 	var session = require('express-session');
 	var MongoStore = require('connect-mongo')(session);
 	app.use(session({
-		secret: 'session secret',
+		secret: process.env.SESSION_SECRET || '&Rd65y($lbBh}=)N{U}uBL&3BXitK$G2h@C8mpew',
 		store: new MongoStore({ url: require('./db').url })
 	}));
 	app.use(require('body-parser')());
