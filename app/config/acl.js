@@ -17,10 +17,6 @@ module.exports.middleware = function middleware(req, res, next) {
 		return;
 	}
 
-	// TODO: Move to model
-	req.user.role = req.user.role || 'public';
-	console.log( 'Access check for ' + req.user.username + ' with role ' + req.user.role );
-
 	// Get all resources by current user role and compare to current path
 	acl.whatResources(req.user.role, function(err, resources) {
 		if (err) {
@@ -58,7 +54,7 @@ module.exports.middleware = function middleware(req, res, next) {
 			if (result) {
 				next();
 			} else {
-				console.log(req.user.username + ' with role ' + req.user.role + ' is not allowed for acess resource ' + reqResource + ' via ' + req.method );
+				console.log(req.user.username + ' with role ' + req.user.role + ' is not allowed to access resource ' + reqResource + ' via ' + req.method );
 				res.json(403, {error: 'Forbidden'});
 				return;
 			}

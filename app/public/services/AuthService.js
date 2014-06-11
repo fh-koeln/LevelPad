@@ -15,11 +15,14 @@ angular.module('levelPad').service('AuthService', ['$rootScope', '$http', '$cook
 		$httpProvider.interceptors.push(function($q) {
 			return {
 				'responseError': function(response) {
-					if (response.status === 401 || response.status === 403) {
+					if (response.status === 401) {
 						console.error('Detect authentitication error ' +
 								response.status + ' in server response!' +
 								' Automatically logout the user!');
 						$scope.loggedIn = false;
+					} else if ( response.status === 403) {
+						console.error('Detect access error ' +
+								response.status + ' in server response!');
 					}
 					return $q.reject(response);
 				}
@@ -51,24 +54,20 @@ angular.module('levelPad').service('AuthService', ['$rootScope', '$http', '$cook
 	};
 
 	$scope.login = function(user, callback) {
-		$log.log('Login user ' + user.username + '...');
+		$('#loginErrorMessage').addClass('hidden');
 
 		$http({
 			method: 'POST',
 			url: '/api/login',
 			data: user
 		}).success(function(response) {
-			// We will receive the login mask here if the login failed.
-			// So we also check if we could get the current user information now...
-
-			$log.log(response);
-			if (response && response.role === 'guest') {
-				$('#loginDialog').modal('hide');
-				$('#signupDialog').modal();
-			} else {
+			$scope.loggedIn = true;
+			$scope.user = response;
+			if (response && response.role !== 'guest') {
 				$scope.verifyStatus(callback);
 			}
 		}).error(function(response) {
+			$('#loginErrorMessage').removeClass('hidden');
 			$log.error('Login failed!');
 			$log.error(response);
 			$scope.loggedIn = false;

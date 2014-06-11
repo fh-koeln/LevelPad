@@ -45,7 +45,11 @@ var checkCredentials = function(username, password, callback) {
 		});
 
 		// Promise-Handler if login failed
-		imap.once('error', callback);
+		//imap.once('error', callback);
+		imap.once('error', function(err) {
+			console.log(err);
+			callback(err);
+		});
 	});
 };
 

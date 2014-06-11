@@ -23,7 +23,7 @@
 				</ul>
 			</li>
 			<li class="dropdown" data-ng-show="loggedIn === true">
-				<a class="dropdown-toggle" data-toggle="dropdown"><span data-ng-bind="user.firstname"></span> <small data-ng-bind="'(' + user.role + ')'"></small> <b class="caret"></b></a>
+				<a class="dropdown-toggle" data-toggle="dropdown"><span data-ng-bind="user.firstname || user.username"></span> <small data-ng-bind="'(' + user.role + ')'"></small> <b class="caret"></b></a>
 				<ul class="dropdown-menu">
 					<li data-ng-class="{ active: $location.path() == '/account' }"><a data-ng-href="/account">Account</a></li>
 					<li><a href="/logout" data-ng-click="logout(); $event.preventDefault();">Logout</a></li>

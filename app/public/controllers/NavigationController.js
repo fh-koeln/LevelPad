@@ -1,7 +1,7 @@
 angular.module('levelPad').controller('NavigationController', ['$scope', '$route', '$location', '$log', 'AuthService', function ($scope, $route, $location, $log, authService) {
-    'use strict';
+	'use strict';
 
-    $scope.$location = $location;
+	$scope.$location = $location;
 
 	/**
 	 * Manages the login / signup dialogs
@@ -27,19 +27,22 @@ angular.module('levelPad').controller('NavigationController', ['$scope', '$route
 		$('#signupDialog').modal('hide');
 	};
 
-	authService.$watch(function(user) {
+	authService.$watch(function() {
 		console.log('logged in: ' + authService.loggedIn + ' -- user: ' + authService.user);
 		if (authService.loggedIn && authService.user) {
 			// Is logged in
 			$scope.hideLoginDialog();
-			$scope.hideSignupDialog();
-			//if ($location.path() === '/' || $location.path() === '/login' || $location.path() === '/signup' || $location.path() === '/logout') {
-			if ($location.path() === '/' || $location.path() === '/login' || $location.path() === '/logout') {
-				$location.path('/');
+
+			if (authService.user.role === 'guest') {
+				$scope.signup();
+			} else {
+				if ($location.path() === '/' || $location.path() === '/login' || $location.path() === '/signup' || $location.path() === '/logout') {
+					$location.path('/');
+				}
 			}
-		} else if (authService.loggedIn && !authService.user) {
+		} else if (!authService.loggedIn || !authService.user) {
 			// Should be logged in
-			$scope.showLoginDialog();
+			$scope.login();
 		}
 	});
 
@@ -47,26 +50,29 @@ angular.module('levelPad').controller('NavigationController', ['$scope', '$route
 	 * Handles the navigation buttons and open the login / signup dialogs.
 	 */
 
-    $scope.login = function() {
-		//if ($location.path() === '/login' || $location.path() === '/signup') {
-		if ($location.path() === '/login') {
+	$scope.login = function() {
+		if ($location.path() === '/') {
+			return;
+		}
+
+		if ($location.path() === '/login' || $location.path() === '/signup') {
 			$location.path('/login');
 		} else {
 			$scope.showLoginDialog();
 		}
-    };
+	};
 
-	/*$scope.signup = function() {
+	$scope.signup = function() {
 		if ($location.path() === '/login' || $location.path() === '/signup') {
 			$location.path('/signup');
 		} else {
 			$scope.showSignupDialog();
 		}
-	};*/
+	};
 
-    $scope.logout = function() {
-        authService.logout();
-    };
+	$scope.logout = function() {
+		authService.logout();
+	};
 
 	/**
 	 * Automatically load the current user status to update the navigation bar fields.
