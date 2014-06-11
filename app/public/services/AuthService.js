@@ -1,5 +1,5 @@
 
-angular.module('levelPad').service('AuthService', ['$rootScope', '$http', '$cookieStore', '$log', function($rootScope, $http, $cookieStore, $log) {
+angular.module('levelPad').service('AuthService', ['$rootScope', '$http', '$cookieStore', '$log', 'AlertService', function($rootScope, $http, $cookieStore, $log, AlertService) {
 
 	var $scope = $rootScope;//.$new();
 
@@ -54,8 +54,6 @@ angular.module('levelPad').service('AuthService', ['$rootScope', '$http', '$cook
 	};
 
 	$scope.login = function(user, callback) {
-		$('#loginErrorMessage').addClass('hidden');
-
 		$http({
 			method: 'POST',
 			url: '/api/login',
@@ -67,7 +65,7 @@ angular.module('levelPad').service('AuthService', ['$rootScope', '$http', '$cook
 				$scope.verifyStatus(callback);
 			}
 		}).error(function(response) {
-			$('#loginErrorMessage').removeClass('hidden');
+			AlertService.showError('Die Anmeldung ist fehlgeschlagen. Bitte versuchen Sie es erneut.');
 			$log.error('Login failed!');
 			$log.error(response);
 			$scope.loggedIn = false;

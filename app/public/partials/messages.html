@@ -1,0 +1,6 @@
+<div data-ng-controller="AlertController">
+	<div data-ng-repeat="alert in alerts" data-ng-class="alert.class">
+		<button data-ng-click="alertService.hide($index)" type="button" class="close" aria-hidden="true">&times;</button>
+		<span data-ng-bind="alert.message"></span>
+	</div>
+</div>

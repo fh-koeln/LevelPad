@@ -34,11 +34,15 @@
 			<div data-ng-include="'views/auth/signup-dialog.html'"></div>
 		</div>
 
+		<div data-ng-include="'partials/messages.html'" class="container"></div>
+
 		<div class="container" data-ng-view=""></div>
 
         <script src="app.js"></script>
 		<script src="api.js"></script>
-        <script src="services/AuthService.js"></script>
+		<script src="services/AlertService.js"></script>
+		<script src="services/AuthService.js"></script>
+		<script src="controllers/AlertController.js"></script>
         <script src="controllers/NavigationController.js"></script>
 		<script src="controllers/MainController.js"></script>
 		<script src="controllers/UserController.js"></script>
