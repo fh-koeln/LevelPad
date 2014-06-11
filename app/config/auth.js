@@ -121,38 +121,6 @@ module.exports = function(app) {
 	app.use(passport.session());
 
 	/**
-	 * POST /api/signup create an new user (register the user itself).
-	 */
-	/*app.post('/api/signup', function(req, res) {
-		console.log('Register: ' + req.body.username);
-
-		// TODO: Simplify code with async.js!
-
-		User.findByUsername(req.body.username, function(err, user) {
-			if (err) {
-				res.json(500, err);
-			} else if (user) {
-				res.json(400, { message: 'User already exist.' });
-			} else {
-				checkCredentials(req.body.username, req.body.password, function(err) {
-					if (err) {
-						res.json(403, err);
-					} else {
-						delete req.body.password;
-						new User(req.body).save(function(err, user) {
-							if (err) {
-								res.json(500, err);
-							} else {
-								res.json(200, user);
-							}
-						});
-					}
-				});
-			}
-		});
-	});*/
-
-	/**
 	 * POST /login validates the login
 	 *
 	 * Use passport.authenticate() as route middleware to authenticate the
@@ -160,7 +128,6 @@ module.exports = function(app) {
 	 * login page.  Otherwise, the primary route function function will be called,
 	 * which, in this example, will redirect the user to the home page.
 	 *
-	 * curl -v -d "username=bob&password=secret" http://127.0.0.1:3000/login
 	 */
 	app.post('/api/login', passport.authenticate('fh-imap'), function(req, res) {
 		res.json(200, req.user);

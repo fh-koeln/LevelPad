@@ -6,6 +6,7 @@
 	"scripts": {
 		"postinstall": "bower install",
 		"run": "node server.js",
+		"run-auto": "nodemon --delay 2.5 --ignore app/public server.js",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"repository": {

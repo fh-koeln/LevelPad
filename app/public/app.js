@@ -11,7 +11,54 @@ app.config(['$logProvider', function($logProvider) {
 	$logProvider.debugEnabled(true);
 }]);
 
+app.factory('httpErrorInterceptor', ['$q', '$rootScope', '$location', function($q, $rootScope, $location) {
+
+	return {
+		'responseError': function(response) {
+			if (response.status === 401) {
+				console.error('Authentitication error in server response detected!' +
+						' Automatically logout the user!');
+				$rootScope.loggedIn = false;
+			} else if ( response.status === 403) {
+				console.error('Access error in server response detected!');
+				$location.path('/403');
+			} else if ( response.status === 404) {
+				console.error('Not found error in server response detected!');
+				$location.path('/404');
+			} else if ( response.status === 500) {
+				console.error('Server error in server response detected!');
+				$location.path('/500');
+			} else if ( response.status === 503) {
+				console.error('Server is not available');
+				$location.path('/503');
+			}
+
+			return $q.reject(response);
+		}
+	};
+}]);
+
+
+app.config(['$httpProvider', function($httpProvider) {
+	$httpProvider.interceptors.push('httpErrorInterceptor');
+}]);
+
 app.config(function ($routeProvider, $locationProvider) {
+
+	// Errors
+
+	$routeProvider.when('/403', {
+		templateUrl: 'views/errors/403.html',
+	});
+	$routeProvider.when('/404', {
+		templateUrl: 'views/errors/404.html',
+	});
+	$routeProvider.when('/500', {
+		templateUrl: 'views/errors/500.html',
+	});
+	$routeProvider.when('/503', {
+		templateUrl: 'views/errors/503.html',
+	});
 
 	// Login / Signup / Logout
 
