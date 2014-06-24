@@ -2,7 +2,10 @@
 
 var express = require('express'),
 	path = require('path'),
-	helmet = require('helmet');
+	helmet = require('helmet'),
+	bodyParser = require('body-parser'),
+	session = require('express-session'),
+	MongoStore = require('connect-mongo')(session);
 
 /**
  * Express configuration
@@ -15,13 +18,11 @@ module.exports = function(app) {
 
 	// Basic request processing:
 	app.use(require('cookie-parser')(process.env.COOKIE_SECRET || 'H2YlmVI=srH5DCw4xKA(IA4YZ|Gr4gutt|Lh0WD:'));
-	var session = require('express-session');
-	var MongoStore = require('connect-mongo')(session);
 	app.use(session({
 		secret: process.env.SESSION_SECRET || '&Rd65y($lbBh}=)N{U}uBL&3BXitK$G2h@C8mpew',
 		store: new MongoStore({ url: require('./db').url })
 	}));
-	app.use(require('body-parser')());
+	app.use(bodyParser.json());
 	app.use(require('connect-timeout')(10 * 1000));
 
 	// Live reload
