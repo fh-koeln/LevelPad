@@ -158,7 +158,7 @@ app.config(function($routeProvider, $locationProvider) {
 	$locationProvider.html5Mode(true);
 });
 
-app.run(function($rootScope, AuthService, AUTH_EVENTS) {
+app.run(function($rootScope, AuthService, AUTH_EVENTS, $location) {
 
 	AuthService.refresh().then(function() {
 		$rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
@@ -167,6 +167,10 @@ app.run(function($rootScope, AuthService, AUTH_EVENTS) {
 	});
 
 	$rootScope.$on('$locationChangeStart', function(event) {
+		if ($location.path() === '/login' || $location.path() === '/logout') {
+			return;
+		}
+
 		AuthService.refresh().then(function() {
 			// Authentifizierung war erfolgreich
 		}, function() {
