@@ -19,7 +19,6 @@ angular.module('levelPad').controller('NavigationController', ['$scope', '$rootS
 	/**
 	 * Handles the navigation buttons and open the login / signup dialogs.
 	 */
-
 	$scope.login = function() {
 		if ($location.path() !== '/login') {
 			$location.path('/login');

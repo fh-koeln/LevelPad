@@ -2,13 +2,22 @@ angular.module('levelPad').factory('AuthService', function ($http, Session) {
 	return {
 		login: function(credentials) {
 			return $http({
-					method: 'POST',
-					url: '/api/login',
-					data: credentials
-				})
-				.then(function(res) {
-					Session.create(Date.now(), res.data);
-				});
+				method: 'POST',
+				url: '/api/login',
+				data: credentials
+			})
+			.then(function(res) {
+				Session.create(Date.now(), res.data);
+			});
+		},
+
+		refresh: function() {
+			return $http({
+				method: 'GET',
+				url: '/api/users/me'
+			}).then(function(res) {
+				Session.create(Date.now(), res.data);
+			});
 		},
 
 		logout: function() {

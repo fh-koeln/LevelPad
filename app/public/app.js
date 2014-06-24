@@ -11,7 +11,7 @@ app.config(['$logProvider', function($logProvider) {
 	$logProvider.debugEnabled(true);
 }]);
 
-/*app.factory('httpErrorInterceptor', ['$q', '$rootScope', '$location', function($q, $rootScope, $location) {
+app.factory('httpErrorInterceptor', ['$q', '$rootScope', '$location', function($q, $rootScope, $location) {
 
 	return {
 		'responseError': function(response) {
@@ -40,7 +40,7 @@ app.config(['$logProvider', function($logProvider) {
 
 app.config(['$httpProvider', function($httpProvider) {
 	$httpProvider.interceptors.push('httpErrorInterceptor');
-}]);*/
+}]);
 
 app.config(function($routeProvider, $locationProvider) {
 	// Errors
