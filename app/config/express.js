@@ -1,7 +1,8 @@
 'use strict';
 
-var express = require('express');
-var path = require('path');
+var express = require('express'),
+	path = require('path'),
+	helmet = require('helmet');
 
 /**
  * Express configuration
@@ -44,6 +45,13 @@ module.exports = function(app) {
 	if (env === 'production') {
 		app.use(require('compression')());
 	}
+
+	// Security
+	app.use(helmet.iexss());
+	app.use(helmet.contentTypeOptions());
+	app.use(helmet.xframe('sameorigin'));
+	app.use(helmet.hidePoweredBy());
+	app.use(helmet.hsts({ maxAge: 1000 * 60 * 60 * 24 })); // 24 hours
 
 	// Static resources
 	//app.use(express.favicon(path.join(__dirname, '../public', 'favicon.ico')));
