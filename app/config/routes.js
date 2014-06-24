@@ -17,7 +17,12 @@ routes.use('/api', api);
 
 /* GET home page for. */
 routes.get('/*', function(req, res) {
-    res.sendfile('index.html', { root: __dirname + '/../public' });
+	console.log(req.path);
+	if (req.path.indexOf('/views/') === 0) {
+		res.send(200, 'Illegal path: ' + req.path);
+	} else {
+		res.sendfile('index.html', { root: __dirname + '/../public' });
+	}
 });
 
 module.exports = routes;

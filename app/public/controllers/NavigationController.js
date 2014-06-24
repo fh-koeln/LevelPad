@@ -34,11 +34,9 @@ angular.module('levelPad').controller('NavigationController', ['$scope', '$rootS
 	};
 
 	$scope.logout = function() {
-		AuthService.logout().then(function() {
-			$rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
-		}, function() {
-			$rootScope.$broadcast(AUTH_EVENTS.logoutFailed);
-		});
+		if ($location.path() !== '/logout') {
+			$location.path('/logout');
+		}
 	};
 
 }]);

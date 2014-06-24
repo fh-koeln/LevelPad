@@ -68,3 +68,56 @@
 		</table>
 	</div>
 </div>
+
+
+
+
+<div class="row">
+	<div class="col-md-6">
+		<h2 style="display: inline;">Subjects</h2>
+		<button data-ng-click="showCreateDialog();" class="btn btn-lg btn-link glyphicon glyphicon-plus" style="padding: 0 0 10px 8px;"></button>
+	</div>
+	<div class="col-md-offset-2 col-md-4">
+		<input type="text" placeholder="Filter" data-ng-model="searchText" autocomplete="off" autofocus="autofocus" class="form-control" />
+	</div>
+</div>
+
+<table class="table table-striped" ng-init="predicate='name'; reverse=false;">
+	<thead>
+	<tr>
+		<th class="col-md-2">
+			Kurzname
+			<button class="btn glyphicon glyphicon-chevron-up" data-ng-click="predicate='shortName'; reverse=false;" data-ng-class="{ 'btn-link': predicate != 'shortName' || !reverse }"></button>
+			<button class="btn glyphicon glyphicon-chevron-down" data-ng-click="predicate='shortName'; reverse=true;" data-ng-class="{ 'btn-link': predicate != 'shortName' || reverse }"></button>
+		</th>
+		<th class="col-md-4">
+			Name
+			<span class="glyphicon glyphicon-chevron-up"></span>
+			<span class="glyphicon glyphicon-chevron-down"></span>
+		</th>
+		<th class="col-md-2">
+			Semester
+			<span class="glyphicon glyphicon-chevron-up"></span>
+			<span class="glyphicon glyphicon-chevron-down"></span>
+		</th>
+		<th class="col-md-2">
+			Jahr
+			<span class="glyphicon glyphicon-chevron-up"></span>
+			<span class="glyphicon glyphicon-chevron-down"></span>
+		</th>
+		<th class="col-md-2">&nbsp;</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr data-ng-repeat="subject in subjects | filter:searchText">
+		<td data-ng-bind="subject.module.shortName" />
+		<td data-ng-bind="subject.module.name" />
+		<td data-ng-bind="subject.semester" />
+		<td data-ng-bind="subject.year" />
+		<td class="text-right">
+			<input data-ng-click="showEditDialog(subject)" type="button" value="Edit" class="btn btn-default" />
+			<input data-ng-click="showDeleteDialog(subject)" type="button" value="Delete" class="btn btn-default" />
+		</td>
+	</tr>
+	</tbody>
+</table>
