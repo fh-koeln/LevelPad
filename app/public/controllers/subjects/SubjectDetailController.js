@@ -1,7 +1,10 @@
 /* global angular, alert */
 
-angular.module('levelPad').controller('SubjectDetailController', ['$scope', 'Module', 'Subject', function ($scope, Module, Subject) {
+angular.module('levelPad').controller('SubjectDetailController', ['$scope', 'CurrentModule', 'CurrentSubject', function ($scope, CurrentModule, CurrentSubject) {
 	'use strict';
+
+	$scope.module = CurrentModule;
+	$scope.subject = CurrentSubject;
 
 	$scope.update = function() {
 		$scope.modules = Module.query(function() {
@@ -17,5 +20,9 @@ angular.module('levelPad').controller('SubjectDetailController', ['$scope', 'Mod
 		});
 	};
 	$scope.update();
+
+	$scope.assistants = [
+		{ name: 'Volker '}
+	];
 
 }]);

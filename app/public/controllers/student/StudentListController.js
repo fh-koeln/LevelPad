@@ -11,4 +11,11 @@ angular.module('levelPad').controller('AdminStudentController', ['$scope', '$log
 	};
 	$scope.update();
 
+	$scope.students = [
+		{ name: 'Dominik' },
+		{ name: 'Dennis '},
+		{ name: 'Ben'},
+		{ name: 'Dario'}
+	];
+
 }]);

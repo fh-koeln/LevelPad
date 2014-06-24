@@ -1,14 +1,9 @@
-<ol class="breadcrumb">
-	<li><a href="/modules">Modules</a></li>
-	<li><a href="/{{ module.slug }}">{{ module.name }}</a></li>
-	<li class="active">{{ subject.semester }} {{ subject.year }}</li>
-</ol>
 
 <ul class="nav nav-tabs">
-	<li class="active"><a href="#tasks" target="_self" data-toggle="tab">Tasks</a></li>
-	<li><a href="#teams" target="_self" data-toggle="tab">Teams</a></li>
-	<li><a href="#students" target="_self" data-toggle="tab">Students</a></li>
-	<li><a href="#assistants" target="_self" data-toggle="tab">Assistants</a></li>
+	<li class="active"><a data-ng-click="openTasks(subject)" target="_self" data-toggle="tab">Tasks</a></li>
+	<li><a data-ng-click="openTeams(subject)" target="_self" data-toggle="tab">Teams</a></li>
+	<li><a data-ng-click="openStudents(subject)" target="_self" data-toggle="tab">Students</a></li>
+	<li><a data-ng-click="openSettings(subject)" target="_self" data-toggle="tab">Settings</a></li>
 </ul>
 
 <p></p>

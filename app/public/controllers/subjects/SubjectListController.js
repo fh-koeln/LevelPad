@@ -16,36 +16,4 @@ angular.module('levelPad').controller('SubjectListController', [
 	};
 	$scope.update();
 
-	$scope.teams = [
-		{
-			students: [
-				{ name: 'Dominik' },
-				{ name: 'Dennis' }
-			]
-		},
-		{
-			students: [
-				{ name: 'Ben'},
-				{ name: 'Dario'}
-			]
-		}
-	];
-
-	$scope.tasks = [
-		{
-			title: 'Hallo'
-		}
-	];
-
-	$scope.students = [
-		{ name: 'Dominik' },
-		{ name: 'Dennis '},
-		{ name: 'Ben'},
-		{ name: 'Dario'}
-	];
-
-	$scope.assistants = [
-		{ name: 'Volker '}
-	];
-
 }]);
