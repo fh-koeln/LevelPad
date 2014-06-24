@@ -1,0 +1,21 @@
+
+<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="delete-title" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<header class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 id="delete-title" class="delete-title">Delete module?</h4>
+			</header>
+			<div class="modal-body">
+				<p>
+					(<span data-ng-bind="module.shortName"></span>)
+					<span data-ng-bind="module.name"></span>
+				</p>
+			</div>
+			<div class="modal-footer">
+				<button data-ng-click="hideDialog();" type="button" class="btn btn-default pull-left">Cancel</button>
+				<button data-ng-click="delete();" type="button" class="btn btn-danger pull-right">Delete</button>
+			</div>
+		</div>
+	</div>
+</div>

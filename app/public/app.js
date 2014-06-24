@@ -19,6 +19,7 @@ app.factory('httpErrorInterceptor', ['$q', '$rootScope', '$location', function($
 				console.error('Authentitication error in server response detected!' +
 						' Automatically logout the user!');
 				$rootScope.loggedIn = false;
+				/*
 			} else if ( response.status === 403) {
 				console.error('Access error in server response detected!');
 				$location.path('/403');
@@ -31,6 +32,7 @@ app.factory('httpErrorInterceptor', ['$q', '$rootScope', '$location', function($
 			} else if ( response.status === 503) {
 				console.error('Server is not available');
 				$location.path('/503');
+				*/
 			}
 
 			return $q.reject(response);
@@ -81,6 +83,10 @@ app.config(function ($routeProvider, $locationProvider) {
 		templateUrl: 'views/main.html',
 		controller: 'MainController'
 	});
+	$routeProvider.when('/dashboard', {
+		templateUrl: 'views/dashboard.html',
+		controller: 'MainController'
+	});
 	$routeProvider.when('/account', {
 		templateUrl: 'views/account.html',
 		controller: 'AccountController'
@@ -90,26 +96,11 @@ app.config(function ($routeProvider, $locationProvider) {
 		controller: 'UserController'
 	});
 
-	// Admin
-
-	$routeProvider.when('/admin/modules', {
-		templateUrl: 'views/admin/modules.html',
-		controller: 'AdminModuleController'
-	});
-	$routeProvider.when('/admin/students', {
-		templateUrl: 'views/admin/students.html',
-		controller: 'AdminStudentController'
-	});
-	$routeProvider.when('/admin/subjects', {
-		templateUrl: 'views/admin/subjects.html',
-		controller: 'AdminSubjectController'
-	});
-
-	// Maybe we could make this later part of the homescreen...
+	// Maybe we could make this later part of the dashboard...
 	// Or we show a "whats new" timeline there?
 	$routeProvider.when('/modules', {
-		templateUrl: 'views/modules/index.html',
-		controller: 'ModulesController'
+		templateUrl: 'views/modules/list.html',
+		controller: 'ModuleListController'
 	});
 
 	// MAGIC RULES!!!!!!!
