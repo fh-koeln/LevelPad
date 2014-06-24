@@ -1,4 +1,4 @@
-angular.module('levelPad').controller('AccountController', ['$scope', '$location', 'AuthService', 'User', function ($scope, $location, authService, User) {
+angular.module('levelPad').controller('AccountController', ['$scope', '$http', '$location', 'AuthService', 'User', 'Session', 'AlertService', function ($scope, $http, $location, authService, User, Session, AlertService) {
 	'use strict';
 
 	/**
@@ -41,7 +41,7 @@ angular.module('levelPad').controller('AccountController', ['$scope', '$location
 	 * Handles login / signup submit buttons.
 	 */
 
-	$scope.login = function($event) {
+	/*$scope.login = function($event) {
 		// Workaround to ensure that angular js has the actual data when user
 		// user autofill in chrome! More about this topic could found in this
 		// bug report: https://github.com/angular/angular.js/issues/1072
@@ -53,11 +53,19 @@ angular.module('levelPad').controller('AccountController', ['$scope', '$location
 		};
 
 		$($event.target).find('button[type=submit]').button('loading');
-		authService.login(user, function(err, user) {
+		$http({
+			method: 'POST',
+			url: '/api/login',
+			data: user
+		}).success(function(response) {
 			$($event.target).find('button[type=submit]').button('reset');
-			if (!err) {
-				$location.path('/');
+			if (response && response.role !== 'guest') {
+			$location.path('/');
 			}
+		}).error(function(response) {
+			$($event.target).find('button[type=submit]').button('reset');
+			AlertService.showError('Die Anmeldung ist fehlgeschlagen. Bitte versuchen Sie es erneut.');
+			console.error(response);
 		});
 	};
 
@@ -77,7 +85,7 @@ angular.module('levelPad').controller('AccountController', ['$scope', '$location
 		};
 
 		$($event.target).find('button[type=submit]').button('loading');
-		authService.signup(user, function(err, user) {
+		authService.signup(user, function(err) {
 			$($event.target).find('button[type=submit]').button('reset');
 			if (!err) {
 				$location.path('/');
@@ -85,12 +93,12 @@ angular.module('levelPad').controller('AccountController', ['$scope', '$location
 		});
 	};
 
-	$scope.logout = function($event) {
+	$scope.logout = function() {
 		authService.logout(function(err) {
 			if (!err) {
 				$location.path('/');
 			}
 		});
-	};
+	};*/
 
 }]);

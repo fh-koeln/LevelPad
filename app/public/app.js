@@ -11,14 +11,14 @@ app.config(['$logProvider', function($logProvider) {
 	$logProvider.debugEnabled(true);
 }]);
 
-app.factory('httpErrorInterceptor', ['$q', '$rootScope', '$location', function($q, $rootScope, $location) {
+/*app.factory('httpErrorInterceptor', ['$q', '$rootScope', '$location', function($q, $rootScope, $location) {
 
 	return {
 		'responseError': function(response) {
 			if (response.status === 401) {
 				console.error('Authentitication error in server response detected!' +
 						' Automatically logout the user!');
-				$rootScope.loggedIn = false;
+			//	$location.path('/logout');
 			} else if ( response.status === 403) {
 				console.error('Access error in server response detected!');
 				$location.path('/403');
@@ -41,10 +41,9 @@ app.factory('httpErrorInterceptor', ['$q', '$rootScope', '$location', function($
 
 app.config(['$httpProvider', function($httpProvider) {
 	$httpProvider.interceptors.push('httpErrorInterceptor');
-}]);
+}]);*/
 
-app.config(function ($routeProvider, $locationProvider) {
-
+app.config(function($routeProvider, $locationProvider) {
 	// Errors
 
 	$routeProvider.when('/403', {
@@ -68,11 +67,11 @@ app.config(function ($routeProvider, $locationProvider) {
 	});
 	$routeProvider.when('/login', {
 		templateUrl: 'views/auth/login-page.html',
-		controller: 'AccountController'
+		controller: 'LoginController'
 	});
 	$routeProvider.when('/logout', {
 		templateUrl: 'views/auth/logout-page.html',
-		controller: 'AccountController'
+		controller: 'LogoutController'
 	});
 
 	// Basics
@@ -168,3 +167,4 @@ app.config(function ($routeProvider, $locationProvider) {
 
 	$locationProvider.html5Mode(true);
 });
+

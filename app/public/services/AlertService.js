@@ -1,9 +1,8 @@
 
 angular.module('levelPad').service('AlertService', ['$rootScope', '$log', function($rootScope, $log) {
 
-	var $scope = $rootScope.$new(true);
-
-	var delegates = [];
+	var $scope = $rootScope.$new(true),
+		delegates = [];
 
 	$scope.bind = function(delegate) {
 		delegates.push(delegate);
@@ -12,7 +11,7 @@ angular.module('levelPad').service('AlertService', ['$rootScope', '$log', functi
 	$scope.unbind = function(delegate) {
 		for (var i = 0; i < delegates.length; i++) {
 			if (delegates[i] === delegate) {
-				delegates.slice(i--);
+				delegates.splice(i--, 1);
 			}
 		}
 	};
