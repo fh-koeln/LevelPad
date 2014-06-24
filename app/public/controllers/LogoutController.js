@@ -1,8 +1,8 @@
-angular.module('levelPad').controller('LogoutController', function ($scope, $rootScope, $location, AUTH_EVENTS, AuthService) {
+angular.module('levelPad').controller('LogoutController', function($scope, $rootScope, $location, AUTH_EVENTS, AuthService) {
 	'use strict';
 
-	$scope.logout = function (credentials) {
-		AuthService.login(credentials).then(function() {
+	$scope.logout = function() {
+		AuthService.logout().then(function() {
 			$rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
 		}, function() {
 			$rootScope.$broadcast(AUTH_EVENTS.logoutFailed);

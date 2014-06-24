@@ -12,7 +12,7 @@ angular.module('levelPad').factory('AuthService', function ($http, Session) {
 		},
 
 		logout: function() {
-			$http({
+			return $http({
 				method: 'POST',
 				url: '/api/logout'
 			})

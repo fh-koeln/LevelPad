@@ -1,4 +1,4 @@
-angular.module('levelPad').controller('LoginController', function ($scope, $rootScope, $location, AUTH_EVENTS, AuthService) {
+angular.module('levelPad').controller('LoginController', function($scope, $rootScope, $location, AUTH_EVENTS, AuthService) {
 	'use strict';
 
 	$scope.credentials = {
@@ -6,7 +6,7 @@ angular.module('levelPad').controller('LoginController', function ($scope, $root
 		password: ''
 	};
 
-	$scope.login = function (credentials) {
+	$scope.login = function(credentials) {
 		AuthService.login(credentials).then(function() {
 			$rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
 		}, function() {

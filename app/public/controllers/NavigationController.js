@@ -12,9 +12,8 @@ angular.module('levelPad').controller('NavigationController', ['$scope', '$rootS
 	});
 
 	$rootScope.$on(AUTH_EVENTS.logoutSuccess, function() {
-		$scope.user = Session.user;
-		$scope.loggedIn = true;
-		$location.path('/');
+		$scope.user = null;
+		$scope.loggedIn = false;
 	});
 
 	/**
