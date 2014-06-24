@@ -105,30 +105,32 @@ app.config(function($routeProvider, $locationProvider) {
 	});
 
 	$routeProvider.when('/:module/:subject', {
-		templateUrl: 'views/subjects/index.html',
-		controller: 'SubjectsController'
+		redirectTo: '/:module/:subject/tasks'
 	});
 
 	$routeProvider.when('/:module/:subject/tasks', {
-		templateUrl: 'views/subjects/index.html',
-		controller: 'SubjectsController'
+		templateUrl: 'views/tasks/list.html',
+		controller: 'TaskListController'
 	});
 	$routeProvider.when('/:module/:subject/tasks/new', {
 		templateUrl: 'views/tasks/edit.html',
-		controller: 'TasksController'
+		controller: 'TaskDetailController'
 	});
 	$routeProvider.when('/:module/:subject/tasks/:task', {
-		templateUrl: 'views/subjects/index.html',
-		controller: 'SubjectsController'
+		templateUrl: 'views/tasks/edit.html',
+		controller: 'TaskDetailController'
 	});
+
 	$routeProvider.when('/:module/:subject/teams', {
-		templateUrl: 'views/subjects/index.html',
-		controller: 'SubjectsController'
+		templateUrl: 'views/teams/list.html',
+		controller: 'TeamListController'
 	});
 	$routeProvider.when('/:module/:subject/teams/:team', {
-		templateUrl: 'views/subjects/index.html',
-		controller: 'SubjectsController'
+		templateUrl: 'views/teams/edit.html',
+		controller: 'TeamDetailController'
 	});
+
+	/*
 	$routeProvider.when('/:module/:subject/students', {
 		templateUrl: 'views/subjects/index.html',
 		controller: 'SubjectsController'
@@ -145,6 +147,7 @@ app.config(function($routeProvider, $locationProvider) {
 		templateUrl: 'views/subjects/index.html',
 		controller: 'SubjectsController'
 	});
+	*/
 
 	// Fallback
 
