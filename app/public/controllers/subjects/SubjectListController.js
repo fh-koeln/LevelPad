@@ -1,6 +1,6 @@
 /* global angular, alert */
 
-angular.module('levelPad').controller('SubjectsController', [
+angular.module('levelPad').controller('SubjectListController', [
 	'$scope', '$routeParams', '$location', '$log', 'Module', 'Subject', 'CurrentModule', 'CurrentSubject',
 	function ($scope, $routeParams, $location, $log, Module, Subject, CurrentModule, CurrentSubject) {
 	'use strict';

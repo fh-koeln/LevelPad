@@ -106,7 +106,7 @@ app.config(function ($routeProvider, $locationProvider) {
 	// MAGIC RULES!!!!!!!
 	$routeProvider.when('/:module', {
 		templateUrl: 'views/modules/show.html',
-		controller: 'ModulesController'
+		controller: 'ModuleDetailController'
 	});
 
 	$routeProvider.when('/:module/:subject', {

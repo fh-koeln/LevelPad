@@ -10,14 +10,8 @@
 				<div class="modal-body">
 
 					<div class="form-group" data-ng-class="{ 'has-error': form.module.$invalid }">
-						<label for="module" class="col-sm-4 control-label">Module:</label>
-						<div class="col-sm-8">
-							<select id="module" name="module"
-									data-ng-model="subject.module"
-									data-ng-options="module.name for module in modules"
-									required="required"
-									class="form-control"></select>
-						</div>
+						<div class="col-sm-4">Module:</div>
+						<div class="col-sm-8">{{ module.name }}</div>
 					</div>
 
 					<div class="form-group" data-ng-class="{ 'has-error': form.semester.$invalid }">
