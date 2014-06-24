@@ -1,6 +1,8 @@
 'use strict';
 
-var passport = require('passport'),
+var express = require('express'),
+	app = express(),
+	passport = require('passport'),
 	LocalStrategy = require('passport-local').Strategy,
 	Imap = require('imap'),
 	User = require('../models/User'),
@@ -8,6 +10,26 @@ var passport = require('passport'),
 
 var checkCredentials = function(username, password, callback) {
 	console.log('Check IMAP credentials for user ' + username + '...');
+
+
+	// In development don't use the IMAP process
+	if (app.get('env') === 'development') {
+		User.findByUsername(username, function(err, user) {
+			if (err) {
+				callback(null, false, err);
+			} else if (!user) {
+				// Create guest user which has to sign up
+				acl.addUserRoles(username, 'guest', function() {
+					user = new User();
+					user.username = username;
+					callback(null, user);
+				});
+			} else {
+				callback(null, user);
+			}
+		});
+		return;
+	}
 
 	// Asynchronous verification, for effect...
 	process.nextTick(function () {
