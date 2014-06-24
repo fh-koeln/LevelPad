@@ -2,10 +2,10 @@
 
 <div class="form-group">
 	<label class="control-label">Benutzername</label>
-	<p class="form-control-static" data-ng-bind="$parent.$parent.username"></p>
+	<p class="form-control-static" data-ng-bind="user.username"></p>
 	<input type="hidden" id="username"
 		   name="username" value=""
-		   data-ng-model="$parent.$parent.username" />
+		   data-ng-model="user.username" />
 </div>
 <div class="form-group">
 	<label for="studentNumber" class="control-label">Matrikel-Nr.</label>
@@ -13,7 +13,7 @@
 		   name="studentNumber" value=""
 		   required="required"
 		   class="form-control"
-		   data-ng-model="$parent.$parent.studentNumber" />
+		   data-ng-model="user.studentNumber" />
 </div>
 <div class="form-group">
 	<label for="email" class="control-label">E-Mail</label>
@@ -21,7 +21,7 @@
 		   name="email" value=""
 		   required="required" autofocus="autofocus"
 		   class="form-control"
-		   data-ng-model="$parent.$parent.email" />
+		   data-ng-model="user.email" />
 </div>
 <div class="form-group">
 	<label for="firstname" class="control-label">Vorname</label>
@@ -29,7 +29,7 @@
 		   name="firstname" value=""
 		   required="required" autofocus="autofocus"
 		   class="form-control"
-		   data-ng-model="$parent.$parent.firstname" />
+		   data-ng-model="user.firstname" />
 </div>
 <div class="form-group">
 	<label for="lastname" class="control-label">Nachname</label>
@@ -37,5 +37,5 @@
 		   name="lastname" value=""
 		   required="required" autofocus="autofocus"
 		   class="form-control"
-		   data-ng-model="$parent.$parent.lastname" />
+		   data-ng-model="user.lastname" />
 </div>

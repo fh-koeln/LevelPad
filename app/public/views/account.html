@@ -2,6 +2,7 @@
 	<div class="col-md-offset-3 col-md-6">
 		<form role="form" data-ng-submit="save($event)">
 			<h2>Account</h2>
+			<div data-ng-include="'partials/messages.html'"></div>
 			<div class="form-group">
 				<label for="username" class="control-label">Campus-ID:</label>
 				<input type="text" id="username"
@@ -45,7 +46,6 @@
 			</div>
 
 			<div class="text-right">
-				<button type="reset" class="btn btn-link">Reset</button>
 				<button type="submit" class="btn btn-primary" data-loading-text="Save...">Save</button>
 			</div>
 		</form>

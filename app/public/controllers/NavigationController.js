@@ -5,7 +5,6 @@ angular.module('levelPad').controller('NavigationController', ['$scope', '$rootS
 
 	$scope.user = null;
 	$scope.loggedIn = false;
-
 	$rootScope.$on(AUTH_EVENTS.loginSuccess, function() {
 		$scope.user = Session.user;
 		$scope.loggedIn = true;

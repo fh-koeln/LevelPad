@@ -20,6 +20,16 @@ angular.module('levelPad').factory('AuthService', function ($http, Session) {
 			});
 		},
 
+		signup: function(user) {
+			return $http({
+				method: 'POST',
+				url: '/api/users',
+				data: user
+			}).then(function(res) {
+				Session.create(Date.now(), res.data);
+			});
+		},
+
 		logout: function() {
 			return $http({
 				method: 'POST',
