@@ -9,7 +9,7 @@ angular.module('levelPad').controller('AccountController', ['$scope', '$rootScop
 		lastname: Session.user ? Session.user.lastname : '',
 	};
 
-	$rootScope.$on(AUTH_EVENTS.loginSuccess, function() {
+	$rootScope.$on(AUTH_EVENTS.loginRefreshed, function() {
 		$scope.user = {
 			username: Session.user.username,
 			email: Session.user.email,

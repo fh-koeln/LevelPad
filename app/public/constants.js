@@ -1,9 +1,11 @@
 angular.module('levelPad').constant('AUTH_EVENTS', {
 	loginSuccess: 'auth-login-success',
 	loginFailed: 'auth-login-failed',
+	loginRefreshed: 'auth-login-refreshed',
 	logoutSuccess: 'auth-logout-success',
 	logoutFailed: 'auth-logout-failed',
-	sessionTimeout: 'auth-session-timeout',
+	signupSuccess: 'auth-signup-success',
+	signupFailed: 'auth-signup-failed',
 	notAuthenticated: 'auth-not-authenticated',
 	notAuthorized: 'auth-not-authorized'
 });
@@ -11,9 +13,9 @@ angular.module('levelPad').constant('AUTH_EVENTS', {
 
 angular.module('levelPad').constant('USER_ROLES', {
 	all: '*',
-	admininstrator: 'admin',
-	professor: 'professor',
-	assistant: 'assistant',
-	guest: 'guest',
-	public: 'public',
+	administrator: 'admin',
+	lecture: 'lecture',
+	assistent: 'assistent',
+	student: 'student',
+	guest: 'guest'
 });

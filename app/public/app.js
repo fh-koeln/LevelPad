@@ -37,9 +37,9 @@ app.factory('httpErrorInterceptor', ['$q', '$location', function($q, $location) 
 }]);
 
 
-app.config(['$httpProvider', function($httpProvider) {
+/*app.config(['$httpProvider', function($httpProvider) {
 	$httpProvider.interceptors.push('httpErrorInterceptor');
-}]);
+}]);*/
 
 app.config(function($routeProvider, $locationProvider) {
 	// Errors
@@ -167,12 +167,13 @@ app.run(function($rootScope, AuthService, AUTH_EVENTS, $location) {
 	});
 
 	$rootScope.$on('$locationChangeStart', function(event) {
-		if ($location.path() === '/login' || $location.path() === '/logout') {
+		if ($location.path() === '/login' || $location.path() === '/logout' || $location.path() === '/signup') {
 			return;
 		}
 
 		AuthService.refresh().then(function() {
 			// Authentifizierung war erfolgreich
+			$rootScope.$broadcast(AUTH_EVENTS.loginRefreshed);
 		}, function() {
 			// Authentifizierung ist fehlgeschlagen, User abmelden
 			event.preventDefault();
