@@ -4,12 +4,22 @@
 
 var acl = require('acl'),
 	db = require('./db'),
-	pathToRegexp = require('path-to-regexp'),
-	async = require('async');
+	pathToRegexp = require('path-to-regexp');
 
-acl = new acl(new acl.mongodbBackend(db.connection.db, 'acl-'));
+/**
+ * Create an ACL instance.
+ * Roles are saved into MongoDB, documents have `acl-` as prefix.
+ */
+module.exports.acl = acl = new acl(new acl.mongodbBackend(db.connection.db, 'acl-'));
 
-
+/**
+ * ACL Middleware
+ *
+ * Middleware for API routes:
+ *  - Returns 401 response when user is not authenticated
+ *  - Returns 403 response when user is not allowed to perform an action
+ *  - Returns 500 response on error
+ */
 module.exports.middleware = function middleware(req, res, next) {
 	if (!req.isAuthenticated()) {
 		console.log('Not authenticated');
@@ -40,7 +50,7 @@ module.exports.middleware = function middleware(req, res, next) {
 		}
 
 		if (!reqResource) {
-			console.log( req.user.username + ' with role ' + req.user.role + ' has no permissions for ' + apiPath );
+			console.log(req.user.username + ' with role ' + req.user.role + ' has no permissions for ' + apiPath);
 			res.json(403, {error: 'Forbidden'});
 			return;
 		}
@@ -62,29 +72,12 @@ module.exports.middleware = function middleware(req, res, next) {
 	});
 };
 
+/**
+ * Set role to a user.
+ *
+ * Existing roles are replaced by the new one.
+ */
 module.exports.setRole = function setRole(user, role, callback) {
-	/*var removeRole, addRole;
-
-	removeRole = function(roles, callback) {
-		console.log(roles);
-		acl.removeUserRoles(user, roles, callback);
-	};
-	addRole = function(callback) {
-		console.log(role);
-		acl.addUserRoles(user, role, callback);
-	};
-
-
-	async.waterfall([
-		function(cb) {
-			cb(null, user);
-		},
-		acl.userRoles,
-		removeRole,
-		addRole,
-		callback
-	]);*/
-
 	acl.userRoles(user, function(err, roles) {
 		if (err) {
 			callback(err);
@@ -187,10 +180,4 @@ db.connection.on('connected', function() {
 		}
 	]);
 
-	// TODO: Remove and fetch from DB/create on POST /api/user/
-	//acl.addUserRoles('dschilli', 'administrator');
-	acl.addUserRoles('cjerolim', 'administrator');
-	acl.addUserRoles('vschaef1', 'administrator');
 });
-
-module.exports.acl = acl;
