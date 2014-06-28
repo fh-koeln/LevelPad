@@ -49,7 +49,7 @@ module.exports = function(app) {
 
 	// Security
 	app.use(helmet.xssFilter());
-	app.use(helmet.contentTypeOptions());
+	app.use(helmet.nosniff());
 	app.use(helmet.xframe('sameorigin'));
 	app.use(helmet.hidePoweredBy());
 	app.use(helmet.hsts());
