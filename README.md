@@ -1,4 +1,4 @@
-# LevelPad [![Dependency Status](https://david-dm.org/fh-koeln/LevelPad.png)](https://david-dm.org/fh-koeln/LevelPad) [![Build Status](https://travis-ci.org/fh-koeln/LevelPad.svg)](https://travis-ci.org/fh-koeln/LevelPad)
+# LevelPad [![Dependency Status](https://david-dm.org/fh-koeln/LevelPad.png)](https://david-dm.org/fh-koeln/LevelPad) [![Build Status](https://travis-ci.org/fh-koeln/LevelPad.svg?branch=master)](https://travis-ci.org/fh-koeln/LevelPad)
 
 Webapp zur Unterstützung einer Bewertung nach dem Niveaustufenmodell
 
