@@ -2,6 +2,8 @@
 
 Webapp zur Unterstützung einer Bewertung nach dem Niveaustufenmodell
 
+[![Dependency Status](https://david-dm.org/fh-koeln/LevelPad.png)](https://david-dm.org/fh-koeln/LevelPad)
+
 **Status**: In Entwicklung.
 
 ## Niveaustufenmodell
