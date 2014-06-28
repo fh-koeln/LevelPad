@@ -48,7 +48,7 @@ module.exports = function(app) {
 	}
 
 	// Security
-	app.use(helmet.iexss());
+	app.use(helmet.xssFilter());
 	app.use(helmet.contentTypeOptions());
 	app.use(helmet.xframe('sameorigin'));
 	app.use(helmet.hidePoweredBy());
