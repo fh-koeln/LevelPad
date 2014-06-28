@@ -52,7 +52,9 @@ module.exports = function(app) {
 	app.use(helmet.nosniff());
 	app.use(helmet.xframe('sameorigin'));
 	app.use(helmet.hidePoweredBy());
-	app.use(helmet.hsts());
+	app.use(helmet.hsts({
+		maxAge: 1000 * 60 * 60 * 24, // 1 day, increase later.
+	}));
 
 	// Static resources
 	//app.use(express.favicon(path.join(__dirname, '../public', 'favicon.ico')));
