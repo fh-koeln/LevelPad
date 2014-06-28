@@ -16,6 +16,8 @@
 	"jquery": true,
 
 	"globals": {
-		"angular": true
+		"angular": true,
+		"describe": false,
+		"it": false
 	}
 }
