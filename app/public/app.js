@@ -11,13 +11,12 @@ app.config(['$logProvider', function($logProvider) {
 	$logProvider.debugEnabled(true);
 }]);
 
-app.factory('httpErrorInterceptor', ['$q', '$rootScope', '$location', function($q, $rootScope, $location) {
+app.factory('httpErrorInterceptor', ['$q', '$location', function($q, $location) {
 
 	return {
 		'responseError': function(response) {
 			if (response.status === 401) {
-				console.error('Authentitication error in server response detected!' +
-						' Automatically logout the user!');
+				console.error('Authentitication error in server response detected!');
 			} else if ( response.status === 403) {
 				console.error('Access error in server response detected!');
 				$location.path('/403');
@@ -38,9 +37,9 @@ app.factory('httpErrorInterceptor', ['$q', '$rootScope', '$location', function($
 }]);
 
 
-app.config(['$httpProvider', function($httpProvider) {
+/*app.config(['$httpProvider', function($httpProvider) {
 	$httpProvider.interceptors.push('httpErrorInterceptor');
-}]);
+}]);*/
 
 app.config(function($routeProvider, $locationProvider) {
 	// Errors
@@ -62,7 +61,7 @@ app.config(function($routeProvider, $locationProvider) {
 
 	$routeProvider.when('/signup', {
 		templateUrl: 'views/auth/signup-page.html',
-		controller: 'AccountController'
+		controller: 'SignupController'
 	});
 	$routeProvider.when('/login', {
 		templateUrl: 'views/auth/login-page.html',
@@ -159,3 +158,30 @@ app.config(function($routeProvider, $locationProvider) {
 	$locationProvider.html5Mode(true);
 });
 
+app.run(function($rootScope, AuthService, AUTH_EVENTS, $location) {
+
+	AuthService.refresh().then(function() {
+		$rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+	}, function() {
+		$rootScope.$broadcast(AUTH_EVENTS.loginFailed);
+	});
+
+	$rootScope.$on('$locationChangeStart', function(event) {
+		if ($location.path() === '/login' || $location.path() === '/logout' || $location.path() === '/signup') {
+			return;
+		}
+
+		AuthService.refresh().then(function() {
+			// Authentifizierung war erfolgreich
+			$rootScope.$broadcast(AUTH_EVENTS.loginRefreshed);
+		}, function() {
+			// Authentifizierung ist fehlgeschlagen, User abmelden
+			event.preventDefault();
+			AuthService.logout().then(function() {
+				$rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
+			}, function() {
+				$rootScope.$broadcast(AUTH_EVENTS.logoutFailed);
+			});
+		});
+	});
+});

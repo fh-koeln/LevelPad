@@ -1,0 +1,12 @@
+language: node_js
+services:
+  - mongodb
+
+# test on two node.js versions: 0.10 (stable) and 0.11 (dev)
+node_js:
+  - "0.11"
+  - "0.10"
+
+before_script:
+  - npm install mocha -g
+

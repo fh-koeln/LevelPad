@@ -1,7 +1,11 @@
 'use strict';
 
-var express = require('express');
-var path = require('path');
+var express = require('express'),
+	path = require('path'),
+	helmet = require('helmet'),
+	bodyParser = require('body-parser'),
+	session = require('express-session'),
+	MongoStore = require('connect-mongo')(session);
 
 /**
  * Express configuration
@@ -14,13 +18,11 @@ module.exports = function(app) {
 
 	// Basic request processing:
 	app.use(require('cookie-parser')(process.env.COOKIE_SECRET || 'H2YlmVI=srH5DCw4xKA(IA4YZ|Gr4gutt|Lh0WD:'));
-	var session = require('express-session');
-	var MongoStore = require('connect-mongo')(session);
 	app.use(session({
 		secret: process.env.SESSION_SECRET || '&Rd65y($lbBh}=)N{U}uBL&3BXitK$G2h@C8mpew',
 		store: new MongoStore({ url: require('./db').url })
 	}));
-	app.use(require('body-parser')());
+	app.use(bodyParser.json());
 	app.use(require('connect-timeout')(10 * 1000));
 
 	// Live reload
@@ -44,6 +46,15 @@ module.exports = function(app) {
 	if (env === 'production') {
 		app.use(require('compression')());
 	}
+
+	// Security
+	app.use(helmet.xssFilter());
+	app.use(helmet.nosniff());
+	app.use(helmet.xframe('sameorigin'));
+	app.use(helmet.hidePoweredBy());
+	app.use(helmet.hsts({
+		maxAge: 1000 * 60 * 60 * 24, // 1 day, increase later.
+	}));
 
 	// Static resources
 	//app.use(express.favicon(path.join(__dirname, '../public', 'favicon.ico')));

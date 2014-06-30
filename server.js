@@ -51,3 +51,5 @@ io.sockets.on('connection', function (socket) {
 server.listen(port, function() {
 	console.info('Server started! Waiting for requests...');
 });
+
+module.exports = server;
