@@ -1,12 +1,15 @@
-
 <ul class="nav nav-tabs">
-	<li class="active"><a data-ng-click="openTasks(subject)" target="_self" data-toggle="tab">Tasks</a></li>
-	<li><a data-ng-click="openTeams(subject)" target="_self" data-toggle="tab">Teams</a></li>
-	<li><a data-ng-click="openStudents(subject)" target="_self" data-toggle="tab">Students</a></li>
-	<li><a data-ng-click="openSettings(subject)" target="_self" data-toggle="tab">Settings</a></li>
+	<li class="active"><a data-ng-href="/{{ module.slug }}/{{ subject.slug }}/tasks">Tasks</a></li>
+	<li><a data-ng-href="/{{ module.slug }}/{{ subject.slug }}/teams">Teams</a></li>
+	<li><a data-ng-href="/{{ module.slug }}/{{ subject.slug }}/students">Students</a></li>
+	<li><a data-ng-href="/{{ module.slug }}/{{ subject.slug }}/settings">Settings</a></li>
+	<li class="navbar-right">
+		<div>
+			<a class="" href="#">Create new Task</a>
+			<a class="btn btn-mini btn-success" href="#">Create new Task</a>
+		</div>
+	</li>
 </ul>
-
-<p></p>
 
 <div class="tab-content">
 	<div class="tab-pane fade in active" id="tasks">

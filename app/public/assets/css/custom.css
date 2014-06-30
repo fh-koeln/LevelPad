@@ -1,14 +1,12 @@
 body {
+	border-top: 4px solid #77cc00;
+	padding-top: 5px;
     padding-bottom: 15px;
 }
 
 /**
  * NAVIGATION
  */
-nav {
-	border-top: 4px solid #77cc00;
-	padding-top: 4px;
-}
 nav a {
 	color: #dd1166;
 }
