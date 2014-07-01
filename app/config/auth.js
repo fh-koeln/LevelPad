@@ -9,18 +9,9 @@ var express = require('express'),
 	acl = require('./acl').acl;
 
 var checkCredentials = function(username, password, callback) {
-	if (username == 'cjerolim') {
-		console.log('Do NOT check credentials for user ' + username + '!');
-		var user = new User();
-		user.username = username;
-		callback(null, user);
-		return;
-	}
-	console.log('Check IMAP credentials for user ' + username + '...');
-
-
 	// In development don't use the IMAP process
 	if (app.get('env') === 'development') {
+		console.log('Search user ' + username + ' in database..');
 		User.findByUsername(username, function(err, user) {
 			if (err) {
 				callback(null, false, err);
@@ -37,6 +28,8 @@ var checkCredentials = function(username, password, callback) {
 		});
 		return;
 	}
+
+	console.log('Check IMAP credentials for user ' + username + '...');
 
 	// Asynchronous verification, for effect...
 	process.nextTick(function () {
