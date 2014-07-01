@@ -12,83 +12,16 @@
 
 <p></p>
 
-<style>
-	.levels {
-		list-style: none;
-		display: block;
-		margin: 0;
-		padding: 0;
-		clear: both;
-	}
-	.levels li {
-		position: relative;
-		float: left;
-		padding: 0 10px;
-		line-height: 40px;
-		background-color: white;
-		border: 1px solid gray;
-	}
-	.levels li:not(:first-child) {
-		padding-left: 25px;
-	}
-
-	.levels li:before {
-		content: " ";
-		position: absolute;
-		top: -1px;
-		left: 100%;
-		width: 40px;
-		height: 40px;;
-		z-index: 1;
-		border: 21px solid transparent;
-		border-left: 16px solid gray;
-	}
-	.levels li:after {
-		content: " ";
-		position: absolute;
-		left: 100%;
-		width: 40px;
-		height: 40px;;
-		z-index: 2;
-		border: 20px solid transparent;
-		border-left: 15px solid white;
-	}
-
-	.levels a {
-		display: inline-block;
-		color: black;
-		line-height: 40px;
-	}
-	.levels a:hover {
-		text-decoration: none;
-	}
-
-	.levels .task {
-		background-color: #c5eec0;
-	}
-	.levels .task:after {
-		border-left: 15px solid #c5eec0;
-	}
-	.levels .task:hover {
-		background-color: #98eea9;
-	}
-	.levels .task:hover:after {
-		border-left: 15px solid #98eea9;
-	}
-	.levels .level {
-
-	}
-</style>
-
-<p>
+<div>
 	<ol class="levels">
 		<li class="task"><a href="#">Aufgabe</a></li>
 		<li class="level"><a href="#">Stufe 1</a></li>
 		<li class="level"><a href="#">Stufe 2</a></li>
 		<li class="level"><a href="#">Stufe 3</a></li>
 	</ol>
-	<a href="#">Stufe hinzufügen</a>
-</p>
+	<a class="levels add" href="#">Stufe hinzufügen</a>
+</div>
+<div class="clearfix"></div>
 
 <p></p>
 
