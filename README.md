@@ -31,6 +31,10 @@ Heroku version runs in production mode:
 
 (will update this to use grunt or gulpjs soon...)
 
+*Run server and auto restart on code change:*
+
+	npm run-script run-auto
+
 *Push new version to heroku:*
 
 	git push heroku master && heroku logs -t
