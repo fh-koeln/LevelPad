@@ -1,15 +1,27 @@
 <ul class="nav nav-tabs">
-	<li class="active"><a href="#tasks" target="_self" data-toggle="tab">Tasks</a></li>
-	<li><a href="#teams" target="_self" data-toggle="tab">Teams</a></li>
-	<li><a href="#students" target="_self" data-toggle="tab">Students</a></li>
-	<li><a href="#assistants" target="_self" data-toggle="tab">Assistants</a></li>
+	<li class="active"><a data-ng-href="/{{ module.slug }}/{{ subject.slug }}/tasks">Tasks</a></li>
+	<li><a data-ng-href="/{{ module.slug }}/{{ subject.slug }}/teams">Teams</a></li>
+	<li><a data-ng-href="/{{ module.slug }}/{{ subject.slug }}/students">Students</a></li>
+	<li><a data-ng-href="/{{ module.slug }}/{{ subject.slug }}/settings">Settings</a></li>
+	<li class="navbar-right">
+		<div>
+			<a class="active btn btn-mini btn-success" data-ng-href="/{{ module.slug }}/{{ subject.slug }}/tasks">Create new Task</a>
+		</div>
+	</li>
 </ul>
 
 <p></p>
 
-<ul class="nav nav-pills">
-	<li class="active"><a data-ng-href="{{ '/' + module.slug + '/' + subject.slug + '/tasks' }}">New task</a></li>
-</ul>
+<div>
+	<ol class="levels">
+		<li class="task"><a href="#">Aufgabe</a></li>
+		<li class="level"><a href="#">Stufe 1</a></li>
+		<li class="level"><a href="#">Stufe 2</a></li>
+		<li class="level"><a href="#">Stufe 3</a></li>
+	</ol>
+	<a class="levels add" href="#">Stufe hinzufügen</a>
+</div>
+<div class="clearfix"></div>
 
 <p></p>
 

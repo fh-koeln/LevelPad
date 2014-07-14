@@ -3,7 +3,7 @@ var express = require('express'),
 	users = express.Router(),
 	User = require('../../models/User'),
 	helpers = require('../_helpers'),
-	acl = require('../../config/acl');
+	acl = require('../../../config/acl');
 
 users.param('user', function(req, res, next, username) {
 	User.findByUsername(username, function(err, user) {

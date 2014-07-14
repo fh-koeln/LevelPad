@@ -7,7 +7,7 @@
     "postinstall": "bower install",
     "run": "node server.js",
     "run-auto": "nodemon --delay 2.5 --ignore app/public server.js",
-    "test": "mocha --reporter spec"
+    "test": "mocha --reporter spec app/tests"
   },
   "repository": {
     "type": "git",
@@ -35,9 +35,9 @@
     "cookie-parser": "~1.3.2",
     "errorhandler": "~1.1.1",
     "express": "~4.4.5",
-    "express-session": "~1.5.2",
-    "helmet": "0.3.1",
-    "imap": "~0.8.10",
+    "express-session": "~1.6.1",
+    "helmet": "0.3.2",
+    "imap": "~0.8.11",
     "mongoose": "~3.8.12",
     "morgan": "~1.1.1",
     "passport": "~0.2.0",

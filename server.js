@@ -15,19 +15,19 @@ var express = require('express'),
 console.info('Will start server on port %d in %s mode...', port, app.get('env'));
 
 // Express settings
-require('./app/config/express')(app);
+require('./config/express')(app);
 
 // Database
-require('./app/config/db');
+require('./config/db');
 
 // Access Control Lists
-require('./app/config/acl');
+require('./config/acl');
 
 // Authentification
-require('./app/config/auth')(app);
+require('./config/auth')(app);
 
 // Routing
-app.use(require('./app/config/routes'));
+app.use(require('./config/routes'));
 
 // @todo
 // Socket.io

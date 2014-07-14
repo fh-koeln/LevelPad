@@ -151,29 +151,30 @@ app.config(function($routeProvider, $locationProvider) {
 		templateUrl: 'views/teams/list.html',
 		controller: 'TeamListController'
 	});
+	$routeProvider.when('/:module/:subject/teams/new', {
+		templateUrl: 'views/teams/edit.html',
+		controller: 'TeamDetailController'
+	});
 	$routeProvider.when('/:module/:subject/teams/:team', {
 		templateUrl: 'views/teams/edit.html',
 		controller: 'TeamDetailController'
 	});
-
-	/*
 	$routeProvider.when('/:module/:subject/students', {
-		templateUrl: 'views/subjects/index.html',
-		controller: 'SubjectsController'
+		templateUrl: 'views/students/list.html',
+		controller: 'StudentListController'
+	});
+	$routeProvider.when('/:module/:subject/students/new', {
+		templateUrl: 'views/students/edit.html',
+		controller: 'StudentDetailController'
 	});
 	$routeProvider.when('/:module/:subject/students/:student', {
-		templateUrl: 'views/subjects/index.html',
-		controller: 'SubjectsController'
+		templateUrl: 'views/students/edit.html',
+		controller: 'StudentDetailController'
 	});
-	$routeProvider.when('/:module/:subject/assistants', {
-		templateUrl: 'views/subjects/index.html',
-		controller: 'SubjectsController'
+	$routeProvider.when('/:module/:subject/settings', {
+		templateUrl: 'views/subjects/settings.html',
+		controller: 'SubjectDetailController'
 	});
-	$routeProvider.when('/:module/:subject/assistants/:assistant', {
-		templateUrl: 'views/subjects/index.html',
-		controller: 'SubjectsController'
-	});
-	*/
 
 	// Fallback
 
