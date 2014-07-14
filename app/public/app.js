@@ -17,16 +17,16 @@ app.factory('httpErrorInterceptor', ['$q', '$location', function($q, $location) 
 		'responseError': function(response) {
 			if (response.status === 401) {
 				console.error('Authentitication error in server response detected!');
-			} else if ( response.status === 403) {
+			} else if (response.status === 403) {
 				console.error('Access error in server response detected!');
 				$location.path('/403');
-			} else if ( response.status === 404) {
+			} else if (response.status === 404) {
 				console.error('Not found error in server response detected!');
 				$location.path('/404');
-			} else if ( response.status === 500) {
+			} else if (response.status === 500) {
 				console.error('Server error in server response detected!');
 				$location.path('/500');
-			} else if ( response.status === 503) {
+			} else if (response.status === 503) {
 				console.error('Server is not available');
 				$location.path('/503');
 			}
@@ -36,9 +36,34 @@ app.factory('httpErrorInterceptor', ['$q', '$location', function($q, $location) 
 	};
 }]);
 
-
-/*app.config(['$httpProvider', function($httpProvider) {
+app.config(['$httpProvider', function($httpProvider) {
 	$httpProvider.interceptors.push('httpErrorInterceptor');
+}]);
+
+// Restrict routes
+/*app.config(['$httpProvider', function ($httpProvider) {
+	var requestInterceptor = ['$q', '$rootScope', '$injector',
+		function ($q, $rootScope, $injector) {
+			var interceptorInstance = {
+				request: function (config) {
+					//console.log(config);
+					var $route = $injector.get('$route');
+					if ($route.current) {
+						var currentRoute = $route.current.$$route.originalPath;
+						if ($route.routes[currentRoute]) {
+							if ($route.routes[currentRoute].loginRequired) {
+								console.log($route.current);
+								return $q.reject('login_required');
+							}
+						}
+					}
+					return config || $q.when(config);
+				}
+			};
+			return interceptorInstance;
+		}];
+
+	$httpProvider.interceptors.push(requestInterceptor);
 }]);*/
 
 app.config(function($routeProvider, $locationProvider) {
@@ -84,7 +109,8 @@ app.config(function($routeProvider, $locationProvider) {
 	});
 	$routeProvider.when('/account', {
 		templateUrl: 'views/account.html',
-		controller: 'AccountController'
+		controller: 'AccountController',
+		loginRequired: true,
 	});
 	$routeProvider.when('/users', {
 		templateUrl: 'views/users.html',
