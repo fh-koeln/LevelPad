@@ -17,8 +17,20 @@ function validateUsernameLength(username) {
 	}
 }
 
+function validateStudentNumber(studentNumber) {
+  	if ( ! /^\d+$/.test(studentNumber) ) {
+    	return false;
+	} else {
+    	return true;
+    }
+}
+
 var userNameValidations = [
-	{ validator: validateUsernameLength, msg: 'Username length is not valid' }
+	{ validator: validateUsernameLength, msg: 'Der Benutzername ist ungültig' }
+];
+
+var studentNumberValidations = [
+	{ validator: validateStudentNumber, msg: 'Die Matrikelnummer ist ungültig' }
 ];
 
 var userSchema = new Schema({
@@ -26,12 +38,12 @@ var userSchema = new Schema({
 	firstname: {type: String, required: true},
 	lastname: {type: String, required: true},
 	email: {type: String, required: true},
-	studentNumber: {type: Number, required: false},
+	studentNumber: {type: String, required: false, validate: studentNumberValidations},
 	role: {type: String, enum: ['guest', 'student', 'lecturer', 'assistent', 'administrator'], default: 'guest'}
 });
 
 userSchema.statics.findByUsername = function (username, callback) {
-	this.findOne({ username: new RegExp(username, 'i') }, callback);
+	this.findOne({ username: username }, callback);
 };
 
 module.exports = mongoose.model('User', userSchema);

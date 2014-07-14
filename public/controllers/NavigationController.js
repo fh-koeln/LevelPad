@@ -29,6 +29,12 @@ angular.module('levelPad').controller('NavigationController', ['$scope', '$rootS
 			$location.path('/signup');
 		}
 	};
+    
+    $scope.admin = function() {
+		if ($location.path() !== '/modules') {
+			$location.path('/modules');
+		}
+	};
 
 	$scope.logout = function() {
 		if ($location.path() !== '/logout') {

@@ -1,4 +1,3 @@
-
 var express = require('express'),
 	users = express.Router(),
 	User = require('../../models/User'),
@@ -26,7 +25,11 @@ users.post('/', function(req, res) {
 
 	user.save(function(err, user) {
 		if (err) {
-			res.json(500, err);
+			if (err.name === 'ValidationError') {
+				res.json(400, err);
+			} else {
+				res.json(500, err);
+			}
 		} else {
 			acl.setRole(user.username, user.role, function(err) {
 				if (err) {
@@ -55,7 +58,19 @@ users.get('/:username', function(req, res) {
 });
 
 users.put('/:username', function(req, res) {
-	User.findOneAndUpdate(req.params, req.body, { upsert: true }, helpers.sendResult(res));
+	User.findOne(req.params, function (err, user) {
+		user.studentNumber = req.body.studentNumber;
+		user.email = req.body.email;
+		user.firstname = req.body.firstname;
+		user.lastname = req.body.lastname;
+  		user.save(function (err, user) {
+  			if (err) {
+				res.json(500, err);
+			} else {
+				res.json(200, user);
+			}
+		});
+	});
 });
 
 users.delete('/:username', function(req, res) {

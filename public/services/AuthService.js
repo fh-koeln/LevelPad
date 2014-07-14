@@ -5,9 +5,6 @@ angular.module('levelPad').factory('AuthService', function ($http, Session) {
 				method: 'POST',
 				url: '/api/login',
 				data: credentials
-			})
-			.then(function(res) {
-				Session.create(Date.now(), res.data);
 			});
 		},
 
@@ -15,8 +12,6 @@ angular.module('levelPad').factory('AuthService', function ($http, Session) {
 			return $http({
 				method: 'GET',
 				url: '/api/users/me'
-			}).then(function(res) {
-				Session.create(Date.now(), res.data);
 			});
 		},
 
@@ -25,8 +20,6 @@ angular.module('levelPad').factory('AuthService', function ($http, Session) {
 				method: 'POST',
 				url: '/api/users',
 				data: user
-			}).then(function(res) {
-				Session.create(Date.now(), res.data);
 			});
 		},
 
@@ -34,17 +27,14 @@ angular.module('levelPad').factory('AuthService', function ($http, Session) {
 			return $http({
 				method: 'POST',
 				url: '/api/logout'
-			})
-			.then(function() {
-				Session.destroy();
 			});
 		},
 
-		isAuthenticated: function () {
+		isAuthenticated: function() {
 			return !!Session.user.id;
 		},
 
-		isAuthorized: function (authorizedRoles) {
+		isAuthorized: function(authorizedRoles) {
 			if (!angular.isArray(authorizedRoles)) {
 				authorizedRoles = [authorizedRoles];
 			}

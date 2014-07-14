@@ -8,7 +8,8 @@ angular.module('levelPad').controller('LoginController', function($scope, $rootS
 
 	$scope.login = function($event) {
 		$($event.target).find('button[type=submit]').button('loading');
-		AuthService.login($scope.credentials).then(function() {
+		AuthService.login($scope.credentials).then(function(res) {
+			Session.create(Date.now(), res.data);
 			$rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
 			$rootScope.$broadcast(AUTH_EVENTS.loginRefreshed);
 		}, function() {

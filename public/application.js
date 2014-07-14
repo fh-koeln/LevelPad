@@ -100,8 +100,8 @@ app.config(function($routeProvider, $locationProvider) {
 	// Basics
 
 	$routeProvider.when('/', {
-		templateUrl: 'views/main.html',
-		controller: 'MainController'
+		templateUrl: 'views/modules/show.html',
+		controller: 'SubjectListController'
 	});
 	$routeProvider.when('/dashboard', {
 		templateUrl: 'views/dashboard.html',
@@ -185,7 +185,7 @@ app.config(function($routeProvider, $locationProvider) {
 	$locationProvider.html5Mode(true);
 });
 
-app.run(function($rootScope, AuthService, AUTH_EVENTS, $location) {
+app.run(function($rootScope, AuthService, AUTH_EVENTS, Session, $location) {
 
 	AuthService.refresh().then(function() {
 		$rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
@@ -198,8 +198,9 @@ app.run(function($rootScope, AuthService, AUTH_EVENTS, $location) {
 			return;
 		}
 
-		AuthService.refresh().then(function() {
+		AuthService.refresh().then(function(res) {
 			// Authentifizierung war erfolgreich
+			Session.create(Date.now(), res.data);
 			$rootScope.$broadcast(AUTH_EVENTS.loginRefreshed);
 		}, function() {
 			// Authentifizierung ist fehlgeschlagen, User abmelden
