@@ -100,8 +100,8 @@ app.config(function($routeProvider, $locationProvider) {
 	// Basics
 
 	$routeProvider.when('/', {
-		templateUrl: 'views/main.html',
-		controller: 'MainController'
+		templateUrl: 'views/modules/show.html',
+		controller: 'SubjectListController'
 	});
 	$routeProvider.when('/dashboard', {
 		templateUrl: 'views/dashboard.html',
