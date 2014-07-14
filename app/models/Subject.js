@@ -14,7 +14,8 @@ var subjectSchema = new Schema({
 	registration_password: String,
 	semester: { type: String, enum: ['Wintersemester', 'Sommersemester'], required: true },
 	slug: {type: String, require: true, unique: true},
-	year: { type: Number, required: true }
+	year: { type: Number, required: true },
+    status: { type: String, enum: ['Active', 'Inactive'], required: true, default: 'Active'}
 });
 
 subjectSchema.statics.findBySlug = function (slug, callback) {
