@@ -71,6 +71,7 @@ describe('Subject controller', function() {
 //			.get('/api/subjects')
 //			.expect(200)
 //			.end(done);
+		done();
 
 	});
 
