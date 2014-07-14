@@ -2,7 +2,7 @@
 process.env.NODE_ENV = 'production';
 
 var request = require('supertest'),
-	server = require('../server');
+	server = require('../../server');
 
 request = request(server);
 
