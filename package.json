@@ -7,7 +7,7 @@
     "postinstall": "bower install",
     "run": "node server.js",
     "run-auto": "nodemon --delay 2.5 --ignore public server.js",
-    "test": "mocha --reporter spec app/tests"
+    "test": "mocha --recursive --reporter spec app/tests"
   },
   "repository": {
     "type": "git",
@@ -42,8 +42,7 @@
     "morgan": "~1.1.1",
     "passport": "~0.2.0",
     "passport-local": "~1.0.0",
-    "path-to-regexp": "~0.2.1",
-    "socket.io": "1.0.6"
+    "path-to-regexp": "~0.2.1"
   },
   "devDependencies": {
     "bower": "*",

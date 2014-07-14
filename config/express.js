@@ -18,12 +18,19 @@ module.exports = function(app) {
 
 	// Basic request processing:
 	app.use(require('cookie-parser')(process.env.COOKIE_SECRET || 'H2YlmVI=srH5DCw4xKA(IA4YZ|Gr4gutt|Lh0WD:'));
-	app.use(session({
-		secret: process.env.SESSION_SECRET || '&Rd65y($lbBh}=)N{U}uBL&3BXitK$G2h@C8mpew',
-		store: new MongoStore({ url: require('./db').url }),
-		resave: false,
-		saveUninitialized: false
-	}));
+
+	// Session
+	if (env === 'test') {
+		// TODO: Disable session in tests, or?
+	} else {
+		app.use(session({
+			secret: process.env.SESSION_SECRET || '&Rd65y($lbBh}=)N{U}uBL&3BXitK$G2h@C8mpew',
+			store: new MongoStore({ url: require('./db').url }),
+			resave: false,
+			saveUninitialized: false
+		}));
+	}
+
 	app.use(bodyParser.json());
 	app.use(require('connect-timeout')(10 * 1000));
 

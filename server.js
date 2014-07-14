@@ -12,7 +12,11 @@ var port = process.env.PORT || 5000;
 var express = require('express'),
 	app = express();
 
-console.info('Will start server on port %d in %s mode...', port, app.get('env'));
+if (process.env.NODE_ENV !== 'test') {
+	console.info('Will start server on port %d in %s mode...', port, app.get('env'));
+} else {
+	console.info('Provide test server for unit tests...');
+}
 
 // Express settings
 require('./config/express')(app);
@@ -29,27 +33,13 @@ require('./config/auth')(app);
 // Routing
 app.use(require('./config/routes'));
 
-// @todo
-// Socket.io
 var server = require('http').createServer(app);
-var io = require('socket.io').listen(server);
-io.sockets.on('connection', function (socket) {
-	console.log('new connection...');
-
-	socket.broadcast.emit('chat_message', {
-		type: 'message',
-		text: 'hallo!'
-	});
-
-	socket.on('chat_message', function (data) {
-		console.log(data);
-	});
-});
-
 
 // Start server
-server.listen(port, function() {
-	console.info('Server started! Waiting for requests...');
-});
+if (process.env.NODE_ENV !== 'test') {
+	server.listen(port, function() {
+		console.info('Server started! Waiting for requests...');
+	});
+}
 
 module.exports = server;

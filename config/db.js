@@ -2,7 +2,13 @@
 
 var mongoose = require('mongoose');
 
-module.exports.url = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/levelpad';
+var env = process.env.NODE_ENV;
+
+if (env === 'test') {
+	module.exports.url = 'mongodb://localhost/levelpadtest';
+} else {
+	module.exports.url = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/levelpad';
+}
 
 // Connect to our database
 mongoose.connect(module.exports.url);

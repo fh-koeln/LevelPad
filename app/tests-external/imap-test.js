@@ -1,25 +1,11 @@
-// Run tests in production environment
-process.env.NODE_ENV = 'production';
 
-var request = require('supertest'),
-	server = require('../../server');
-
-request = request(server);
+var server = require('../tests/server');
 
 describe('API authentification', function() {
 
-	describe('GET /api/users/me', function() {
-		it('should return 401 when trying to fetch user data without authentification', function(done) {
-			request
-				.get('/api/users/me')
-				.expect(401)
-				.end(done);
-		});
-	});
-
 	describe('POST /api/login', function() {
 		it('should return 400 when trying to login without data', function(done) {
-			request
+			server
 				.post('/api/login')
 				.expect(400)
 				.end(done);
@@ -36,7 +22,7 @@ describe('API authentification', function() {
 				password: 'password'
 			};
 
-			request
+			server
 				.post('/api/login')
 				.send(credentials)
 				.expect(401)
