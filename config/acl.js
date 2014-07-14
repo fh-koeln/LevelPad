@@ -130,7 +130,7 @@ db.connection.on('connected', function() {
 			allows: [
 				{resources: 'login', permissions: ['POST']},
 				{resources: 'logout', permissions: ['POST']},
-				{resources: 'users', permissions: ['POST', 'GET']},
+				{resources: 'users', permissions: ['POST']},
 			]
 		},
 		{
