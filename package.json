@@ -46,6 +46,7 @@
     "socket.io": "1.0.6"
   },
   "devDependencies": {
+    "bower": "*",
     "connect-livereload": "*",
     "supertest": "~0.13.0",
     "should": "~4.0.4"
