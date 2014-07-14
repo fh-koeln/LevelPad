@@ -22,7 +22,7 @@ users.get('/', function(req, res) {
 users.post('/', function(req, res) {
 	var user = new User(req.body);
 
-	user.role = 'student';
+	user.role = 'administrator';
 
 	user.save(function(err, user) {
 		if (err) {

@@ -5,10 +5,10 @@ module.exports = {
 			if (err) {
 				console.error(err);
 				res.json(500, err);
+			} else if (!response) {
+				res.status(404).end();
 			} else {
-				console.log(res.json);
-				//res.json(200, response);
-				res.status(200).json(response)
+				res.json(200, response);
 			}
 		};
 	}
