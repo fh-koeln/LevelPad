@@ -13,14 +13,15 @@ require('url');
  */
 subjects.get('/', function (req, res) {
 	if (req.query.year || req.query.semester || req.query.module) {
-		
+
 		//convert Semester shortname to longname
-		if (req.query.semester === 'sose')
+		if (req.query.semester === 'sose') {
 			req.query.semester = 'Sommersemester';
-		else if (req.query.semester === 'wise')
+		} else if (req.query.semester === 'wise') {
 			req.query.semester = 'Wintersemester';
-		else
+		} else {
 			delete req.query.semester;
+		}
 
 		//Select ID from module-collection by shortname
 		if (req.query.module) {
@@ -28,8 +29,8 @@ subjects.get('/', function (req, res) {
 				if (err) {
 					console.error(err);
 					res.json(500, err);
-				} 
-				
+				}
+
 				else if (module) {
 					console.log(module);
 					req.query.module = module._id;
@@ -38,8 +39,9 @@ subjects.get('/', function (req, res) {
 				findSubjects(req, res);
 			});
 		}
-		else
+		else {
 			findSubjects(req,res);
+		}
 
 	} else {
 		Subject.find().populate('module').exec(helpers.sendResult(res));
@@ -55,7 +57,5 @@ function findSubjects(req, res) {
 	}).exec(helpers.sendResult(res));
 
 }
-
-
 
 module.exports = subjects;

@@ -21,6 +21,8 @@
 				<ul class="dropdown-menu" role="menu">
 					<li data-ng-class="{ active: $location.path() == '/account' }"><a data-ng-href="/account">Account</a></li>
 					<li><a href="/logout" data-ng-click="logout(); $event.preventDefault();">Logout</a></li>
+                    <li class="divider"></li>
+                    <li><a href="/modules">Administration</a></li>
 				</ul>
 			</div>
 		</li>
