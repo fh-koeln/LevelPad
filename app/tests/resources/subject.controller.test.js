@@ -67,10 +67,10 @@ describe('Subject controller', function() {
 		user.should.have.property('name', 'tj');
 		user.should.have.property('pets').with.lengthOf(4);
 
-		server
-			.get('/api/subjects')
-			.expect(200)
-			.end(done);
+//		server
+//			.get('/api/subjects')
+//			.expect(200)
+//			.end(done);
 
 	});
 
