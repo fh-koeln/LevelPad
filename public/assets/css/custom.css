@@ -24,13 +24,23 @@ nav h1 {
 
 @media (max-width: 767px) {
 	nav h1 {
-		width: 20px;
+		width: 30px;
 		overflow: hidden;
+		height: 40px;
 	}
 	nav h1:before {
-		content: '❮';
+		content: '\e079';
 		margin-left: 10px;
 		margin-right: 10px;
+		position: relative;
+		top: 1px;
+		display: inline-block;
+		font-family: 'Glyphicons Halflings';
+		font-style: normal;
+		font-weight: normal;
+		line-height: 1;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
 	}
 }
 
@@ -48,10 +58,19 @@ nav > ul > li {
 }
 @media (min-width: 768px) {
 	nav > ul.navi > li:before {
-		content: '❯';
+		content: '\e080';
 		color: #bbbbbb;
 		margin-left: 5px;
 		margin-right: 15px;
+		position: relative;
+		top: 1px;
+		display: inline-block;
+		font-family: 'Glyphicons Halflings';
+		font-style: normal;
+		font-weight: normal;
+		line-height: 1;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
 	}
 }
 nav > ul > li.active a, nav > ul > li a:active {
