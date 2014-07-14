@@ -13,12 +13,7 @@ describe('API authentification', function() {
 			request
 				.get('/api/users/me')
 				.expect(401)
-				.end(function(err){
-					if (err) {
-						return done(err);
-					}
-					done();
-				});
+				.end(done);
 		});
 	});
 
@@ -27,12 +22,7 @@ describe('API authentification', function() {
 			request
 				.post('/api/login')
 				.expect(400)
-				.end(function(err){
-					if (err) {
-						return done(err);
-					}
-					done();
-				});
+				.end(done);
 		});
 	});
 
@@ -50,12 +40,7 @@ describe('API authentification', function() {
 				.post('/api/login')
 				.send(credentials)
 				.expect(401)
-				.end(function(err){
-					if (err) {
-						return done(err);
-					}
-					done();
-				});
+				.end(done);
 		});
 	});
 });
