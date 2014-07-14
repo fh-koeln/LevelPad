@@ -18,7 +18,7 @@ modules.get('/', function (req, res) {
  * Get one module.
  */
 modules.get('/:slug', function (req, res) {
-	Module.findOne(req.params.slug, helpers.sendResult(res));
+	Module.findBySlug(req.params.slug, helpers.sendResult(res));
 });
 
 /**
