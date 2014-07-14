@@ -8,7 +8,7 @@ var express = require('express'),
 api.use(acl.middleware);
 
 api.use('/modules', require('../app/resources/modules'));
-api.use('/subjects', require('../app/resources/Subjects'));
+api.use('/subjects', require('../app/resources/subjects'));
 api.use('/users', require('../app/resources/users'));
 
 var routes = express.Router();
