@@ -6,7 +6,7 @@
   "scripts": {
     "postinstall": "bower install",
     "run": "node server.js",
-    "run-auto": "nodemon --delay 2.5 --ignore app/public server.js",
+    "run-auto": "nodemon --delay 2.5 --ignore public server.js",
     "test": "mocha --reporter spec app/tests"
   },
   "repository": {
