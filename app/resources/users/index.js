@@ -26,7 +26,11 @@ users.post('/', function(req, res) {
 
 	user.save(function(err, user) {
 		if (err) {
-			res.json(500, err);
+			if (err.name === 'ValidationError') {
+				res.json(400, err);
+			} else {
+				res.json(500, err);
+			}
 		} else {
 			acl.setRole(user.username, user.role, function(err) {
 				if (err) {

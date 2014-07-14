@@ -15,7 +15,8 @@ angular.module('levelPad').controller('SignupController', function($scope, $root
 		$scope.user.username = Session.user.username;
 
 		$($event.target).find('button[type=submit]').button('loading');
-		AuthService.signup($scope.user).then(function() {
+		AuthService.signup($scope.user).then(function(res) {
+			Session.create(Date.now(), res.data);
 			$rootScope.$broadcast(AUTH_EVENTS.signupSuccess);
 			$rootScope.$broadcast(AUTH_EVENTS.loginRefreshed);
 		}, function() {
