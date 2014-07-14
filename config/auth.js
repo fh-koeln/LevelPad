@@ -5,7 +5,7 @@ var express = require('express'),
 	passport = require('passport'),
 	LocalStrategy = require('passport-local').Strategy,
 	Imap = require('imap'),
-	User = require('../models/User'),
+	User = require('../app/models/User'),
 	acl = require('./acl').acl;
 
 var checkCredentials = function(username, password, callback) {
