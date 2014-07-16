@@ -7,5 +7,8 @@ node_js:
   - "0.11"
   - "0.10"
 
+script: "npm run-script test-cov"
+
 after_script:
   - "cat ./coverage/lcov.info | coveralls"
+  - "coveralls ./coverage/lcov.info"
