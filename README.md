@@ -1,4 +1,4 @@
-# LevelPad [![Build status][travis-image]][travis-url] [![Dependency Status][travis-image]][travis-url] [![Test coverage][coveralls-image]][coveralls-url]
+# LevelPad [![Build status][travis-image]][travis-url] [![Dependency Status][dependency-image]][dependency-url] [![Test coverage][coveralls-image]][coveralls-url]
 
 [travis-image]: https://img.shields.io/travis/fh-koeln/LevelPad.svg
 [travis-url]: https://travis-ci.org/fh-koeln/LevelPad
