@@ -35,6 +35,14 @@ Heroku version runs in production mode:
 
 	npm run-script run-auto
 
+*Run tests*
+
+	npm test
+
+*Run tests with coverage report*
+
+	npm run-script test-cov
+
 *Push new version to heroku:*
 
 	git push heroku master && heroku logs -t
