@@ -9,6 +9,4 @@ node_js:
 
 script: "npm run-script test-cov"
 
-after_script:
-  - "cat ./coverage/lcov.info | coveralls"
-  - "coveralls ./coverage/lcov.info"
+after_script: "cat ./coverage/lcov.info | node_modules/.bin/coveralls"

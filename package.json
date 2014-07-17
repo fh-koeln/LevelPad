@@ -7,8 +7,8 @@
     "postinstall": "node ./node_modules/.bin/bower install",
     "run": "node server.js",
     "run-auto": "node ./node_modules/.bin/nodemon --delay 2.5 --ignore public server.js",
-    "test": "node ./node_modules/.bin/mocha --recursive --reporter spec app/tests",
-    "test-cov": "node ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha --recursive app/tests"
+    "test": "NODE_ENV=test node ./node_modules/.bin/mocha --recursive --reporter spec app/tests",
+    "test-cov": "NODE_ENV=test node ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- --recursive --report lcovonly app/tests"
   },
   "repository": {
     "type": "git",
@@ -50,7 +50,9 @@
     "nodemon": "*",
     "connect-livereload": "*",
     "mocha": "*",
+    "mocha-lcov-reporter": "*",
     "istanbul": "*",
+    "coveralls": "*",
     "supertest": "~0.13.0",
     "should": "~4.0.4"
   }
