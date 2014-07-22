@@ -1,5 +1,6 @@
 
-var Imap = require('imap'),
+var LocalStrategy = require('passport-local').Strategy,
+	Imap = require('imap'),
 	User = require('../../app/models/User'),
 	acl = require('../acl').acl;
 
@@ -70,7 +71,7 @@ var checkCredentials = function(username, password, callback) {
 	});
 };
 
-module.exports = function(username, password, done) {
+module.exports = new LocalStrategy(function(username, password, done) {
 	checkCredentials(username, password, function(err) {
 		if (err) {
 			done(null, false, err);
@@ -91,4 +92,4 @@ module.exports = function(username, password, done) {
 			});
 		}
 	});
-};
+});

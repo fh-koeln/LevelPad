@@ -1,8 +1,7 @@
 'use strict';
 
 var passport = require('passport'),
-	LocalStrategy = require('passport-local').Strategy,
-	fhKoelnImap = require('./strategies/fh-koeln-imap'),
+	fhKoelnImapStrategy = require('./strategies/fh-koeln-imap'),
 	acl = require('./acl').acl,
 	User = require('../app/models/User');
 
@@ -36,14 +35,14 @@ passport.deserializeUser(function(username, done) {
 
 
 /**
- * Use the LocalStrategy within Passport.
+ * Use the FH-Köln IMAP Strategy (a LocalStrategy) within Passport.
  *
  * Strategies in passport require a `verify` function, which accept
  * credentials (in this case, a username and password), and invoke a callback
  * with a user object.  In the real world, this would query a database;
  * however, in this example we are using a baked-in set of users.
  */
-passport.use('fh-imap', new LocalStrategy(fhKoelnImap));
+passport.use('fh-imap', fhKoelnImapStrategy);
 
 module.exports = function(app) {
 
