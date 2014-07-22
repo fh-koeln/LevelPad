@@ -10,6 +10,8 @@ api.use(acl.middleware);
 api.use('/modules', require('../app/resources/modules'));
 api.use('/subjects', require('../app/resources/subjects'));
 api.use('/users', require('../app/resources/users'));
+api.use('/years', require('../app/resources/years'));
+api.use('/semester', require('../app/resources/semester'));
 
 var routes = express.Router();
 routes.use('/api', api);
