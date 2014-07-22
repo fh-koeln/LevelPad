@@ -44,6 +44,4 @@ tasks.delete('/:slug', function(req, res) {
 	Task.findOneAndRemove(req.params, helpers.sendResult(res));
 });
 
-tasks.use('/:slug/teams', require('./teams'));
-
 module.exports = tasks;
