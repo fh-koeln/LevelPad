@@ -1,7 +1,8 @@
 'use strict';
 
 var passport = require('passport'),
-	fhKoelnImapStrategy = require('./strategies/fh-koeln-imap'),
+	DatabaseStrategy = require('./strategies/DatabaseStrategy'),
+	FHKIMAPStrategy = require('./strategies/FHKIMAPStrategy'),
 	acl = require('./acl').acl,
 	User = require('../app/models/User');
 
@@ -42,7 +43,11 @@ passport.deserializeUser(function(username, done) {
  * with a user object.  In the real world, this would query a database;
  * however, in this example we are using a baked-in set of users.
  */
-passport.use('fh-imap', fhKoelnImapStrategy);
+if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
+	passport.use('fh-imap', DatabaseStrategy);
+} else {
+	passport.use('fh-imap', FHKIMAPStrategy);
+}
 
 module.exports = function(app) {
 
@@ -72,3 +77,4 @@ module.exports = function(app) {
 		res.json(200, {});
 	});
 };
+
