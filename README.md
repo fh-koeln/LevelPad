@@ -13,16 +13,35 @@ Webapp zur Unterstützung einer Bewertung nach dem Niveaustufenmodell
 
 ## Niveaustufenmodell
 
-## Technik
+> TODO
 
-Dieses Projekt ist umgesetzt als Node.JS / AngularJS webapp. Verwendete Software:
+## Software components:
 
-* [Node.js](http://nodejs.org/)
-* [express](http://expressjs.com/)
-* [Bootstrap](http://getbootstrap.com/)
-* [AngularJS](http://www.angularjs.org/)
-* [socket.io](http://socket.io/)
-* [Passport](http://passportjs.org/)
+Implemented with the "MEAN-stack" (mongoDB, express, AngularJS, Node.js):
+
+* Storage / Persistance / Cache:
+[mongoDB](http://www.mongodb.org/) with
+[mongoose](http://mongoosejs.com/)
+
+* Backend stack:
+[Node.js](http://nodejs.org/),
+[express](http://expressjs.com/),
+[acl](https://github.com/optimalbits/node_acl),
+[Passport](http://passportjs.org/),
+[helmet](https://github.com/evilpacket/helmet)
+
+* Backend tests:
+[mocha](https://github.com/visionmedia/mocha),
+[should](https://github.com/visionmedia/should.js),
+[supertest](https://github.com/visionmedia/supertest) and
+[istanbul](https://github.com/gotwarlost/istanbul)
+
+* Frontend stack:
+[AngularJS](http://www.angularjs.org/),
+[Bootstrap](http://getbootstrap.com/)
+
+* Frontend tests:
+TODO
 
 ## Heroku installation
 
