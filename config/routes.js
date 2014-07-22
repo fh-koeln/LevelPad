@@ -17,6 +17,10 @@ var routes = express.Router();
 routes.use('/api', api);
 //routes.get('/explorer', require('../resources/explorer')('', routes));
 
+if (process.env.NODE_ENV === 'development') {
+	routes.use('/acl', acl.debugRoute);
+}
+
 routes.get('/*', function(req, res) {
 	console.log(req.path);
 	if (req.path.indexOf('/views/') === 0) {

@@ -4,6 +4,7 @@
 
 var acl = require('acl'),
 	db = require('./db'),
+	express = require('express'),
 	pathToRegexp = require('path-to-regexp');
 
 /**
@@ -71,6 +72,29 @@ module.exports.middleware = function middleware(req, res, next) {
 		});
 	});
 };
+
+module.exports.debugRoute = express.Router();
+module.exports.debugRoute.get('/me', function(req, res) {
+	res.json(200, req.user);
+});
+module.exports.debugRoute.get('/me/roles', function(req, res) {
+	acl.userRoles(req.user.username, function(err, roles) {
+		if (err) {
+			res.json(500, err);
+		} else {
+			res.json(200, roles);
+		}
+	});
+});
+module.exports.debugRoute.get('/me/resources', function(req, res) {
+	acl.whatResources(req.user.role, function(err, resources) {
+		if (err) {
+			res.json(500, err);
+		} else {
+			res.json(200, resources);
+		}
+	});
+});
 
 /**
  * Set role to a user.
