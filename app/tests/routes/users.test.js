@@ -3,7 +3,7 @@
 var supertest = require('supertest'),
 	server = require('../../../server');
 
-describe('API authentification', function() {
+describe('Users API', function() {
 	it('should return 401 when trying to fetch user data without authentification', function(done) {
 		var agent = supertest.agent(server);
 		agent
