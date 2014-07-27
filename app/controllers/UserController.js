@@ -50,6 +50,14 @@ exports.create = function(callback, userdata) {
 	], callback);
 };
 
+/**
+ * Update the user with given username. The userdata are optional
+ * and the username ifself could not changed (currently).
+ *
+ * @param callback
+ * @param username
+ * @param userdata
+ */
 exports.update = function(callback, username, userdata) {
 	// TODO: could we remove the find here and change the check based on the numberAffected callback argument?
 	async.waterfall([
@@ -74,6 +82,12 @@ exports.update = function(callback, username, userdata) {
 	], callback);
 };
 
+/**
+ * Removes the user with the given username.
+ *
+ * @param callback
+ * @param username
+ */
 exports.delete = function(callback, username) {
 	// TODO: could we remove the find here and change the check based on the numberAffected callback argument?
 	// currently replaced because findOneAndRemove will not throw an error if the user doesn't exist anymore.
