@@ -2,9 +2,8 @@ language: node_js
 services:
   - mongodb
 
-# test on this node.js versions: 0.8 (previously stable), 0.10 (current stable) and 0.11 (dev)
+# test on two node.js versions: 0.10 (stable) and 0.11 (dev)
 node_js:
-  - "0.8"
   - "0.10"
   - "0.11"
 
