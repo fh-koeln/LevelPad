@@ -25,7 +25,7 @@ module.exports.clear = function(callback) {
 
 module.exports.initializeTestData = function(callback) {
 	async.series([
-		function(callback) {
+		function(next) {
 			var user = {
 				username: 'admin1',
 				firstname: 'Admin1',
@@ -33,9 +33,9 @@ module.exports.initializeTestData = function(callback) {
 				email: 'admin1@fh-koeln.de',
 				role: 'administrator'
 			};
-			new User(user).save(callback);
+			new User(user).save(next);
 		},
-		function(callback) {
+		function(next) {
 			var user = {
 				username: 'lecturer1',
 				firstname: 'Lecturer1',
@@ -43,29 +43,29 @@ module.exports.initializeTestData = function(callback) {
 				email: 'lecturer1@fh-koeln.de',
 				role: 'lecturer'
 			};
-			new User(user).save(callback);
+			new User(user).save(next);
 		},
-		function() {
+		function(next) {
 			var module = {
 				slug: 'wba1',
 				shortName: 'WBA 1',
 				name: 'Webbasierte Anwendungen 1'
 			};
-			new Module(module).save(callback);
+			new Module(module).save(next);
 		},
-		function() {
+		function(next) {
 			var module = {
 				slug: 'wba2',
 				shortName: 'WBA 2',
 				name: 'Webbasierte Anwendungen 2'
 			};
-			new Module(module).save(callback);
+			new Module(module).save(next);
 		},
-		function(callback) {
+		function(next) {
 			// Create guest user which has to sign up
 //			acl.addUserRoles('lecturer1', 'administrator', callback);
 //			acl.addUserRoles('lecturer1', 'administrator', callback);
-			callback();
+			next();
 		}
 	], callback);
 };
