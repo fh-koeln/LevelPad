@@ -13,17 +13,17 @@ users.param('user', function(req, res, next, username) {
 });
 
 /**
- * Get all users and apply optional filter.
+ * List all users and apply optional filter.
  */
 users.get('/', function (req, res) {
-	UserController.getAll(_helpers.sendResult(res));
+	UserController.list(_helpers.sendResult(res));
 });
 
 /**
- * Create a new user based on the given username.
+ * Find user by username.
  */
-users.post('/', function(req, res) {
-	UserController.create(_helpers.sendResult(res), req.body);
+users.get('/:username', function(req, res) {
+	UserController.read(_helpers.sendResult(res), req.params.username);
 });
 
 /**
@@ -38,10 +38,10 @@ users.get('/me', function(req, res) {
 });
 
 /**
- * Find user by username.
+ * Create a new user based on the given username.
  */
-users.get('/:username', function(req, res) {
-	UserController.getUser(_helpers.sendResult(res), req.params.username);
+users.post('/', function(req, res) {
+	UserController.create(_helpers.sendResult(res), req.body);
 });
 
 /**

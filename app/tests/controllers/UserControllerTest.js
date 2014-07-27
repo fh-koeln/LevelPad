@@ -17,9 +17,9 @@ describe('UserController', function() {
 		], done);
 	});
 
-	describe('getAll', function() {
-		it('should search without filter as default', function(done) {
-			UserController.getAll(function(err, users) {
+	describe('list', function() {
+		it('should find all users without filter (default)', function(done) {
+			UserController.list(function(err, users) {
 				assert.isNull(err, 'Error should be null');
 				assert.isNotNull(users, 'Users should be not null');
 				assert.lengthOf(users, 2, 'Users array has length of 2');
@@ -29,7 +29,7 @@ describe('UserController', function() {
 
 		it('should find an user (admin1 by username) via filter', function(done) {
 			var filter = { username: 'admin1' };
-			UserController.getAll(function(err, users) {
+			UserController.list(function(err, users) {
 				assert.isNull(err, 'Error should be null');
 				assert.isNotNull(users, 'Users should be not null');
 				assert.lengthOf(users, 1, 'Users array has length of 1');
@@ -48,9 +48,9 @@ describe('UserController', function() {
 		});
 	});
 
-	describe('getUser', function() {
+	describe('read', function() {
 		it('should return a known user (admin1)', function(done) {
-			UserController.getUser(function(err, user) {
+			UserController.read(function(err, user) {
 				assert.isNull(err, 'Error should be null');
 				assert.isNotNull(user, 'User should be not null');
 
@@ -67,7 +67,7 @@ describe('UserController', function() {
 		});
 
 		it('should return null for an unknown user (unknownuser)', function(done) {
-			UserController.getUser(function(err, user) {
+			UserController.read(function(err, user) {
 				assert.isNotNull(err, 'Error should be not null');
 				assert.isNull(user, 'User should be null');
 				done();

@@ -4,9 +4,9 @@ var User = require('../models/User'),
 	acl = require('../../config/acl');
 
 /**
- * Get all users and apply optional filter.
+ * List all users and apply optional filter.
  */
-exports.getAll = function(callback, filter) {
+exports.list = function(callback, filter) {
 	User.find(filter, callback);
 };
 
@@ -16,7 +16,7 @@ exports.getAll = function(callback, filter) {
  * @param callback
  * @param username
  */
-exports.getUser = function(callback, username) {
+exports.read = function(callback, username) {
 	// TODO assert here that username is a string?
 	User.findOne({ username: username }, function(err, user) {
 		if (!err && !user) {
@@ -62,7 +62,7 @@ exports.update = function(callback, username, userdata) {
 	// TODO: could we remove the find here and change the check based on the numberAffected callback argument?
 	async.waterfall([
 		function(next) {
-			exports.getUser(next, username);
+			exports.read(next, username);
 		},
 		function(user, next) {
 			if (userdata.firstname !== undefined) {
@@ -95,7 +95,7 @@ exports.delete = function(callback, username) {
 
 	async.waterfall([
 		function(next) {
-			exports.getUser(next, username);
+			exports.read(next, username);
 		},
 		function(user, next) {
 			user.remove(next);
