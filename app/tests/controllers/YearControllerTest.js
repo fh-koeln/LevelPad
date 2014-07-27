@@ -1,14 +1,10 @@
 'use strict';
 
 var YearController = require('../../controllers/YearController'),
-	assert = require('chai').assert,
-	expect = require('chai').expect,
-	sinon = require('sinon');
+	expect = require('chai').expect;
 
 describe('YearController', function() {
-
 	describe('getAll', function() {
-
 		it('should contain 2014', function(done) {
 			YearController.getAll(function(err, years) {
 

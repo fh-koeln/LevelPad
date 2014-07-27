@@ -2,24 +2,18 @@
 
 var SemesterController = require('../../controllers/SemesterController'),
 	assert = require('chai').assert,
-	expect = require('chai').expect,
-	sinon = require('sinon');
+	expect = require('chai').expect;
 
 describe('SemesterController', function() {
-
-	var req, res;
-
-	beforeEach(function() {
-		req = {};
-		res = {};
-		res.json = sinon.spy();
-	});
-
 	describe('getAll', function() {
-		it('should contain 2014', function() {
-			SemesterController.getAll(req, res);
+		it('should contain 2014', function(done) {
+			SemesterController.getAll(function(err, semesters) {
 
-			assert(res.json.calledWith(200));
+				expect(err).to.be.null;
+				expect(semesters).to.have.length(2);
+
+				done(err);
+			});
 		});
 	});
 

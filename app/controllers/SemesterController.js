@@ -2,8 +2,8 @@
 /**
  * Get all available semester
  */
-exports.getAll = function (req, res) {
-	res.json(200, [
+exports.getAll = function(callback) {
+	callback(null, [
 		// TODO externalize this later
 		{ id: 'sose', slug: 'sose', name: 'Sommersemester' },
 		{ id: 'wise', slug: 'wise', name: 'Wintersemester' }
