@@ -1,8 +1,8 @@
 var express = require('express'),
 	subjects = express.Router(),
-	Subject = require('../../models/Subject'),
-	Module = require('../../models/Module'),
-	helpers = require('../_helpers');
+	Subject = require('../models/Subject'),
+	Module = require('../models/Module'),
+	helpers = require('./_helpers');
 
 //subjects.use('/:slug/artifacts', require('./Artifacts'));
 

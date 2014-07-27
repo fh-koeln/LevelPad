@@ -45,6 +45,22 @@ module.exports.initializeTestData = function(callback) {
 			};
 			new User(user).save(callback);
 		},
+		function() {
+			var module = {
+				slug: 'wba1',
+				shortName: 'WBA 1',
+				name: 'Webbasierte Anwendungen 1'
+			};
+			new Module(module).save(callback);
+		},
+		function() {
+			var module = {
+				slug: 'wba2',
+				shortName: 'WBA 2',
+				name: 'Webbasierte Anwendungen 2'
+			};
+			new Module(module).save(callback);
+		},
 		function(callback) {
 			// Create guest user which has to sign up
 //			acl.addUserRoles('lecturer1', 'administrator', callback);

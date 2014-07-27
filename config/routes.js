@@ -7,8 +7,8 @@ var express = require('express'),
 // API is only available for authenticated users.
 api.use(acl.middleware);
 
-api.use('/modules', require('../app/controllers/modules'));
-api.use('/subjects', require('../app/controllers/subjects'));
+api.use('/modules', require('../app/routes/modules'));
+api.use('/subjects', require('../app/routes/subjects'));
 api.use('/users', require('../app/routes/users'));
 api.use('/years', require('../app/routes/years'));
 api.use('/semesters', require('../app/routes/semesters'));

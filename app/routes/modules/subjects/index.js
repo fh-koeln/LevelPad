@@ -95,7 +95,7 @@ subjects.delete('/:slug', function (req, res) {
 	Subject.findOneAndRemove(req.params.slug, helpers.sendResult(res));
 });
 
-subjects.use('/tasks', require('./tasks'));
+subjects.use('/tasks', require('./tasks/index'));
 subjects.use('/students', require('./students'));
 subjects.use('/assistants', require('./assistants'));
 

@@ -66,10 +66,14 @@ describe('UserController', function() {
 			}, 'admin1');
 		});
 
-		it('should return null for an unknown user (unknownuser)', function(done) {
+		it('should fail for an unknown user (unknownuser)', function(done) {
 			UserController.read(function(err, user) {
 				assert.isNotNull(err, 'Error should be not null');
 				assert.isNull(user, 'User should be null');
+
+				expect(err).property('name', 'Error');
+				expect(err).property('message', 'Unknown user');
+
 				done();
 			}, 'unknownuser');
 		});

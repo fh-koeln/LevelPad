@@ -2,7 +2,7 @@
 var express = require('express'),
 	users = express.Router(),
 	UserController = require('../controllers/UserController'),
-	_helpers = require('../controllers/_helpers');
+	_helpers = require('./_helpers');
 
 // TODO check if we could replace the :username param in update and or delete below.
 users.param('user', function(req, res, next, username) {
@@ -38,14 +38,14 @@ users.get('/me', function(req, res) {
 });
 
 /**
- * Create a new user based on the given username.
+ * Create a new user based on the given userdata.
  */
 users.post('/', function(req, res) {
 	UserController.create(_helpers.sendResult(res), req.body);
 });
 
 /**
- * Update the user with given username. The userdata are optional
+ * Update the user with given username. userdata properties are optional
  * and the username ifself could not changed (currently).
  */
 users.put('/:username', function(req, res) {

@@ -5,6 +5,9 @@ var User = require('../models/User'),
 
 /**
  * List all users and apply optional filter.
+ *
+ * @param callback
+ * @param filter
  */
 exports.list = function(callback, filter) {
 	User.find(filter, callback);
@@ -27,7 +30,7 @@ exports.read = function(callback, username) {
 };
 
 /**
- * Create a new user based on the given username.
+ * Create a new user based on the given userdata.
  *
  * @param callback
  * @param userdata
@@ -51,7 +54,7 @@ exports.create = function(callback, userdata) {
 };
 
 /**
- * Update the user with given username. The userdata are optional
+ * Update the user with given username. Userdata properties are optional
  * and the username ifself could not changed (currently).
  *
  * @param callback
