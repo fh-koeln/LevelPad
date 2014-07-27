@@ -7,11 +7,11 @@ var express = require('express'),
 // API is only available for authenticated users.
 api.use(acl.middleware);
 
-api.use('/modules', require('../app/resources/modules'));
-api.use('/subjects', require('../app/resources/subjects'));
-api.use('/users', require('../app/resources/users'));
-api.use('/years', require('../app/resources/years'));
-api.use('/semester', require('../app/resources/semester'));
+api.use('/modules', require('../app/controllers/modules'));
+api.use('/subjects', require('../app/controllers/subjects'));
+api.use('/users', require('../app/controllers/users'));
+api.use('/years', require('../app/routes/years'));
+api.use('/semesters', require('../app/routes/semesters'));
 
 var routes = express.Router();
 routes.use('/api', api);
