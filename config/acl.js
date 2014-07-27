@@ -106,7 +106,7 @@ module.exports.setRole = function setRole(user, role, callback) {
 	acl.userRoles(user, function(err, roles) {
 		if (err) {
 			callback(err);
-		} else {
+		} else if (roles && roles.length > 0) {
 			acl.removeUserRoles(user, roles, function(err) {
 				if (err) {
 					callback(err);
@@ -115,6 +115,10 @@ module.exports.setRole = function setRole(user, role, callback) {
 						callback(err);
 					});
 				}
+			});
+		} else {
+			acl.addUserRoles(user, role, function(err) {
+				callback(err);
 			});
 		}
 	});

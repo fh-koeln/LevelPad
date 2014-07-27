@@ -9,7 +9,7 @@ api.use(acl.middleware);
 
 api.use('/modules', require('../app/controllers/modules'));
 api.use('/subjects', require('../app/controllers/subjects'));
-api.use('/users', require('../app/controllers/users'));
+api.use('/users', require('../app/routes/users'));
 api.use('/years', require('../app/routes/years'));
 api.use('/semesters', require('../app/routes/semesters'));
 
