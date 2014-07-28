@@ -211,14 +211,13 @@ describe('ModuleSubjectController', function() {
 			], done);
 		});
 
-		it.skip('should successfully update a known subject (WBA 1 2014 Sommersemester) with data', function(done) {
-			var newmoduledata = {
-				shortName: 'New shortname',
-				name: 'New name'
+		it('should successfully update a known subject (WBA 1 2014 Sommersemester) with data', function(done) {
+			var newsubjectdata = {
+				status: 'inactive'
 			};
 			async.series([
 				function(next) {
-					Subject.findOne({ slug: '2014-1', year: 2014, semester: 'Sommersemester' }, function(err, subject) {
+					Subject.findOne({ slug: '2014-1', year: 2014, semester: 'Sommersemester' }).populate('module').exec(function(err, subject) {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(subject, 'Subject should be not null');
 
@@ -242,24 +241,24 @@ describe('ModuleSubjectController', function() {
 						expect(subject).property('slug', '2014-1');
 						expect(subject).property('module');
 						expect(subject).property('semester', 'Sommersemester');
-						expect(subject).property('status', 'active');
+						expect(subject).property('status', 'inactive');
 
 						var module = subject.module;
 						expect(module).property('shortName', 'WBA 1');
 						expect(module).property('name', 'Webbasierte Anwendungen 1');
 
 						next(err);
-					}, 'wba1', 2014, 'Sommersemester', newmoduledata);
+					}, 'wba1', 2014, 'Sommersemester', newsubjectdata);
 				},
 				function(next) {
-					Subject.findOne({ slug: '2014-1', year: 2014, semester: 'Sommersemester' }, function(err, subject) {
+					Subject.findOne({ slug: '2014-1', year: 2014, semester: 'Sommersemester' }).populate('module').exec(function(err, subject) {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(subject, 'Subject should be not null');
 
 						expect(subject).property('slug', '2014-1');
 						expect(subject).property('module');
 						expect(subject).property('semester', 'Sommersemester');
-						expect(subject).property('status', 'active');
+						expect(subject).property('status', 'inactive');
 
 						var module = subject.module;
 						expect(module).property('shortName', 'WBA 1');

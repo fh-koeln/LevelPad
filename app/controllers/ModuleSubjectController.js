@@ -140,12 +140,9 @@ exports.update = function(callback, module, year, semester, subjectData) {
 			exports.read(next, module, year, semester);
 		},
 		function(subject, next) {
-//			if (subjectData.shortName !== undefined) {
-//				subject.shortName = subjectData.shortName;
-//			}
-//			if (subjectData.name !== undefined) {
-//				subject.name = subjectData.name;
-//			}
+			if (subjectData.status !== undefined) {
+				subject.status = subjectData.status;
+			}
 			subject.save(next);
 		}
 	], callback);
