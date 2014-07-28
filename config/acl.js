@@ -2,7 +2,8 @@
 
 // Access Control Lists
 
-var acl = require('acl'),
+var debug = require('debug')('acl'),
+	acl = require('acl'),
 	db = require('./db'),
 	express = require('express'),
 	pathToRegexp = require('path-to-regexp');
@@ -23,7 +24,7 @@ module.exports.acl = acl = new acl(new acl.mongodbBackend(db.connection.db, 'acl
  */
 module.exports.middleware = function middleware(req, res, next) {
 	if (!req.isAuthenticated()) {
-		console.log('Not authenticated');
+		debug('Not authenticated');
 		res.json(401, {error: 'Not authenticated'});
 		return;
 	}
@@ -51,7 +52,7 @@ module.exports.middleware = function middleware(req, res, next) {
 		}
 
 		if (!reqResource) {
-			console.log(req.user.username + ' with role ' + req.user.role + ' has no permissions for ' + apiPath);
+			debug(req.user.username + ' with role ' + req.user.role + ' has no permissions for ' + apiPath);
 			res.json(403, {error: 'Forbidden'});
 			return;
 		}
@@ -65,7 +66,7 @@ module.exports.middleware = function middleware(req, res, next) {
 			if (result) {
 				next();
 			} else {
-				console.log(req.user.username + ' with role ' + req.user.role + ' is not allowed to access resource ' + reqResource + ' via ' + req.method );
+				debug(req.user.username + ' with role ' + req.user.role + ' is not allowed to access resource ' + reqResource + ' via ' + req.method );
 				res.json(403, {error: 'Forbidden'});
 				return;
 			}
@@ -105,7 +106,7 @@ module.exports.setRole = function setRole(user, role, callback) {
 	acl.userRoles(user, function(err, roles) {
 		if (err) {
 			callback(err);
-		} else {
+		} else if (roles && roles.length > 0) {
 			acl.removeUserRoles(user, roles, function(err) {
 				if (err) {
 					callback(err);
@@ -114,6 +115,10 @@ module.exports.setRole = function setRole(user, role, callback) {
 						callback(err);
 					});
 				}
+			});
+		} else {
+			acl.addUserRoles(user, role, function(err) {
+				callback(err);
 			});
 		}
 	});
@@ -179,6 +184,7 @@ db.connection.on('connected', function() {
 				{resources: 'login', permissions: ['POST']},
 				{resources: 'logout', permissions: ['POST']},
 				{resources: 'users/me', permissions: ['GET', 'PUT']},
+				{resources: 'subjects', permissions: ['GET']},
 			]
 		},
 		{
@@ -189,7 +195,6 @@ db.connection.on('connected', function() {
 				{resources: 'users', permissions: ['GET', 'POST']},
 				{resources: 'users/me', permissions: ['GET', 'PUT']},
 				{resources: 'users/:user', permissions: ['GET', 'PUT', 'DELETE']},
-				{resources: 'subjects', permissions: ['GET']},
 				{resources: 'modules', permissions: ['GET', 'POST']},
 				{resources: 'modules/:module', permissions: ['GET', 'PUT', 'DELETE']},
 				{resources: 'modules/:module/subjects', permissions: ['GET', 'POST']},

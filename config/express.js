@@ -14,14 +14,23 @@ module.exports = function(app) {
 	var env = app.get('env');
 
 	// Logging
-	app.use(require('morgan')(env === 'development' ? 'dev' : undefined));
+	if (env === 'development') {
+		app.use(require('morgan')('dev'));
+	} else if (env !== 'test') {
+		app.use(require('morgan')());
+	}
 
 	// Basic request processing:
 	app.use(require('cookie-parser')(process.env.COOKIE_SECRET || 'H2YlmVI=srH5DCw4xKA(IA4YZ|Gr4gutt|Lh0WD:'));
 
 	// Session
 	if (env === 'test') {
-		// TODO: Disable session in tests, or?
+		// TODO: Or could we use mongostore in tests?
+		app.use(session({
+			secret: process.env.SESSION_SECRET || '&Rd65y($lbBh}=)N{U}uBL&3BXitK$G2h@C8mpew',
+			resave: false,
+			saveUninitialized: false
+		}));
 	} else {
 		app.use(session({
 			secret: process.env.SESSION_SECRET || '&Rd65y($lbBh}=)N{U}uBL&3BXitK$G2h@C8mpew',

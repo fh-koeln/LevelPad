@@ -1,10 +1,9 @@
+
 var express = require('express'),
 	subjects = express.Router(),
-	Subject = require('../../models/Subject'),
-	Module = require('../../models/Module'),
-	helpers = require('../_helpers');
-require('url');
-
+	Subject = require('../models/Subject'),
+	Module = require('../models/Module'),
+	helpers = require('./_helpers');
 
 //subjects.use('/:slug/artifacts', require('./Artifacts'));
 
@@ -29,12 +28,8 @@ subjects.get('/', function (req, res) {
 				if (err) {
 					console.error(err);
 					res.json(500, err);
-				}
-
-				else if (module) {
-					console.log(module);
+				} else if (module) {
 					req.query.module = module._id;
-
 				}
 				findSubjects(req, res);
 			});
@@ -53,7 +48,7 @@ function findSubjects(req, res) {
 	Subject.find(
 		req.query
 	).populate({
-		path: 'module',
+		path: 'module'
 	}).exec(helpers.sendResult(res));
 
 }

@@ -1,11 +1,11 @@
 
 var express = require('express'),
 	assistants = express.Router(),
-	Module = require('../../../models/Module'),
-	Subject = require('../../../models/Subject'),
-	Member = require('../../../models/Member'),
-	User = require('../../../models/User'),
-	helpers = require('../../_helpers');
+	Module = require('../models/Module'),
+	Subject = require('../models/Subject'),
+	Member = require('../models/Member'),
+	User = require('../models/User'),
+	helpers = require('./_helpers');
 
 assistants.param('assistant', function(req, res, next, subject, assistant) {
 	console.log('get assistant param');

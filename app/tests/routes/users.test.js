@@ -1,10 +1,12 @@
 'use strict';
 
-var server = require('../server');
+var supertest = require('supertest'),
+	server = require('../../../server');
 
-describe('API authentification', function() {
+describe('Users API', function() {
 	it('should return 401 when trying to fetch user data without authentification', function(done) {
-		server
+		var agent = supertest.agent(server);
+		agent
 			.get('/api/users/me')
 			.expect(401)
 			.end(done);

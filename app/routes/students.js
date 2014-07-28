@@ -1,8 +1,8 @@
 
 var express = require('express'),
 	students = express.Router(),
-	User = require('../../../models/User'),
-	helpers = require('../../_helpers');
+	User = require('../models/User'),
+	helpers = require('./_helpers');
 
 /**
  * Get all modules

@@ -7,15 +7,15 @@ var mongoose = require('mongoose'),
 	ObjectId = Schema.ObjectId;
 
 var subjectSchema = new Schema({
-	module: {type: ObjectId, ref: 'Module', required: true},
-	tasks: [{type: ObjectId, ref: 'Task'}],
-	registration_active: {type: Boolean, default: false},
+	slug: { type: String, require: true /*, unique: true*/ }, // TODO slug must be contain moduleSlug OR could not be unique
+	module: { type: ObjectId, ref: 'Module', required: true },
+	year: { type: Number, required: true },
+	semester: { type: String, enum: [ 'Wintersemester', 'Sommersemester' ], required: true },
+	status: { type: String, enum: [ 'active', 'inactive' ], required: true },
+	registration_active: { type: Boolean, default: false },
 	registration_expires_at: Date,
 	registration_password: String,
-	semester: { type: String, enum: ['Wintersemester', 'Sommersemester'], required: true },
-	slug: {type: String, require: true, unique: true},
-	year: { type: Number, required: true },
-    status: { type: String, enum: ['Active', 'Inactive'], required: true, default: 'Active'}
+	tasks: [ { type: ObjectId, ref: 'Task' } ]
 });
 
 subjectSchema.statics.findBySlug = function (slug, callback) {

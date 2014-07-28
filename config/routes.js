@@ -7,11 +7,11 @@ var express = require('express'),
 // API is only available for authenticated users.
 api.use(acl.middleware);
 
-api.use('/modules', require('../app/resources/modules'));
-api.use('/subjects', require('../app/resources/subjects'));
-api.use('/users', require('../app/resources/users'));
-api.use('/years', require('../app/resources/years'));
-api.use('/semester', require('../app/resources/semester'));
+api.use('/modules', require('../app/routes/modules'));
+api.use('/subjects', require('../app/routes/subjects'));
+api.use('/users', require('../app/routes/users'));
+api.use('/years', require('../app/routes/years'));
+api.use('/semesters', require('../app/routes/semesters'));
 
 var routes = express.Router();
 routes.use('/api', api);
@@ -22,7 +22,6 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 routes.get('/*', function(req, res) {
-	console.log(req.path);
 	if (req.path.indexOf('/views/') === 0) {
 		res.send(200, 'Illegal path: ' + req.path);
 	} else {

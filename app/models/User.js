@@ -34,12 +34,12 @@ var studentNumberValidations = [
 ];
 
 var userSchema = new Schema({
-	username: {type: String, required: true, lowercase: true, unique: true, trim: true, validate: userNameValidations},
-	firstname: {type: String, required: true},
-	lastname: {type: String, required: true},
-	email: {type: String, required: true},
-	studentNumber: {type: String, required: false, validate: studentNumberValidations},
-	role: {type: String, enum: ['guest', 'student', 'lecturer', 'assistent', 'administrator'], default: 'guest'}
+	username: { type: String, required: true, lowercase: true, unique: true, trim: true, validate: userNameValidations },
+	firstname: { type: String, required: true },
+	lastname: { type: String, required: true },
+	email: { type: String, required: true },
+	studentNumber: { type: String, required: false, validate: studentNumberValidations },
+	role: { type: String, required: true, enum: [ 'student', 'lecturer', 'assistent', 'administrator' ] }
 });
 
 userSchema.statics.findByUsername = function (username, callback) {
