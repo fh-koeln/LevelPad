@@ -1,3 +1,32 @@
+
+var Subject = require('../models/Subject'),
+	Member = require('../models/Member'),
+	User = require('../models/User'),
+	async = require('async'),
+	acl = require('../../config/acl');
+
 /**
- * Created by christoph on 28.07.14.
+ * List all subjects by user and apply an optional filter.
+ *
+ * @param callback
+ * @param user
  */
+exports.list = function(callback, user) {
+	async.waterfall([
+		function(next) {
+			if (typeof user === 'string') {
+				User.findByUsername(user, next);
+			} else {
+				next(null, user);
+			}
+		},
+		function(user, next) {
+			if (!user || !user._id) {
+				return next(new Error('Unknown user'));
+			}
+
+			Member.find({ user: user._id }).populate('subject').exec(next);
+		}
+	], callback);
+
+};

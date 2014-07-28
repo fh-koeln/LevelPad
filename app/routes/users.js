@@ -2,6 +2,7 @@
 var express = require('express'),
 	users = express.Router(),
 	UserController = require('../controllers/UserController'),
+	UserSubjectController = require('../controllers/UserSubjectController'),
 	_helpers = require('./_helpers');
 
 // TODO check if we could replace the :username param in update and or delete below.
@@ -57,6 +58,13 @@ users.put('/:username', function(req, res) {
  */
 users.delete('/:username', function(req, res) {
 	UserController.remove(_helpers.sendResult(res), req.params.username);
+});
+
+/**
+ * List all subjects for the given username.
+ */
+users.get('/:username/subjects', function (req, res) {
+	UserSubjectController.list(_helpers.sendResult(res), req.params.username);
 });
 
 module.exports = users;

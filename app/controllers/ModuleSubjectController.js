@@ -5,7 +5,7 @@ var Subject = require('../models/Subject'),
 	acl = require('../../config/acl');
 
 /**
- * List all subjects for an module and apply optional filter.
+ * List all subjects by module and apply an optional filter.
  *
  * @param callback
  * @param module
@@ -29,7 +29,7 @@ exports.list = function(callback, module, filter) {
 
 			filter.module = module._id;
 
-			Subject.find(filter).populate('module').exec(callback);
+			Subject.find(filter).populate('module').exec(next);
 		}
 	], callback);
 
