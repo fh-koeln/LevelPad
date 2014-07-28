@@ -1,8 +1,8 @@
 
 /**
- * Get all available semester
+ * List all semester
  */
-exports.getAll = function(callback) {
+exports.list = function(callback) {
 	callback(null, [
 		// TODO externalize this later
 		{ id: 'sose', slug: 'sose', name: 'Sommersemester' },

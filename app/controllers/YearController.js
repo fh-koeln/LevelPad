@@ -1,12 +1,33 @@
 
+var Subject = require('../models/Subject');
+
 /**
- * Get all available years
+ * List all years
  */
-exports.getAll = function (callback) {
-	callback(null, [
-		// TODO automatically load this: from first used year to current year (+1 ?)
-		{ id: '0x7DD', slug: '2013', year: 2013 },
-		{ id: '0x7DE', slug: '2014', year: 2014 },
-		{ id: '0x7DF', slug: '2015', year: 2015 }
-	]);
+exports.list = function (callback) {
+
+	Subject.findOne().lean().select('year').sort('year').exec(function(err, firstYearSubject) {
+		if (err) {
+			callback(err);
+			return;
+		}
+
+		var from = firstYearSubject ? firstYearSubject.year : new Date().getFullYear(),
+			to = new Date().getFullYear() + 1,
+			years = [];
+
+		if (from > to) {
+			from = to;
+		}
+
+		for (var year = from; year <= to; year++) {
+			years.push({
+				slug: year.toString(),
+				name: year.toString(),
+				year: year
+			});
+		}
+
+		callback(null, years);
+	});
 };
