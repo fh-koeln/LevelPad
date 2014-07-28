@@ -35,8 +35,6 @@ describe('UserController', function() {
 				assert.lengthOf(users, 1, 'Users array has length of 1');
 
 				var user = users[0];
-				expect(user).property('_id');
-				expect(user).property('__v');
 				expect(user).property('username', 'admin1');
 				expect(user).property('firstname', 'Admin1');
 				expect(user).property('lastname', 'Admin1');
@@ -54,8 +52,6 @@ describe('UserController', function() {
 				assert.isNull(err, 'Error should be null');
 				assert.isNotNull(user, 'User should be not null');
 
-				expect(user).property('_id');
-				expect(user).property('__v');
 				expect(user).property('username', 'admin1');
 				expect(user).property('firstname', 'Admin1');
 				expect(user).property('lastname', 'Admin1');
@@ -100,8 +96,6 @@ describe('UserController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(user, 'User should be not null');
 
-						expect(user).property('_id');
-						expect(user).property('__v');
 						expect(user).property('username', 'newtestuser1'); // automatically transformed to lowercase
 						expect(user).property('firstname', 'NewTestUser1');
 						expect(user).property('lastname', 'NewTestUser1');
@@ -116,8 +110,6 @@ describe('UserController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(user, 'User should be not null');
 
-						expect(user).property('_id');
-						expect(user).property('__v');
 						expect(user).property('username', 'newtestuser1'); // automatically transformed to lowercase
 						expect(user).property('firstname', 'NewTestUser1');
 						expect(user).property('lastname', 'NewTestUser1');
@@ -230,8 +222,6 @@ describe('UserController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(user, 'User should be not null');
 
-						expect(user).property('_id');
-						expect(user).property('__v');
 						expect(user).property('username', 'admin1');
 						expect(user).property('firstname', 'Admin1');
 						expect(user).property('lastname', 'Admin1');
@@ -246,8 +236,6 @@ describe('UserController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(user, 'User should be not null');
 
-						expect(user).property('_id');
-						expect(user).property('__v');
 						expect(user).property('username', 'admin1');
 						expect(user).property('firstname', 'New firstname');
 						expect(user).property('lastname', 'New lastname');
@@ -262,8 +250,6 @@ describe('UserController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(user, 'User should be not null');
 
-						expect(user).property('_id');
-						expect(user).property('__v');
 						expect(user).property('username', 'admin1');
 						expect(user).property('firstname', 'New firstname');
 						expect(user).property('lastname', 'New lastname');
@@ -286,8 +272,6 @@ describe('UserController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(user, 'User should be not null');
 
-						expect(user).property('_id');
-						expect(user).property('__v');
 						expect(user).property('username', 'admin1');
 						expect(user).property('firstname', 'Admin1');
 						expect(user).property('lastname', 'Admin1');
@@ -302,8 +286,6 @@ describe('UserController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(user, 'User should be not null');
 
-						expect(user).property('_id');
-						expect(user).property('__v');
 						expect(user).property('username', 'admin1');
 						expect(user).property('firstname', 'Admin1');
 						expect(user).property('lastname', 'Admin1');
@@ -318,8 +300,6 @@ describe('UserController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(user, 'User should be not null');
 
-						expect(user).property('_id');
-						expect(user).property('__v');
 						expect(user).property('username', 'admin1');
 						expect(user).property('firstname', 'Admin1');
 						expect(user).property('lastname', 'Admin1');

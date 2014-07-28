@@ -53,8 +53,6 @@ describe('ModuleSubjectController', function() {
 				assert.isNull(err, 'Error should be null');
 				assert.isNotNull(subject, 'Subject should be not null');
 
-				expect(subject).property('_id');
-				expect(subject).property('__v');
 				expect(subject).property('slug', '2014-1');
 				expect(subject).property('module');
 				expect(subject).property('semester', 'Sommersemester');
@@ -80,8 +78,6 @@ describe('ModuleSubjectController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(subject, 'Subject should be not null');
 
-						expect(subject).property('_id');
-						expect(subject).property('__v');
 						expect(subject).property('slug', '2014-1');
 						expect(subject).property('module');
 						expect(subject).property('semester', 'Sommersemester');
@@ -124,16 +120,12 @@ describe('ModuleSubjectController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(subject, 'Subject should be not null');
 
-						expect(subject).property('_id');
-						expect(subject).property('__v');
 						expect(subject).property('slug', '2014-wintersemester-wba1');
 						expect(subject).property('module');
 						expect(subject).property('semester', 'Wintersemester');
 						expect(subject).property('status', 'active');
 
 						var module = subject.module;
-						expect(module).property('_id');
-						expect(module).property('__v');
 						expect(module).property('shortName', 'WBA 1');
 						expect(module).property('name', 'Webbasierte Anwendungen 1');
 
@@ -145,8 +137,6 @@ describe('ModuleSubjectController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(subject, 'Subject should be not null');
 
-						expect(subject).property('_id');
-						expect(subject).property('__v');
 						expect(subject).property('slug', '2014-wintersemester-wba1');
 						expect(subject).property('module');
 						expect(subject).property('semester', 'Wintersemester');
@@ -232,16 +222,12 @@ describe('ModuleSubjectController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(subject, 'Subject should be not null');
 
-						expect(subject).property('_id');
-						expect(subject).property('__v');
 						expect(subject).property('slug', '2014-1');
 						expect(subject).property('module');
 						expect(subject).property('semester', 'Sommersemester');
 						expect(subject).property('status', 'active');
 
 						var module = subject.module;
-						expect(module).property('_id');
-						expect(module).property('__v');
 						expect(module).property('shortName', 'WBA 1');
 						expect(module).property('name', 'Webbasierte Anwendungen 1');
 
@@ -253,16 +239,12 @@ describe('ModuleSubjectController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(subject, 'Subject should be not null');
 
-						expect(subject).property('_id');
-						expect(subject).property('__v');
 						expect(subject).property('slug', '2014-1');
 						expect(subject).property('module');
 						expect(subject).property('semester', 'Sommersemester');
 						expect(subject).property('status', 'active');
 
 						var module = subject.module;
-						expect(module).property('_id');
-						expect(module).property('__v');
 						expect(module).property('shortName', 'WBA 1');
 						expect(module).property('name', 'Webbasierte Anwendungen 1');
 
@@ -274,16 +256,12 @@ describe('ModuleSubjectController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(subject, 'Subject should be not null');
 
-						expect(subject).property('_id');
-						expect(subject).property('__v');
 						expect(subject).property('slug', '2014-1');
 						expect(subject).property('module');
 						expect(subject).property('semester', 'Sommersemester');
 						expect(subject).property('status', 'active');
 
 						var module = subject.module;
-						expect(module).property('_id');
-						expect(module).property('__v');
 						expect(module).property('shortName', 'WBA 1');
 						expect(module).property('name', 'Webbasierte Anwendungen 1');
 
@@ -303,16 +281,12 @@ describe('ModuleSubjectController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(subject, 'Subject should be not null');
 
-						expect(subject).property('_id');
-						expect(subject).property('__v');
 						expect(subject).property('slug', '2014-1');
 						expect(subject).property('module');
 						expect(subject).property('semester', 'Sommersemester');
 						expect(subject).property('status', 'active');
 
 						var module = subject.module;
-						expect(module).property('_id');
-						expect(module).property('__v');
 						expect(module).property('shortName', 'WBA 1');
 						expect(module).property('name', 'Webbasierte Anwendungen 1');
 
@@ -324,16 +298,12 @@ describe('ModuleSubjectController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(subject, 'Subject should be not null');
 
-						expect(subject).property('_id');
-						expect(subject).property('__v');
 						expect(subject).property('slug', '2014-1');
 						expect(subject).property('module');
 						expect(subject).property('semester', 'Sommersemester');
 						expect(subject).property('status', 'active');
 
 						var module = subject.module;
-						expect(module).property('_id');
-						expect(module).property('__v');
 						expect(module).property('shortName', 'WBA 1');
 						expect(module).property('name', 'Webbasierte Anwendungen 1');
 
@@ -345,16 +315,12 @@ describe('ModuleSubjectController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(subject, 'Subject should be not null');
 
-						expect(subject).property('_id');
-						expect(subject).property('__v');
 						expect(subject).property('slug', '2014-1');
 						expect(subject).property('module');
 						expect(subject).property('semester', 'Sommersemester');
 						expect(subject).property('status', 'active');
 
 						var module = subject.module;
-						expect(module).property('_id');
-						expect(module).property('__v');
 						expect(module).property('shortName', 'WBA 1');
 						expect(module).property('name', 'Webbasierte Anwendungen 1');
 

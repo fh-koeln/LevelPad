@@ -34,8 +34,6 @@ describe('ModuleController', function() {
 				assert.isNull(err, 'Error should be null');
 				assert.isNotNull(module, 'Module should be not null');
 
-				expect(module).property('_id');
-				expect(module).property('__v');
 				expect(module).property('slug', 'wba1');
 				expect(module).property('shortName', 'WBA 1');
 				expect(module).property('name', 'Webbasierte Anwendungen 1');
@@ -72,8 +70,6 @@ describe('ModuleController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(module, 'Module should be not null');
 
-						expect(module).property('_id');
-						expect(module).property('__v');
 						expect(module).property('slug', 'gdvk'); // automatically transformed to lowercase
 						expect(module).property('shortName', 'GdvK');
 						expect(module).property('name', 'Grundlagen der visuellen Kommunikation');
@@ -86,8 +82,6 @@ describe('ModuleController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(module, 'Module should be not null');
 
-						expect(module).property('_id');
-						expect(module).property('__v');
 						expect(module).property('slug', 'gdvk'); // automatically transformed to lowercase
 						expect(module).property('shortName', 'GdvK');
 						expect(module).property('name', 'Grundlagen der visuellen Kommunikation');
@@ -174,8 +168,6 @@ describe('ModuleController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(module, 'Module should be not null');
 
-						expect(module).property('_id');
-						expect(module).property('__v');
 						expect(module).property('slug', 'wba1');
 						expect(module).property('shortName', 'WBA 1');
 						expect(module).property('name', 'Webbasierte Anwendungen 1');
@@ -188,8 +180,6 @@ describe('ModuleController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(module, 'Module should be not null');
 
-						expect(module).property('_id');
-						expect(module).property('__v');
 						expect(module).property('slug', 'wba1');
 						expect(module).property('shortName', 'New shortname');
 						expect(module).property('name', 'New name');
@@ -202,8 +192,6 @@ describe('ModuleController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(module, 'Module should be not null');
 
-						expect(module).property('_id');
-						expect(module).property('__v');
 						expect(module).property('slug', 'wba1');
 						expect(module).property('shortName', 'New shortname');
 						expect(module).property('name', 'New name');
@@ -224,8 +212,6 @@ describe('ModuleController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(module, 'Module should be not null');
 
-						expect(module).property('_id');
-						expect(module).property('__v');
 						expect(module).property('slug', 'wba1');
 						expect(module).property('shortName', 'WBA 1');
 						expect(module).property('name', 'Webbasierte Anwendungen 1');
@@ -238,8 +224,6 @@ describe('ModuleController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(module, 'Module should be not null');
 
-						expect(module).property('_id');
-						expect(module).property('__v');
 						expect(module).property('slug', 'wba1');
 						expect(module).property('shortName', 'WBA 1');
 						expect(module).property('name', 'Webbasierte Anwendungen 1');
@@ -252,8 +236,6 @@ describe('ModuleController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(module, 'Module should be not null');
 
-						expect(module).property('_id');
-						expect(module).property('__v');
 						expect(module).property('slug', 'wba1');
 						expect(module).property('shortName', 'WBA 1');
 						expect(module).property('name', 'Webbasierte Anwendungen 1');
