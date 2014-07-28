@@ -6,7 +6,7 @@ var express = require('express'),
 
 // TODO check if we could replace the :username param in update and or delete below.
 users.param('user', function(req, res, next, username) {
-	UserController.getUser(function(err, user) {
+	UserController.read(function(err, user) {
 		req.user = user;
 		next(err);
 	}, username);

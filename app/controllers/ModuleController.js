@@ -110,7 +110,7 @@ exports.delete = function(callback, moduleSlug) {
 			Subject.find({
 				module: module._id
 			}).remove(function(err) {
-				next(err, module);
+				next(err, module); // keep module result from mongoose
 			});
 		},
 		function(module, next) {

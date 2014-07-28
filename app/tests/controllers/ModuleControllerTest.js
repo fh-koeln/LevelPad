@@ -20,7 +20,6 @@ describe('ModuleController', function() {
 	describe('list', function() {
 		it('should find all modules without filter (default)', function(done) {
 			ModuleController.list(function(err, modules) {
-				console.log(modules);
 				assert.isNull(err, 'Error should be null');
 				assert.isNotNull(modules, 'Modules should be not null');
 				assert.lengthOf(modules, 2, 'Modules array has length of 2');
@@ -65,7 +64,7 @@ describe('ModuleController', function() {
 					Module.findOne({ slug: 'gdvk' }, function(err, module) {
 						assert.isNull(err, 'Error should be null');
 						assert.isNull(module, 'Module should be not null');
-						next(err, module);
+						next(err);
 					});
 				},
 				function(next) {
@@ -79,7 +78,7 @@ describe('ModuleController', function() {
 						expect(module).property('shortName', 'GdvK');
 						expect(module).property('name', 'Grundlagen der visuellen Kommunikation');
 
-						next(err, module);
+						next(err);
 					}, moduledata);
 				},
 				function(next) {
@@ -93,7 +92,7 @@ describe('ModuleController', function() {
 						expect(module).property('shortName', 'GdvK');
 						expect(module).property('name', 'Grundlagen der visuellen Kommunikation');
 
-						next(err, module);
+						next(err);
 					});
 				}
 			], done);
@@ -144,21 +143,21 @@ describe('ModuleController', function() {
 					Module.findOne({ slug: 'wba1' }, function(err, module) {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(module, 'Module should be not null');
-						next(err, module);
+						next(err);
 					});
 				},
 				function(next) {
 					ModuleController.update(function(err, module) {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(module, 'Module should be not null');
-						next(err, module);
+						next(err);
 					}, 'wba1', newmoduledata);
 				},
 				function(next) {
 					Module.findOne({ slug: 'wba1' }, function(err, module) {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(module, 'Module should be not null');
-						next(err, module);
+						next(err);
 					});
 				}
 			], done);
@@ -181,7 +180,7 @@ describe('ModuleController', function() {
 						expect(module).property('shortName', 'WBA 1');
 						expect(module).property('name', 'Webbasierte Anwendungen 1');
 
-						next(err, module);
+						next(err);
 					});
 				},
 				function(next) {
@@ -195,7 +194,7 @@ describe('ModuleController', function() {
 						expect(module).property('shortName', 'New shortname');
 						expect(module).property('name', 'New name');
 
-						next(err, module);
+						next(err);
 					}, 'wba1', newmoduledata);
 				},
 				function(next) {
@@ -209,7 +208,7 @@ describe('ModuleController', function() {
 						expect(module).property('shortName', 'New shortname');
 						expect(module).property('name', 'New name');
 
-						next(err, module);
+						next(err);
 					});
 				}
 			], done);
@@ -231,7 +230,7 @@ describe('ModuleController', function() {
 						expect(module).property('shortName', 'WBA 1');
 						expect(module).property('name', 'Webbasierte Anwendungen 1');
 
-						next(err, module);
+						next(err);
 					});
 				},
 				function(next) {
@@ -245,7 +244,7 @@ describe('ModuleController', function() {
 						expect(module).property('shortName', 'WBA 1');
 						expect(module).property('name', 'Webbasierte Anwendungen 1');
 
-						next(err, module);
+						next(err);
 					}, 'wba1', newmoduledata);
 				},
 				function(next) {
@@ -259,7 +258,7 @@ describe('ModuleController', function() {
 						expect(module).property('shortName', 'WBA 1');
 						expect(module).property('name', 'Webbasierte Anwendungen 1');
 
-						next(err, module);
+						next(err);
 					});
 				}
 			], done);

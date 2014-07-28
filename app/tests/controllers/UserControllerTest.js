@@ -199,21 +199,21 @@ describe('UserController', function() {
 					User.findOne({ username: 'admin1' }, function(err, user) {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(user, 'User should be not null');
-						next(err, user);
+						next(err);
 					});
 				},
 				function(next) {
 					UserController.update(function(err, user) {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(user, 'User should be not null');
-						next(err, user);
+						next(err);
 					}, 'admin1', newuserdata);
 				},
 				function(next) {
 					User.findOne({ username: 'admin1' }, function(err, user) {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(user, 'User should be not null');
-						next(err, user);
+						next(err);
 					});
 				}
 			], done);
@@ -238,7 +238,7 @@ describe('UserController', function() {
 						expect(user).property('email', 'admin1@fh-koeln.de');
 						expect(user).property('role', 'administrator');
 
-						next(err, user);
+						next(err);
 					});
 				},
 				function(next) {
@@ -254,7 +254,7 @@ describe('UserController', function() {
 						expect(user).property('email', 'admin1@fh-koeln.de');
 						expect(user).property('role', 'administrator');
 
-						next(err, user);
+						next(err);
 					}, 'admin1', newuserdata);
 				},
 				function(next) {
@@ -270,7 +270,7 @@ describe('UserController', function() {
 						expect(user).property('email', 'admin1@fh-koeln.de');
 						expect(user).property('role', 'administrator');
 
-						next(err, user);
+						next(err);
 					});
 				}
 			], done);
@@ -294,7 +294,7 @@ describe('UserController', function() {
 						expect(user).property('email', 'admin1@fh-koeln.de');
 						expect(user).property('role', 'administrator');
 
-						next(err, user);
+						next(err);
 					});
 				},
 				function(next) {
@@ -310,7 +310,7 @@ describe('UserController', function() {
 						expect(user).property('email', 'admin1@fh-koeln.de');
 						expect(user).property('role', 'administrator');
 
-						next(err, user);
+						next(err);
 					}, 'admin1', newuserdata);
 				},
 				function(next) {
@@ -326,7 +326,7 @@ describe('UserController', function() {
 						expect(user).property('email', 'admin1@fh-koeln.de');
 						expect(user).property('role', 'administrator');
 
-						next(err, user);
+						next(err);
 					});
 				}
 			], done);

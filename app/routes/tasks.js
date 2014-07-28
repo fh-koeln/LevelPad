@@ -1,8 +1,8 @@
 
 var express = require('express'),
 	tasks = express.Router(),
-	Task = require('../../../../models/Task'),
-	helpers = require('../../../_helpers');
+	Task = require('../models/Task'),
+	helpers = require('./_helpers');
 
 /**
  * Get all tasks for the current subject.

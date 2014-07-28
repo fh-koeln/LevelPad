@@ -62,6 +62,36 @@ module.exports.initializeTestData = function(callback) {
 			new Module(module).save(next);
 		},
 		function(next) {
+			Module.findOne({ slug: 'wba1' }, function(err, module) {
+				if (err) {
+					return next(err);
+				}
+				var subject = {
+					slug: '2014-1', // TODO
+					module: module,
+					year: 2014,
+					semester: 'Sommersemester', // TODO
+					status: 'active'
+				};
+				new Subject(subject).save(next);
+			});
+		},
+		function(next) {
+			Module.findOne({ slug: 'wba2' }, function(err, module) {
+				if (err) {
+					return next(err);
+				}
+				var subject = {
+					slug: '2014-2', // TODO
+					module: module,
+					year: 2014,
+					semester: 'Sommersemester', // TODO
+					status: 'inactive'
+				};
+				new Subject(subject).save(next);
+			});
+		},
+		function(next) {
 			// Create guest user which has to sign up
 //			acl.addUserRoles('lecturer1', 'administrator', callback);
 //			acl.addUserRoles('lecturer1', 'administrator', callback);
