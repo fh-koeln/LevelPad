@@ -101,7 +101,7 @@ app.config(function($routeProvider, $locationProvider) {
 
 	$routeProvider.when('/', {
 		templateUrl: 'views/modules/show.html',
-		controller: 'SubjectListController'
+		controller: 'DashboardController'
 	});
 	$routeProvider.when('/dashboard', {
 		templateUrl: 'views/dashboard.html',
