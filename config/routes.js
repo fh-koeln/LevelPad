@@ -5,7 +5,11 @@ var express = require('express'),
 	acl = require('../config/acl');
 
 // API is only available for authenticated users.
-api.use(acl.middleware);
+if (process.env.ACL === 'disabled') {
+	console.log('ACL DISABLED!');
+} else {
+	api.use(acl.middleware);
+}
 
 api.use('/modules', require('../app/routes/modules'));
 api.use('/subjects', require('../app/routes/subjects'));
