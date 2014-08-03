@@ -40,7 +40,7 @@
     "express-session": "~1.7.2",
     "helmet": "0.4.0",
     "imap": "~0.8.12",
-    "mongoose": "~3.9.0",
+    "mongoose": "~3.8.0",
     "morgan": "~1.2.2",
     "passport": "~0.2.0",
     "passport-local": "~1.0.0",
