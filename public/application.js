@@ -126,8 +126,13 @@ app.config(function($routeProvider, $locationProvider) {
 	});
 
 	// MAGIC RULES!!!!!!!
+
 	$routeProvider.when('/:module', {
 		templateUrl: 'views/modules/show.html',
+		controller: 'ModuleDetailController'
+	});
+	$routeProvider.when('/:module/edit', {
+		templateUrl: 'views/modules/edit.html',
 		controller: 'ModuleDetailController'
 	});
 
