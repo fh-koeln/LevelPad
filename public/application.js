@@ -118,11 +118,15 @@ app.config(function($routeProvider, $locationProvider) {
 		controller: 'UserController'
 	});
 
-	// Maybe we could make this later part of the dashboard...
-	// Or we show a "whats new" timeline there?
+	// Modules
+
 	$routeProvider.when('/modules', {
 		templateUrl: 'views/modules/list.html',
 		controller: 'ModuleListController'
+	});
+	$routeProvider.when('/new', {
+		templateUrl: 'views/modules/edit.html',
+		controller: 'ModuleDetailController'
 	});
 
 	// MAGIC RULES!!!!!!!
@@ -133,6 +137,10 @@ app.config(function($routeProvider, $locationProvider) {
 	});
 	$routeProvider.when('/:module/edit', {
 		templateUrl: 'views/modules/edit.html',
+		controller: 'ModuleDetailController'
+	});
+	$routeProvider.when('/:module/delete', {
+		templateUrl: 'views/modules/delete.html',
 		controller: 'ModuleDetailController'
 	});
 
