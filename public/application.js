@@ -4,7 +4,8 @@ var app = angular.module('levelPad', [
 	'ngCookies',
 	'ngResource',
 	'ngSanitize',
-	'ngRoute'
+	'ngRoute',
+	'ui.bootstrap'
 ]);
 
 app.config(['$logProvider', function($logProvider) {
