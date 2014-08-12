@@ -10,9 +10,9 @@ var debug = require('debug')('acl'),
 
 /**
  * Create an ACL instance.
- * Roles are saved into MongoDB, documents have `acl-` as prefix.
+ * Roles are saved into MongoDB, documents have `acl-` as prefix, one collection for all resources.
  */
-module.exports.acl = acl = new acl(new acl.mongodbBackend(db.connection.db, 'acl-'));
+module.exports.acl = acl = new acl(new acl.mongodbBackend(db.connection.db, 'acl-', true));
 
 /**
  * ACL Middleware
