@@ -5,7 +5,7 @@ var express = require('express'),
 	_helpers = require('./_helpers');
 
 years.get('/', function (req, res) {
-	YearController.getAll(_helpers.sendResult(res));
+	YearController.list(_helpers.sendResult(res));
 });
 
 module.exports = years;
