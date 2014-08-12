@@ -6,14 +6,14 @@ module.exports = {
 				console.error(err);
 
 				if (err.name === 'ValidationError') {
-					res.json(400, err);
+					res.status(400).json(err);
 				} else {
-					res.json(500, err);
+					res.status(500).json(err);
 				}
 			} else if (!response) {
 				res.status(404).end();
 			} else {
-				res.json(200, response);
+				res.status(200).json(response);
 			}
 		};
 	}
