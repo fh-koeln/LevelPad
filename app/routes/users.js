@@ -20,12 +20,6 @@ users.get('/', function (req, res) {
 	UserController.list(_helpers.sendResult(res));
 });
 
-/**
- * Find user by username.
- */
-users.get('/:username', function(req, res) {
-	UserController.read(_helpers.sendResult(res), req.params.username);
-});
 
 /**
  * Get informations about the current user.
@@ -36,6 +30,13 @@ users.get('/me', function(req, res) {
 	} else {
 		res.json(404, { message: 'User not found...' });
 	}
+});
+
+/**
+ * Find user by username.
+ */
+users.get('/:username', function(req, res) {
+	UserController.read(_helpers.sendResult(res), req.params.username);
 });
 
 /**
