@@ -26,9 +26,9 @@ users.get('/', function (req, res) {
  */
 users.get('/me', function(req, res) {
 	if (req.user) {
-		res.json(200, req.user);
+		res.status(200).json(req.user);
 	} else {
-		res.json(404, { message: 'User not found...' });
+		res.status(404).json({ error: 'User not found' });
 	}
 });
 
