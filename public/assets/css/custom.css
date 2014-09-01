@@ -18,8 +18,9 @@ nav h1 {
 	float: left;
 	margin: 0;
 	padding: 0;
-	font-size: 18px;
+	font-size: 20pt;
 	line-height: 40px;
+    font-weight: 600;
 }
 
 @media (max-width: 767px) {
@@ -52,11 +53,11 @@ nav > ul {
 nav > ul > li {
 	display: inline-block;
 	float: left;
-	margin-left: 10px;
-	font-size: 14px;
+	margin-left: 20px;
+	font-size: 14pt;
 	line-height: 40px;
 }
-@media (min-width: 768px) {
+/*@media (min-width: 768px) {
 	nav > ul.navi > li:before {
 		content: '\e080';
 		color: #bbbbbb;
@@ -72,9 +73,10 @@ nav > ul > li {
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
 	}
-}
+}*/
 nav > ul > li.active a, nav > ul > li a:active {
 	color: #77aabb;
+    font-weight: 600;
 }
 
 /**
@@ -86,6 +88,7 @@ nav > ul > li.active a, nav > ul > li a:active {
 	margin: 0;
 	padding: 0;
 	clear: both;
+    
 }
 .levels > li {
 	position: relative;
@@ -166,6 +169,12 @@ a.levels.add {
 }
 .levels .active .level:hover:after, .levels .level:hover:after {
 	border-left-color: #e7eeaa;
+}
+
+table {
+    border-top: 1px solid lightgray; 
+    border-left : 1px solid lightgray; 
+    border-bottom: 1px solid lightgray;" 
 }
 
 /**
