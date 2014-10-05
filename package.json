@@ -8,7 +8,7 @@
     "run": "node server.js",
     "run-auto": "./node_modules/.bin/nodemon --delay 2.5 --ignore public server.js",
     "test": "set NODE_ENV=test && node ./node_modules/mocha/bin/mocha --reporter spec --recursive app/tests",
-    "test-cov": "set NODE_ENV=test && node ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- --recursive app/tests"
+    "test-cov": "set NODE_ENV=test && istanbul cover ./node_modules/mocha/bin/_mocha -- --recursive app/tests"
   },
   "repository": {
     "type": "git",
