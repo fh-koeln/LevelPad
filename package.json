@@ -4,11 +4,11 @@
   "description": "Webapp zur Unterstützung einer Bewertung nach dem Niveaustufenmodell",
   "private": true,
   "scripts": {
-    "postinstall": "node ./node_modules/.bin/bower install",
+    "postinstall": "node ./node_modules/bower/bin/bower install",
     "run": "node server.js",
-    "run-auto": "node ./node_modules/.bin/nodemon --delay 2.5 --ignore public server.js",
-    "test": "NODE_ENV=test node ./node_modules/.bin/mocha --reporter spec --recursive app/tests",
-    "test-cov": "NODE_ENV=test node ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- --recursive app/tests"
+    "run-auto": "./node_modules/.bin/nodemon --delay 2.5 --ignore public server.js",
+    "test": "set NODE_ENV=test && node ./node_modules/mocha/bin/mocha --reporter spec --recursive app/tests",
+    "test-cov": "set NODE_ENV=test && node ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- --recursive app/tests"
   },
   "repository": {
     "type": "git",
