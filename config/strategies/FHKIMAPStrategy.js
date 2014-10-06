@@ -34,6 +34,7 @@ var checkCredentials = function(username, password, callback) {
 					acl.addUserRoles(username, 'guest', function() {
 						user = new User();
 						user.username = username;
+						user.role = 'guest';
 						callback(null, user);
 					});
 				} else {

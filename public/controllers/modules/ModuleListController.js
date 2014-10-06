@@ -1,6 +1,6 @@
 /* global angular, alert */
 
-angular.module('levelPad').controller('ModuleListController', ['$scope', 'Module', function ($scope, Module) {
+angular.module('levelPad').controller('ModuleListController', ['$scope', '$modal', 'Module', function ($scope, $modal, Module) {
 	'use strict';
 
 	$scope.update = function() {
@@ -13,23 +13,69 @@ angular.module('levelPad').controller('ModuleListController', ['$scope', 'Module
 	$scope.update();
 
 	$scope.showCreateDialog = function() {
-		$scope.module = new Module();
-		$('#edit').modal();
+		var scope = $scope.$new();
+		scope.module = new Module();
+
+		var modalInstance = $modal.open({
+			templateUrl: 'views/modules/edit.html',
+			controller: 'ModuleDetailController',
+			scope: scope
+		});
+
+		scope.save = function() {
+			modalInstance.close(scope.module);
+		};
+		scope.close = function() {
+			modalInstance.dismiss('cancel');
+		};
+
+		modalInstance.result.then(function(result) {
+			$scope.update();
+		});
 	};
 
 	$scope.showEditDialog = function(module) {
-		$scope.module = angular.copy(module);
-		$('#edit').modal();
+		var scope = $scope.$new();
+		scope.module = angular.copy(module);
+
+		var modalInstance = $modal.open({
+			templateUrl: 'views/modules/edit.html',
+			controller: 'ModuleDetailController',
+			scope: scope
+		});
+
+		scope.save = function() {
+			modalInstance.close(scope.module);
+		};
+		scope.close = function() {
+			modalInstance.dismiss('cancel');
+		};
+
+		modalInstance.result.then(function() {
+			$scope.update();
+		});
 	};
 
 	$scope.showDeleteDialog = function(module) {
-		$scope.module = angular.copy(module);
-		$('#delete').modal();
-	};
+		var scope = $scope.$new();
+		scope.module = angular.copy(module);
 
-	$scope.hideDialog = function() {
-		$('#edit, #delete').modal('hide');
-		$scope.module = null;
+		var modalInstance = $modal.open({
+			templateUrl: 'views/modules/delete.html',
+			controller: 'ModuleDetailController',
+			scope: scope
+		});
+
+		scope.save = function() {
+			modalInstance.close(scope.module);
+		};
+		scope.close = function() {
+			modalInstance.dismiss('cancel');
+		};
+
+		modalInstance.result.then(function() {
+			$scope.update();
+		});
 	};
 
 	$scope.save = function() {

@@ -1,6 +1,7 @@
 
 var User = require('../models/User'),
 	async = require('async'),
+	errors = require('common-errors'),
 	acl = require('../../config/acl');
 
 /**
@@ -23,7 +24,8 @@ exports.read = function(callback, username) {
 	// TODO assert here that username is a string?
 	User.findOne({ username: username }, function(err, user) {
 		if (!err && !user) {
-			err = new Error('Unknown user');
+			//err = new Error('Unknown user');
+			err = new errors.NotFoundError('User');
 		}
 		callback(err, user);
 	});
@@ -38,7 +40,7 @@ exports.read = function(callback, username) {
 exports.create = function(callback, userdata) {
 	var user = new User(userdata);
 
-	// TODO not every user should be an admin, or?
+	// TODO Change to 'student'
 	user.role = 'administrator';
 
 	async.waterfall([

@@ -4,7 +4,8 @@ var app = angular.module('levelPad', [
 	'ngCookies',
 	'ngResource',
 	'ngSanitize',
-	'ngRoute'
+	'ngRoute',
+	'ui.bootstrap'
 ]);
 
 app.config(['$logProvider', function($logProvider) {
@@ -15,20 +16,22 @@ app.factory('httpErrorInterceptor', ['$q', '$location', function($q, $location) 
 
 	return {
 		'responseError': function(response) {
+			console.error('Receive status code ' + response.status + ' for ' + response.config.url);
+
 			if (response.status === 401) {
 				console.error('Authentitication error in server response detected!');
 			} else if (response.status === 403) {
 				console.error('Access error in server response detected!');
-				$location.path('/403');
+//				$location.path('/403');
 			} else if (response.status === 404) {
 				console.error('Not found error in server response detected!');
-				$location.path('/404');
+//				$location.path('/404');
 			} else if (response.status === 500) {
 				console.error('Server error in server response detected!');
-				$location.path('/500');
+//				$location.path('/500');
 			} else if (response.status === 503) {
 				console.error('Server is not available');
-				$location.path('/503');
+//				$location.path('/503');
 			}
 
 			return $q.reject(response);
@@ -110,23 +113,36 @@ app.config(function($routeProvider, $locationProvider) {
 	$routeProvider.when('/account', {
 		templateUrl: 'views/account.html',
 		controller: 'AccountController',
-		loginRequired: true,
+		loginRequired: true
 	});
 	$routeProvider.when('/users', {
 		templateUrl: 'views/users.html',
 		controller: 'UserController'
 	});
 
-	// Maybe we could make this later part of the dashboard...
-	// Or we show a "whats new" timeline there?
+	// Modules
+
 	$routeProvider.when('/modules', {
 		templateUrl: 'views/modules/list.html',
 		controller: 'ModuleListController'
 	});
+	$routeProvider.when('/new', {
+		templateUrl: 'views/modules/edit.html',
+		controller: 'ModuleDetailController'
+	});
 
 	// MAGIC RULES!!!!!!!
+
 	$routeProvider.when('/:module', {
 		templateUrl: 'views/modules/show.html',
+		controller: 'ModuleDetailController'
+	});
+	$routeProvider.when('/:module/edit', {
+		templateUrl: 'views/modules/edit.html',
+		controller: 'ModuleDetailController'
+	});
+	$routeProvider.when('/:module/delete', {
+		templateUrl: 'views/modules/delete.html',
 		controller: 'ModuleDetailController'
 	});
 

@@ -1,12 +1,14 @@
 
 angular.module('levelPad').controller('ModuleDetailController', [
-	'$scope', '$routeParams', '$log', 'Module', 'Subject', 'CurrentModule',
-	function ($scope, $routeParams, $log, Module, Subject, CurrentModule) {
+	'$scope', '$routeParams', '$log', '$modal', 'Module', 'Subject', 'CurrentModule',
+	function ($scope, $routeParams, $log, $modal, Module, Subject, CurrentModule) {
 
 	'use strict';
-	$scope.module = CurrentModule;
+	console.log('ModuleDetailController: routeParams:', $routeParams);
 
-	console.log('SubjectsController: routeParams:', $routeParams);
+	if (!$scope.module) {
+		$scope.module = CurrentModule;
+	}
 
 	$scope.update = function () {
 		$scope.semester = [
@@ -26,29 +28,74 @@ angular.module('levelPad').controller('ModuleDetailController', [
 	$scope.update();
 
 	$scope.showCreateDialog = function() {
-		$scope.subject = new Subject();
-		$('#edit').modal();
+		var scope = $scope.$new();
+		scope.module = new Module();
+
+		var modalInstance = $modal.open({
+			templateUrl: 'views/modules/edit.html',
+			controller: 'ModuleDetailController',
+			scope: scope
+		});
+
+		scope.save = function() {
+			modalInstance.close(scope.module);
+		};
+		scope.close = function() {
+			modalInstance.dismiss('cancel');
+		};
+
+		modalInstance.result.then(function(result) {
+			$scope.update();
+		});
 	};
 
-	$scope.showEditDialog = function(subject) {
-		$scope.subject = angular.copy(subject);
-		$('#edit').modal();
+	$scope.showEditDialog = function(module) {
+		var scope = $scope.$new();
+		scope.module = angular.copy(module);
+
+		var modalInstance = $modal.open({
+			templateUrl: 'views/modules/edit.html',
+			controller: 'ModuleDetailController',
+			scope: scope
+		});
+
+		scope.save = function() {
+			modalInstance.close(scope.module);
+		};
+		scope.close = function() {
+			modalInstance.dismiss('cancel');
+		};
+
+		modalInstance.result.then(function() {
+			$scope.update();
+		});
 	};
 
-	$scope.showDeleteDialog = function(subject) {
-		$scope.subject = angular.copy(subject);
-		$('#delete').modal();
-	};
+	$scope.showDeleteDialog = function(module) {
+		var scope = $scope.$new();
+		scope.module = angular.copy(module);
 
-	$scope.hideDialog = function() {
-		$('#edit, #delete').modal('hide');
-		$scope.subject = null;
+		var modalInstance = $modal.open({
+			templateUrl: 'views/modules/delete.html',
+			controller: 'ModuleDetailController',
+			scope: scope
+		});
+
+		scope.save = function() {
+			modalInstance.close(scope.module);
+		};
+		scope.close = function() {
+			modalInstance.dismiss('cancel');
+		};
+
+		modalInstance.result.then(function() {
+			$scope.update();
+		});
 	};
 
 	$scope.save = function() {
-		console.log('save:', $scope.subject);
-		$scope.subject.module = $scope.module;
-		$scope.subject.$save(function() {
+		console.log('save:', $scope.module);
+		$scope.module.$save(function() {
 			$scope.hideDialog();
 			$scope.update();
 		}, function() {
@@ -57,7 +104,7 @@ angular.module('levelPad').controller('ModuleDetailController', [
 	};
 
 	$scope.delete = function() {
-		$scope.subject.$delete(function() {
+		$scope.module.$delete(function() {
 			$scope.hideDialog();
 			$scope.update();
 		}, function() {

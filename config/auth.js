@@ -26,6 +26,7 @@ passport.deserializeUser(function(username, done) {
 			acl.addUserRoles(username, 'guest').then(function() {
 				user = new User();
 				user.username = username;
+				user.role = 'guest';
 				done(null, user);
 			});
 		} else {
