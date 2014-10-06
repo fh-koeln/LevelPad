@@ -20,7 +20,7 @@ angular.module('levelPad').controller('SignupController', function($scope, $root
 			$rootScope.$broadcast(AUTH_EVENTS.signupSuccess);
 			$rootScope.$broadcast(AUTH_EVENTS.loginRefreshed);
 		}, function() {
-			$rootScope.$broadcast(AUTH_EVENTS.signupFailed);
+			$rootScope.$broadcast(AUTH_EVENTS.signupFailed, res.errors);
 		}).finally(function() {
 			$($event.target).find('button[type=submit]').button('reset');
 		});
@@ -30,7 +30,8 @@ angular.module('levelPad').controller('SignupController', function($scope, $root
 		$location.path('/');
 	});
 
-	$rootScope.$on(AUTH_EVENTS.signupFailed, function() {
+	$rootScope.$on(AUTH_EVENTS.signupFailed, function( res ) {
+		AlertService.showError( error.message )
 		AlertService.showError('Die Registrierung ist fehlgeschlagen. Bitte versuchen Sie es erneut.', -1);
 	});
 
