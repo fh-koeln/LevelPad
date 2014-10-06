@@ -67,8 +67,9 @@ describe('UserController', function() {
 				assert.isNotNull(err, 'Error should be not null');
 				assert.isNull(user, 'User should be null');
 
-				expect(err).property('name', 'Error');
-				expect(err).property('message', 'Unknown user');
+				expect(err).property('name', 'NotFoundError');
+				expect(err).property('message', 'Not Found: "User"');
+				expect(err).property('entity_name', 'User');
 
 				done();
 			}, 'unknownuser');
