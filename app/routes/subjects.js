@@ -26,8 +26,7 @@ subjects.get('/', function (req, res) {
 		if (req.query.module) {
 			Module.findBySlug(req.query.module, function (err, module) {
 				if (err) {
-					console.error(err);
-					res.json(500, err);
+					res.status(500).json(err);
 				} else if (module) {
 					req.query.module = module._id;
 				}

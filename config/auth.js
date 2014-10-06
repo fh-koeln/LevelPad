@@ -26,6 +26,7 @@ passport.deserializeUser(function(username, done) {
 			acl.addUserRoles(username, 'guest').then(function() {
 				user = new User();
 				user.username = username;
+				user.role = 'guest';
 				done(null, user);
 			});
 		} else {
@@ -66,7 +67,7 @@ module.exports = function(app) {
 	 *
 	 */
 	app.post('/api/login', passport.authenticate('fh-imap'), function(req, res) {
-		res.json(200, req.user);
+		res.status(200).json(req.user);
 	});
 
 	/**
@@ -74,7 +75,7 @@ module.exports = function(app) {
 	 */
 	app.post('/api/logout', function (req, res) {
 		req.logout();
-		res.json(200, {});
+		res.status(200).end();
 	});
 };
 

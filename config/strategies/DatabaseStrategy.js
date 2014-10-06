@@ -10,13 +10,14 @@ module.exports = new LocalStrategy(function(username, password, done) {
 	User.findByUsername(username, function(err, user) {
 		if (err) {
 			done(null, false, err);
-//		} else if (!user) {
-//			// Create guest user which has to sign up
-//			acl.addUserRoles(username, 'guest', function() {
-//				user = new User();
-//				user.username = username;
-//				done(null, user);
-//			});
+		} else if (!user) {
+			// Create guest user which has to sign up
+			acl.addUserRoles(username, 'guest', function() {
+				user = new User();
+				user.username = username;
+				user.role = 'guest';
+				done(null, user);
+			});
 		} else {
 			done(null, user);
 		}

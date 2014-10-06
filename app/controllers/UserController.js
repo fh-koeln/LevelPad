@@ -38,7 +38,7 @@ exports.read = function(callback, username) {
 exports.create = function(callback, userdata) {
 	var user = new User(userdata);
 
-	// TODO not every user should be an admin, or?
+	// TODO Change to 'student'
 	user.role = 'administrator';
 
 	async.waterfall([
