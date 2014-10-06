@@ -28,7 +28,7 @@ module.exports.middleware = function middleware(req, res, next) {
 		res.status(401).json({error: 'Not authenticated'});
 		return;
 	}
-
+	console.log(req.user.role);
 	// Get all resources by current user role and compare to current path
 	acl.whatResources(req.user.role, function(err, resources) {
 		if (err) {
