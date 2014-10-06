@@ -1,6 +1,7 @@
 
 var User = require('../models/User'),
 	async = require('async'),
+	errors = require('common-errors'),
 	acl = require('../../config/acl');
 
 /**
@@ -23,7 +24,8 @@ exports.read = function(callback, username) {
 	// TODO assert here that username is a string?
 	User.findOne({ username: username }, function(err, user) {
 		if (!err && !user) {
-			err = new Error('Unknown user');
+			//err = new Error('Unknown user');
+			err = new errors.NotFoundError('User');
 		}
 		callback(err, user);
 	});

@@ -180,6 +180,89 @@ table {
 /**
  * OVERWRITE BOOTSTRAP BEHAVIOUR
  */
+
 .table-hover {
     cursor: pointer;
+}
+
+.interaction-bar {
+    padding: 20px 0; 
+    border-left: 1px solid lightgrey;   
+}
+
+.interaction-link{
+    color: #77aabb;
+}
+
+.module-time {
+    font-weight: normal;
+    color: grey;
+}
+
+.module-name {
+    font-weight: normal;   
+}
+
+.nav > li > a {
+    border: 1px solid #dddddd;
+    border-bottom-color: transparent;
+    cursor: default;
+    color: black;
+    margin-right: -1px;
+}
+
+
+
+.form-control::-moz-placeholder {
+    color: #c0c0c0;
+}
+.form-control:-ms-input-placeholder {
+    color: #c0c0c0;
+}
+.form-control::-webkit-input-placeholder {
+    color: #c0c0c0;
+}
+
+.nav-tabs > li.active > a{
+    font-weight: 600;   
+}
+
+.input-group{
+    padding-right: 0px;
+    margin-right: -1px;
+}
+
+.input-group-addon{
+    background-color: #dddddd;
+    padding: 0px 10px 0px 10px;
+}
+
+.search-input{
+    border-left-width: 0px;
+    border-left-color: transparent;
+}
+
+.interaction-tools {
+    padding-top: 8px;
+}
+
+.search-bar {
+    padding-right: 6px;
+}
+
+.arrow-right {
+    font-family: "Helvetica Neue";
+    font-size: 40px;
+    color: #6399AE;
+    
+}
+
+.nav-tabs,
+.nav-pills {
+  position: relative;
+}
+
+@media (max-width: 768px) {
+
+
 }
