@@ -20,22 +20,23 @@ users.get('/', function (req, res) {
 	UserController.list(_helpers.sendResult(res));
 });
 
-/**
- * Find user by username.
- */
-users.get('/:username', function(req, res) {
-	UserController.read(_helpers.sendResult(res), req.params.username);
-});
 
 /**
  * Get informations about the current user.
  */
 users.get('/me', function(req, res) {
 	if (req.user) {
-		res.json(200, req.user);
+		res.status(200).json(req.user);
 	} else {
-		res.json(404, { message: 'User not found...' });
+		res.status(404).json({ error: 'User not found' });
 	}
+});
+
+/**
+ * Find user by username.
+ */
+users.get('/:username', function(req, res) {
+	UserController.read(_helpers.sendResult(res), req.params.username);
 });
 
 /**

@@ -5,7 +5,7 @@ var express = require('express'),
 	_helpers = require('./_helpers');
 
 semesters.get('/', function (req, res) {
-	SemesterController.getAll(_helpers.sendResult(res));
+	SemesterController.list(_helpers.sendResult(res));
 });
 
 module.exports = semesters;

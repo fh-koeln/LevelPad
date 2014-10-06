@@ -25,14 +25,14 @@ module.exports.acl = acl = new acl(new acl.mongodbBackend(db.connection.db, 'acl
 module.exports.middleware = function middleware(req, res, next) {
 	if (!req.isAuthenticated()) {
 		debug('Not authenticated');
-		res.json(401, {error: 'Not authenticated'});
+		res.status(401).json({error: 'Not authenticated'});
 		return;
 	}
 
 	// Get all resources by current user role and compare to current path
 	acl.whatResources(req.user.role, function(err, resources) {
 		if (err) {
-			res.json(500, {error: 'Unexpected authorization error'});
+			res.status(500).json({error: 'Unexpected authorization error'});
 			return;
 		}
 
@@ -53,13 +53,13 @@ module.exports.middleware = function middleware(req, res, next) {
 
 		if (!reqResource) {
 			debug(req.user.username + ' with role ' + req.user.role + ' has no permissions for ' + apiPath);
-			res.json(403, {error: 'Forbidden'});
+			res.status(403).json({error: 'Forbidden'});
 			return;
 		}
 
 		acl.isAllowed(req.user.username, reqResource, req.method, function(err, result) {
 			if (err) {
-				res.json(500, {error: 'Unexpected authorization error'});
+				res.status(500).json({error: 'Unexpected authorization error'});
 				return;
 			}
 
@@ -67,7 +67,7 @@ module.exports.middleware = function middleware(req, res, next) {
 				next();
 			} else {
 				debug(req.user.username + ' with role ' + req.user.role + ' is not allowed to access resource ' + reqResource + ' via ' + req.method );
-				res.json(403, {error: 'Forbidden'});
+				res.status(403).json({error: 'Forbidden'});
 				return;
 			}
 		});
@@ -76,23 +76,23 @@ module.exports.middleware = function middleware(req, res, next) {
 
 module.exports.debugRoute = express.Router();
 module.exports.debugRoute.get('/me', function(req, res) {
-	res.json(200, req.user);
+	res.status(200).json(req.user);
 });
 module.exports.debugRoute.get('/me/roles', function(req, res) {
 	acl.userRoles(req.user.username, function(err, roles) {
 		if (err) {
-			res.json(500, err);
+			res.status(500).json(err);
 		} else {
-			res.json(200, roles);
+			res.status(200).json(roles);
 		}
 	});
 });
 module.exports.debugRoute.get('/me/resources', function(req, res) {
 	acl.whatResources(req.user.role, function(err, resources) {
 		if (err) {
-			res.json(500, err);
+			res.status(500).json(err);
 		} else {
-			res.json(200, resources);
+			res.status(200).json(resources);
 		}
 	});
 });
