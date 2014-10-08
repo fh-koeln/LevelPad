@@ -6,7 +6,7 @@ var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
 function validateUsernameLength(username) {
-	if ( ! username ) {
+	if (!username) {
 		return false;
 	}
 
@@ -18,6 +18,10 @@ function validateUsernameLength(username) {
 }
 
 function validateNamesLength(name) {
+	if (!name) {
+		return false;
+	}
+
 	if (name.length < 2) {
 		return false;
 	} else {
@@ -26,6 +30,10 @@ function validateNamesLength(name) {
 }
 
 function validateStudentNumber(studentNumber) {
+	if (!studentNumber) {
+		return false;
+	}
+
   	if ( /^[0-9]{8}$/.test(studentNumber) ) {
     	return true;
 	} else {
@@ -34,6 +42,10 @@ function validateStudentNumber(studentNumber) {
 }
 
 function validateEmail(email) {
+	if (!email) {
+		return false;
+	}
+
   	var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if ( re.test(email) ) {
     	return true;

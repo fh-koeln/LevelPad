@@ -36,9 +36,9 @@ describe('UserController', function() {
 
 				var user = users[0];
 				expect(user).property('username', 'admin1');
-				expect(user).property('firstname', 'Admin1');
-				expect(user).property('lastname', 'Admin1');
-				expect(user).property('email', 'admin1@fh-koeln.de');
+				expect(user).property('firstname', 'Max');
+				expect(user).property('lastname', 'Mustermann');
+				expect(user).property('email', 'max.mustermann@fh-koeln.de');
 				expect(user).property('role', 'administrator');
 
 				done();
@@ -53,9 +53,9 @@ describe('UserController', function() {
 				assert.isNotNull(user, 'User should be not null');
 
 				expect(user).property('username', 'admin1');
-				expect(user).property('firstname', 'Admin1');
-				expect(user).property('lastname', 'Admin1');
-				expect(user).property('email', 'admin1@fh-koeln.de');
+				expect(user).property('firstname', 'Max');
+				expect(user).property('lastname', 'Mustermann');
+				expect(user).property('email', 'max.mustermann@fh-koeln.de');
 				expect(user).property('role', 'administrator');
 
 				done();
@@ -77,16 +77,16 @@ describe('UserController', function() {
 	});
 
 	describe('create', function() {
-		it('should save a new user (NewTestUser1) with full data', function(done) {
+		it('should save a new user (admin2) with full data', function(done) {
 			var userdata = {
-				username: 'NewTestUser1',
-				firstname: 'NewTestUser1',
-				lastname: 'NewTestUser1',
-				email: 'NewTestUser1@fh-koeln.de'
+				username: 'Admin2',
+				firstname: 'Peter',
+				lastname: 'Mustermann',
+				email: 'peter.mustermann@fh-koeln.de'
 			};
 			async.series([
 				function(next) {
-					User.findOne({ username: 'NewTestUser1' }, function(err, user) {
+					User.findOne({ username: 'admin2' }, function(err, user) {
 						assert.isNull(err, 'Error should be null');
 						assert.isNull(user, 'User should be not null');
 						next(err, user);
@@ -97,11 +97,11 @@ describe('UserController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(user, 'User should be not null');
 
-						expect(user).property('username', 'newtestuser1'); // automatically transformed to lowercase
-						expect(user).property('firstname', 'NewTestUser1');
-						expect(user).property('lastname', 'NewTestUser1');
-						expect(user).property('email', 'NewTestUser1@fh-koeln.de');
-						expect(user).property('role', 'administrator');
+						expect(user).property('username', 'admin2'); // automatically transformed to lowercase
+						expect(user).property('firstname', 'Peter');
+						expect(user).property('lastname', 'Mustermann');
+						expect(user).property('email', 'peter.mustermann@fh-koeln.de');
+						expect(user).property('role', 'administrator'); // @todo: This will fail if default role will be switched to student
 
 						next(err, user);
 					}, userdata);
@@ -111,10 +111,10 @@ describe('UserController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(user, 'User should be not null');
 
-						expect(user).property('username', 'newtestuser1'); // automatically transformed to lowercase
-						expect(user).property('firstname', 'NewTestUser1');
-						expect(user).property('lastname', 'NewTestUser1');
-						expect(user).property('email', 'NewTestUser1@fh-koeln.de');
+						expect(user).property('username', 'admin2'); // automatically transformed to lowercase
+						expect(user).property('firstname', 'Peter');
+						expect(user).property('lastname', 'Mustermann');
+						expect(user).property('email', 'peter.mustermann@fh-koeln.de');
 						expect(user).property('role', 'administrator');
 
 						next(err, user);
@@ -144,9 +144,9 @@ describe('UserController', function() {
 
 		it('should fail if user has no username', function(done) {
 			var userdata = {
-				firstname: 'NewTestUser3',
-				lastname: 'NewTestUser3',
-				email: 'NewTestUser1@fh-koeln.de'
+				firstname: 'Anna',
+				lastname: 'Mustermann',
+				email: 'anna.mustermann@fh-koeln.de'
 			};
 			UserController.create(function(err, user) {
 				assert.isNotNull(err, 'Error should be not null');
@@ -165,9 +165,9 @@ describe('UserController', function() {
 		it('should fail for an already known user (admin1)', function(done) {
 			var userdata = {
 				username: 'admin1',
-				firstname: 'NewTestUser3',
-				lastname: 'NewTestUser3',
-				email: 'NewTestUser1@fh-koeln.de'
+				firstname: 'Max',
+				lastname: 'Mustermann',
+				email: 'max.mustermann@fh-koeln.de'
 			};
 			UserController.create(function(err, user) {
 				assert.isNotNull(err, 'Error should be not null');
@@ -214,8 +214,7 @@ describe('UserController', function() {
 
 		it('should successfully update a known user (admin1) with data', function(done) {
 			var newuserdata = {
-				firstname: 'New firstname',
-				lastname: 'New lastname'
+				firstname: 'Maximilan'
 			};
 			async.series([
 				function(next) {
@@ -224,9 +223,9 @@ describe('UserController', function() {
 						assert.isNotNull(user, 'User should be not null');
 
 						expect(user).property('username', 'admin1');
-						expect(user).property('firstname', 'Admin1');
-						expect(user).property('lastname', 'Admin1');
-						expect(user).property('email', 'admin1@fh-koeln.de');
+						expect(user).property('firstname', 'Max');
+						expect(user).property('lastname', 'Mustermann');
+						expect(user).property('email', 'max.mustermann@fh-koeln.de');
 						expect(user).property('role', 'administrator');
 
 						next(err);
@@ -238,9 +237,9 @@ describe('UserController', function() {
 						assert.isNotNull(user, 'User should be not null');
 
 						expect(user).property('username', 'admin1');
-						expect(user).property('firstname', 'New firstname');
-						expect(user).property('lastname', 'New lastname');
-						expect(user).property('email', 'admin1@fh-koeln.de');
+						expect(user).property('firstname', 'Maximilan');
+						expect(user).property('lastname', 'Mustermann');
+						expect(user).property('email', 'max.mustermann@fh-koeln.de');
 						expect(user).property('role', 'administrator');
 
 						next(err);
@@ -252,9 +251,9 @@ describe('UserController', function() {
 						assert.isNotNull(user, 'User should be not null');
 
 						expect(user).property('username', 'admin1');
-						expect(user).property('firstname', 'New firstname');
-						expect(user).property('lastname', 'New lastname');
-						expect(user).property('email', 'admin1@fh-koeln.de');
+						expect(user).property('firstname', 'Maximilan');
+						expect(user).property('lastname', 'Mustermann');
+						expect(user).property('email', 'max.mustermann@fh-koeln.de');
 						expect(user).property('role', 'administrator');
 
 						next(err);
@@ -274,9 +273,9 @@ describe('UserController', function() {
 						assert.isNotNull(user, 'User should be not null');
 
 						expect(user).property('username', 'admin1');
-						expect(user).property('firstname', 'Admin1');
-						expect(user).property('lastname', 'Admin1');
-						expect(user).property('email', 'admin1@fh-koeln.de');
+						expect(user).property('firstname', 'Max');
+						expect(user).property('lastname', 'Mustermann');
+						expect(user).property('email', 'max.mustermann@fh-koeln.de');
 						expect(user).property('role', 'administrator');
 
 						next(err);
@@ -288,9 +287,9 @@ describe('UserController', function() {
 						assert.isNotNull(user, 'User should be not null');
 
 						expect(user).property('username', 'admin1');
-						expect(user).property('firstname', 'Admin1');
-						expect(user).property('lastname', 'Admin1');
-						expect(user).property('email', 'admin1@fh-koeln.de');
+						expect(user).property('firstname', 'Max');
+						expect(user).property('lastname', 'Mustermann');
+						expect(user).property('email', 'max.mustermann@fh-koeln.de');
 						expect(user).property('role', 'administrator');
 
 						next(err);
@@ -302,9 +301,9 @@ describe('UserController', function() {
 						assert.isNotNull(user, 'User should be not null');
 
 						expect(user).property('username', 'admin1');
-						expect(user).property('firstname', 'Admin1');
-						expect(user).property('lastname', 'Admin1');
-						expect(user).property('email', 'admin1@fh-koeln.de');
+						expect(user).property('firstname', 'Max');
+						expect(user).property('lastname', 'Mustermann');
+						expect(user).property('email', 'max.mustermann@fh-koeln.de');
 						expect(user).property('role', 'administrator');
 
 						next(err);

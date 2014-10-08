@@ -28,9 +28,9 @@ module.exports.initializeTestData = function(callback) {
 		function(next) {
 			var user = {
 				username: 'admin1',
-				firstname: 'Admin1',
-				lastname: 'Admin1',
-				email: 'admin1@fh-koeln.de',
+				firstname: 'Max',
+				lastname: 'Mustermann',
+				email: 'max.mustermann@fh-koeln.de',
 				role: 'administrator'
 			};
 			new User(user).save(next);
@@ -38,9 +38,9 @@ module.exports.initializeTestData = function(callback) {
 		function(next) {
 			var user = {
 				username: 'lecturer1',
-				firstname: 'Lecturer1',
-				lastname: 'Lecturer1',
-				email: 'lecturer1@fh-koeln.de',
+				firstname: 'Erika',
+				lastname: 'Mustermann',
+				email: 'erika.mustermann@fh-koeln.de',
 				role: 'lecturer'
 			};
 			new User(user).save(next);
