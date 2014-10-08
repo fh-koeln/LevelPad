@@ -29,7 +29,7 @@ routes.get('/*', function(req, res) {
 	if (req.path.indexOf('/views/') === 0) {
 		res.send(200, 'Illegal path: ' + req.path);
 	} else {
-		res.sendfile('index.html', { root: __dirname + '/../public' });
+		res.sendFile('index.html', { root: __dirname + '/../public' });
 	}
 });
 
