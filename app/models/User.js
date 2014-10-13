@@ -80,7 +80,7 @@ var userSchema = new Schema({
 	firstname: { type: String, required: true, trim: true, validate: firstnameValidations },
 	lastname: { type: String, required: true, trim: true, validate: lastnameValidations },
 	email: { type: String, required: true, unique: true, trim: true, validate: emailValidations },
-	studentNumber: { type: String, required: false, unique: true, trim: true, validate: studentNumberValidations },
+	studentNumber: { type: String, required: false, unique: true, sparse: true, trim: true, validate: studentNumberValidations },
 	role: { type: String, required: true, enum: [ 'guest', 'student', 'lecturer', 'assistent', 'administrator' ] }
 });
 
