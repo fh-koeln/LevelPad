@@ -1,6 +1,6 @@
 <ul class="nav nav-tabs">
-	<li class="active"><a data-ng-href="/modules">Modules</a></li>
-	<li><a data-ng-href="/users">Users</a></li>
+	<li class="active"><a data-ng-href="/modules">Veranstaltungsmodule</a></li>
+	<li><a data-ng-href="/users">Benutzer</a></li>
 </ul>
 
 <div class="row">
@@ -9,16 +9,14 @@
 	</div>
 	<div class="col-xs-offset-2 col-xs-6 text-right">
 		<button data-ng-click="showCreateDialog();" class="btn btn-lg btn-link glyphicon glyphicon-plus" style="padding: 0 0 10px 8px;"></button>
-		<a data-ng-href="/new" data-ng-click="showCreateDialog(); $event.preventDefault();">Create new module</a>
+		<a data-ng-href="/modules/new" data-ng-click="showCreateDialog(); $event.preventDefault();">Neue Veranstaltung anlegen</a>
 	</div>
 </div>
 
 <table class="table table-striped table-hover">
 	<tr data-ng-repeat="module in modules | filter:searchText">
-		<td data-ng-click="go(  '/' + module.slug )">
-			<h4><a data-ng-href="{{ '/' + module.slug }}">{{ module.name }}</a></h4>
-			<a data-ng-href="/{{ module.slug }}/edit" data-ng-click="showEditDialog(module); $event.preventDefault();" class="btn btn-default">Edit</a>
-			<a data-ng-href="/{{ module.slug }}/delete" data-ng-click="showDeleteDialog(module); $event.preventDefault();" class="btn btn-default">Delete</a>
+		<td data-ng-click="showEditDialog(module); $event.preventDefault();">
+			<h4><a data-ng-href="/modules/{{ module.slug }}/edit">{{ module.name }}</a></h4>
 		</td>
 	</tr>
 </table>

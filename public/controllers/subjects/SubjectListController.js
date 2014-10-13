@@ -39,16 +39,10 @@ angular.module('levelPad').controller('SubjectListController', [
 		$('#delete').modal();
 	};
 
-	$scope.hideDialog = function() {
-		$('#edit, #delete').modal('hide');
-		$scope.subject = null;
-	};
-
 	$scope.save = function() {
 		console.log('save:', $scope.subject);
 		$scope.subject.module = $scope.module;
 		$scope.subject.$save(function() {
-			$scope.hideDialog();
 			$scope.update();
 		}, function() {
 			alert('Error!');
@@ -57,7 +51,6 @@ angular.module('levelPad').controller('SubjectListController', [
 
 	$scope.delete = function() {
 		$scope.subject.$delete(function() {
-			$scope.hideDialog();
 			$scope.update();
 		}, function() {
 			alert('Error!');
