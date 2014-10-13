@@ -3,13 +3,24 @@
 	<header class="modal-header">
 		<button type="button" class="close" aria-hidden="true"
 				data-ng-show="cancel" data-ng-click="cancel();">&times;</button>
-		<h4 id="edit-title" class="modal-title">{{ !module._id ? 'Neue Veranstaltung anlegen' : 'Veranstaltung ändern' }}</h4>
+		<h4 id="edit-title" class="modal-title">{{ !subject._id ? 'Neue Veranstaltung anlegen' : 'Veranstaltung ändern' }}</h4>
 	</header>
 	<div class="modal-body">
 
-		<div class="form-group" data-ng-class="{ 'has-error': form.module.$invalid }">
-			<div class="col-sm-4">Module:</div>
-			<div class="col-sm-8">{{ module.name }}</div>
+		<div class="form-group" data-ng-show="subject._id">
+			<div class="col-sm-4">Modul:</div>
+			<div class="col-sm-8">{{ subject.module.name }}</div>
+		</div>
+
+		<div class="form-group" data-ng-hide="subject._id" data-ng-class="{ 'has-error': form.semester.$invalid }">
+			<label for="module" class="col-sm-4 control-label">Modul:</label>
+			<div class="col-sm-8">
+				<select id="module" name="module"
+						data-ng-model="subject.module"
+						data-ng-options="m.key as m.name for m in modules"
+						required="required"
+						class="form-control"></select>
+			</div>
 		</div>
 
 		<div class="form-group" data-ng-class="{ 'has-error': form.semester.$invalid }">
@@ -39,7 +50,7 @@
 		<button type="button" class="btn btn-default pull-left"
 				data-ng-show="cancel" data-ng-click="cancel();">Abbrechen</button>
 		<button type="button" class="btn btn-default pull-left"
-				data-ng-show="module._id" data-ng-click="showDeleteDialog();">Löschen</button>
+				data-ng-show="subject._id" data-ng-click="showDeleteDialog();">Löschen</button>
 		<button type="submit" class="btn btn-primary pull-right"
 				data-ng-disabled="form.$invalid" >Speichern</button>
 	</div>
