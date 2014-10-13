@@ -3,7 +3,7 @@
 	<header class="modal-header">
 		<button type="button" class="close" aria-hidden="true"
 				data-ng-show="cancel" data-ng-click="cancel();">&times;</button>
-		<h4 id="edit-title" class="modal-title">{{ !module._id ? 'Create new module' : 'Edit module' }}</h4>
+		<h4 id="edit-title" class="modal-title">{{ !module._id ? 'Neuen Benutzer anlegen' : 'Benutzer bearbeiten' }}</h4>
 	</header>
 	<div class="modal-body">
 
@@ -30,8 +30,10 @@
 	</div>
 	<div class="modal-footer">
 		<button type="button" class="btn btn-default pull-left"
-				data-ng-show="cancel" data-ng-click="cancel();">Cancel</button>
+				data-ng-show="cancel" data-ng-click="cancel();">Abbrechen</button>
+		<button type="button" class="btn btn-default pull-left"
+				data-ng-show="module._id" data-ng-click="showDeleteDialog();">Löschen</button>
 		<button type="submit" class="btn btn-primary pull-right"
-				data-ng-disabled="form.$invalid" >Save</button>
+				data-ng-disabled="form.$invalid" >Speichern</button>
 	</div>
 </form>

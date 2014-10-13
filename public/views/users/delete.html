@@ -10,7 +10,7 @@
 			Möchten Sie den Benutzer {{ user.firstname }} {{ user.lastname }} wirklich löschen?
 		</p>
 		<p>
-			Bitte geben Sie zur Sicherheit das Modulkürzel ein: <code>{{ module.shortName }}</code>
+			Bitte geben Sie zur Sicherheit <code>yolo</code> ein.
 		</p>
 		<p>
 			<input type="text" data-ng-model="validationInput">
@@ -18,7 +18,7 @@
 	</div>
 	<div class="modal-footer">
 		<button type="button" class="btn btn-default pull-left"
-				data-ng-click="showDeleteDialog();">Abbrechen</button>
+				data-ng-show="cancel" data-ng-click="cancel();">Abbrechen</button>
 		<button type="submit" class="btn btn-danger pull-right"
 				data-ng-disabled="validationInput !== 'yolo'">Unwiderruflich Löschen</button>
 	</div>
