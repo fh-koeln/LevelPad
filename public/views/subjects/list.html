@@ -1,0 +1,71 @@
+<!--
+    Navbar für große Devices
+-->
+<ul class="nav nav-tabs hidden-xs " data-ng-init="filterStatus='sose'"> <!--Filterstatus muss geaendert werden fuer Aktiv und inaktive-->
+	<li class="col-md-2,5" data-ng-class="{ 'active': filterStatus=='sose' }"><a data-ng-click="filterStatus='sose'  ">Aktive Veranstaltungen</a></li>
+	<li class="col-md-2,5"  data-ng-class="{ 'active': filterStatus=='wise' }"><a data-ng-click="filterStatus='wise' ">Deaktive Veranstaltungen</a></li>
+</ul>
+
+<!--
+    Searchbar und neue Veranstaltung für große Devices
+-->
+
+<div class="container hidden-xs">
+	<div class="row interaction-bar" >
+		<div class="col-md-5 search-bar">
+			<div class="input-group">
+				<div class="input-group-addon">
+					<span class="glyphicon glyphicon-search"></span>
+				</div>
+				<input type="text" placeholder="Veranstaltung, Jahr, ..." data-ng-model="searchText" autocomplete="off" class="form-control search-input" />
+			</div>
+		</div>
+		<div class="col-md-5 interaction-tools">
+			<a class="interaction-link" data-ng-click="showCreateDialog();">+ neue Veranstaltung anlegen</a>
+		</div>
+	</div>
+</div>
+
+<!--
+    Navbar, Searchbtn, newBtn für kleine Devices
+-->
+
+<div class="container hidden-md hidden-lg hidden-sm">
+	<div class="row" >
+		<div class="dropdown col-xs-9">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Aktive Veranstaltungen <span class="caret"></span></a>
+			<ul class="dropdown-menu" role="menu">
+				<li class="col-md-2,5" data-ng-class="{ 'active': filterStatus=='sose' }">
+					<a data-ng-click="filterStatus='sose'  ">Aktive Veranstaltungen</a>
+				</li>
+				<li class="col-md-2,5"  data-ng-class="{ 'active': filterStatus=='wise' }">
+					<a data-ng-click="filterStatus='wise' ">Deaktive Veranstaltungen</a>
+				</li>
+			</ul>
+		</div>
+		<button type="button" class="btn btn-default navbar-btn col-xs-1">
+			<span class="glyphicon glyphicon-search"></span>
+		</button>
+		<button type="button" class="btn btn-default navbar-btn col-xs-1 col-xs-offset-1">+</button>
+	</div>
+</div>
+
+<table class="table table-striped table-hover" ng-init="predicate='name'; reverse=false;">
+	<tbody>
+	<tr>
+		<th class="col-xs-10 col-md-10" style="padding: 10px 0 10px 20px;">
+			<span class="module-name"> Webbasierte Anwendungen 2: Verteilte Anwendungen </span>  <br/>
+			<span class="module-time"> Sommersemester 2014 </span>  </th>
+		<td class="col-md-2 hidden-xs text-right"> 50 Teilnehmer </td>
+		<td class="col-xs-2 hidden-md hidden-lg hidden-sm text-right arrow-right"> ⟩ </td>
+	</tr>
+
+	<tr>
+		<th class="col-xs-10 col-md-10 " style="padding: 10px 0 10px 20px;">
+			<span class="module-name"> Entwicklungsprojekt interaktiver Systeme </span>  <br/>
+			<span class="module-time"> Sommersemester 2013 </span>  </th>
+		<td class="col-md-2 hidden-xs text-right"> 36 Teilnehmer </td>
+		<td class="col-xs-2 hidden-md hidden-lg hidden-sm text-right arrow-right"> ⟩ </td>
+	</tr>
+	</tbody>
+</table>
