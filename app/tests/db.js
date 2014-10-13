@@ -6,6 +6,7 @@ var async = require('async'),
 	Task = require('../models/Task'),
 	acl = require('../../config/acl').acl;
 
+
 module.exports.clear = function(callback) {
 	async.series([
 		function(callback) {

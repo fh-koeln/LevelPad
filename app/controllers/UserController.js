@@ -46,11 +46,6 @@ exports.create = function(callback, userdata) {
 	async.waterfall([
 		function(next) {
 			user.save(next);
-		},
-		function(user, numberAffected, next) {
-			acl.setRole(user.username, user.role, function(err) {
-				next(err, user); // keep user result from mongoose
-			});
 		}
 	], callback);
 };
