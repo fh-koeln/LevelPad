@@ -15,6 +15,23 @@ var debug = require('debug')('acl'),
 module.exports.acl = acl = new acl(new acl.mongodbBackend(db.connection.db, 'acl-'));
 
 /**
+ * Helper fuction to check if an object
+ * @param  {[type]}  obj   [description]
+ * @param  {[type]}  key   [description]
+ * @param  {[type]}  value [description]
+ * @return {Boolean}       [description]
+ */
+function hasValue(obj, key, value) {
+	return obj.hasOwnProperty(key) && obj[key] === value;
+}
+
+function hasCurrentUserKey(keys) {
+	return keys.some(function(key) {
+		return hasValue(key, 'name', 'currentUser');
+	});
+}
+
+/**
  * ACL Middleware
  *
  * Middleware for API routes:
@@ -23,11 +40,13 @@ module.exports.acl = acl = new acl(new acl.mongodbBackend(db.connection.db, 'acl
  *  - Returns 500 response on error
  */
 module.exports.middleware = function middleware(req, res, next) {
+
 	if (!req.isAuthenticated()) {
 		debug('Not authenticated');
 		res.status(401).json({error: 'Not authenticated'});
 		return;
 	}
+
 
 	// Get all resources by current user role and compare to current path
 	acl.whatResources(req.user.role, function(err, resources) {
@@ -36,7 +55,7 @@ module.exports.middleware = function middleware(req, res, next) {
 			return;
 		}
 
-		var keys, regexp, isMatch, resource, reqResource = '',
+		var keys, regexp, isMatch, result, username, resource, reqResource = '',
 			originalUrl = req.originalUrl,
 			apiPath = originalUrl.replace(/\/?api\/?/, '').split('?')[0];
 
@@ -46,6 +65,20 @@ module.exports.middleware = function middleware(req, res, next) {
 			isMatch = regexp.test(apiPath);
 
 			if (isMatch) {
+				if (hasCurrentUserKey(keys)) {
+					// Get the requested user
+					result = regexp.exec(apiPath);
+					keys.map( function(key, i) {
+						if ( key.name == 'currentUser' ) {
+							username = result[i + 1];
+						}
+					});
+
+					if (username !== req.user.username ) {
+						continue;
+					}
+				}
+
 				reqResource = resource;
 				break;
 			}
@@ -62,7 +95,6 @@ module.exports.middleware = function middleware(req, res, next) {
 				res.status(500).json({error: 'Unexpected authorization error'});
 				return;
 			}
-
 			if (result) {
 				next();
 			} else {
@@ -124,6 +156,30 @@ module.exports.setRole = function setRole(user, role, callback) {
 	});
 };
 
+module.exports.removeRole = function setRole(user, callback) {
+	acl.userRoles(user, function(err, roles) {
+		if (err) {
+			callback(err);
+		} else if (roles && roles.length > 0) {
+			acl.removeUserRoles(user, roles, function(err) {
+				if (err) {
+					callback(err);
+				} else {
+					callback(err);
+				}
+			});
+		} else {
+			callback(err);
+		}
+	});
+};
+
+module.exports.setUserBasedRoles = function(user, callback) {
+	callback(err);
+
+
+};
+
 db.connection.on('connected', function() {
 	/**
 	 * Define default permissions for resources
@@ -168,6 +224,7 @@ db.connection.on('connected', function() {
 				{resources: 'login', permissions: ['POST']},
 				{resources: 'logout', permissions: ['POST']},
 				{resources: 'users/me', permissions: ['GET', 'PUT']},
+				{resources: 'users/:currentUser/subjects', permissions: ['GET']},
 			]
 		},
 		{
@@ -176,6 +233,7 @@ db.connection.on('connected', function() {
 				{resources: 'login', permissions: ['POST']},
 				{resources: 'logout', permissions: ['POST']},
 				{resources: 'users/me', permissions: ['GET', 'PUT']},
+				{resources: 'users/:currentUser/subjects', permissions: ['GET']},
 			]
 		},
 		{
@@ -184,7 +242,7 @@ db.connection.on('connected', function() {
 				{resources: 'login', permissions: ['POST']},
 				{resources: 'logout', permissions: ['POST']},
 				{resources: 'users/me', permissions: ['GET', 'PUT']},
-				{resources: 'subjects', permissions: ['GET']},
+				{resources: 'users/:currentUser/subjects', permissions: ['GET']},
 			]
 		},
 		{
@@ -195,6 +253,8 @@ db.connection.on('connected', function() {
 				{resources: 'users', permissions: ['GET', 'POST']},
 				{resources: 'users/me', permissions: ['GET', 'PUT']},
 				{resources: 'users/:user', permissions: ['GET', 'PUT', 'DELETE']},
+				{resources: 'users/:user/subjects', permissions: ['GET']},
+				{resources: 'users/:currentUser/subjects', permissions: ['GET']},
 				{resources: 'modules', permissions: ['GET', 'POST']},
 				{resources: 'modules/:module', permissions: ['GET', 'PUT', 'DELETE']},
 				{resources: 'modules/:module/subjects', permissions: ['GET', 'POST']},

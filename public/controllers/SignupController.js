@@ -19,8 +19,8 @@ angular.module('levelPad').controller('SignupController', function($scope, $root
 			Session.create(Date.now(), res.data);
 			$rootScope.$broadcast(AUTH_EVENTS.signupSuccess);
 			$rootScope.$broadcast(AUTH_EVENTS.loginRefreshed);
-		}, function() {
-			$rootScope.$broadcast(AUTH_EVENTS.signupFailed);
+		}, function(res) {
+			$rootScope.$broadcast(AUTH_EVENTS.signupFailed, res);
 		}).finally(function() {
 			$($event.target).find('button[type=submit]').button('reset');
 		});
@@ -30,8 +30,16 @@ angular.module('levelPad').controller('SignupController', function($scope, $root
 		$location.path('/');
 	});
 
-	$rootScope.$on(AUTH_EVENTS.signupFailed, function() {
-		AlertService.showError('Die Registrierung ist fehlgeschlagen. Bitte versuchen Sie es erneut.', -1);
+	$rootScope.$on(AUTH_EVENTS.signupFailed, function(event, res) {
+		if (typeof res.data.errors === 'object') {
+			for (var errorName in res.data.errors) {
+			    if (res.data.errors.hasOwnProperty(errorName)) {
+			        AlertService.showError(res.data.errors[errorName].message, -1);
+			    }
+			}
+		} else {
+			AlertService.showError('Die Registrierung ist fehlgeschlagen. Bitte versuchen Sie es erneut.', -1);
+		}
 	});
 
 });

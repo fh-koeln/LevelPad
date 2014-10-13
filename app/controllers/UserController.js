@@ -1,6 +1,7 @@
 
 var User = require('../models/User'),
 	async = require('async'),
+	errors = require('common-errors'),
 	acl = require('../../config/acl');
 
 /**
@@ -23,7 +24,8 @@ exports.read = function(callback, username) {
 	// TODO assert here that username is a string?
 	User.findOne({ username: username }, function(err, user) {
 		if (!err && !user) {
-			err = new Error('Unknown user');
+			//err = new Error('Unknown user');
+			err = new errors.NotFoundError('User');
 		}
 		callback(err, user);
 	});
@@ -44,11 +46,6 @@ exports.create = function(callback, userdata) {
 	async.waterfall([
 		function(next) {
 			user.save(next);
-		},
-		function(user, numberAffected, next) {
-			acl.setRole(user.username, user.role, function(err) {
-				next(err, user); // keep user result from mongoose
-			});
 		}
 	], callback);
 };
@@ -68,6 +65,9 @@ exports.update = function(callback, username, userdata) {
 			exports.read(next, username);
 		},
 		function(user, next) {
+			if (userdata.studentNumber !== undefined) {
+				user.studentNumber = userdata.studentNumber;
+			}
 			if (userdata.firstname !== undefined) {
 				user.firstname = userdata.firstname;
 			}
@@ -76,10 +76,17 @@ exports.update = function(callback, username, userdata) {
 			}
 			if (userdata.email !== undefined) {
 				user.email = userdata.email;
+				User.findOne({ email: userdata.email }, function(err, user) {
+					if (!err && user && user.username !== username) {
+						err = new errors.AlreadyInUseError('User', 'email');
+					}
+					next(err, user);
+				});
+			} else {
+				next(null, user);
 			}
-			if (userdata.studentNumber !== undefined) {
-				user.studentNumber = userdata.studentNumber;
-			}
+		},
+		function(user, next) {
 			user.save(next);
 		}
 	], callback);

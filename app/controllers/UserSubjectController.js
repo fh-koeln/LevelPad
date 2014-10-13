@@ -3,6 +3,7 @@ var Subject = require('../models/Subject'),
 	Member = require('../models/Member'),
 	User = require('../models/User'),
 	async = require('async'),
+	errors = require('common-errors'),
 	acl = require('../../config/acl');
 
 /**
@@ -22,7 +23,7 @@ exports.list = function(callback, user) {
 		},
 		function(user, next) {
 			if (!user || !user._id) {
-				return next(new Error('Unknown user'));
+				return next(new errors.NotFoundError('User'));
 			}
 
 			Member.find({ user: user._id }).populate('subject').exec(next);
