@@ -144,7 +144,23 @@ app.config(function($routeProvider, $locationProvider) {
 
 	$routeProvider.when('/users', {
 		templateUrl: 'views/users/list.html',
-		controller: 'UserController'
+		controller: 'UserListController'
+	});
+	$routeProvider.when('/users/new', {
+		templateUrl: 'views/users/edit.html',
+		controller: 'UserDetailController'
+	});
+	$routeProvider.when('/users/:module', {
+		templateUrl: 'views/users/show.html',
+		controller: 'UserDetailController'
+	});
+	$routeProvider.when('/users/:module/edit', {
+		templateUrl: 'views/users/edit.html',
+		controller: 'UserDetailController'
+	});
+	$routeProvider.when('/users/:module/delete', {
+		templateUrl: 'views/users/delete.html',
+		controller: 'UserDetailController'
 	});
 
 	// MAGIC RULES!!!!!!!
