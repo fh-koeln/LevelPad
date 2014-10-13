@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-md-offset-3 col-md-6">
-		<form role="form" data-ng-submit="save($event)">
+		<form role="form" name="form" data-ng-submit="save($event)">
 			<h2>Account</h2>
 			<div data-ng-include="'partials/messages.html'"></div>
 			<div class="form-group">
@@ -12,41 +12,45 @@
 					   class="form-control"
 					   data-ng-model="user.username" />
 			</div>
-			<div class="form-group">
+			<div class="form-group" data-ng-class="{ 'has-error': form.studentNumber.$invalid && form.studentNumber.$dirty }">
 				<label for="studentNumber" class="control-label">Matrikel-Nr.:</label>
 				<input type="text" id="studentNumber"
 					   name="studentNumber" value=""
+					   ng-pattern="/^[0-9]{8}$/"
 					   required="required"
 					   class="form-control"
 					   data-ng-model="user.studentNumber" />
 			</div>
-			<div class="form-group">
+			<div class="form-group" data-ng-class="{ 'has-error': form.email.$invalid && form.email.$dirty }">
 				<label for="email" class="control-label">E-Mail:</label>
-				<input type="text" id="email"
+				<input type="email" id="email"
 					   name="email" value=""
 					   required="required"
 					   class="form-control"
 					   data-ng-model="user.email" />
 			</div>
-			<div class="form-group">
+			<div class="form-group" data-ng-class="{ 'has-error': form.firstname.$invalid && form.firstname.$dirty }">
 				<label for="firstname" class="control-label">Vorname:</label>
 				<input type="text" id="firstname"
 					   name="firstname" value=""
+					   data-ng-minlength="2"
 					   required="required"
 					   class="form-control"
 					   data-ng-model="user.firstname" />
 			</div>
-			<div class="form-group">
+			<div class="form-group" data-ng-class="{ 'has-error': form.lastname.$invalid && form.lastname.$dirty }">
 				<label for="lastname" class="control-label">Nachname:</label>
 				<input type="text" id="lastname"
 					   name="lastname" value=""
+					   data-ng-minlength="2"
 					   required="required"
 					   class="form-control"
 					   data-ng-model="user.lastname" />
 			</div>
 
 			<div class="text-right">
-				<button type="submit" class="btn btn-primary" data-loading-text="Save...">Save</button>
+				<a href="/" class="btn">Abbrechen</a>
+				<button type="submit" class="btn btn-primary" data-ng-disabled="form.$invalid" data-loading-text="Speichern...">Speichern</button>
 			</div>
 		</form>
 	</div>

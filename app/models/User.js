@@ -10,7 +10,7 @@ function validateUsernameLength(username) {
 		return false;
 	}
 
-	if (username.length <= 3 || username.length > 20) {
+	if (username.length < 2 || username.length > 20) {
 		return false;
 	} else {
 		return true;
@@ -76,10 +76,10 @@ var emailValidations = [
 
 var userSchema = new Schema({
 	username: { type: String, required: true, lowercase: true, unique: true, trim: true, validate: userNameValidations },
-	firstname: { type: String, required: true, validate: firstnameValidations },
-	lastname: { type: String, required: true, validate: lastnameValidations },
-	email: { type: String, required: true, validate: emailValidations },
-	studentNumber: { type: String, required: false, validate: studentNumberValidations },
+	firstname: { type: String, required: true, trim: true, validate: firstnameValidations },
+	lastname: { type: String, required: true, trim: true, validate: lastnameValidations },
+	email: { type: String, required: true, unique: true, trim: true, validate: emailValidations },
+	studentNumber: { type: String, required: false, unique: true, trim: true, validate: studentNumberValidations },
 	role: { type: String, required: true, enum: [ 'guest', 'student', 'lecturer', 'assistent', 'administrator' ] }
 });
 
