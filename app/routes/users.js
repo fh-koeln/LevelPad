@@ -58,7 +58,7 @@ users.put('/:username', function(req, res) {
  * Removes the user with the given username.
  */
 users.delete('/:username', function(req, res) {
-	UserController.remove(_helpers.sendResult(res), req.params.username);
+	UserController.delete(_helpers.sendResult(res), req.params.username);
 });
 
 /**
