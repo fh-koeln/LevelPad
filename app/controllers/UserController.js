@@ -65,6 +65,9 @@ exports.update = function(callback, username, userdata) {
 			exports.read(next, username);
 		},
 		function(user, next) {
+			if (userdata.studentNumber !== undefined) {
+				user.studentNumber = userdata.studentNumber;
+			}
 			if (userdata.firstname !== undefined) {
 				user.firstname = userdata.firstname;
 			}
@@ -73,10 +76,17 @@ exports.update = function(callback, username, userdata) {
 			}
 			if (userdata.email !== undefined) {
 				user.email = userdata.email;
+				User.findOne({ email: userdata.email }, function(err, user) {
+					if (!err && user && user.username !== username) {
+						err = new errors.AlreadyInUseError('User', 'email');
+					}
+					next(err, user);
+				});
+			} else {
+				next(null, user);
 			}
-			if (userdata.studentNumber !== undefined) {
-				user.studentNumber = userdata.studentNumber;
-			}
+		},
+		function(user, next) {
 			user.save(next);
 		}
 	], callback);
