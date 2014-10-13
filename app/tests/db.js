@@ -46,6 +46,28 @@ module.exports.initializeTestData = function(callback) {
 			new User(user).save(next);
 		},
 		function(next) {
+			var user = {
+				username: 'student1',
+				firstname: 'Manuel',
+				lastname: 'Manoli',
+				email: 'manuel.manoli@fh-koeln.de',
+				role: 'student',
+				studentNumber: '11111111'
+			};
+			new User(user).save(next);
+		},
+		function(next) {
+			var user = {
+				username: 'student2',
+				firstname: 'Laura',
+				lastname: 'Mueller',
+				email: 'laura.mueller@fh-koeln.de',
+				role: 'student',
+				studentNumber: '12345678'
+			};
+			new User(user).save(next);
+		},
+		function(next) {
 			var module = {
 				slug: 'wba1',
 				shortName: 'WBA 1',
