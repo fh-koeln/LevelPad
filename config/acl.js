@@ -189,6 +189,8 @@ db.connection.on('connected', function() {
 		{resources: 'users', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
 		{resources: 'users/me', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
 		{resources: 'users/:user', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+		{resources: 'users/:user/subjects', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+		{resources: 'users/:currentUser/subjects', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
 		{resources: 'subjects', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
 		{resources: 'modules', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
 		{resources: 'modules/:module', permissions: ['GET', 'PUT', 'POST', 'DELETE']},

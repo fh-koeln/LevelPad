@@ -1,12 +1,5 @@
 # LevelPad [![Build status][travis-image]][travis-url] [![Test coverage][coveralls-image]][coveralls-url] [![Dependency Status][dependency-image]][dependency-url]
 
-[travis-image]: https://img.shields.io/travis/fh-koeln/LevelPad.svg
-[travis-url]: https://travis-ci.org/fh-koeln/LevelPad
-[coveralls-image]: https://img.shields.io/coveralls/fh-koeln/LevelPad.svg
-[coveralls-url]: https://coveralls.io/r/fh-koeln/LevelPad
-[dependency-image]: https://david-dm.org/fh-koeln/LevelPad.png
-[dependency-url]: https://david-dm.org/fh-koeln/LevelPad
-
 Webapp zur Unterstützung einer Bewertung nach dem Niveaustufenmodell
 
 **Status**: In Entwicklung.
@@ -48,9 +41,17 @@ Implemented with the "MEAN-stack" (mongoDB, express, AngularJS, Node.js):
 OSX/Linux: `npm test` / Windows: `npm run-script test-win`
 
 *Run tests with coverage report*  
-OSX/Linux: `npm run-script test-cov` / Windows: `npm run-script test-cov`
+OSX/Linux: `npm run-script test-cov` / Windows: `npm run-script test-cov-win`
 
 *Push new version to heroku:*  
 `git push heroku master && heroku logs -t`
 
-(Please remember that we already enabled production-mode on heroku with `heroku config:set NODE_ENV=production´.)
+(Please remember that we already enabled production-mode on heroku with `heroku config:set NODE_ENV=production`.)
+
+
+[travis-image]: https://img.shields.io/travis/fh-koeln/LevelPad.svg?style=flat-square
+[travis-url]: https://travis-ci.org/fh-koeln/LevelPad
+[coveralls-image]: https://img.shields.io/coveralls/fh-koeln/LevelPad.svg?style=flat-square
+[coveralls-url]: https://coveralls.io/r/fh-koeln/LevelPad
+[dependency-image]: http://img.shields.io/david/fh-koeln/LevelPad.svg?style=flat-square
+[dependency-url]: https://david-dm.org/fh-koeln/LevelPad
