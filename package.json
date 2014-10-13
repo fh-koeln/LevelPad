@@ -7,8 +7,10 @@
     "postinstall": "bower install",
     "run": "node server.js",
     "run-auto": "nodemon --delay 2.5 --ignore public server.js",
-    "test": "set NODE_ENV=test && mocha --reporter spec --recursive app/tests",
-    "test-cov": "set NODE_ENV=test && istanbul cover ./node_modules/mocha/bin/_mocha -- --recursive app/tests"
+    "test": "NODE_ENV=test mocha --reporter spec --recursive app/tests",
+    "test-win": "set NODE_ENV=test && mocha --reporter spec --recursive app/tests",
+    "test-cov": "NODE_ENV=test istanbul cover ./node_modules/mocha/bin/_mocha -- --recursive app/tests",
+    "test-cov-win": "set NODE_ENV=test && istanbul cover ./node_modules/mocha/bin/_mocha -- --recursive app/tests"
   },
   "repository": {
     "type": "git",
