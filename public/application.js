@@ -19,7 +19,7 @@ app.factory('httpErrorInterceptor', ['$q', '$location', function($q, $location) 
 			console.error('Receive status code ' + response.status + ' for ' + response.config.url);
 
 			if (response.status === 401) {
-				console.error('Authentitication error in server response detected!');
+				console.error('Authentication error in server response detected!');
 			} else if (response.status === 403) {
 				console.error('Access error in server response detected!');
 //				$location.path('/403');
@@ -115,10 +115,6 @@ app.config(function($routeProvider, $locationProvider) {
 		controller: 'AccountController',
 		loginRequired: true
 	});
-	$routeProvider.when('/users', {
-		templateUrl: 'views/users.html',
-		controller: 'UserController'
-	});
 
 	// Modules
 
@@ -126,9 +122,45 @@ app.config(function($routeProvider, $locationProvider) {
 		templateUrl: 'views/modules/list.html',
 		controller: 'ModuleListController'
 	});
-	$routeProvider.when('/new', {
+	$routeProvider.when('/modules/new', {
 		templateUrl: 'views/modules/edit.html',
 		controller: 'ModuleDetailController'
+	});
+	$routeProvider.when('/modules/:module', {
+		templateUrl: 'views/modules/show.html',
+		controller: 'ModuleDetailController'
+	});
+	$routeProvider.when('/modules/:module/edit', {
+		templateUrl: 'views/modules/edit.html',
+		controller: 'ModuleDetailController'
+	});
+	$routeProvider.when('/modules/:module/delete', {
+		templateUrl: 'views/modules/delete.html',
+		controller: 'ModuleDetailController'
+	});
+
+
+	// Users
+
+	$routeProvider.when('/users', {
+		templateUrl: 'views/users/list.html',
+		controller: 'UserListController'
+	});
+	$routeProvider.when('/users/new', {
+		templateUrl: 'views/users/edit.html',
+		controller: 'UserDetailController'
+	});
+	$routeProvider.when('/users/:module', {
+		templateUrl: 'views/users/show.html',
+		controller: 'UserDetailController'
+	});
+	$routeProvider.when('/users/:module/edit', {
+		templateUrl: 'views/users/edit.html',
+		controller: 'UserDetailController'
+	});
+	$routeProvider.when('/users/:module/delete', {
+		templateUrl: 'views/users/delete.html',
+		controller: 'UserDetailController'
 	});
 
 	// MAGIC RULES!!!!!!!
@@ -137,15 +169,6 @@ app.config(function($routeProvider, $locationProvider) {
 		templateUrl: 'views/modules/show.html',
 		controller: 'ModuleDetailController'
 	});
-	$routeProvider.when('/:module/edit', {
-		templateUrl: 'views/modules/edit.html',
-		controller: 'ModuleDetailController'
-	});
-	$routeProvider.when('/:module/delete', {
-		templateUrl: 'views/modules/delete.html',
-		controller: 'ModuleDetailController'
-	});
-
 	$routeProvider.when('/:module/:subject', {
 		redirectTo: '/:module/:subject/tasks'
 	});

@@ -1,12 +1,13 @@
 
-<form name="form" role="form" class="form-horizontal" data-ng-submit="save();">
+<form name="form" role="form" class="form-horizontal" data-ng-submit="submit();">
 	<header class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		<h4 data-ng-bind="!module._id ? 'Create new module' : 'Edit module'" id="edit-title" class="modal-title"></h4>
+		<button type="button" class="close" aria-hidden="true"
+				data-ng-show="cancel" data-ng-click="cancel();">&times;</button>
+		<h4 id="edit-title" class="modal-title">{{ !module._id ? 'Create new module' : 'Edit module' }}</h4>
 	</header>
 	<div class="modal-body">
 
-		<div class="form-group" data-ng-class="{ 'has-error': form.shortName.$invalid }">
+		<div class="form-group" data-ng-class="{ 'has-error': form.shortName.$invalid && form.shortName.$dirty }">
 			<label for="shortName" class="col-sm-4 control-label">Short name</label>
 			<div class="col-sm-8">
 				<input id="shortName" name="shortName" type="text"
@@ -17,7 +18,7 @@
 			</div>
 		</div>
 
-		<div class="form-group" data-ng-class="{ 'has-error': form.name.$invalid }">
+		<div class="form-group" data-ng-class="{ 'has-error': form.name.$invalid && form.name.$dirty }">
 			<label for="name" class="col-sm-4 control-label">Name</label>
 			<div class="col-sm-8">
 				<input id="name" name="name" type="text"
@@ -29,7 +30,9 @@
 
 	</div>
 	<div class="modal-footer">
-		<button data-ng-disabled="!close" data-ng-click="close();" type="button" class="btn btn-default pull-left">Cancel</button>
-		<button data-ng-disabled="form.$invalid" type="submit" class="btn btn-primary pull-right">Save</button>
+		<button type="button" class="btn btn-default pull-left"
+				data-ng-show="cancel" data-ng-click="cancel();">Cancel</button>
+		<button type="submit" class="btn btn-primary pull-right"
+				data-ng-disabled="form.$invalid" >Save</button>
 	</div>
 </form>

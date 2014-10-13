@@ -22,7 +22,7 @@ describe('UserController', function() {
 			UserController.list(function(err, users) {
 				assert.isNull(err, 'Error should be null');
 				assert.isNotNull(users, 'Users should be not null');
-				assert.lengthOf(users, 2, 'Users array has length of 2');
+				assert.lengthOf(users, 4, 'Users array has length of 2');
 				done();
 			});
 		});
@@ -255,6 +255,98 @@ describe('UserController', function() {
 						expect(user).property('lastname', 'Mustermann');
 						expect(user).property('email', 'max.mustermann@fh-koeln.de');
 						expect(user).property('role', 'administrator');
+
+						next(err);
+					});
+				}
+			], done);
+		});
+
+		it('should not update a known user (student1) with already used studentNumber', function(done) {
+			var newuserdata = {
+				studentNumber: '12345678'
+			};
+			async.series([
+				function(next) {
+					User.findOne({ username: 'student1' }, function(err, user) {
+						assert.isNull(err, 'Error should be null');
+						assert.isNotNull(user, 'User should be not null');
+
+						expect(user).property('username', 'student1');
+						expect(user).property('firstname', 'Manuel');
+						expect(user).property('lastname', 'Manoli');
+						expect(user).property('email', 'manuel.manoli@fh-koeln.de');
+						expect(user).property('role', 'student');
+						expect(user).property('studentNumber', '11111111');
+
+						next(err);
+					});
+				},
+				function(next) {
+					UserController.update(function(err, user) {
+						assert.isNotNull(err, 'Error should be not null');
+						assert.isUndefined(user, 'User should be undefined');
+
+						next(null);
+					}, 'student1', newuserdata);
+				},
+				function(next) {
+					User.findOne({ username: 'student1' }, function(err, user) {
+						assert.isNull(err, 'Error should be null');
+						assert.isNotNull(user, 'User should be not null');
+
+						expect(user).property('username', 'student1');
+						expect(user).property('firstname', 'Manuel');
+						expect(user).property('lastname', 'Manoli');
+						expect(user).property('email', 'manuel.manoli@fh-koeln.de');
+						expect(user).property('role', 'student');
+						expect(user).property('studentNumber', '11111111');
+
+						next(err);
+					});
+				}
+			], done);
+		});
+
+		it('should not update a known user (student1) with already used email', function(done) {
+			var newuserdata = {
+				email: 'laura.mueller@fh-koeln.de'
+			};
+			async.series([
+				function(next) {
+					User.findOne({ username: 'student1' }, function(err, user) {
+						assert.isNull(err, 'Error should be null');
+						assert.isNotNull(user, 'User should be null');
+
+						expect(user).property('username', 'student1');
+						expect(user).property('firstname', 'Manuel');
+						expect(user).property('lastname', 'Manoli');
+						expect(user).property('email', 'manuel.manoli@fh-koeln.de');
+						expect(user).property('role', 'student');
+						expect(user).property('studentNumber', '11111111');
+
+						next(err);
+					});
+				},
+				function(next) {
+					UserController.update(function(err, user) {
+						assert.isNotNull(err, 'Error should be not null');
+						assert.isUndefined(user, 'User should be undefined');
+
+						next(null);
+					}, 'student1', newuserdata);
+				},
+				function(next) {
+					User.findOne({ username: 'student1' }, function(err, user) {
+						assert.isNull(err, 'Error should be null');
+						assert.isNotNull(user, 'User should be not null');
+
+						expect(user).property('username', 'student1');
+						expect(user).property('firstname', 'Manuel');
+						expect(user).property('lastname', 'Manoli');
+						expect(user).property('email', 'manuel.manoli@fh-koeln.de');
+						expect(user).property('role', 'student');
+						expect(user).property('studentNumber', '11111111');
 
 						next(err);
 					});

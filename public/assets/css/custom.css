@@ -74,7 +74,7 @@ nav > ul > li {
 		-moz-osx-font-smoothing: grayscale;
 	}
 }*/
-nav > ul > li.active a, nav > ul > li a:active {
+nav > ul > li.active a {
 	color: #77aabb;
     font-weight: 600;
 }
@@ -88,7 +88,7 @@ nav > ul > li.active a, nav > ul > li a:active {
 	margin: 0;
 	padding: 0;
 	clear: both;
-    
+
 }
 .levels > li {
 	position: relative;
@@ -172,9 +172,9 @@ a.levels.add {
 }
 
 table {
-    border-top: 1px solid lightgray; 
-    border-left : 1px solid lightgray; 
-    border-bottom: 1px solid lightgray;" 
+    border-top: 1px solid lightgray;
+    border-left : 1px solid lightgray;
+    border-bottom: 1px solid lightgray;"
 }
 
 /**
@@ -186,8 +186,8 @@ table {
 }
 
 .interaction-bar {
-    padding: 20px 0; 
-    border-left: 1px solid lightgrey;   
+    padding: 20px 0;
+    border-left: 1px solid lightgrey;
 }
 
 .interaction-link{
@@ -200,7 +200,7 @@ table {
 }
 
 .module-name {
-    font-weight: normal;   
+    font-weight: normal;
 }
 
 .nav > li > a {
@@ -224,7 +224,7 @@ table {
 }
 
 .nav-tabs > li.active > a{
-    font-weight: 600;   
+    font-weight: 600;
 }
 
 .input-group{
@@ -254,7 +254,7 @@ table {
     font-family: "Helvetica Neue";
     font-size: 40px;
     color: #6399AE;
-    
+
 }
 
 .nav-tabs,

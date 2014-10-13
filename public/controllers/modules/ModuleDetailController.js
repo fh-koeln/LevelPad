@@ -5,10 +5,11 @@ angular.module('levelPad').controller('ModuleDetailController', [
 
 	'use strict';
 	console.log('ModuleDetailController: routeParams:', $routeParams);
+	console.log($scope.module);
 
-	if (!$scope.module) {
-		$scope.module = CurrentModule;
-	}
+	$scope.module = $scope.module || CurrentModule || new Module();
+
+	console.log($scope.module);
 
 	$scope.update = function () {
 		$scope.semester = [
@@ -27,6 +28,7 @@ angular.module('levelPad').controller('ModuleDetailController', [
 	};
 	$scope.update();
 
+		/*
 	$scope.showCreateDialog = function() {
 		var scope = $scope.$new();
 		scope.module = new Module();
@@ -50,6 +52,7 @@ angular.module('levelPad').controller('ModuleDetailController', [
 	};
 
 	$scope.showEditDialog = function(module) {
+		console.log('edit via detail');
 		var scope = $scope.$new();
 		scope.module = angular.copy(module);
 
@@ -92,24 +95,28 @@ angular.module('levelPad').controller('ModuleDetailController', [
 			$scope.update();
 		});
 	};
+	*/
 
-	$scope.save = function() {
-		console.log('save:', $scope.module);
-		$scope.module.$save(function() {
-			$scope.hideDialog();
-			$scope.update();
-		}, function() {
-			alert('Error!');
-		});
-	};
+	if (!$scope.submit) {
+		$scope.submit = function () {
+			console.log('detail save scope', $scope);
+			alert('detail save');
+			$scope.module.$save(function () {
+				$scope.update();
+			}, function () {
+				alert('Error!');
+			});
+		};
+	}
 
-	$scope.delete = function() {
-		$scope.module.$delete(function() {
-			$scope.hideDialog();
-			$scope.update();
-		}, function() {
-			alert('Error!');
-		});
-	};
+	if (!$scope.delete) {
+		$scope.delete = function () {
+			$scope.module.$delete(function () {
+				$scope.update();
+			}, function () {
+				alert('Error!');
+			});
+		};
+	}
 
 }]);

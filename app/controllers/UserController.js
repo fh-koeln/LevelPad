@@ -65,22 +65,41 @@ exports.update = function(callback, username, userdata) {
 			exports.read(next, username);
 		},
 		function(user, next) {
-			if (userdata.studentNumber !== undefined) {
-				user.studentNumber = userdata.studentNumber;
-			}
 			if (userdata.firstname !== undefined) {
 				user.firstname = userdata.firstname;
 			}
 			if (userdata.lastname !== undefined) {
 				user.lastname = userdata.lastname;
 			}
+			next(null, user);
+		},
+		function(user, next) {
 			if (userdata.email !== undefined) {
 				user.email = userdata.email;
-				User.findOne({ email: userdata.email }, function(err, user) {
-					if (!err && user && user.username !== username) {
-						err = new errors.AlreadyInUseError('User', 'email');
+				User.findOne({ email: userdata.email }, function(err, duplicateUser) {
+					if (err) {
+						next(err);
+					} else if (duplicateUser && duplicateUser.username !== username) {
+						next(new errors.AlreadyInUseError('User', 'email'));
+					} else {
+						next(null, user);
 					}
-					next(err, user);
+				});
+			} else {
+				next(null, user);
+			}
+		},
+		function(user, next) {
+			if (userdata.studentNumber !== undefined) {
+				user.studentNumber = userdata.studentNumber;
+				User.findOne({ studentNumber: userdata.studentNumber }, function(err, duplicateUser) {
+					if (err) {
+						next(err);
+					} else if (duplicateUser && duplicateUser.username !== username) {
+						next(new errors.AlreadyInUseError('User', 'studentNumber'));
+					} else {
+						next(null, user);
+					}
 				});
 			} else {
 				next(null, user);
