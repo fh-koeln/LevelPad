@@ -1,15 +1,12 @@
 
 angular.module('levelPad').controller('ModuleDetailController', [
-	'$scope', '$routeParams', '$log', '$modal', 'Module', 'Subject', 'CurrentModule',
-	function ($scope, $routeParams, $log, $modal, Module, Subject, CurrentModule) {
+	'$scope', '$routeParams', '$log', 'DialogService', 'Module', 'Subject', 'CurrentModule',
+	function ($scope, $routeParams, $log, DialogService, Module, Subject, CurrentModule) {
 
 	'use strict';
 	console.log('ModuleDetailController: routeParams:', $routeParams);
-	console.log($scope.module);
 
 	$scope.module = $scope.module || CurrentModule || new Module();
-
-	console.log($scope.module);
 
 	$scope.update = function () {
 		$scope.semester = [
@@ -18,84 +15,21 @@ angular.module('levelPad').controller('ModuleDetailController', [
 		];
 
 		// Get all subjects for the current module
-		Subject.query({
-			module: CurrentModule
-		}, function(subjects) {
-			$scope.subjects = subjects;
-		}, function() {
-			$log.error('Could not load subjects.');
-		});
+		if ($scope.module) {
+			Subject.query({
+				module: $scope.module
+			}, function(subjects) {
+				$scope.subjects = subjects;
+			}, function() {
+				$log.error('Could not load subjects.');
+			});
+		}
 	};
 	$scope.update();
 
-		/*
-	$scope.showCreateDialog = function() {
-		var scope = $scope.$new();
-		scope.module = new Module();
-
-		var modalInstance = $modal.open({
-			templateUrl: 'views/modules/edit.html',
-			controller: 'ModuleDetailController',
-			scope: scope
-		});
-
-		scope.save = function() {
-			modalInstance.close(scope.module);
-		};
-		scope.close = function() {
-			modalInstance.dismiss('cancel');
-		};
-
-		modalInstance.result.then(function(result) {
-			$scope.update();
-		});
-	};
-
-	$scope.showEditDialog = function(module) {
-		console.log('edit via detail');
-		var scope = $scope.$new();
-		scope.module = angular.copy(module);
-
-		var modalInstance = $modal.open({
-			templateUrl: 'views/modules/edit.html',
-			controller: 'ModuleDetailController',
-			scope: scope
-		});
-
-		scope.save = function() {
-			modalInstance.close(scope.module);
-		};
-		scope.close = function() {
-			modalInstance.dismiss('cancel');
-		};
-
-		modalInstance.result.then(function() {
-			$scope.update();
-		});
-	};
-
-	$scope.showDeleteDialog = function(module) {
-		var scope = $scope.$new();
-		scope.module = angular.copy(module);
-
-		var modalInstance = $modal.open({
-			templateUrl: 'views/modules/delete.html',
-			controller: 'ModuleDetailController',
-			scope: scope
-		});
-
-		scope.save = function() {
-			modalInstance.close(scope.module);
-		};
-		scope.close = function() {
-			modalInstance.dismiss('cancel');
-		};
-
-		modalInstance.result.then(function() {
-			$scope.update();
-		});
-	};
-	*/
+	// Notice: The following scope variables will be prefilled when
+	// this detail controller is opened within another controller
+	// in a modal dialog! So we must not override these callbacks here!
 
 	if (!$scope.submit) {
 		$scope.submit = function () {
@@ -116,6 +50,22 @@ angular.module('levelPad').controller('ModuleDetailController', [
 			}, function () {
 				alert('Error!');
 			});
+		};
+	}
+
+	if (!$scope.showDeleteDialog) {
+		$scope.showDeleteDialog = function (module) {
+			var dialog = new DialogService('/modules/:module/delete');
+			dialog.scope.module = angular.copy(module);
+			dialog.scope.submit = function () {
+				dialog.scope.module.$save(function () {
+					dialog.submit();
+					$scope.update();
+				}, function () {
+					alert('Fehler!');
+				});
+			};
+			dialog.open();
 		};
 	}
 

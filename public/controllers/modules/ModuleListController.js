@@ -37,6 +37,10 @@ angular.module('levelPad').controller('ModuleListController', ['$scope', '$route
 				alert('Fehler!');
 			});
 		};
+		dialog.scope.showDeleteDialog = function() {
+			dialog.cancel();
+			$scope.showDeleteDialog(module);
+		};
 		dialog.open();
 	};
 
