@@ -40,11 +40,13 @@ function hasCurrentUserKey(keys) {
  *  - Returns 500 response on error
  */
 module.exports.middleware = function middleware(req, res, next) {
+
 	if (!req.isAuthenticated()) {
 		debug('Not authenticated');
 		res.status(401).json({error: 'Not authenticated'});
 		return;
 	}
+
 
 	// Get all resources by current user role and compare to current path
 	acl.whatResources(req.user.role, function(err, resources) {
@@ -71,8 +73,7 @@ module.exports.middleware = function middleware(req, res, next) {
 							username = result[i + 1];
 						}
 					});
-					console.log(username);
-					console.log(req.user.username);
+
 					if (username !== req.user.username ) {
 						continue;
 					}
@@ -82,7 +83,6 @@ module.exports.middleware = function middleware(req, res, next) {
 				break;
 			}
 		}
-
 
 		if (!reqResource) {
 			debug(req.user.username + ' with role ' + req.user.role + ' has no permissions for ' + apiPath);
@@ -95,7 +95,6 @@ module.exports.middleware = function middleware(req, res, next) {
 				res.status(500).json({error: 'Unexpected authorization error'});
 				return;
 			}
-
 			if (result) {
 				next();
 			} else {
@@ -153,6 +152,24 @@ module.exports.setRole = function setRole(user, role, callback) {
 			acl.addUserRoles(user, role, function(err) {
 				callback(err);
 			});
+		}
+	});
+};
+
+module.exports.removeRole = function setRole(user, callback) {
+	acl.userRoles(user, function(err, roles) {
+		if (err) {
+			callback(err);
+		} else if (roles && roles.length > 0) {
+			acl.removeUserRoles(user, roles, function(err) {
+				if (err) {
+					callback(err);
+				} else {
+					callback(err);
+				}
+			});
+		} else {
+			callback(err);
 		}
 	});
 };
@@ -226,7 +243,6 @@ db.connection.on('connected', function() {
 				{resources: 'logout', permissions: ['POST']},
 				{resources: 'users/me', permissions: ['GET', 'PUT']},
 				{resources: 'users/:currentUser/subjects', permissions: ['GET']},
-				{resources: 'subjects', permissions: ['GET']},
 			]
 		},
 		{
@@ -238,6 +254,7 @@ db.connection.on('connected', function() {
 				{resources: 'users/me', permissions: ['GET', 'PUT']},
 				{resources: 'users/:user', permissions: ['GET', 'PUT', 'DELETE']},
 				{resources: 'users/:user/subjects', permissions: ['GET']},
+				{resources: 'users/:currentUser/subjects', permissions: ['GET']},
 				{resources: 'modules', permissions: ['GET', 'POST']},
 				{resources: 'modules/:module', permissions: ['GET', 'PUT', 'DELETE']},
 				{resources: 'modules/:module/subjects', permissions: ['GET', 'POST']},

@@ -3,7 +3,8 @@
 // The user model
 
 var mongoose = require('mongoose'),
-	Schema = mongoose.Schema;
+	Schema = mongoose.Schema,
+	acl = require('../../config/acl');
 
 function validateUsernameLength(username) {
 	if (!username) {
@@ -86,5 +87,17 @@ var userSchema = new Schema({
 userSchema.statics.findByUsername = function (username, callback) {
 	this.findOne({ username: username }, callback);
 };
+
+userSchema.post('save', function(user) {
+	acl.setRole(user.username, user.role, function(err) {
+//		console.log(err);
+	});
+});
+
+userSchema.post('remove', function(user) {
+	acl.removeRole(user.username, function(err) {
+//		console.log(err);
+	});
+});
 
 module.exports = mongoose.model('User', userSchema);

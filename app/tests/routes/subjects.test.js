@@ -5,13 +5,12 @@ var supertest = require('supertest'),
 	db = require('../db'),
 	async = require('async');
 
-describe.skip('Subjects API', function() {
+describe('Subjects API', function() {
 
-	var agent;
+	var agent = supertest.agent(server);
 
 	var loginUser = function(username, password) {
 		return function(callback) {
-			agent = supertest.agent(server);
 			agent
 				.post('/api/login')
 				.send({ username: username, password: password })
@@ -21,7 +20,7 @@ describe.skip('Subjects API', function() {
 		};
 	};
 
-	beforeEach(function(done) {
+	before(function(done) {
 		async.series([
 			db.clear,
 			db.initializeTestData,
@@ -31,14 +30,14 @@ describe.skip('Subjects API', function() {
 
 	it('should return no resource at beginning', function(done) {
 		agent
-			.get('/api/subjects')
+			.get('/api/users/lecturer1/subjects')
 			.expect(200)
 			.end(done);
 	});
 
 	it('should not accept a new subject', function(done) {
 		agent
-			.post('/api/subjects')
+			.post('/api/users/lecturer1/subjects')
 			.expect(403)
 			.end(done);
 	});
