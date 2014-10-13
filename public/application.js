@@ -139,6 +139,28 @@ app.config(function($routeProvider, $locationProvider) {
 		controller: 'ModuleDetailController'
 	});
 
+	// Subjects
+
+	$routeProvider.when('/subjects', {
+		templateUrl: 'views/subjects/list.html',
+		controller: 'SubjectListController'
+	});
+	$routeProvider.when('/subjects/new', {
+		templateUrl: 'views/subjects/edit.html',
+		controller: 'SubjectDetailController'
+	});
+	$routeProvider.when('/subjects/:subject', {
+		templateUrl: 'views/subjects/show.html',
+		controller: 'SubjectDetailController'
+	});
+	$routeProvider.when('/subjects/:subject/edit', {
+		templateUrl: 'views/subjects/edit.html',
+		controller: 'SubjectDetailController'
+	});
+	$routeProvider.when('/subjects/:subject/delete', {
+		templateUrl: 'views/subjects/delete.html',
+		controller: 'SubjectDetailController'
+	});
 
 	// Users
 

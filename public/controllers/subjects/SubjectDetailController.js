@@ -8,26 +8,11 @@ angular.module('levelPad').controller('SubjectDetailController', [
 		$scope.module = CurrentModule;
 		$scope.subject = CurrentSubject;
 
-		$scope.module = CurrentModule;
-	$scope.subject = CurrentSubject;
 
-	$scope.update = function() {
-		$scope.modules = Module.query(function() {
 
-		}, function() {
-			alert('Could not load modules.');
-		});
 
-		$scope.subjects = Subject.query(function() {
-
-		}, function() {
-			alert('Could not load subjects.');
-		});
-	};
-	$scope.update();
-
-	$scope.assistants = [
-		{ name: 'Volker '}
-	];
+		$scope.assistants = [
+			{ name: 'Volker '}
+		];
 
 }]);
