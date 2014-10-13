@@ -15,9 +15,9 @@ angular.module('levelPad').controller('ModuleDetailController', [
 		];
 
 		// Get all subjects for the current module
-		if ($scope.module) {
+		if ($scope.module && $scope.module._id && scope.module.slug) {
 			Subject.query({
-				module: $scope.module
+				module: $scope.module.slug
 			}, function(subjects) {
 				$scope.subjects = subjects;
 			}, function() {

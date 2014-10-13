@@ -19,7 +19,6 @@ api.use('/semesters', require('../app/routes/semesters'));
 
 var routes = express.Router();
 routes.use('/api', api);
-//routes.get('/explorer', require('../resources/explorer')('', routes));
 
 if (process.env.NODE_ENV === 'development') {
 	routes.use('/acl', acl.debugRoute);
