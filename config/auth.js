@@ -75,7 +75,7 @@ module.exports = function(app) {
 	 */
 	app.post('/api/logout', function (req, res) {
 		req.logout();
-		res.status(200).end();
+		res.status(204).end();
 	});
 };
 

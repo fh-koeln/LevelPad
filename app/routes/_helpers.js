@@ -1,10 +1,13 @@
+'use strict';
+
+var debug = require('debug')('API Helper');
 
 module.exports = {
 	sendResult: function(res) {
 		return function(err, response) {
 			if (err) {
-				console.error(err);
-				console.error(err.message);
+				debug(err);
+				debug(err.message);
 
 				if (err.name === 'ValidationError' || err.name === 'AlreadyInUseError') {
 					res.status(400).json(err);
