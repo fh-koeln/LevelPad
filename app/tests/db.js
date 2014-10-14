@@ -1,10 +1,12 @@
+'use strict';
 
 var async = require('async'),
 	User = require('../models/User'),
 	Module = require('../models/Module'),
 	Subject = require('../models/Subject'),
 	Task = require('../models/Task'),
-	acl = require('../../config/acl').acl;
+	acl = require('../../config/acl').acl,
+	users = require('./users');
 
 
 module.exports.clear = function(callback) {
@@ -27,46 +29,16 @@ module.exports.clear = function(callback) {
 module.exports.initializeTestData = function(callback) {
 	async.series([
 		function(next) {
-			var user = {
-				username: 'admin1',
-				firstname: 'Max',
-				lastname: 'Mustermann',
-				email: 'max.mustermann@fh-koeln.de',
-				role: 'administrator'
-			};
-			new User(user).save(next);
+			new User(users.admin1).save(next);
 		},
 		function(next) {
-			var user = {
-				username: 'lecturer1',
-				firstname: 'Erika',
-				lastname: 'Mustermann',
-				email: 'erika.mustermann@fh-koeln.de',
-				role: 'lecturer'
-			};
-			new User(user).save(next);
+			new User(users.lecturer1).save(next);
 		},
 		function(next) {
-			var user = {
-				username: 'student1',
-				firstname: 'Manuel',
-				lastname: 'Manoli',
-				email: 'manuel.manoli@fh-koeln.de',
-				role: 'student',
-				studentNumber: '11111111'
-			};
-			new User(user).save(next);
+			new User(users.student1).save(next);
 		},
 		function(next) {
-			var user = {
-				username: 'student2',
-				firstname: 'Laura',
-				lastname: 'Mueller',
-				email: 'laura.mueller@fh-koeln.de',
-				role: 'student',
-				studentNumber: '12345678'
-			};
-			new User(user).save(next);
+			new User(users.student2).save(next);
 		},
 		function(next) {
 			var module = {
