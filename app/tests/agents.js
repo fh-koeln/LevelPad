@@ -18,6 +18,17 @@ var admin1 = function(callback) {
 		});
 }
 
+var lecturer1 = function(callback) {
+	agents.lecturer1 = supertest.agent(server);
+
+	agents.lecturer1
+		.post('/api/login')
+		.send({ username: users.lecturer1.username, password: users.lecturer1.password })
+		.end(function(err) {
+			callback(err);
+		});
+}
+
 var student1 = function(callback) {
 	agents.student1 = supertest.agent(server);
 
@@ -55,6 +66,7 @@ var student3 = function(callback) {
 module.exports.setUp = function(callback) {
 	async.waterfall([
 		admin1,
+		lecturer1,
 		student1,
 		student2,
 		student3
