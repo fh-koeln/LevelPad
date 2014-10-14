@@ -1,47 +1,57 @@
 
-<div id="edit" tabindex="-1" role="dialog" aria-labelledby="edit-title" aria-hidden="true" class="modal fade">
-	<form name="form" role="form" class="form-horizontal" data-ng-submit="save();">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<header class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 data-ng-bind="!subject._id ? 'Create new subject' : 'Edit subject'" id="edit-title" class="modal-title"></h4>
-				</header>
-				<div class="modal-body">
+<form name="form" role="form" class="form-horizontal" data-ng-submit="submit();">
+	<header class="modal-header">
+		<button type="button" class="close" aria-hidden="true"
+				data-ng-show="cancel" data-ng-click="cancel();">&times;</button>
+		<h4 id="edit-title" class="modal-title">{{ !subject._id ? 'Neue Veranstaltung anlegen' : 'Veranstaltung ändern' }}</h4>
+	</header>
+	<div class="modal-body">
 
-					<div class="form-group" data-ng-class="{ 'has-error': form.module.$invalid }">
-						<div class="col-sm-4">Module:</div>
-						<div class="col-sm-8">{{ module.name }}</div>
-					</div>
+		<div class="form-group" data-ng-show="subject._id">
+			<div class="col-sm-4">Modul:</div>
+			<div class="col-sm-8">{{ subject.module.name }}</div>
+		</div>
 
-					<div class="form-group" data-ng-class="{ 'has-error': form.semester.$invalid }">
-						<label for="semester" class="col-sm-4 control-label">Semester:</label>
-						<div class="col-sm-8">
-							<select id="semester" name="semester"
-									data-ng-model="subject.semester"
-									data-ng-options="s.key as s.name for s in semester"
-									required="required"
-									class="form-control"></select>
-						</div>
-					</div>
-
-					<div class="form-group" data-ng-class="{ 'has-error': form.year.$invalid }">
-						<label for="year" class="col-sm-4 control-label">Year</label>
-						<div class="col-sm-8">
-							<input id="year" name="year" type="year"
-								   data-ng-model="subject.year"
-								   data-ng-pattern="/^([0-9]{4})$/"
-								   required="required"
-								   class="form-control"/>
-						</div>
-					</div>
-
-				</div>
-				<div class="modal-footer">
-					<button data-ng-click="hideDialog();" type="button" class="btn btn-default pull-left">Cancel</button>
-					<button data-ng-disabled="form.$invalid" type="submit" class="btn btn-primary pull-right">Save</button>
-				</div>
+		<div class="form-group" data-ng-hide="subject._id" data-ng-class="{ 'has-error': form.semester.$invalid }">
+			<label for="module" class="col-sm-4 control-label">Modul:</label>
+			<div class="col-sm-8">
+				<select id="module" name="module"
+						data-ng-model="subject.module"
+						data-ng-options="m.key as m.name for m in modules"
+						required="required"
+						class="form-control"></select>
 			</div>
 		</div>
-	</form>
-</div>
+
+		<div class="form-group" data-ng-class="{ 'has-error': form.semester.$invalid }">
+			<label for="semester" class="col-sm-4 control-label">Semester:</label>
+			<div class="col-sm-8">
+				<select id="semester" name="semester"
+						data-ng-model="subject.semester"
+						data-ng-options="s.key as s.name for s in semester"
+						required="required"
+						class="form-control"></select>
+			</div>
+		</div>
+
+		<div class="form-group" data-ng-class="{ 'has-error': form.year.$invalid }">
+			<label for="year" class="col-sm-4 control-label">Year</label>
+			<div class="col-sm-8">
+				<input id="year" name="year" type="year"
+					   data-ng-model="subject.year"
+					   data-ng-pattern="/^([0-9]{4})$/"
+					   required="required"
+					   class="form-control"/>
+			</div>
+		</div>
+
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-default pull-left"
+				data-ng-show="cancel" data-ng-click="cancel();">Abbrechen</button>
+		<button type="button" class="btn btn-default pull-left"
+				data-ng-show="subject._id" data-ng-click="showDeleteDialog();">Löschen</button>
+		<button type="submit" class="btn btn-primary pull-right"
+				data-ng-disabled="form.$invalid" >Speichern</button>
+	</div>
+</form>

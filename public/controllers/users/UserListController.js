@@ -37,14 +37,18 @@ angular.module('levelPad').controller('UserListController', ['$scope', '$route',
 				alert('Fehler!');
 			});
 		};
+		dialog.scope.showDeleteDialog = function() {
+			dialog.cancel();
+			$scope.showDeleteDialog(user);
+		};
 		dialog.open();
 	};
 
 	$scope.showDeleteDialog = function(user) {
 		var dialog = new DialogService('/users/:user/delete');
 		dialog.scope.user = angular.copy(user);
-		dialog.scope.submit = function() {
-			dialog.scope.user.$save(function() {
+		dialog.scope.delete = function() {
+			dialog.scope.user.$delete(function() {
 				dialog.submit();
 				$scope.update();
 			}, function() {

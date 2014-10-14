@@ -15,9 +15,9 @@ angular.module('levelPad').controller('ModuleDetailController', [
 		];
 
 		// Get all subjects for the current module
-		if ($scope.module) {
+		if ($scope.module && $scope.module._id && $scope.module.slug) {
 			Subject.query({
-				module: $scope.module
+				module: $scope.module.slug
 			}, function(subjects) {
 				$scope.subjects = subjects;
 			}, function() {
@@ -57,8 +57,8 @@ angular.module('levelPad').controller('ModuleDetailController', [
 		$scope.showDeleteDialog = function (module) {
 			var dialog = new DialogService('/modules/:module/delete');
 			dialog.scope.module = angular.copy(module);
-			dialog.scope.submit = function () {
-				dialog.scope.module.$save(function () {
+			dialog.scope.delete = function () {
+				dialog.scope.module.$delete(function () {
 					dialog.submit();
 					$scope.update();
 				}, function () {
