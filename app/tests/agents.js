@@ -16,7 +16,7 @@ var admin1 = function(callback) {
 		.end(function(err) {
 			callback(err);
 		});
-}
+};
 
 var lecturer1 = function(callback) {
 	agents.lecturer1 = supertest.agent(server);
@@ -27,7 +27,7 @@ var lecturer1 = function(callback) {
 		.end(function(err) {
 			callback(err);
 		});
-}
+};
 
 var student1 = function(callback) {
 	agents.student1 = supertest.agent(server);
@@ -38,7 +38,7 @@ var student1 = function(callback) {
 		.end(function(err) {
 			callback(err);
 		});
-}
+};
 
 var student2 = function(callback) {
 	agents.student2 = supertest.agent(server);
@@ -49,7 +49,7 @@ var student2 = function(callback) {
 		.end(function(err) {
 			callback(err);
 		});
-}
+};
 
 var student3 = function(callback) {
 	agents.student3 = supertest.agent(server);
@@ -60,7 +60,7 @@ var student3 = function(callback) {
 		.end(function(err) {
 			callback(err);
 		});
-}
+};
 
 
 module.exports.setUp = function(callback) {

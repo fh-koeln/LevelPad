@@ -41,10 +41,42 @@ exports.create = function(callback, userdata) {
 	var user = new User(userdata);
 
 	// TODO Change to 'student'
-	user.role = 'administrator';
+	user.role = 'student';
 
 	async.waterfall([
 		function(next) {
+			if (userdata.email !== undefined) {
+				user.email = userdata.email;
+				User.findOne({ email: userdata.email }, function(err, duplicateUser) {
+					if (err) {
+						next(err);
+					} else if (duplicateUser) {
+						next(new errors.AlreadyInUseError('User', 'email'));
+					} else {
+						next(null, user);
+					}
+				});
+			} else {
+				next(null, user);
+			}
+		},
+		function(user, next) {
+			if (userdata.studentNumber !== undefined) {
+				user.studentNumber = userdata.studentNumber;
+				User.findOne({ studentNumber: userdata.studentNumber }, function(err, duplicateUser) {
+					if (err) {
+						next(err);
+					} else if (duplicateUser) {
+						next(new errors.AlreadyInUseError('User', 'studentNumber'));
+					} else {
+						next(null, user);
+					}
+				});
+			} else {
+				next(null, user);
+			}
+		},
+		function(user, next) {
 			user.save(next);
 		}
 	], callback);

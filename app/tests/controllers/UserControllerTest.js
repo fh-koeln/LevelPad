@@ -4,6 +4,7 @@ var UserController = require('../../controllers/UserController'),
 	User = require('../../models/User'),
 	assert = require('chai').assert,
 	expect = require('chai').expect,
+	should = require('should'),
 //	sinon = require('sinon'),
 	db = require('../db'),
 	async = require('async');
@@ -101,7 +102,7 @@ describe('UserController', function() {
 						expect(user).property('firstname', 'Peter');
 						expect(user).property('lastname', 'Mustermann');
 						expect(user).property('email', 'peter.mustermann@fh-koeln.de');
-						expect(user).property('role', 'administrator'); // @todo: This will fail if default role will be switched to student
+						expect(user).property('role', 'student'); // @todo: This will fail if default role will be switched to student
 
 						next(err, user);
 					}, userdata);
@@ -115,7 +116,7 @@ describe('UserController', function() {
 						expect(user).property('firstname', 'Peter');
 						expect(user).property('lastname', 'Mustermann');
 						expect(user).property('email', 'peter.mustermann@fh-koeln.de');
-						expect(user).property('role', 'administrator');
+						expect(user).property('role', 'student');
 
 						next(err, user);
 					});
@@ -170,14 +171,46 @@ describe('UserController', function() {
 				email: 'max.mustermann@fh-koeln.de'
 			};
 			UserController.create(function(err, user) {
-				assert.isNotNull(err, 'Error should be not null');
-				assert.isUndefined(user, 'User should be null or undefined');
+				should.exist(err);
+				should.not.exist(user);
 
-				expect(err).property('name', 'MongoError');
-				expect(err).property('code', 11000);
+				err.should.have.property('name').and.be.equal('AlreadyInUseError');
 
-				assert.property(err, 'err');
-				assert.include(err.err, 'duplicate key error');
+				done();
+			}, userdata);
+		});
+
+		it('should fail for an already known email (student1)', function(done) {
+			var userdata = {
+				username: 'student1',
+				firstname: 'Manuel',
+				lastname: 'Manoli',
+				email: 'max.mustermann@fh-koeln.de'
+			};
+			UserController.create(function(err, user) {
+				should.exist(err);
+				should.not.exist(user);
+
+				err.should.have.property('name').and.be.equal('AlreadyInUseError');
+				err.should.have.property('arg1').and.be.equal('email');
+
+				done();
+			}, userdata);
+		});
+
+		it('should fail for an already known studentNumber (student1)', function(done) {
+			var userdata = {
+				username: 'student1',
+				firstname: 'Manuel',
+				lastname: 'Manoli',
+				studentNumber: '11111111'
+			};
+			UserController.create(function(err, user) {
+				should.exist(err);
+				should.not.exist(user);
+
+				err.should.have.property('name').and.be.equal('AlreadyInUseError');
+				err.should.have.property('arg1').and.be.equal('studentNumber');
 
 				done();
 			}, userdata);

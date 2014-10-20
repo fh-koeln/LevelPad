@@ -172,15 +172,15 @@ app.config(function($routeProvider, $locationProvider) {
 		templateUrl: 'views/users/edit.html',
 		controller: 'UserDetailController'
 	});
-	$routeProvider.when('/users/:user', {
+	$routeProvider.when('/users/:username', {
 		templateUrl: 'views/users/show.html',
 		controller: 'UserDetailController'
 	});
-	$routeProvider.when('/users/:user/edit', {
+	$routeProvider.when('/users/:username/edit', {
 		templateUrl: 'views/users/edit.html',
 		controller: 'UserDetailController'
 	});
-	$routeProvider.when('/users/:user/delete', {
+	$routeProvider.when('/users/:username/delete', {
 		templateUrl: 'views/users/delete.html',
 		controller: 'UserDetailController'
 	});

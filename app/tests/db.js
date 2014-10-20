@@ -11,17 +11,17 @@ var async = require('async'),
 
 module.exports.clear = function(callback) {
 	async.series([
-		function(callback) {
-			Task.remove(callback);
+		function(next) {
+			Task.remove(next);
 		},
-		function(callback) {
-			Subject.remove(callback);
+		function(next) {
+			Subject.remove(next);
 		},
-		function(callback) {
-			Module.remove(callback);
+		function(next) {
+			Module.remove(next);
 		},
-		function(callback) {
-			User.remove(callback);
+		function(next) {
+			User.remove(next);
 		}
 	], callback);
 };

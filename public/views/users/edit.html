@@ -32,7 +32,7 @@
 		<button type="button" class="btn btn-default pull-left"
 				data-ng-show="cancel" data-ng-click="cancel();">Abbrechen</button>
 		<button type="button" class="btn btn-default pull-left"
-				data-ng-show="user._id" data-ng-click="showDeleteDialog();">Löschen</button>
+				data-ng-show="user._id" data-ng-click="showDeleteDialog(); $event.preventDefault();">Löschen</button>
 		<button type="submit" class="btn btn-primary pull-right"
 				data-ng-disabled="form.$invalid" >Speichern</button>
 	</div>
