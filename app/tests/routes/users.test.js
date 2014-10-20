@@ -230,7 +230,7 @@ describe('Users API', function() {
 			});
 	});
 
-	it('should return 200 when a guest creates a user with full data', function(done) {
+	it('should return 200 (change to 201!) when a guest creates a user with full data', function(done) {
 		agents.student3
 			.post('/api/users')
 			.send({
@@ -239,7 +239,7 @@ describe('Users API', function() {
 				lastname : users.student3.lastname,
 				email: users.student3.email
 			})
-			.expect(200)
+			.expect(200) // @todo Should be 201
 			.set('Accept', 'application/json')
 			.expect('Content-Type', /json/)
 			.end(function(err, res) {

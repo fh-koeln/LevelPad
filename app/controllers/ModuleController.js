@@ -2,6 +2,7 @@
 var Module = require('../models/Module'),
 	Subject = require('../models/Subject'),
 	async = require('async'),
+	errors = require('common-errors'),
 	acl = require('../../config/acl');
 
 /**
@@ -23,7 +24,7 @@ exports.list = function(callback, filter) {
 exports.read = function(callback, moduleSlug) {
 	Module.findBySlug(moduleSlug, function(err, module) {
 		if (!err && !module) {
-			err = new Error('Unknown module');
+			err = new errors.NotFoundError('Module');
 		}
 		callback(err, module);
 	});

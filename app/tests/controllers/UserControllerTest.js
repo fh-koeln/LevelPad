@@ -19,15 +19,6 @@ describe('UserController', function() {
 	});
 
 	describe('list', function() {
-		it('should find all users without filter (default)', function(done) {
-			UserController.list(function(err, users) {
-				assert.isNull(err, 'Error should be null');
-				assert.isNotNull(users, 'Users should be not null');
-				assert.lengthOf(users, 4, 'Users array has length of 2');
-				done();
-			});
-		});
-
 		it('should find an user (admin1 by username) via filter', function(done) {
 			var filter = { username: 'admin1' };
 			UserController.list(function(err, users) {
