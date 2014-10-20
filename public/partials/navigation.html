@@ -1,14 +1,16 @@
 <!-- ⟨ ⟩ ❮ ❯ -->
-<nav>
-	<a href="/"><h1>LevelPad</h1></a>
+<nav class="clearfix">
+	<a class="hidden-xs" href="/"><h1>LevelPad </h1></a>
+    <a class="hidden-md hidden-lg hidden-sm" href="/"><h1>LP</h1></a>
+	
+    <h2 class="subtitle">Veranstaltungen</h2>
 
-	<ul class="navi">
-		<li class="active">Veranstaltungen</li>
-	</ul>
-
-	<ul style="float: right;">
+	<ul class="menu-bar">
 		<li data-ng-hide="loggedIn" data-ng-class="{ active: $location.path() == '/login' }">
-			<a href="/login" data-ng-click="login(); $event.preventDefault();">Login</a>
+			<a class="hidden-xs" href="/login" data-ng-click="login(); $event.preventDefault();">Login</a>
+            <a class="hidden-md hidden-lg hidden-sm" href="/login" data-ng-click="login(); $event.preventDefault();">
+                <span class="glyphicon glyphicon-align-justify"></span>
+            </a>
 		</li>
 		<li data-ng-show="loggedIn">
 			<div class="dropdown">

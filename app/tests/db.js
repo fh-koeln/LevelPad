@@ -35,6 +35,9 @@ module.exports.initializeTestData = function(callback) {
 			new User(users.lecturer1).save(next);
 		},
 		function(next) {
+			new User(users.assistant1).save(next);
+		},
+		function(next) {
 			new User(users.student1).save(next);
 		},
 		function(next) {
