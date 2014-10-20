@@ -20,6 +20,15 @@ users.lecturer1 = {
 	role: 'lecturer'
 };
 
+users.assistant1 = {
+	username: 'assistant1',
+	password : 'unused',
+	firstname: 'Roberto',
+	lastname: 'Jacinto',
+	email: 'roberto.jacinto@fh-koeln.de',
+	role: 'assistant'
+};
+
 users.student1 = {
 	username: 'student1',
 	password : 'unused',

@@ -81,7 +81,7 @@ var userSchema = new Schema({
 	lastname: { type: String, required: true, trim: true, validate: lastnameValidations },
 	email: { type: String, required: true, unique: true, trim: true, validate: emailValidations },
 	studentNumber: { type: String, required: false, unique: true, sparse: true, trim: true, validate: studentNumberValidations },
-	role: { type: String, required: true, enum: [ 'guest', 'student', 'lecturer', 'assistent', 'administrator' ] }
+	role: { type: String, required: true, enum: [ 'guest', 'student', 'lecturer', 'assistant', 'administrator' ] }
 });
 
 userSchema.statics.findByUsername = function (username, callback) {
