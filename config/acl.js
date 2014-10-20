@@ -69,7 +69,7 @@ module.exports.middleware = function middleware(req, res, next) {
 					// Get the requested user
 					result = regexp.exec(apiPath);
 					keys.map( function(key, i) {
-						if ( key.name == 'currentUser' ) {
+						if ( key.name === 'currentUser' ) {
 							username = result[i + 1];
 						}
 					});
@@ -174,12 +174,6 @@ module.exports.removeRole = function setRole(user, callback) {
 	});
 };
 
-module.exports.setUserBasedRoles = function(user, callback) {
-	callback(err);
-
-
-};
-
 db.connection.on('connected', function() {
 	/**
 	 * Define default permissions for resources
@@ -245,6 +239,8 @@ db.connection.on('connected', function() {
 				{resources: 'logout', permissions: ['POST']},
 				{resources: 'users/me', permissions: ['GET', 'PUT']},
 				{resources: 'users/:currentUser/subjects', permissions: ['GET']},
+				{resources: 'modules', permissions: ['GET']},
+				{resources: 'modules/:module', permissions: ['GET']},
 			]
 		},
 		{
