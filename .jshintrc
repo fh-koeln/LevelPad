@@ -18,6 +18,8 @@
 	"globals": {
 		"angular": true,
 		"describe": false,
-		"it": false
+		"it": false,
+		"before": false,
+		"beforeEach": false
 	}
 }

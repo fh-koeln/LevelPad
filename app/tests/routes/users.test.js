@@ -183,7 +183,7 @@ describe('Users API', function() {
 			});
 	});
 
-	it.skip('should return 400 when a guest creates a user with existing email address', function(done) {
+	it('should return 400 when a guest creates a user with existing email address', function(done) {
 		agents.student3
 			.post('/api/users')
 			.send({
@@ -206,7 +206,7 @@ describe('Users API', function() {
 			});
 	});
 
-	it.skip('should return 400 when a guest creates a user with existing student number', function(done) {
+	it('should return 400 when a guest creates a user with existing student number', function(done) {
 		agents.student3
 			.post('/api/users')
 			.send({
