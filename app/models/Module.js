@@ -13,7 +13,6 @@ var moduleSchema = new Schema({
 
 moduleSchema.statics.findBySlug = function (slug, callback) {
 	this.findOne({ slug: slug }, callback);
-	
 };
 
 module.exports = mongoose.model('Module', moduleSchema);
