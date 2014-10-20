@@ -1,5 +1,7 @@
 'use strict';
 
+require('should-http');
+
 var	should = require('should'),
 	db = require('../db'),
 	async = require('async'),
@@ -23,29 +25,49 @@ describe('Modules API', function() {
 		], done);
 	});
 
-	it('should return 403 when a guest wants to access the modules', function(done) {
+	it('should return 403 when a guest wants to access modules', function(done) {
 		agents.student3
-			.post('/api/modules')
+			.get('/api/modules')
 			.set('Accept', 'application/json')
-			.expect(403)
-			.expect('Content-Type', /json/)
 			.end(function(err, res) {
 				should.not.exist(err);
-				should.exist(res.body);
+				res.should.have.status(403);
+				res.should.be.json;
 
-			//	console.log(res);
+				should.exist(res.body); // @todo Check error response
 
 				done(err);
 			});
 	});
 
-	it.skip('should return 200 when a student wants to access the modules', function(done) {
+	it('should return 403 when a student wants to access modules', function(done) {
 		agents.student2
-			.post('/api/modules')
-			.expect(200)
+			.get('/api/modules')
 			.set('Accept', 'application/json')
-			.expect('Content-Type', /json/)
-			.end(done);
+			.end(function(err, res) {
+				should.not.exist(err);
+				res.should.have.status(403);
+				res.should.be.json;
+
+				should.exist(res.body); // @todo Check error response
+
+				done(err);
+			});
 	});
 
+	it('should return 200 when a lecture wants to access the modules', function(done) {
+		agents.lecturer1
+			.get('/api/modules')
+			.set('Accept', 'application/json')
+			.end(function(err, res) {
+				should.not.exist(err);
+				res.should.have.status(200);
+				res.should.be.json;
+
+				should.exist(res.body); // @todo Check error response
+
+				done(err);
+			});
+	});
 });
+

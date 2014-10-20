@@ -69,7 +69,7 @@ module.exports.middleware = function middleware(req, res, next) {
 					// Get the requested user
 					result = regexp.exec(apiPath);
 					keys.map( function(key, i) {
-						if ( key.name == 'currentUser' ) {
+						if ( key.name === 'currentUser' ) {
 							username = result[i + 1];
 						}
 					});
@@ -174,12 +174,6 @@ module.exports.removeRole = function setRole(user, callback) {
 	});
 };
 
-module.exports.setUserBasedRoles = function(user, callback) {
-	callback(err);
-
-
-};
-
 db.connection.on('connected', function() {
 	/**
 	 * Define default permissions for resources
@@ -246,6 +240,9 @@ db.connection.on('connected', function() {
 				{resources: 'logout', permissions: ['POST']},
 				{resources: 'users/me', permissions: ['GET', 'PUT']},
 				{resources: 'users/:currentUser/subjects', permissions: ['GET']},
+				{resources: 'modules', permissions: ['GET']},
+				{resources: 'years', permissions: ['GET']},
+				{resources: 'modules/:module', permissions: ['GET']},
 			]
 		},
 		{
@@ -258,6 +255,7 @@ db.connection.on('connected', function() {
 				{resources: 'users/:user', permissions: ['GET', 'PUT', 'DELETE']},
 				{resources: 'users/:user/subjects', permissions: ['GET']},
 				{resources: 'users/:currentUser/subjects', permissions: ['GET']},
+				{resources: 'years', permissions: ['GET']},
 				{resources: 'modules', permissions: ['GET', 'POST']},
 				{resources: 'modules/:module', permissions: ['GET', 'PUT', 'DELETE']},
 				{resources: 'modules/:module/subjects', permissions: ['GET', 'POST']},

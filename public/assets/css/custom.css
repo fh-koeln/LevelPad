@@ -17,7 +17,7 @@ nav a:hover, nav a:focus {
 nav h1 {
 	float: left;
 	margin: 0;
-	padding: 0;
+	padding: 0 15px 0 0;
 	font-size: 20pt;
 	line-height: 40px;
     font-weight: 600;
@@ -25,11 +25,22 @@ nav h1 {
 
 @media (max-width: 767px) {
 	nav h1 {
-		width: 30px;
+		width: 12%;
 		overflow: hidden;
 		height: 40px;
+        padding-left: 15px;
 	}
-	nav h1:before {
+    
+    .subtitle{
+        width: 76%;
+        text-align: center;   
+        padding: 0;
+    }
+    
+    .menu-bar{
+        width: 12%;
+    }
+	   /*nav h1:before {
 		content: '\e079';
 		margin-left: 10px;
 		margin-right: 10px;
@@ -42,7 +53,17 @@ nav h1 {
 		line-height: 1;
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
-	}
+	}*/
+    
+    .container{
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .dropdown-toggle{
+        padding: 10px 15px;
+    }
+    
 }
 
 nav > ul {
@@ -211,7 +232,30 @@ table {
     margin-right: -1px;
 }
 
+.blue {
+    color: #6399AE;
+}
 
+.btn-glyphicon {
+    padding: 10px 14px;
+    margin: 0;
+    border: none;
+    background: none;
+}
+
+.dropdown-box{
+    border: 1px solid lightgrey;
+    border-bottom: none;
+    padding: 10px 15px;
+}
+
+.dropdown-text{
+    text-decoration: none;
+}
+
+.table > tbody > tr > th.subject-item-title{
+    padding: 10px 0 10px 15px;
+}
 
 .form-control::-moz-placeholder {
     color: #c0c0c0;
@@ -250,6 +294,17 @@ table {
     padding-right: 6px;
 }
 
+.subtitle{
+    font-size: 14pt;
+    float: left;
+    margin: 0;
+	line-height: 40px;
+}
+
+.menu-bar{
+        float: right;
+}
+
 .arrow-right {
     font-family: "Helvetica Neue";
     font-size: 40px;
@@ -262,7 +317,41 @@ table {
   position: relative;
 }
 
-@media (max-width: 768px) {
+.control-label{
+    text-align: right;
+    color: black;
+    font-weight: normal;
+    padding-right: 0;
+}
 
+fieldset.radio-box {
+    border: 1px groove #ddd;
+    padding: 0 ;
+    margin: 0 ;
+    -webkit-box-shadow:  0px 0px 0px 0px #000;
+            box-shadow:  0px 0px 0px 0px #000;
+}
 
+legend.radio-box {
+    font-size: 12pt;
+    width:inherit; /* Or auto */
+    padding:0 5px; /* To give a bit of padding on the left and right */
+    margin-bottom: 0;
+    border-bottom:none;
+}
+
+fieldset > .radio-items{
+    padding: 10px 20px;
+}
+
+.subject-activeTill{
+    display: inline-block;
+    margin-left: 20px;
+    width: 60%;
+    float: right;
+}
+
+.subject-password-generator{
+    margin-left: 20px;
+    display: inline-block;
 }
