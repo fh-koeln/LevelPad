@@ -355,3 +355,24 @@ fieldset > .radio-items{
     margin-left: 20px;
     display: inline-block;
 }
+
+.subject-title{
+    font-weight: 600;
+    font-size: 12pt;
+}
+
+.show-subject-head{
+    padding: 20px 0;
+}
+
+.add-student{
+    padding: 15px 0;
+}
+
+span.student-forename{
+    font-weight: normal;
+}
+
+span.student-lastname{
+    font-weight: 600;
+}
