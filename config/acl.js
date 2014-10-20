@@ -241,6 +241,7 @@ db.connection.on('connected', function() {
 				{resources: 'users/me', permissions: ['GET', 'PUT']},
 				{resources: 'users/:currentUser/subjects', permissions: ['GET']},
 				{resources: 'modules', permissions: ['GET']},
+				{resources: 'years', permissions: ['GET']},
 				{resources: 'modules/:module', permissions: ['GET']},
 			]
 		},
@@ -254,6 +255,7 @@ db.connection.on('connected', function() {
 				{resources: 'users/:user', permissions: ['GET', 'PUT', 'DELETE']},
 				{resources: 'users/:user/subjects', permissions: ['GET']},
 				{resources: 'users/:currentUser/subjects', permissions: ['GET']},
+				{resources: 'years', permissions: ['GET']},
 				{resources: 'modules', permissions: ['GET', 'POST']},
 				{resources: 'modules/:module', permissions: ['GET', 'PUT', 'DELETE']},
 				{resources: 'modules/:module/subjects', permissions: ['GET', 'POST']},
