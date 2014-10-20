@@ -5,12 +5,18 @@ angular.module('levelPad').controller('UserDetailController', [
 
 		'use strict';
 		console.log('UserDetailController: routeParams:', $routeParams);
-		console.log($scope.user);
-
-		$scope.user = $scope.user || new User();
 
 		$scope.update = function () {
+			// Get the current user
+			if (!$scope.user && $routeParams.username) {
+				$scope.user = User.get({
+					username: $routeParams.username
+				}, function(user) {
 
+				}, function() {
+					$log.error('Could not load subjects.');
+				});
+			}
 		};
 		$scope.update();
 
@@ -38,7 +44,7 @@ angular.module('levelPad').controller('UserDetailController', [
 
 		if (!$scope.showDeleteDialog) {
 			$scope.showDeleteDialog = function (user) {
-				var dialog = new DialogService('/users/:user/delete');
+				var dialog = new DialogService('/users/:username/delete');
 				dialog.scope.user = angular.copy(user);
 				dialog.scope.delete = function () {
 					dialog.scope.user.$delete(function () {

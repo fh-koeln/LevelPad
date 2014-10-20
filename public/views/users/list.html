@@ -21,7 +21,7 @@
 <table class="table table-striped table-hover">
 	<tr data-ng-repeat="user in users | filter:searchText">
 		<td data-ng-click="showEditDialog(user); $event.preventDefault();">
-			<h4><a data-ng-href="/users/{{ user.slug }}/edit">{{ user.firstname }} {{ user.lastname }}</a></h4>
+			<h4><a data-ng-href="/users/{{ user.username }}/edit">{{ user.firstname }} {{ user.lastname }}</a></h4>
 		</td>
 	</tr>
 </table>
