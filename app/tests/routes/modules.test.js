@@ -175,9 +175,9 @@ describe('Modules API', function() {
 			});
 	});
 
-	it.skip('should return 404 for unknown module', function(done) {
+	it('should return 404 for unknown module', function(done) {
 		agents.admin1
-			.get('/api/modules/cga')
+			.get('/api/modules/foo')
 			.set('Accept', 'application/json')
 			.end(function(err, res) {
 				should.not.exist(err);

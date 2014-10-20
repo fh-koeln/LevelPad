@@ -22,7 +22,7 @@ exports.list = function(callback, filter) {
  * @param moduleSlug
  */
 exports.read = function(callback, moduleSlug) {
-	Module.findBySlug(moduleSlug, function(err, module) {
+	Module.findOne({ slug: moduleSlug }, function(err, module) {
 		if (!err && !module) {
 			err = new errors.NotFoundError('Module');
 		}

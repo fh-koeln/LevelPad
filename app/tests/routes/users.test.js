@@ -453,6 +453,20 @@ describe('Users API', function() {
 			});
 	});
 
+	it('should return 404 for unknown user', function(done) {
+		agents.admin1
+			.get('/api/users/doesnotexists')
+			.expect(404)
+			.end(function(err, res) {
+				should.not.exist(err);
+				should.exist(res.body);
+
+
+				done(err);
+			});
+
+	});
+
 	it('should return 204 when user logs out', function(done) {
 		agents.student1
 			.post('/api/logout')

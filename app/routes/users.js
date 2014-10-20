@@ -5,7 +5,7 @@ var express = require('express'),
 	UserSubjectController = require('../controllers/UserSubjectController'),
 	_helpers = require('./_helpers');
 
-// TODO check if we could replace the :username param in update and or delete below.
+// TODO check if we could replace the :username param or delete below.
 users.param('user', function(req, res, next, username) {
 	UserController.read(function(err, user) {
 		req.user = user;

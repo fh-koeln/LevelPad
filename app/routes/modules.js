@@ -9,6 +9,14 @@ var express = require('express'),
 	ModuleSubjectController = require('../controllers/ModuleSubjectController'),
 	_helpers = require('./_helpers');
 
+// TODO check if we could replace the :slug param or delete below.
+modules.param('module', function (req, res, next, moduleSlug) {
+	ModuleController.read(function(err, module) {
+		req.module = module;
+		next(err);
+	}, moduleSlug);
+});
+
 /**
  * Get all modules
  */
@@ -42,16 +50,6 @@ modules.put('/:slug', function (req, res) {
  */
 modules.delete('/:slug', function (req, res) {
 	ModuleController.delete(_helpers.sendResult(res), req.params.slug);
-});
-
-/**
- * Get all modules
- */
-modules.param(':slug', function (req, res, next, slug) {
-	ModuleController.read(function(err, module) {
-		req.module = module;
-		next(err);
-	}, slug);
 });
 
 //
