@@ -102,7 +102,7 @@ describe('UserController', function() {
 						expect(user).property('firstname', 'Peter');
 						expect(user).property('lastname', 'Mustermann');
 						expect(user).property('email', 'peter.mustermann@fh-koeln.de');
-						expect(user).property('role', 'administrator'); // @todo: This will fail if default role will be switched to student
+						expect(user).property('role', 'student'); // @todo: This will fail if default role will be switched to student
 
 						next(err, user);
 					}, userdata);
@@ -116,7 +116,7 @@ describe('UserController', function() {
 						expect(user).property('firstname', 'Peter');
 						expect(user).property('lastname', 'Mustermann');
 						expect(user).property('email', 'peter.mustermann@fh-koeln.de');
-						expect(user).property('role', 'administrator');
+						expect(user).property('role', 'student');
 
 						next(err, user);
 					});
