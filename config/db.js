@@ -4,11 +4,15 @@ var mongoose = require('mongoose');
 
 var env = process.env.NODE_ENV;
 
-if (env === 'test') {
-	module.exports.url = 'mongodb://localhost/levelpadtest';
-} else {
-	module.exports.url = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/levelpad';
-}
+var mongoHost = process.env.MONGODB_HOST || process.env.MONGODB_PORT_27017_TCP_ADDR || 'localhost';
+var mongoPort = process.env.MONGODB_PORT || process.env.MONGODB_PORT_27017_TCP_PORT || 27017;
+var mongoDb = process.env.MONGODB_DB || (env === 'test' ? 'levelpadtest' : 'levelpad');
+
+var mongoDbURL = 'mongodb://' + mongoHost + ':' + mongoPort + '/' + mongoDb;
+
+module.exports.url = process.env.MONGODB_URL || process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || mongoDbURL;
+
+console.log('Evaluated environment variables for mongodb URL: ' + module.exports.url);
 
 // Connect to our database
 mongoose.connect(module.exports.url);

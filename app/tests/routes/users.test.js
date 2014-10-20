@@ -18,7 +18,7 @@ describe('Users API', function() {
 		});
 	}
 
-	before(function(done) {
+	beforeEach(function(done) {
 		async.series([
 			db.clear,
 			db.initializeTestData,
@@ -251,14 +251,14 @@ describe('Users API', function() {
 				res.body.should.have.property('firstname').and.be.equal(users.student3.firstname);
 				res.body.should.have.property('lastname').and.be.equal(users.student3.lastname);
 				res.body.should.have.property('email').and.be.equal(users.student3.email);
-				res.body.should.have.property('role').and.be.equal('administrator'); // @todo This will fail in future, change to student
+				res.body.should.have.property('role').and.be.equal(users.student3.role); // @todo This will fail in future, change to student
 
 				done(err);
 			});
 	});
 
 	it('should return 200 and users data for current user', function(done) {
-		agents.student3
+		agents.student1
 			.get('/api/users/me')
 			.expect(200)
 			.set('Accept', 'application/json')
@@ -267,20 +267,20 @@ describe('Users API', function() {
 				should.not.exist(err);
 				should.exist(res.body);
 
-				res.body.should.have.property('username').and.be.equal(users.student3.username);
+				res.body.should.have.property('username').and.be.equal(users.student1.username);
 				res.body.should.not.have.property('password');
-				res.body.should.have.property('firstname').and.be.equal(users.student3.firstname);
-				res.body.should.have.property('lastname').and.be.equal(users.student3.lastname);
-				res.body.should.have.property('email').and.be.equal(users.student3.email);
-				res.body.should.have.property('role').and.be.equal('administrator'); // @todo This will fail in future, change to student
+				res.body.should.have.property('firstname').and.be.equal(users.student1.firstname);
+				res.body.should.have.property('lastname').and.be.equal(users.student1.lastname);
+				res.body.should.have.property('email').and.be.equal(users.student1.email);
+				res.body.should.have.property('role').and.be.equal(users.student1.role); // @todo This will fail in future, change to student
 
 				done(err);
 			});
 	});
 
 	it('should return 200 when user updates data', function(done) {
-		agents.student3
-			.put('/api/users/' + users.student3.username)
+		agents.student1
+			.put('/api/users/' + users.student1.username)
 			.expect(200)
 			.send({
 				firstname : 'Foo'
@@ -291,16 +291,16 @@ describe('Users API', function() {
 				should.not.exist(err);
 				should.exist(res.body);
 
-				res.body.should.have.property('username').and.be.equal(users.student3.username);
+				res.body.should.have.property('username').and.be.equal(users.student1.username);
 				res.body.should.have.property('firstname').and.be.equal('Foo');
-				res.body.should.have.property('lastname').and.be.equal(users.student3.lastname);
-				res.body.should.have.property('email').and.be.equal(users.student3.email);
+				res.body.should.have.property('lastname').and.be.equal(users.student1.lastname);
+				res.body.should.have.property('email').and.be.equal(users.student1.email);
 
 				done(err);
 			});
 	});
 
-	it.skip('should return 200 when students updates data', function(done) {
+	it('should return 200 when students updates data', function(done) {
 		agents.student2
 			.put('/api/users/' + users.student2.username)
 			.expect(200)
@@ -323,8 +323,8 @@ describe('Users API', function() {
 	});
 
 	it('should return 400 when user updates to existing email address', function(done) {
-		agents.student3
-			.put('/api/users/' + users.student3.username)
+		agents.student1
+			.put('/api/users/' + users.student1.username)
 			.expect(400)
 			.send({
 				email : users.student2.email
@@ -343,8 +343,8 @@ describe('Users API', function() {
 	});
 
 	it('should return 400 when user updates to existing student number', function(done) {
-		agents.student3
-			.put('/api/users/' + users.student3.username)
+		agents.student1
+			.put('/api/users/' + users.student1.username)
 			.expect(400)
 			.send({
 				studentNumber : users.student2.studentNumber,
@@ -425,9 +425,9 @@ describe('Users API', function() {
 			});
 	});
 
-	it.skip('should return 403 when student wants to delete their account', function(done) {
-		agents.student3 // student3 is admin...
-			.delete('/api/users/' + users.student3.username)
+	it('should return 403 when student wants to delete their account', function(done) {
+		agents.student1 // student3 is admin...
+			.delete('/api/users/' + users.student1.username)
 			.expect(403)
 			.set('Accept', 'application/json')
 			.expect('Content-Type', /json/)
@@ -454,7 +454,7 @@ describe('Users API', function() {
 	});
 
 	it('should return 204 when user logs out', function(done) {
-		agents.student3
+		agents.student1
 			.post('/api/logout')
 			.expect(204)
 			.end(function(err, res) {
@@ -469,17 +469,33 @@ describe('Users API', function() {
 	});
 
 	it('should return 401 after user is logged out', function(done) {
-		agents.student3
-			.get('/api/users/me')
-			.expect(401)
-			.set('Accept', 'application/json')
-			.expect('Content-Type', /json/)
-			.end(function(err, res) {
-				should.not.exist(err);
-				should.exist(res.body);
+		async.series([
+		    function(next){
+		    	agents.student2
+			        .post('/api/logout')
+			        .expect(204)
+			        .end(function(err, res) {
+			        	should.not.exist(err);
+			        	should.exist(res.body);
 
-				done(err);
-			});
+			        	res.body.should.be.empty;
+
+			        	next(err);
+			        });
+		    },
+		    function(next){
+		    	agents.student2
+			        .get('/api/users/me')
+			        .expect(401)
+			        .set('Accept', 'application/json')
+			        .expect('Content-Type', /json/)
+			        .end(function(err, res) {
+			        	should.not.exist(err);
+			        	should.exist(res.body);
+
+			        	next(err);
+			        });
+		    }
+		], done);
 	});
-
 });

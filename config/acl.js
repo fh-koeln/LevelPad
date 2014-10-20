@@ -219,7 +219,8 @@ db.connection.on('connected', function() {
 			allows: [
 				{resources: 'login', permissions: ['POST']},
 				{resources: 'logout', permissions: ['POST']},
-				{resources: 'users/me', permissions: ['GET', 'PUT']},
+				{resources: 'users/me', permissions: ['GET']},
+				{resources: 'users/:currentUser', permissions: ['GET', 'PUT']},
 				{resources: 'users/:currentUser/subjects', permissions: ['GET']},
 			]
 		},
