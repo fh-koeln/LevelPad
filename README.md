@@ -23,7 +23,7 @@ Implemented with the "MEAN-stack" (mongoDB, express, AngularJS, Node.js):
   [helmet](https://github.com/evilpacket/helmet)
 * Backend tests:
   [mocha](https://github.com/visionmedia/mocha),
-  [should](https://github.com/visionmedia/should.js),
+  [should](https://github.com/shouldjs/should.js),
   [supertest](https://github.com/visionmedia/supertest) and
   [istanbul](https://github.com/gotwarlost/istanbul)
 * Frontend stack:
