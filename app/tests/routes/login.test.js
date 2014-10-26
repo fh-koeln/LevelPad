@@ -1,5 +1,7 @@
 'use strict';
 
+require('should-http');
+
 var supertest = require('supertest'),
 	should = require('should'),
 	server = require('../../../server'),
@@ -9,7 +11,7 @@ var supertest = require('supertest'),
 
 describe('Login API', function() {
 
-	before(function(done) {
+	beforeEach(function(done) {
 		async.series([
 			db.clear,
 			db.initializeTestData,
@@ -22,13 +24,16 @@ describe('Login API', function() {
 		agent
 			.post('/api/login')
 			.send({ username: users.student3.username, password: users.student3.password })
-			.expect(200)
 			.set('Accept', 'application/json')
-			.expect('Content-Type', /json/)
-			.expect('set-cookie', /^connect.*/)
 			.end(function(err, res) {
 				should.not.exist(err);
+				res.should.have.status(200);
+				res.should.be.json;
+
 				should.exist(res.body);
+
+				res.headers.should.have.property('set-cookie')
+					.and.match(/^connect.*/);
 
 				done(err);
 			});
@@ -40,12 +45,11 @@ describe('Login API', function() {
 		agent
 			.post('/api/login')
 			.send({ username: users.student3.username })
-			.expect(400)
 			.set('Accept', 'application/json')
-		//	.expect('Content-Type', /json/)
-			.expect('set-cookie', /^connect.*/)
 			.end(function(err, res) {
 				should.not.exist(err);
+				res.should.have.status(400);
+
 				should.exist(res.body);
 
 				done(err);
@@ -58,13 +62,16 @@ describe('Login API', function() {
 		agent
 			.post('/api/login')
 			.send({ username: users.admin1.username, password: users.admin1.password })
-			.expect(200)
 			.set('Accept', 'application/json')
-			.expect('Content-Type', /json/)
-			.expect('set-cookie', /^connect.*/)
 			.end(function(err, res) {
 				should.not.exist(err);
+				res.should.have.status(200);
+				res.should.be.json;
+
 				should.exist(res.body);
+
+				res.headers.should.have.property('set-cookie')
+					.and.match(/^connect.*/);
 
 				res.body.should.have.property('username', users.admin1.username);
 				res.body.should.have.property('role', users.admin1.role);

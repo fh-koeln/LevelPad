@@ -5,7 +5,6 @@ var async = require('async'),
 	Module = require('../models/Module'),
 	Subject = require('../models/Subject'),
 	Task = require('../models/Task'),
-	acl = require('../../config/acl').acl,
 	users = require('./users');
 
 

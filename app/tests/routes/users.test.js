@@ -1,8 +1,8 @@
 'use strict';
 
-var supertest = require('supertest'),
-	should = require('should'),
-	server = require('../../../server'),
+require('should-http');
+
+var should = require('should'),
 	db = require('../db'),
 	async = require('async'),
 	agentsAPI = require('../agents'),
@@ -29,10 +29,14 @@ describe('Users API', function() {
 	it('should return 400 when a guest creates a user with no data', function(done) {
 		agents.student3
 			.post('/api/users')
-			.expect(400)
 			.set('Accept', 'application/json')
-			.expect('Content-Type', /json/)
-			.end(done);
+			.end(function(err, res) {
+				should.not.exist(err);
+				res.should.have.status(400);
+				res.should.be.json;
+
+				done(err);
+			});
 	});
 
 	it('should return 400 when a guest creates a user with no email', function(done) {
@@ -43,11 +47,12 @@ describe('Users API', function() {
 				firstname : users.student3.firstname,
 				lastname : users.student3.lastname,
 			})
-			.expect(400)
 			.set('Accept', 'application/json')
-			.expect('Content-Type', /json/)
 			.end(function(err, res) {
 				should.not.exist(err);
+				res.should.have.status(400);
+				res.should.be.json;
+
 				should.exist(res.body);
 
 				res.body.should.have.property('errors')
@@ -67,11 +72,12 @@ describe('Users API', function() {
 				firstname : users.student3.firstname,
 				lastname : users.student3.lastname,
 			})
-			.expect(400)
 			.set('Accept', 'application/json')
-			.expect('Content-Type', /json/)
 			.end(function(err, res) {
 				should.not.exist(err);
+				res.should.have.status(400);
+				res.should.be.json;
+
 				should.exist(res.body);
 
 				res.body.should.have.property('errors')
@@ -91,11 +97,12 @@ describe('Users API', function() {
 				lastname : users.student3.lastname,
 				email : users.student3.email,
 			})
-			.expect(400)
 			.set('Accept', 'application/json')
-			.expect('Content-Type', /json/)
 			.end(function(err, res) {
 				should.not.exist(err);
+				res.should.have.status(400);
+				res.should.be.json;
+
 				should.exist(res.body);
 
 				res.body.should.have.property('errors')
@@ -115,11 +122,12 @@ describe('Users API', function() {
 				firstname : users.student3.firstname,
 				email : users.student3.email,
 			})
-			.expect(400)
 			.set('Accept', 'application/json')
-			.expect('Content-Type', /json/)
 			.end(function(err, res) {
 				should.not.exist(err);
+				res.should.have.status(400);
+				res.should.be.json;
+
 				should.exist(res.body);
 
 				res.body.should.have.property('errors')
@@ -139,11 +147,12 @@ describe('Users API', function() {
 				lastname : users.student3.lastname,
 				email : users.student3.email,
 			})
-			.expect(400)
 			.set('Accept', 'application/json')
-			.expect('Content-Type', /json/)
 			.end(function(err, res) {
 				should.not.exist(err);
+				res.should.have.status(400);
+				res.should.be.json;
+
 				should.exist(res.body);
 
 				res.body.should.have.property('errors')
@@ -164,11 +173,12 @@ describe('Users API', function() {
 				lastname : users.student3.lastname,
 				email : 'foo',
 			})
-			.expect(400)
 			.set('Accept', 'application/json')
-			.expect('Content-Type', /json/)
 			.end(function(err, res) {
 				should.not.exist(err);
+				res.should.have.status(400);
+				res.should.be.json;
+
 				should.exist(res.body);
 
 				res.body.should.have.property('name')
@@ -192,11 +202,12 @@ describe('Users API', function() {
 				lastname : users.student3.lastname,
 				email : users.admin1.email,
 			})
-			.expect(400)
 			.set('Accept', 'application/json')
-			.expect('Content-Type', /json/)
 			.end(function(err, res) {
 				should.not.exist(err);
+				res.should.have.status(400);
+				res.should.be.json;
+
 				should.exist(res.body);
 
 				res.body.should.have.property('name')
@@ -216,11 +227,12 @@ describe('Users API', function() {
 				email : users.student3.email,
 				studentNumber : users.student2.studentNumber,
 			})
-			.expect(400)
 			.set('Accept', 'application/json')
-			.expect('Content-Type', /json/)
 			.end(function(err, res) {
 				should.not.exist(err);
+				res.should.have.status(400);
+				res.should.be.json;
+
 				should.exist(res.body);
 
 				res.body.should.have.property('name')
@@ -239,11 +251,12 @@ describe('Users API', function() {
 				lastname : users.student3.lastname,
 				email: users.student3.email
 			})
-			.expect(200) // @todo Should be 201
 			.set('Accept', 'application/json')
-			.expect('Content-Type', /json/)
 			.end(function(err, res) {
 				should.not.exist(err);
+				res.should.have.status(200); // @todo should be 201
+				res.should.be.json;
+
 				should.exist(res.body);
 
 				res.body.should.have.property('username').and.be.equal(users.student3.username);
@@ -260,11 +273,12 @@ describe('Users API', function() {
 	it('should return 200 and users data for current user', function(done) {
 		agents.student1
 			.get('/api/users/me')
-			.expect(200)
 			.set('Accept', 'application/json')
-			.expect('Content-Type', /json/)
 			.end(function(err, res) {
 				should.not.exist(err);
+				res.should.have.status(200);
+				res.should.be.json;
+
 				should.exist(res.body);
 
 				res.body.should.have.property('username').and.be.equal(users.student1.username);
@@ -281,14 +295,15 @@ describe('Users API', function() {
 	it('should return 200 when user updates data', function(done) {
 		agents.student1
 			.put('/api/users/' + users.student1.username)
-			.expect(200)
 			.send({
 				firstname : 'Foo'
 			})
 			.set('Accept', 'application/json')
-			.expect('Content-Type', /json/)
 			.end(function(err, res) {
 				should.not.exist(err);
+				res.should.have.status(200);
+				res.should.be.json;
+
 				should.exist(res.body);
 
 				res.body.should.have.property('username').and.be.equal(users.student1.username);
@@ -303,14 +318,15 @@ describe('Users API', function() {
 	it('should return 200 when students updates data', function(done) {
 		agents.student2
 			.put('/api/users/' + users.student2.username)
-			.expect(200)
 			.send({
 				firstname : 'Foo'
 			})
 			.set('Accept', 'application/json')
-			.expect('Content-Type', /json/)
 			.end(function(err, res) {
 				should.not.exist(err);
+				res.should.have.status(200);
+				res.should.be.json;
+
 				should.exist(res.body);
 
 				res.body.should.have.property('username').and.be.equal(users.student2.username);
@@ -325,14 +341,15 @@ describe('Users API', function() {
 	it('should return 400 when user updates to existing email address', function(done) {
 		agents.student1
 			.put('/api/users/' + users.student1.username)
-			.expect(400)
 			.send({
 				email : users.student2.email
 			})
 			.set('Accept', 'application/json')
-			.expect('Content-Type', /json/)
 			.end(function(err, res) {
 				should.not.exist(err);
+				res.should.have.status(400);
+				res.should.be.json;
+
 				should.exist(res.body);
 
 				res.body.should.have.property('name')
@@ -345,14 +362,15 @@ describe('Users API', function() {
 	it('should return 400 when user updates to existing student number', function(done) {
 		agents.student1
 			.put('/api/users/' + users.student1.username)
-			.expect(400)
 			.send({
 				studentNumber : users.student2.studentNumber,
 			})
 			.set('Accept', 'application/json')
-			.expect('Content-Type', /json/)
 			.end(function(err, res) {
 				should.not.exist(err);
+				res.should.have.status(400);
+				res.should.be.json;
+
 				should.exist(res.body);
 
 				res.body.should.have.property('name')
@@ -365,11 +383,12 @@ describe('Users API', function() {
 	it('should return 200 and users data for students', function(done) {
 		agents.student2
 			.get('/api/users/me')
-			.expect(200)
 			.set('Accept', 'application/json')
-			.expect('Content-Type', /json/)
 			.end(function(err, res) {
 				should.not.exist(err);
+				res.should.have.status(200);
+				res.should.be.json;
+
 				should.exist(res.body);
 
 				res.body.should.have.property('username').and.be.equal(users.student2.username);
@@ -386,11 +405,12 @@ describe('Users API', function() {
 	it('should return 200 and users data for admins', function(done) {
 		agents.admin1
 			.get('/api/users/me')
-			.expect(200)
 			.set('Accept', 'application/json')
-			.expect('Content-Type', /json/)
 			.end(function(err, res) {
 				should.not.exist(err);
+				res.should.have.status(200);
+				res.should.be.json;
+
 				should.exist(res.body);
 
 				res.body.should.have.property('username').and.be.equal(users.admin1.username);
@@ -407,11 +427,12 @@ describe('Users API', function() {
 	it('should return 200 and users data for lecturers', function(done) {
 		agents.lecturer1
 			.get('/api/users/me')
-			.expect(200)
 			.set('Accept', 'application/json')
-			.expect('Content-Type', /json/)
 			.end(function(err, res) {
 				should.not.exist(err);
+				res.should.have.status(200);
+				res.should.be.json;
+
 				should.exist(res.body);
 
 				res.body.should.have.property('username').and.be.equal(users.lecturer1.username);
@@ -428,11 +449,12 @@ describe('Users API', function() {
 	it('should return 403 when student wants to delete their account', function(done) {
 		agents.student1 // student3 is admin...
 			.delete('/api/users/' + users.student1.username)
-			.expect(403)
 			.set('Accept', 'application/json')
-			.expect('Content-Type', /json/)
 			.end(function(err, res) {
 				should.not.exist(err);
+				res.should.have.status(403);
+				res.should.be.json;
+
 				should.exist(res.body);
 
 				done(err);
@@ -442,11 +464,12 @@ describe('Users API', function() {
 	it('should return 403 when student wants to delete another student', function(done) {
 		agents.student1
 			.delete('/api/users/' + users.student2.username)
-			.expect(403)
 			.set('Accept', 'application/json')
-			.expect('Content-Type', /json/)
 			.end(function(err, res) {
 				should.not.exist(err);
+				res.should.have.status(403);
+				res.should.be.json;
+
 				should.exist(res.body);
 
 				done(err);
@@ -456,11 +479,13 @@ describe('Users API', function() {
 	it('should return 404 for unknown user', function(done) {
 		agents.admin1
 			.get('/api/users/doesnotexists')
-			.expect(404)
+			.set('Accept', 'application/json')
 			.end(function(err, res) {
 				should.not.exist(err);
-				should.exist(res.body);
+				res.should.have.status(404);
+				res.should.be.json;
 
+				should.exist(res.body);
 
 				done(err);
 			});
@@ -470,9 +495,11 @@ describe('Users API', function() {
 	it('should return 204 when user logs out', function(done) {
 		agents.student1
 			.post('/api/logout')
-			.expect(204)
+			.set('Accept', 'application/json')
 			.end(function(err, res) {
 				should.not.exist(err);
+				res.should.have.status(204);
+
 				should.exist(res.body);
 
 				res.body.should.be.empty;
@@ -484,32 +511,35 @@ describe('Users API', function() {
 
 	it('should return 401 after user is logged out', function(done) {
 		async.series([
-		    function(next){
-		    	agents.student2
-			        .post('/api/logout')
-			        .expect(204)
-			        .end(function(err, res) {
-			        	should.not.exist(err);
-			        	should.exist(res.body);
+			function(next){
+				agents.student2
+					.post('/api/logout')
+					.set('Accept', 'application/json')
+					.end(function(err, res) {
+						should.not.exist(err);
+						res.should.have.status(204);
 
-			        	res.body.should.be.empty;
+						should.exist(res.body);
 
-			        	next(err);
-			        });
-		    },
-		    function(next){
-		    	agents.student2
-			        .get('/api/users/me')
-			        .expect(401)
-			        .set('Accept', 'application/json')
-			        .expect('Content-Type', /json/)
-			        .end(function(err, res) {
-			        	should.not.exist(err);
-			        	should.exist(res.body);
+						res.body.should.be.empty;
 
-			        	next(err);
-			        });
-		    }
+						next(err);
+					});
+			},
+			function(next){
+				agents.student2
+					.get('/api/users/me')
+					.set('Accept', 'application/json')
+					.end(function(err, res) {
+						should.not.exist(err);
+						res.should.have.status(401);
+						res.should.be.json;
+
+						should.exist(res.body);
+
+						next(err);
+					});
+			}
 		], done);
 	});
 });
