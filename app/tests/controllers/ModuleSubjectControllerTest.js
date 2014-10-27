@@ -1,7 +1,6 @@
 'use strict';
 
 var ModuleSubjectController = require('../../controllers/ModuleSubjectController'),
-	Subject = require('../../models/Subject'),
 	Module = require('../../models/Module'),
 	assert = require('chai').assert,
 	expect = require('chai').expect,
@@ -56,7 +55,7 @@ describe('ModuleSubjectController', function() {
 				expect(subject).property('slug', subjects.wba1Wise1415.slug);
 				expect(subject).property('module');
 				expect(subject).property('semester',subjects.wba1Wise1415.semester);
-				expect(subject).property('year', 2014);
+				expect(subject).property('year', subjects.wba1Wise1415.year);
 				expect(subject).property('status', subjects.wba1Wise1415.status);
 
 				var module = subject.module;
@@ -67,30 +66,31 @@ describe('ModuleSubjectController', function() {
 			}, subjects.wba1Wise1415.module.slug, subjects.wba1Wise1415.slug);
 		});
 
-		it('should return a known subject (wba1 2014 Sommersemester) via module', function(done) {
+		it('should return a known subject (WBA 2 2014 Sommersemester) via module', function(done) {
 			async.waterfall([
 				function(next) {
-					Module.findOne({ slug: 'wba1' }, next);
+					Module.findOne({ slug: subjects.wba2Sose14.module.slug }, next);
 				},
 				function(module, next) {
-					assert.isNotNull(module, 'Module should be not null');
+					assert.isNotNull(module, 'Module should not be null');
 
 					ModuleSubjectController.read(function(err, subject) {
 						assert.isNull(err, 'Error should be null');
-						assert.isNotNull(subject, 'Subject should be not null');
+						assert.isNotNull(subject, 'Subject should not be null');
 
-						expect(subject).property('slug', 'wise1415');
+						expect(subject).property('slug', subjects.wba2Sose14.slug);
 						expect(subject).property('module');
-						expect(subject).property('semester', 'Wintersemester');
-						expect(subject).property('year', 2014);
-						expect(subject).property('status', 'active');
+
+						expect(subject).property('year', subjects.wba2Sose14.year);
+						expect(subject).property('semester', subjects.wba2Sose14.semester);
+						expect(subject).property('status', subjects.wba2Sose14.status);
 
 						var module = subject.module;
-						expect(module).property('shortName', 'WBA 1');
-						expect(module).property('name', 'Web-basierte Anwendungen 1');
+						expect(module).property('shortName', subjects.wba2Sose14.module.shortName);
+						expect(module).property('name', subjects.wba2Sose14.module.name);
 
 						next();
-					}, module, 'wise1415');
+					}, module, subjects.wba2Sose14.slug);
 				}
 			], done);
 		});
@@ -219,14 +219,14 @@ describe('ModuleSubjectController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(subject, 'Subject should be not null');
 
-						expect(subject).property('slug', 'wise1415');
+						expect(subject).property('slug', subjects.wba1Wise1415.slug);
 						expect(subject).property('module');
-						expect(subject).property('semester', 'Wintersemester');
+						expect(subject).property('semester', subjects.wba1Wise1415.semester);
 						expect(subject).property('status', 'inactive');
 
 						var module = subject.module;
-						expect(module).property('shortName', 'WBA 1');
-						expect(module).property('name', 'Web-basierte Anwendungen 1');
+						expect(module).property('shortName', subjects.wba1Wise1415.module.shortName);
+						expect(module).property('name', subjects.wba1Wise1415.module.name);
 
 						next(err);
 					}, 'wba1', 'wise1415', newSubjectData);
