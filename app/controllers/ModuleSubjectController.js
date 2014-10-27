@@ -2,6 +2,7 @@
 var Subject = require('../models/Subject'),
 	Module = require('../models/Module'),
 	async = require('async'),
+	errors = require('common-errors'),
 	acl = require('../../config/acl');
 
 /**
@@ -22,7 +23,7 @@ exports.list = function(callback, module, filter) {
 		},
 		function(module, next) {
 			if (!module || !module._id) {
-				return next(new Error('Unknown module'));
+				return next(new errors.NotFoundError('Module'));
 			}
 
 			filter = filter || {};
@@ -54,12 +55,12 @@ exports.read = function(callback, module, year, semester) {
 		},
 		function(module, next) {
 			if (!module || !module._id) {
-				return next(new Error('Unknown module'));
+				return next(new errors.NotFoundError('Module'));
 			}
 
 			Subject.findOne({ module: module._id, year: year, semester: semester }).populate('module').exec(function(err, subject) {
 				if (!err && !subject) {
-					err = new Error('Unknown subject');
+					return next(new errors.NotFoundError('Subject'));
 				}
 				next(err, subject);
 			});
@@ -89,7 +90,7 @@ exports.create = function(callback, module, year, semester, subjectData) {
 			// check if subject is already exist!
 			Subject.findOne({ module: module._id, year: year, semester: semester }, function(err, subject) {
 				if (!err && subject) {
-					return next(new Error('Subject already exist!'));
+					return next(new errors.AlreadyInUseError('Subject'));
 				}
 				next(err, module); // keep module
 			});

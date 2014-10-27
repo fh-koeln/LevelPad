@@ -175,8 +175,7 @@ describe('ModuleSubjectController', function() {
 				assert.isNotNull(err, 'Error should be not null');
 				assert.isUndefined(subject, 'Subject should be null or undefined');
 
-				expect(err).property('name', 'Error');
-				expect(err).property('message', 'Subject already exist!');
+				expect(err).property('name', 'AlreadyInUseError');
 
 				done();
 			}, 'wba1', 2014, 'Sommersemester', subjectdata);
@@ -352,6 +351,9 @@ describe('ModuleSubjectController', function() {
 			ModuleSubjectController.delete(function(err, subject) {
 				assert.isNotNull(err, 'Error should be not null');
 				assert.isUndefined(subject, 'Subject should be null or undefined');
+
+				expect(err).property('name', 'NotFoundError');
+
 				done();
 			}, 'unknownmodule', 2014, 'Sommersemester');
 		});
@@ -359,7 +361,10 @@ describe('ModuleSubjectController', function() {
 		it('should fail for an unknown year or semester', function(done) {
 			ModuleSubjectController.delete(function(err, subject) {
 				assert.isNotNull(err, 'Error should be not null');
-				assert.isNull(subject, 'Subject should be null');
+				assert.isUndefined(subject, 'Subject should be null');
+
+				expect(err).property('name', 'NotFoundError');
+
 				done();
 			}, 'wba1', 2014, 'unknownsemester');
 		});

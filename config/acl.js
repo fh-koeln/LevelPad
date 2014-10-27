@@ -68,8 +68,8 @@ module.exports.middleware = function middleware(req, res, next) {
 				if (hasCurrentUserKey(keys)) {
 					// Get the requested user
 					result = regexp.exec(apiPath);
-					keys.map( function(key, i) {
-						if ( key.name === 'currentUser' ) {
+					keys.map(function(key, i) {
+						if (key.name === 'currentUser') {
 							username = result[i + 1];
 						}
 					});
