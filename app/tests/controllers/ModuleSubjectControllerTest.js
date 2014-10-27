@@ -48,14 +48,14 @@ describe('ModuleSubjectController', function() {
 	});
 
 	describe('read', function() {
-		it('should return a known subject (wba1 2014 Sommersemester) via string', function(done) {
+		it('should return a known subject (wba1 2014 Wintersemester) via string', function(done) {
 			ModuleSubjectController.read(function(err, subject) {
 				assert.isNull(err, 'Error should be null');
 				assert.isNotNull(subject, 'Subject should be not null');
 
-				expect(subject).property('slug', '2014-1');
+				expect(subject).property('slug', 'wise1415');
 				expect(subject).property('module');
-				expect(subject).property('semester', 'Sommersemester');
+				expect(subject).property('semester', 'Wintersemester');
 				expect(subject).property('status', 'active');
 
 				var module = subject.module;
@@ -63,7 +63,7 @@ describe('ModuleSubjectController', function() {
 				expect(module).property('name', 'Webbasierte Anwendungen 1');
 
 				done();
-			}, 'wba1', '2014', 'Sommersemester');
+			}, 'wba1', '2014', 'Wintersemester');
 		});
 
 		it('should return a known subject (wba1 2014 Sommersemester) via module', function(done) {
@@ -78,9 +78,9 @@ describe('ModuleSubjectController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(subject, 'Subject should be not null');
 
-						expect(subject).property('slug', '2014-1');
+						expect(subject).property('slug', 'wise1415');
 						expect(subject).property('module');
-						expect(subject).property('semester', 'Sommersemester');
+						expect(subject).property('semester', 'Wintersemester');
 						expect(subject).property('status', 'active');
 
 						var module = subject.module;
@@ -88,7 +88,7 @@ describe('ModuleSubjectController', function() {
 						expect(module).property('name', 'Webbasierte Anwendungen 1');
 
 						next();
-					}, module, 2014, 'Sommersemester');
+					}, module, 2014, 'Wintersemester');
 				}
 			], done);
 		});
@@ -98,20 +98,20 @@ describe('ModuleSubjectController', function() {
 				assert.isNotNull(err, 'Error should be not null');
 				assert.isUndefined(subject, 'Subject should be null or undefined');
 				done();
-			}, 'unknownmodule', 2014, 'Sommersemester');
+			}, 'unknownmodule', 2014, 'Wintersemester');
 		});
 	});
 
 	describe('create', function() {
-		it('should save a new subject (WBA 1 2014 Wintersemester) with full data', function(done) {
+		it('should save a new subject (WBA 1 2013 Wintersemester) with full data', function(done) {
 			var subjectdata = {
 				status: 'active'
 			};
 			async.series([
 				function(next) {
-					Subject.findOne({ slug: '2014-1', year: 2014, semester: 'Wintersemester' }).populate('module').exec(function(err, subject) {
+					Subject.findOne({ slug: 'wise1314', year: 2013, semester: 'Wintersemester' }).populate('module').exec(function(err, subject) {
 						assert.isNull(err, 'Error should be null');
-						assert.isNull(subject, 'Subject should be not null');
+						assert.isNull(subject, 'Subject should be null');
 						next(err, subject);
 					});
 				},
@@ -120,7 +120,7 @@ describe('ModuleSubjectController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(subject, 'Subject should be not null');
 
-						expect(subject).property('slug', '2014-wintersemester-wba1');
+						expect(subject).property('slug', 'wise1314');
 						expect(subject).property('module');
 						expect(subject).property('semester', 'Wintersemester');
 						expect(subject).property('status', 'active');
@@ -130,14 +130,14 @@ describe('ModuleSubjectController', function() {
 						expect(module).property('name', 'Webbasierte Anwendungen 1');
 
 						next(err, subject);
-					}, 'wba1', 2014, 'Wintersemester', subjectdata);
+					}, 'wba1', 2013, 'Wintersemester', subjectdata);
 				},
 				function(next) {
-					Subject.findOne({ slug: '2014-wintersemester-wba1', year: 2014, semester: 'Wintersemester' }).populate('module').exec(function(err, subject) {
+					Subject.findOne({ slug: 'wise1314', year: 2013, semester: 'Wintersemester' }).populate('module').exec(function(err, subject) {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(subject, 'Subject should be not null');
 
-						expect(subject).property('slug', '2014-wintersemester-wba1');
+						expect(subject).property('slug', 'wise1314');
 						expect(subject).property('module');
 						expect(subject).property('semester', 'Wintersemester');
 						expect(subject).property('status', 'active');
@@ -165,10 +165,10 @@ describe('ModuleSubjectController', function() {
 				expect(err.errors).property('status');
 
 				done();
-			}, 'wba1', 2014, 'Wintersemester', subjectdata);
+			}, 'wba1', 2012, 'Wintersemester', subjectdata);
 		});
 
-		it('should fail for an already existing subject (WBA 1 2014 Sommersemester)', function(done) {
+		it('should fail for an already existing subject (WBA 1 2014 Wintersemester)', function(done) {
 			var subjectdata = {
 			};
 			ModuleSubjectController.create(function(err, subject) {
@@ -178,16 +178,16 @@ describe('ModuleSubjectController', function() {
 				expect(err).property('name', 'AlreadyInUseError');
 
 				done();
-			}, 'wba1', 2014, 'Sommersemester', subjectdata);
+			}, 'wba1', 2014, 'Wintersemester', subjectdata);
 		});
 	});
 
 	describe('update', function() {
-		it('should successfully update a known subject (WBA 1 2014 Sommersemester) without data', function(done) {
+		it('should successfully update a known subject (WBA 1 2014 Wintersemester) without data', function(done) {
 			var newsubjectdata = {};
 			async.series([
 				function(next) {
-					Subject.findOne({ slug: '2014-1', year: 2014, semester: 'Sommersemester' }, function(err, subject) {
+					Subject.findOne({ slug: 'wise1415', year: 2014, semester: 'Wintersemester' }, function(err, subject) {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(subject, 'Subject should be not null');
 						next(err);
@@ -198,10 +198,10 @@ describe('ModuleSubjectController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(subject, 'Subject should be not null');
 						next(err);
-					}, 'wba1', 2014, 'Sommersemester', newsubjectdata);
+					}, 'wba1', 2014, 'Wintersemester', newsubjectdata);
 				},
 				function(next) {
-					Subject.findOne({ slug: '2014-1', year: 2014, semester: 'Sommersemester' }, function(err, subject) {
+					Subject.findOne({ slug: 'wise1415', year: 2014, semester: 'Wintersemester' }, function(err, subject) {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(subject, 'Subject should be not null');
 						next(err);
@@ -210,19 +210,19 @@ describe('ModuleSubjectController', function() {
 			], done);
 		});
 
-		it('should successfully update a known subject (WBA 1 2014 Sommersemester) with data', function(done) {
+		it('should successfully update a known subject (WBA 1 2014 Wintersemester) with data', function(done) {
 			var newsubjectdata = {
 				status: 'inactive'
 			};
 			async.series([
 				function(next) {
-					Subject.findOne({ slug: '2014-1', year: 2014, semester: 'Sommersemester' }).populate('module').exec(function(err, subject) {
+					Subject.findOne({ slug: 'wise1415', year: 2014, semester: 'Wintersemester' }).populate('module').exec(function(err, subject) {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(subject, 'Subject should be not null');
 
-						expect(subject).property('slug', '2014-1');
+						expect(subject).property('slug', 'wise1415');
 						expect(subject).property('module');
-						expect(subject).property('semester', 'Sommersemester');
+						expect(subject).property('semester', 'Wintersemester');
 						expect(subject).property('status', 'active');
 
 						var module = subject.module;
@@ -237,9 +237,9 @@ describe('ModuleSubjectController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(subject, 'Subject should be not null');
 
-						expect(subject).property('slug', '2014-1');
+						expect(subject).property('slug', 'wise1415');
 						expect(subject).property('module');
-						expect(subject).property('semester', 'Sommersemester');
+						expect(subject).property('semester', 'Wintersemester');
 						expect(subject).property('status', 'inactive');
 
 						var module = subject.module;
@@ -247,16 +247,16 @@ describe('ModuleSubjectController', function() {
 						expect(module).property('name', 'Webbasierte Anwendungen 1');
 
 						next(err);
-					}, 'wba1', 2014, 'Sommersemester', newsubjectdata);
+					}, 'wba1', 2014, 'Wintersemester', newsubjectdata);
 				},
 				function(next) {
-					Subject.findOne({ slug: '2014-1', year: 2014, semester: 'Sommersemester' }).populate('module').exec(function(err, subject) {
+					Subject.findOne({ slug: 'wise1415', year: 2014, semester: 'Wintersemester' }).populate('module').exec(function(err, subject) {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(subject, 'Subject should be not null');
 
-						expect(subject).property('slug', '2014-1');
+						expect(subject).property('slug', 'wise1415');
 						expect(subject).property('module');
-						expect(subject).property('semester', 'Sommersemester');
+						expect(subject).property('semester', 'Wintersemester');
 						expect(subject).property('status', 'inactive');
 
 						var module = subject.module;
@@ -275,13 +275,13 @@ describe('ModuleSubjectController', function() {
 			};
 			async.series([
 				function(next) {
-					Subject.findOne({ slug: '2014-1', year: 2014, semester: 'Sommersemester' }).populate('module').exec(function(err, subject) {
+					Subject.findOne({ slug: 'wise1415', year: 2014, semester: 'Wintersemester' }).populate('module').exec(function(err, subject) {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(subject, 'Subject should be not null');
 
-						expect(subject).property('slug', '2014-1');
+						expect(subject).property('slug', 'wise1415');
 						expect(subject).property('module');
-						expect(subject).property('semester', 'Sommersemester');
+						expect(subject).property('semester', 'Wintersemester');
 						expect(subject).property('status', 'active');
 
 						var module = subject.module;
@@ -296,9 +296,9 @@ describe('ModuleSubjectController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(subject, 'Subject should be not null');
 
-						expect(subject).property('slug', '2014-1');
+						expect(subject).property('slug', 'wise1415');
 						expect(subject).property('module');
-						expect(subject).property('semester', 'Sommersemester');
+						expect(subject).property('semester', 'Wintersemester');
 						expect(subject).property('status', 'active');
 
 						var module = subject.module;
@@ -306,16 +306,16 @@ describe('ModuleSubjectController', function() {
 						expect(module).property('name', 'Webbasierte Anwendungen 1');
 
 						next(err);
-					}, 'wba1', 2014, 'Sommersemester', newmoduledata);
+					}, 'wba1', 2014, 'Wintersemester', newmoduledata);
 				},
 				function(next) {
-					Subject.findOne({ slug: '2014-1', year: 2014, semester: 'Sommersemester' }).populate('module').exec(function(err, subject) {
+					Subject.findOne({ slug: 'wise1415', year: 2014, semester: 'Wintersemester' }).populate('module').exec(function(err, subject) {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(subject, 'Subject should be not null');
 
-						expect(subject).property('slug', '2014-1');
+						expect(subject).property('slug', 'wise1415');
 						expect(subject).property('module');
-						expect(subject).property('semester', 'Sommersemester');
+						expect(subject).property('semester', 'Wintersemester');
 						expect(subject).property('status', 'active');
 
 						var module = subject.module;
@@ -339,12 +339,12 @@ describe('ModuleSubjectController', function() {
 	});
 
 	describe('delete', function() {
-		it('should successfully remove a known subject (wba1 2014 Sommersemester)', function(done) {
+		it('should successfully remove a known subject (wba1 2014 Wintersemester)', function(done) {
 			ModuleSubjectController.delete(function(err, subject) {
 				assert.isNull(err, 'Error should be null');
 				assert.isNotNull(subject, 'Subject should be not null');
 				done(err);
-			}, 'wba1', 2014, 'Sommersemester');
+			}, 'wba1', 2014, 'Wintersemester');
 		});
 
 		it('should fail for an unknown subject (unknownmodule)', function(done) {

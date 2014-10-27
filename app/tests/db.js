@@ -64,10 +64,10 @@ module.exports.initializeTestData = function(callback) {
 					return next(err);
 				}
 				var subject = {
-					slug: '2014-1', // TODO
+					slug: 'wise1415', // TODO
 					module: module,
 					year: 2014,
-					semester: 'Sommersemester', // TODO
+					semester: 'Wintersemester', // TODO
 					status: 'active'
 				};
 				new Subject(subject).save(next);
@@ -79,7 +79,7 @@ module.exports.initializeTestData = function(callback) {
 					return next(err);
 				}
 				var subject = {
-					slug: '2014-2', // TODO
+					slug: 'sose14', // TODO
 					module: module,
 					year: 2014,
 					semester: 'Sommersemester', // TODO
