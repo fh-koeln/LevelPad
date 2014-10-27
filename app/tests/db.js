@@ -6,7 +6,8 @@ var async = require('async'),
 	Subject = require('../models/Subject'),
 	Task = require('../models/Task'),
 	users = require('./users'),
-	modules = require('./modules');
+	modules = require('./modules'),
+	subjects = require('./subjects');
 
 
 module.exports.clear = function(callback) {
@@ -50,31 +51,31 @@ module.exports.initializeTestData = function(callback) {
 			new Module(modules.wba2).save(next);
 		},
 		function(next) {
-			Module.findOne({ slug: 'wba1' }, function(err, module) {
+			Module.findOne({ slug: subjects.wba1Wise1415.module.slug }, function(err, module) {
 				if (err) {
 					return next(err);
 				}
 				var subject = {
-					slug: 'wise1415', // TODO
+					slug: subjects.wba1Wise1415.slug,
 					module: module,
-					year: 2014,
-					semester: 'Wintersemester', // TODO
-					status: 'active'
+					year: subjects.wba1Wise1415.year,
+					semester: subjects.wba1Wise1415.semester,
+					status: subjects.wba1Wise1415.status,
 				};
 				new Subject(subject).save(next);
 			});
 		},
 		function(next) {
-			Module.findOne({ slug: 'wba2' }, function(err, module) {
+			Module.findOne({ slug: subjects.wba2Sose14.module.slug }, function(err, module) {
 				if (err) {
 					return next(err);
 				}
 				var subject = {
-					slug: 'sose14', // TODO
+					slug: subjects.wba2Sose14.slug,
 					module: module,
-					year: 2014,
-					semester: 'Sommersemester', // TODO
-					status: 'inactive'
+					year: subjects.wba2Sose14.year,
+					semester: subjects.wba2Sose14.semester,
+					status: subjects.wba2Sose14.status,
 				};
 				new Subject(subject).save(next);
 			});

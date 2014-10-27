@@ -5,8 +5,8 @@ var ModuleSubjectController = require('../../controllers/ModuleSubjectController
 	Module = require('../../models/Module'),
 	assert = require('chai').assert,
 	expect = require('chai').expect,
-//	sinon = require('sinon'),
 	db = require('../db'),
+	subjects = require('../subjects'),
 	async = require('async');
 
 describe('ModuleSubjectController', function() {
@@ -20,26 +20,26 @@ describe('ModuleSubjectController', function() {
 
 	describe('list', function() {
 		it('should find all subjects for module (wba1) via string', function(done) {
-			ModuleSubjectController.list(function(err, subjects) {
+			ModuleSubjectController.list(function(err, moduleSubjects) {
 				assert.isNull(err, 'Error should be null');
-				assert.isNotNull(subjects, 'Subjects should be not null');
-				assert.lengthOf(subjects, 1, 'Subjects array has length of 1');
+				assert.isNotNull(moduleSubjects, 'Subjects should be not null');
+				assert.lengthOf(moduleSubjects, 1, 'Subjects array has length of 1');
 				done(err);
-			}, 'wba1');
+			}, subjects.wba1Wise1415.module.slug);
 		});
 
 		it('should find all subjects for module (wba1) via module', function(done) {
 			async.waterfall([
 				function(next) {
-					Module.findOne({ slug: 'wba1' }, next);
+					Module.findOne({ slug: subjects.wba1Wise1415.module.slug }, next);
 				},
 				function(module, next) {
 					assert.isNotNull(module, 'Module should be not null');
 
-					ModuleSubjectController.list(function(err, subjects) {
+					ModuleSubjectController.list(function(err, moduleSubjects) {
 						assert.isNull(err, 'Error should be null');
-						assert.isNotNull(subjects, 'Subjects should be not null');
-						assert.lengthOf(subjects, 1, 'Subjects array has length of 1');
+						assert.isNotNull(moduleSubjects, 'Subjects should be not null');
+						assert.lengthOf(moduleSubjects, 1, 'Subjects array has length of 1');
 						next(err);
 					}, module);
 				}
@@ -49,21 +49,21 @@ describe('ModuleSubjectController', function() {
 
 	describe('read', function() {
 		it('should return a known subject (wba1 2014 Wintersemester) via string', function(done) {
-			ModuleSubjectController.read(function(err, subject) {
+			ModuleSubjectController.read(function(err, moduleSubject) {
 				assert.isNull(err, 'Error should be null');
-				assert.isNotNull(subject, 'Subject should be not null');
+				assert.isNotNull(moduleSubject, 'Subject should be not null');
 
-				expect(subject).property('slug', 'wise1415');
-				expect(subject).property('module');
-				expect(subject).property('semester', 'Wintersemester');
-				expect(subject).property('status', 'active');
+				expect(moduleSubject).property('slug', subjects.wba1Wise1415.slug);
+				expect(moduleSubject).property('module');
+				expect(moduleSubject).property('semester',subjects.wba1Wise1415.semester);
+				expect(moduleSubject).property('status', subjects.wba1Wise1415.status);
 
-				var module = subject.module;
-				expect(module).property('shortName', 'WBA 1');
-				expect(module).property('name', 'Web-basierte Anwendungen 1');
+				var module = moduleSubject.module;
+				expect(module).property('shortName', subjects.wba1Wise1415.module.shortName);
+				expect(module).property('name', subjects.wba1Wise1415.module.name);
 
 				done();
-			}, 'wba1', '2014', 'Wintersemester');
+			}, subjects.wba1Wise1415.module.slug, subjects.wba1Wise1415.year, subjects.wba1Wise1415.semester);
 		});
 
 		it('should return a known subject (wba1 2014 Sommersemester) via module', function(done) {
