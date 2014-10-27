@@ -30,7 +30,7 @@
     Navbar, Searchbtn, newBtn für kleine Devices
 -->
 
-<div class="container hidden-md hidden-lg hidden-sm">
+<div class="container hidden-md hidden-lg hidden-sm nav-dropdown ">
 	<div class="row" >
 		<div class="dropdown col-xs-8 dropdown-box">
 			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Aktive Veranstaltungen <span class="caret btn-dropdown"></span></a>
@@ -43,13 +43,21 @@
 				</li>
 			</ul>
 		</div>
-		<button type="button" class="btn btn-default navbar-btn btn-glyphicon blue">
-			<span class="glyphicon glyphicon-search"></span>
-		</button>
-		<button type="button" class="btn btn-default navbar-btn btn-glyphicon blue">
-            <span class="glyphicon glyphicon-plus"></span>
-        </button>
+        <div class="col-xs-2 col-xs-offset-2">
+            <a class=" btn btn-glyphicon navbar-btn interaction-link" data-ng-href="/subjects/new" data-ng-click="showCreateDialog(); $event.preventDefault();">
+              <span class="glyphicon glyphicon-plus"></span>
+            </a>
+        </div>
 	</div>
+</div>
+
+<div class="col-xs-12 hidden-md hidden-lg hidden-sm search-bar">
+    <div class="input-group">
+        <div class="input-group-addon">
+			<span class="glyphicon glyphicon-search"></span>
+		</div>
+        <input type="text" placeholder="Veranstaltung, Jahr, ..." data-ng-model="searchText" autocomplete="off" class="form-control search-input" />
+    </div>
 </div>
 
 <table class="table table-striped table-hover" ng-init="predicate='name'; reverse=false;">

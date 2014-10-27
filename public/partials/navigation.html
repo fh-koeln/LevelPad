@@ -14,12 +14,15 @@
 		</li>
 		<li data-ng-show="loggedIn">
 			<div class="dropdown">
-				<a data-toggle="dropdown">
+				<a class="hidden-xs" data-toggle="dropdown">
 					<span data-ng-bind="user.firstname || user.username"></span>
 					<small data-ng-bind="'(' + user.role + ')'"></small>
 					<b class="caret"></b>
 				</a>
-				<ul class="dropdown-menu" role="menu">
+                <a class="hidden-sm hidden-md hidden-lg" data-toggle="dropdown">
+                    <span class="glyphicon glyphicon-align-justify"></span>
+                </a>
+				<ul class="dropdown-menu pull-right" role="menu">
 					<li data-ng-class="{ active: $location.path() == '/account' }"><a data-ng-href="/account">Account</a></li>
 					<li><a href="/logout" data-ng-click="logout(); $event.preventDefault();">Logout</a></li>
                     <li class="divider"></li>

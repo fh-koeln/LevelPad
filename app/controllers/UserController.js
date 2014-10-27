@@ -40,7 +40,7 @@ exports.create = function(callback, userdata) {
 	var user = new User(userdata);
 
 	// TODO Change to 'student'
-	user.role = 'student';
+	user.role = 'administrator';
 
 	async.waterfall([
 		function(next) {

@@ -229,6 +229,10 @@ app.config(function($routeProvider, $locationProvider) {
 		controller: 'StudentDetailController'
 	});
 	$routeProvider.when('/:module/:subject/students/:student', {
+		templateUrl: 'views/students/show.html',
+		controller: 'StudentDetailController'
+	});
+    $routeProvider.when('/:module/:subject/students/:student/edit', {
 		templateUrl: 'views/students/edit.html',
 		controller: 'StudentDetailController'
 	});

@@ -23,49 +23,6 @@ nav h1 {
     font-weight: 600;
 }
 
-@media (max-width: 767px) {
-	nav h1 {
-		width: 12%;
-		overflow: hidden;
-		height: 40px;
-        padding-left: 15px;
-	}
-    
-    .subtitle{
-        width: 76%;
-        text-align: center;   
-        padding: 0;
-    }
-    
-    .menu-bar{
-        width: 12%;
-    }
-	   /*nav h1:before {
-		content: '\e079';
-		margin-left: 10px;
-		margin-right: 10px;
-		position: relative;
-		top: 1px;
-		display: inline-block;
-		font-family: 'Glyphicons Halflings';
-		font-style: normal;
-		font-weight: normal;
-		line-height: 1;
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-	}*/
-    
-    .container{
-        padding-left: 0px;
-        padding-right: 0px;
-    }
-
-    .dropdown-toggle{
-        padding: 10px 15px;
-    }
-    
-}
-
 nav > ul {
 	display: inline-block;
 	margin: 0;
@@ -232,8 +189,12 @@ table {
     margin-right: -1px;
 }
 
-.blue {
+.interaction-color {
     color: #6399AE;
+}
+
+.delete-color{
+    color: #D40051;
 }
 
 .btn-glyphicon {
@@ -302,7 +263,7 @@ table {
 }
 
 .menu-bar{
-        float: right;
+    float: right;
 }
 
 .arrow-right {
@@ -369,10 +330,123 @@ fieldset > .radio-items{
     padding: 15px 0;
 }
 
-span.student-forename{
+span.student-lastname{
+    font-weight: 600;
+}
+
+.table-normal-font{
     font-weight: normal;
 }
 
-span.student-lastname{
-    font-weight: 600;
+.nav-dropdown{
+    border-bottom: 1px solid lightgray;   
+}
+
+table.borderless-table {
+    border-top-style: none;
+    border-left-style: none;
+    border-right-style: none;
+    border-bottom-style: none;
+    vertical-align: top;
+}
+
+tr.table-headline > th{
+    border-top: 1px solid lightgray;
+    border-bottom: 0;
+    color: lightgray;
+    font-weight: normal;
+}
+
+table > tbody > tr > .students-table-element{
+    height: 67px;
+    vertical-align: middle;
+}
+
+.small-circle {
+	border-radius: 50%;
+	width: 25px;
+	height: 25px; 
+    background-color: lightgray;
+    display: inline-block;
+	/ width and height can be anything, as long as they're equal /
+}
+
+.medium-circle {
+	border-radius: 50%;
+	width: 50px;
+	height: 50px; 
+    background-color: lightgray;
+    display: inline-block;
+	/ width and height can be anything, as long as they're equal /
+}
+
+.large-circle {
+	border-radius: 50%;
+	width: 89px;
+	height: 89px; 
+    background-color: lightgray;
+    display: inline-block;
+	/ width and height can be anything, as long as they're equal /
+}
+
+.rating-align{
+    vertical-align: middle;
+    display: inline-block;
+    height: 90px; 
+}
+
+tr > td.table-element-padding-left{
+    padding-left: 10px;
+}
+
+@media (max-width: 767px) {
+	nav h1 {
+		width: 12%;
+		overflow: hidden;
+		height: 40px;
+        padding-left: 15px;
+	}
+    
+    .subtitle{
+        width: 76%;
+        text-align: center;   
+        padding: 0;
+    }
+    
+    .menu-bar{
+        width: 12%;
+    }
+    
+    .subject-password-generator{
+        margin-left: 0px;
+        display: block;
+    }
+	   /*nav h1:before {
+		content: '\e079';
+		margin-left: 10px;
+		margin-right: 10px;
+		position: relative;
+		top: 1px;
+		display: inline-block;
+		font-family: 'Glyphicons Halflings';
+		font-style: normal;
+		font-weight: normal;
+		line-height: 1;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}*/
+    
+    .container{
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .dropdown-toggle{
+        padding: 10px 15px;
+    }
+    
+    .search-bar {
+    padding: 10px 10px;
+    }
+    
 }

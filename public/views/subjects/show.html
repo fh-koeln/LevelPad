@@ -1,5 +1,10 @@
-<div class="show-subject-head">
-    <div class="subject-title">Grundlagen der visuellen Kommunikation  <span class="glyphicon glyphicon-pencil blue"></span></div>
+<div class="show-subject-head hidden-xs">
+    <div class="subject-title">
+        Grundlagen der visuellen Kommunikation 
+        <a class=" btn btn-glyphicon interaction-link" data-ng-href="/subjects/new" data-ng-click="showCreateDialog(); $event.preventDefault();">
+            <span class="glyphicon glyphicon-pencil interaction-color"></span>
+        </a>
+    </div>
     <div class="subject-semester">Sommersemester 2014</div>
 </div>
 
@@ -30,7 +35,7 @@
 				<input type="text" placeholder="Nachname, Vorname, Matrikelnummer ..." data-ng-model="searchText" autocomplete="off" class="form-control search-input" />
 			</div>
 		</div>
-        <div class="col-md-offset-3 col-md-3 checkbox text-right">
+        <div class="col-sm-offset-2 col-sm-4 col-md-offset-3 col-md-3 checkbox">
             <label>
                 <input type="checkbox"> Bewertung anzeigen
             </label>
@@ -42,7 +47,7 @@
     Navbar, Searchbtn, newBtn für kleine Devices
 -->
 
-<div class="container hidden-md hidden-lg hidden-sm">
+<div class="container hidden-md hidden-lg hidden-sm nav-dropdown">
 	<div class="row" >
 		<div class="dropdown col-xs-8 dropdown-box">
 			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Teilnehmer<span class="caret btn-dropdown"></span></a>
@@ -58,22 +63,92 @@
 				</li>
 			</ul>
 		</div>
-		<button type="button" class="btn btn-default navbar-btn btn-glyphicon blue">
-            <span class="glyphicon glyphicon-plus"></span>
-        </button>
+        <div class="col-xs-2 col-xs-offset-2">
+            <button type="button" class="btn btn-default navbar-btn btn-glyphicon interaction-color">
+                <span class="glyphicon glyphicon-plus"></span>
+            </button>
+        </div>
 	</div>
 </div>
 
+<div class="col-xs-12 hidden-md hidden-lg hidden-sm search-bar">
+    <div class="input-group">
+        <div class="input-group-addon">
+			<span class="glyphicon glyphicon-search"></span>
+		</div>
+        <input type="text" placeholder="Veranstaltung, Jahr, ..." data-ng-model="searchText" autocomplete="off" class="form-control search-input" />
+    </div>
+</div>
+
 <table class="table table-striped table-hover" ng-init="predicate='name'; reverse=false;">
-	<tbody>
-	<tr>
-		<th class="col-xs-6 col-md-6 studentname">
-			<span class="student-forename">Peter </span>
-			<span class="student-lastname"> Wackel</span>
-            <span class="student-matrikelnummer text-right"> 110 876 54 </span>
-        </th>
-		<td class="col-md-6 hidden-xs text-right"> Rating </td>
-		<td class="col-xs-2 hidden-md hidden-lg hidden-sm text-right arrow-right"> ⟩ </td>
-	</tr>
+	<thead>
+        <tr class="table-headline">
+            <th class="col-xs-10 col-sm-4 col-md-4">
+                <span class="hidden-xs ">Name</span>
+                <span class="hidden-md hidden-lg hidden-sm">Name + Matrikelnr.</span>
+            </th>
+            <th class="col-sm-2 col-md-2 hidden-xs">
+                Matrikelnr.
+            </th>
+            <th class="col-sm-2 col-md-2 hidden-xs">
+                Artefakte
+            </th>
+            <th class="col-sm-2 col-md-2 hidden-xs">
+                relative Note
+            </th>
+            <th class="col-sm-2 col-md-2 hidden-xs">
+                absolute Note
+            </th>
+            <th class="col-xs-2 hidden-sm hidden-md hidden-lg ">
+            </th>
+        </tr>
+        
+    </thead>
+    <tbody>
+        <tr>
+            <th class="col-xs-10 col-sm-4 col-md-4 studentname students-table-element">
+                
+                    <span class="table-normal-font">Peter </span>
+                    <span class="student-lastname"> Wackel</span>
+                
+                <p class="table-normal-font hidden-md hidden-lg hidden-sm"> 110 876 54 </p>
+            </th>
+            <td class="col-sm-2 col-md-2 hidden-xs students-table-element">
+                <span class="student-matrikelnummer text-right"> 110 876 54 </span>
+            </td>
+            <td class="col-sm-2 col-md-2 hidden-xs"> 
+                <div class="circle"> </div>
+            </td>
+            <td class="col-sm-2 col-md-2 hidden-xs"> 
+                <div class="circle"> </div>
+            </td>
+            <td class="col-sm-2 col-md-2 hidden-xs"> 
+                <div class="circle"> </div>
+            </td>
+            <td class="col-xs-2 hidden-md hidden-lg hidden-sm text-right arrow-right"> ⟩ </td>
+        </tr>
+        
+        <tr>
+            <th class="col-xs-10 col-sm-4 col-md-4 studentname students-table-element">
+                
+                    <span class="table-normal-font">Das ist ein sehr </span>
+                    <span class="student-lastname">Langer Namen</span>
+                
+                <p class="student-matrikelnummer hidden-md hidden-lg hidden-sm"> 110 876 54 </p>
+            </th>
+            <td class="col-sm-2 col-md-2 hidden-xs students-table-element">
+                <span class="table-normal-font text-right"> 110 876 54 </span>
+            </td>
+            <td class="col-sm-2 col-md-2 hidden-xs"> 
+                <div class="medium-circle"> </div>
+            </td>
+            <td class="col-sm-2 col-md-2 hidden-xs"> 
+                <div class="medium-circle"> </div>
+            </td>
+            <td class="col-sm-2 col-md-2 hidden-xs"> 
+                <div class="medium-circle"> </div>
+            </td>
+            <td class="col-xs-2 hidden-md hidden-lg hidden-sm text-right arrow-right"> ⟩ </td>
+        </tr>
 	</tbody>
 </table>
