@@ -87,6 +87,10 @@ exports.create = function(callback, module, year, semester, subjectData) {
 			}
 		},
 		function(module, next) {
+			if (!module || !module._id) {
+				return next(new errors.NotFoundError('Module'));
+			}
+
 			// check if subject is already exist!
 			Subject.findOne({ module: module._id, year: year, semester: semester }, function(err, subject) {
 				if (!err && subject) {
@@ -96,8 +100,18 @@ exports.create = function(callback, module, year, semester, subjectData) {
 			});
 		},
 		function(module, next) {
-			var subject = new Subject(subjectData);
-			subject.slug = (year + '-' + semester + '-' + module.slug).toLowerCase();
+			var subject = new Subject(subjectData),
+				semesterSlug, yearSlug, nextYear = year + 1;
+
+			if (semester === 'Sommersemester') {
+				semesterSlug = 'sose';
+				yearSlug = year.toString()[2] + year.toString()[3];
+			} else if (semester === 'Wintersemester') {
+				semesterSlug = 'wise';
+				yearSlug = year.toString()[2] + year.toString()[3] + nextYear.toString()[2] +  nextYear.toString()[3];
+			}
+
+			subject.slug = (semesterSlug + yearSlug).toLowerCase();
 			subject.module = module._id;
 			subject.year = year;
 			subject.semester = semester;
