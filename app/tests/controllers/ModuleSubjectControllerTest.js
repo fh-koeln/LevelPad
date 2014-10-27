@@ -60,7 +60,7 @@ describe('ModuleSubjectController', function() {
 
 				var module = subject.module;
 				expect(module).property('shortName', 'WBA 1');
-				expect(module).property('name', 'Webbasierte Anwendungen 1');
+				expect(module).property('name', 'Web-basierte Anwendungen 1');
 
 				done();
 			}, 'wba1', '2014', 'Wintersemester');
@@ -85,7 +85,7 @@ describe('ModuleSubjectController', function() {
 
 						var module = subject.module;
 						expect(module).property('shortName', 'WBA 1');
-						expect(module).property('name', 'Webbasierte Anwendungen 1');
+						expect(module).property('name', 'Web-basierte Anwendungen 1');
 
 						next();
 					}, module, 2014, 'Wintersemester');
@@ -127,7 +127,7 @@ describe('ModuleSubjectController', function() {
 
 						var module = subject.module;
 						expect(module).property('shortName', 'WBA 1');
-						expect(module).property('name', 'Webbasierte Anwendungen 1');
+						expect(module).property('name', 'Web-basierte Anwendungen 1');
 
 						next(err, subject);
 					}, 'wba1', 2013, 'Wintersemester', subjectdata);
@@ -144,7 +144,7 @@ describe('ModuleSubjectController', function() {
 
 						var module = subject.module;
 						expect(module).property('shortName', 'WBA 1');
-						expect(module).property('name', 'Webbasierte Anwendungen 1');
+						expect(module).property('name', 'Web-basierte Anwendungen 1');
 
 						next(err, subject);
 					});
@@ -227,7 +227,7 @@ describe('ModuleSubjectController', function() {
 
 						var module = subject.module;
 						expect(module).property('shortName', 'WBA 1');
-						expect(module).property('name', 'Webbasierte Anwendungen 1');
+						expect(module).property('name', 'Web-basierte Anwendungen 1');
 
 						next(err);
 					});
@@ -244,7 +244,7 @@ describe('ModuleSubjectController', function() {
 
 						var module = subject.module;
 						expect(module).property('shortName', 'WBA 1');
-						expect(module).property('name', 'Webbasierte Anwendungen 1');
+						expect(module).property('name', 'Web-basierte Anwendungen 1');
 
 						next(err);
 					}, 'wba1', 2014, 'Wintersemester', newsubjectdata);
@@ -261,7 +261,7 @@ describe('ModuleSubjectController', function() {
 
 						var module = subject.module;
 						expect(module).property('shortName', 'WBA 1');
-						expect(module).property('name', 'Webbasierte Anwendungen 1');
+						expect(module).property('name', 'Web-basierte Anwendungen 1');
 
 						next(err);
 					});
@@ -286,7 +286,7 @@ describe('ModuleSubjectController', function() {
 
 						var module = subject.module;
 						expect(module).property('shortName', 'WBA 1');
-						expect(module).property('name', 'Webbasierte Anwendungen 1');
+						expect(module).property('name', 'Web-basierte Anwendungen 1');
 
 						next(err);
 					});
@@ -303,7 +303,7 @@ describe('ModuleSubjectController', function() {
 
 						var module = subject.module;
 						expect(module).property('shortName', 'WBA 1');
-						expect(module).property('name', 'Webbasierte Anwendungen 1');
+						expect(module).property('name', 'Web-basierte Anwendungen 1');
 
 						next(err);
 					}, 'wba1', 2014, 'Wintersemester', newmoduledata);
@@ -320,7 +320,7 @@ describe('ModuleSubjectController', function() {
 
 						var module = subject.module;
 						expect(module).property('shortName', 'WBA 1');
-						expect(module).property('name', 'Webbasierte Anwendungen 1');
+						expect(module).property('name', 'Web-basierte Anwendungen 1');
 
 						next(err);
 					});

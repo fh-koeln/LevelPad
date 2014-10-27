@@ -36,7 +36,7 @@ describe('ModuleController', function() {
 
 				expect(module).property('slug', 'wba1');
 				expect(module).property('shortName', 'WBA 1');
-				expect(module).property('name', 'Webbasierte Anwendungen 1');
+				expect(module).property('name', 'Web-basierte Anwendungen 1');
 
 				done();
 			}, 'wba1');
@@ -170,7 +170,7 @@ describe('ModuleController', function() {
 
 						expect(module).property('slug', 'wba1');
 						expect(module).property('shortName', 'WBA 1');
-						expect(module).property('name', 'Webbasierte Anwendungen 1');
+						expect(module).property('name', 'Web-basierte Anwendungen 1');
 
 						next(err);
 					});
@@ -214,7 +214,7 @@ describe('ModuleController', function() {
 
 						expect(module).property('slug', 'wba1');
 						expect(module).property('shortName', 'WBA 1');
-						expect(module).property('name', 'Webbasierte Anwendungen 1');
+						expect(module).property('name', 'Web-basierte Anwendungen 1');
 
 						next(err);
 					});
@@ -226,7 +226,7 @@ describe('ModuleController', function() {
 
 						expect(module).property('slug', 'wba1');
 						expect(module).property('shortName', 'WBA 1');
-						expect(module).property('name', 'Webbasierte Anwendungen 1');
+						expect(module).property('name', 'Web-basierte Anwendungen 1');
 
 						next(err);
 					}, 'wba1', newmoduledata);
@@ -238,7 +238,7 @@ describe('ModuleController', function() {
 
 						expect(module).property('slug', 'wba1');
 						expect(module).property('shortName', 'WBA 1');
-						expect(module).property('name', 'Webbasierte Anwendungen 1');
+						expect(module).property('name', 'Web-basierte Anwendungen 1');
 
 						next(err);
 					});

@@ -72,13 +72,13 @@ describe('Modules API', function() {
 				modules[0].should.containEql({
 					slug: 'wba1',
 					shortName: 'WBA 1',
-					name: 'Webbasierte Anwendungen 1'
+					name: 'Web-basierte Anwendungen 1'
 				});
 
 				modules[1].should.containEql({
 					slug: 'wba2',
 					shortName: 'WBA 2',
-					name: 'Webbasierte Anwendungen 2'
+					name: 'Web-basierte Anwendungen 2'
 				});
 
 				done(err);
@@ -120,7 +120,7 @@ describe('Modules API', function() {
 
 				res.body.should.have.property('slug').and.be.equal('wba1');
 				res.body.should.have.property('shortName').and.be.equal('WBA 1');
-				res.body.should.have.property('name').and.be.equal('Webbasierte Anwendungen 1');
+				res.body.should.have.property('name').and.be.equal('Web-basierte Anwendungen 1');
 
 				done(err);
 			});
