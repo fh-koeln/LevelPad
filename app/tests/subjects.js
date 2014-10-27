@@ -19,4 +19,12 @@ subjects.wba2Sose14 = {
 	status: 'inactive'
 };
 
+subjects.eisSose13 = {
+	slug: 'sose13',
+	semester: 'Sommersemester',
+	year: 2013,
+	module: modules.eis,
+	status: 'inactive'
+};
+
 module.exports = subjects;
