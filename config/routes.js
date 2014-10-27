@@ -11,9 +11,12 @@ if (process.env.ACL === 'disabled') {
 	api.use(acl.middleware);
 }
 
+// Primary resources
 api.use('/modules', require('../app/routes/modules'));
-api.use('/subjects', require('../app/routes/subjects'));
 api.use('/users', require('../app/routes/users'));
+//api.use('/subjects', require('../app/routes/subjects')); // Currently disabled because it's unused
+
+// Secondary resources
 api.use('/years', require('../app/routes/years'));
 api.use('/semesters', require('../app/routes/semesters'));
 

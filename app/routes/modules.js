@@ -81,49 +81,49 @@ moduleSubjects.get('/', function (req, res) {
 	 else
 	 delete req.query.semester;
 	 */
-	SubjectController.list(_helpers.sendResult(res));
+	ModuleSubjectController.list(_helpers.sendResult(res));
 });
 
 /**
  * Get one specific subject by slug (year-semester-module) for a module
  */
 moduleSubjects.get('/:slug', function (req, res) {
-	SubjectController.read(_helpers.sendResult(res), req.module, req.params.slug);
+	ModuleSubjectController.read(_helpers.sendResult(res), req.module, req.params.slug);
 });
 
 moduleSubjects.post('/', function (req, res) {
-	UserController.create(_helpers.sendResult(res), req.body);
+	ModuleSubjectController.create(_helpers.sendResult(res), req.body);
 });
 
 /**
  * Create or update one module by short name for a module.
  */
-moduleSubjects.put('/:year(\\d{4})/:semester(ss|ws)/:module', function (req, res) {
-	/*
-	 //generate slug
-	 var moduleSlug = req.body.module.slug;
+// moduleSubjects.put('/:year(\\d{4})/:semester(ss|ws)/:module', function (req, res) {
 
-	 req.body.module = req.body.module._id;
-	 req.body.semester = req.body.semester === 'sose' ? 'Sommersemester' : 'Wintersemester';
+// 	 //generate slug
+// 	 var moduleSlug = req.body.module.slug;
 
-	 new Subject(req.body).save(_helpers.sendResult(res));
-	 */
+// 	 req.body.module = req.body.module._id;
+// 	 req.body.semester = req.body.semester === 'sose' ? 'Sommersemester' : 'Wintersemester';
 
-	// Variante 2
-	Module.findByShortName(req.params.module, function (err, module) {
-		req.params.module = module._id;
-		req.body.module = module._id;
-		Subject.findOneAndUpdate(req.params, req.body, {
-			upsert: true
-		}, _helper.sendResult(res));
-	});
-});
+// 	 new Subject(req.body).save(_helpers.sendResult(res));
+
+
+// 	// Variante 2
+// 	Module.findByShortName(req.params.module, function (err, module) {
+// 		req.params.module = module._id;
+// 		req.body.module = module._id;
+// 		Subject.findOneAndUpdate(req.params, req.body, {
+// 			upsert: true
+// 		}, _helper.sendResult(res));
+// 	});
+// });
 
 /**
  * Delete one subject by slug for a module
  */
 moduleSubjects.delete('/:slug', function (req, res) {
-	Subject.findOneAndRemove(req.params.slug, _helpers.sendResult(res));
+	ModuleSubjectController.delete(_helpers.sendResult(res), req.params.slug);
 });
 
 moduleSubjects.use('/tasks', require('./tasks'));

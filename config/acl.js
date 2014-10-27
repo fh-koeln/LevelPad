@@ -15,7 +15,8 @@ var debug = require('debug')('acl'),
 module.exports.acl = acl = new acl(new acl.mongodbBackend(db.connection.db, 'acl-'));
 
 /**
- * Helper fuction to check if an object
+ * Helper fuction to check if a key and value exists.
+ *
  * @param  {[type]}  obj   [description]
  * @param  {[type]}  key   [description]
  * @param  {[type]}  value [description]
@@ -25,6 +26,12 @@ function hasValue(obj, key, value) {
 	return obj.hasOwnProperty(key) && obj[key] === value;
 }
 
+/**
+ * Check if an object has a name=currentUser pair.
+ *
+ * @param  {[type]}  keys [description]
+ * @return {Boolean}      [description]
+ */
 function hasCurrentUserKey(keys) {
 	return keys.some(function(key) {
 		return hasValue(key, 'name', 'currentUser');
@@ -68,8 +75,8 @@ module.exports.middleware = function middleware(req, res, next) {
 				if (hasCurrentUserKey(keys)) {
 					// Get the requested user
 					result = regexp.exec(apiPath);
-					keys.map( function(key, i) {
-						if ( key.name === 'currentUser' ) {
+					keys.map(function(key, i) {
+						if (key.name === 'currentUser') {
 							username = result[i + 1];
 						}
 					});

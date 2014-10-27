@@ -5,10 +5,10 @@ require('should-http');
 var	should = require('should'),
 	db = require('../db'),
 	async = require('async'),
-	modules = require('../modules'),
-	agentsAPI = require('../agents');
+	agentsAPI = require('../agents'),
+	subjects = require('../subjects');
 
-describe('Modules API', function() {
+describe('Modules Subjects API', function() {
 	var agents;
 
 	function setUpAgents(done) {
@@ -26,9 +26,9 @@ describe('Modules API', function() {
 		], done);
 	});
 
-	it('should return 403 when a guest wants to access modules', function(done) {
+	it('should return 403 when a guest wants to access module subjects', function(done) {
 		agents.student3
-			.get('/api/modules')
+			.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects')
 			.set('Accept', 'application/json')
 			.end(function(err, res) {
 				should.not.exist(err);
@@ -41,24 +41,24 @@ describe('Modules API', function() {
 			});
 	});
 
-	it('should return 403 when a student wants to access modules', function(done) {
+	it.skip('should return 200 when a student is a member of a module subject', function(done) {
 		agents.student2
-			.get('/api/modules')
+			.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects')
 			.set('Accept', 'application/json')
 			.end(function(err, res) {
 				should.not.exist(err);
-				res.should.have.status(403);
+				res.should.have.status(200);
 				res.should.be.json;
 
-				should.exist(res.body); // @todo Check error response
+				should.exist(res.body);
 
 				done(err);
 			});
 	});
 
-	it('should return 200 when a lecture wants to access the modules', function(done) {
+	it.skip('should return 200 when a lecture is a creator of a module subject', function(done) {
 		agents.lecturer1
-			.get('/api/modules')
+			.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects')
 			.set('Accept', 'application/json')
 			.end(function(err, res) {
 				should.not.exist(err);
@@ -66,33 +66,17 @@ describe('Modules API', function() {
 				res.should.be.json;
 				should.exist(res.body);
 
-				var apiModules = res.body;
-
-				apiModules.should.have.a.lengthOf(2);
-
-				apiModules[0].should.containEql({
-					slug: modules.wba1.slug,
-					shortName: modules.wba1.shortName,
-					name: modules.wba1.name
-				});
-
-				apiModules[1].should.containEql({
-					slug: modules.wba2.slug,
-					shortName: modules.wba2.shortName,
-					name: modules.wba2.name
-				});
-
 				done(err);
 			});
 	});
 
-	it('should return 200 (change to 201!) when an admin creates a new module', function(done) {
+	it.skip('should return 200 (change to 201!) when an admin creates a new module subject', function(done) {
 		agents.admin1
-			.post('/api/modules')
+			.post('/api/modules/' + subjects.wba2Sose13.module.slug + '/subjects')
 			.send({
-				slug: modules.eis.slug,
-				shortName: modules.eis.shortName,
-				name: modules.eis.name
+				semester: subjects.wba2Sose13.semester,
+				year: subjects.wba2Sose13.semester,
+				status: subjects.wba2Sose13.status
 			})
 			.set('Accept', 'application/json')
 			.end(function(err, res) {
@@ -101,15 +85,12 @@ describe('Modules API', function() {
 				res.should.be.json;
 				should.exist(res.body);
 
-				res.body.should.have.property('slug').and.be.equal(modules.eis.slug);
-				res.body.should.have.property('shortName').and.be.equal(modules.eis.shortName);
-				res.body.should.have.property('name').and.be.equal(modules.eis.name);
 
 				done(err);
 			});
 	});
 
-	it('should return 200 and data when a lecturer read a module', function(done) {
+	it.skip('should return 200 and data when a lecturer read a module', function(done) {
 		agents.admin1
 			.get('/api/modules/wba1')
 			.set('Accept', 'application/json')
@@ -119,15 +100,15 @@ describe('Modules API', function() {
 				res.should.be.json;
 				should.exist(res.body);
 
-				res.body.should.have.property('slug').and.be.equal(modules.wba1.slug);
-				res.body.should.have.property('shortName').and.be.equal(modules.wba1.shortName);
-				res.body.should.have.property('name').and.be.equal(modules.wba1.name);
+				res.body.should.have.property('slug').and.be.equal('wba1');
+				res.body.should.have.property('shortName').and.be.equal('WBA 1');
+				res.body.should.have.property('name').and.be.equal('Webbasierte Anwendungen 1');
 
 				done(err);
 			});
 	});
 
-	it('should return 200 when an admin deletes a module', function(done) {
+	it.skip('should return 200 when an admin deletes a module', function(done) {
 		agents.admin1
 			.delete('/api/modules/wba1')
 			.set('Accept', 'application/json')
@@ -141,7 +122,7 @@ describe('Modules API', function() {
 			});
 	});
 
-	it('should return 403 when a lecturer deletes a module', function(done) {
+	it.skip('should return 403 when a lecturer deletes a module', function(done) {
 		agents.lecturer1
 			.delete('/api/modules/wba1')
 			.set('Accept', 'application/json')
@@ -155,11 +136,11 @@ describe('Modules API', function() {
 			});
 	});
 
-	it('should return 200 when an admin updates a module', function(done) {
+	it.skip('should return 200 when an admin updates a module', function(done) {
 		agents.admin1
 			.put('/api/modules/wba1')
 			.send({
-				name: modules.wba1.name
+				name: 'Web-basierte Anwendungen 1'
 			})
 			.set('Accept', 'application/json')
 			.end(function(err, res) {
@@ -168,15 +149,15 @@ describe('Modules API', function() {
 				res.should.be.json;
 				should.exist(res.body);
 
-				res.body.should.have.property('slug').and.be.equal(modules.wba1.slug);
-				res.body.should.have.property('shortName').and.be.equal(modules.wba1.shortName);
-				res.body.should.have.property('name').and.be.equal(modules.wba1.name);
+				res.body.should.have.property('slug').and.be.equal('wba1');
+				res.body.should.have.property('shortName').and.be.equal('WBA 1');
+				res.body.should.have.property('name').and.be.equal('Web-basierte Anwendungen 1');
 
 				done(err);
 			});
 	});
 
-	it('should return 404 for unknown module', function(done) {
+	it.skip('should return 404 for unknown module', function(done) {
 		agents.admin1
 			.get('/api/modules/foo')
 			.set('Accept', 'application/json')
