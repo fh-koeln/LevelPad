@@ -5,7 +5,8 @@ var async = require('async'),
 	Module = require('../models/Module'),
 	Subject = require('../models/Subject'),
 	Task = require('../models/Task'),
-	users = require('./users');
+	users = require('./users'),
+	modules = require('./modules');
 
 
 module.exports.clear = function(callback) {
@@ -43,20 +44,10 @@ module.exports.initializeTestData = function(callback) {
 			new User(users.student2).save(next);
 		},
 		function(next) {
-			var module = {
-				slug: 'wba1',
-				shortName: 'WBA 1',
-				name: 'Webbasierte Anwendungen 1'
-			};
-			new Module(module).save(next);
+			new Module(modules.wba1).save(next);
 		},
 		function(next) {
-			var module = {
-				slug: 'wba2',
-				shortName: 'WBA 2',
-				name: 'Webbasierte Anwendungen 2'
-			};
-			new Module(module).save(next);
+			new Module(modules.wba2).save(next);
 		},
 		function(next) {
 			Module.findOne({ slug: 'wba1' }, function(err, module) {
