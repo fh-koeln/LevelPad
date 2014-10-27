@@ -37,14 +37,14 @@ exports.list = function(callback, module, filter) {
 };
 
 /**
- * Find subject by module, year and subject.
+ * Find subject by module and subject slug.
  *
  * @param callback
  * @param module
  * @param year
  * @param semester
  */
-exports.read = function(callback, module, year, semester) {
+exports.read = function(callback, module, slug) {
 	async.waterfall([
 		function(next) {
 			if (typeof module === 'string') {
@@ -58,7 +58,7 @@ exports.read = function(callback, module, year, semester) {
 				return next(new errors.NotFoundError('Module'));
 			}
 
-			Subject.findOne({ module: module._id, year: year, semester: semester }).populate('module').exec(function(err, subject) {
+			Subject.findOne({ module: module._id, slug: slug }).populate('module').exec(function(err, subject) {
 				if (!err && !subject) {
 					return next(new errors.NotFoundError('Subject'));
 				}
@@ -77,8 +77,20 @@ exports.read = function(callback, module, year, semester) {
  * @param semester
  * @param subjectdata
  */
-exports.create = function(callback, module, year, semester, subjectData) {
+exports.create = function(callback, module, subjectData) {
+
 	async.waterfall([
+		function(next) {
+			if (!subjectData.year) {
+				return next(new errors.ArgumentNullError('year'));
+			}
+
+			if (!subjectData.semester) {
+				return next(new errors.ArgumentNullError('semester'));
+			}
+
+			next(null);
+		},
 		function(next) {
 			if (typeof module === 'string') {
 				Module.findOne({ slug: module }, next);
@@ -91,8 +103,8 @@ exports.create = function(callback, module, year, semester, subjectData) {
 				return next(new errors.NotFoundError('Module'));
 			}
 
-			// check if subject is already exist!
-			Subject.findOne({ module: module._id, year: year, semester: semester }, function(err, subject) {
+			// check if subject already exists!
+			Subject.findOne({ module: module._id, year: subjectData.year, semester: subjectData.semester }, function(err, subject) {
 				if (!err && subject) {
 					return next(new errors.AlreadyInUseError('Subject'));
 				}
@@ -101,6 +113,8 @@ exports.create = function(callback, module, year, semester, subjectData) {
 		},
 		function(module, next) {
 			var subject = new Subject(subjectData),
+				year = subjectData.year,
+				semester = subjectData.semester,
 				semesterSlug, yearSlug, nextYear = year + 1;
 
 			if (semester === 'Sommersemester') {
@@ -113,8 +127,6 @@ exports.create = function(callback, module, year, semester, subjectData) {
 
 			subject.slug = (semesterSlug + yearSlug).toLowerCase();
 			subject.module = module._id;
-			subject.year = year;
-			subject.semester = semester;
 
 			subject.save(next);
 		},
@@ -145,14 +157,14 @@ exports.create = function(callback, module, year, semester, subjectData) {
  * @param semester
  * @param subjectData
  */
-exports.update = function(callback, module, year, semester, subjectData) {
+exports.update = function(callback, module, slug, subjectData) {
 	// TODO: Verify that the ID and the slug is not changed!?
 //	subjectData.slug = subjectSlug;
 
 	// TODO: could we remove the find here and change the check based on the numberAffected callback argument?
 	async.waterfall([
 		function(next) {
-			exports.read(next, module, year, semester);
+			exports.read(next, module, slug);
 		},
 		function(subject, next) {
 			if (subjectData.status !== undefined) {
@@ -171,7 +183,7 @@ exports.update = function(callback, module, year, semester, subjectData) {
  * @param year
  * @param semester
  */
-exports.delete = function(callback, module, year, semester) {
+exports.delete = function(callback, module, slug) {
 
 	// TODO add force parameter and remove module with subjects only if this parameter is true.
 
@@ -181,7 +193,7 @@ exports.delete = function(callback, module, year, semester) {
 
 	async.waterfall([
 		function(next) {
-			exports.read(next, module, year, semester);
+			exports.read(next, module, slug);
 		},
 		function(subject, next) {
 			subject.remove(next);

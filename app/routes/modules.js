@@ -85,14 +85,14 @@ moduleSubjects.get('/', function (req, res) {
 });
 
 /**
- * Get one specific subject by slug (year-semester-module) for a module
+ * Get one specific subject by slug (semester-year) for a module
  */
 moduleSubjects.get('/:slug', function (req, res) {
 	ModuleSubjectController.read(_helpers.sendResult(res), req.module, req.params.slug);
 });
 
 moduleSubjects.post('/', function (req, res) {
-	ModuleSubjectController.create(_helpers.sendResult(res), req.module, req.body.year, req.body.semester, req.body);
+	ModuleSubjectController.create(_helpers.sendResult(res), req.module, req.body);
 });
 
 /**
