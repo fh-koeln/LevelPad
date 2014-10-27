@@ -66,10 +66,10 @@ describe('ModuleSubjectController', function() {
 			}, subjects.wba1Wise1415.module.slug, subjects.wba1Wise1415.year, subjects.wba1Wise1415.semester);
 		});
 
-		it('should return a known subject (wba1 2014 Sommersemester) via module', function(done) {
+		it('should return a known subject (WBA 2 2014 Sommersemester) via module', function(done) {
 			async.waterfall([
 				function(next) {
-					Module.findOne({ slug: 'wba1' }, next);
+					Module.findOne({ slug: subjects.wba2Sose14.module.slug }, next);
 				},
 				function(module, next) {
 					assert.isNotNull(module, 'Module should be not null');
@@ -78,17 +78,17 @@ describe('ModuleSubjectController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(subject, 'Subject should be not null');
 
-						expect(subject).property('slug', 'wise1415');
+						expect(subject).property('slug', subjects.wba2Sose14.slug);
 						expect(subject).property('module');
-						expect(subject).property('semester', 'Wintersemester');
-						expect(subject).property('status', 'active');
+						expect(subject).property('semester', subjects.wba2Sose14.semester);
+						expect(subject).property('status', subjects.wba2Sose14.status);
 
 						var module = subject.module;
-						expect(module).property('shortName', 'WBA 1');
-						expect(module).property('name', 'Web-basierte Anwendungen 1');
+						expect(module).property('shortName', subjects.wba2Sose14.module.shortName);
+						expect(module).property('name', subjects.wba2Sose14.module.name);
 
 						next();
-					}, module, 2014, 'Wintersemester');
+					}, module, subjects.wba2Sose14.year, subjects.wba2Sose14.semester);
 				}
 			], done);
 		});
@@ -220,14 +220,14 @@ describe('ModuleSubjectController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(subject, 'Subject should be not null');
 
-						expect(subject).property('slug', 'wise1415');
+						expect(subject).property('slug', subjects.wba1Wise1415.slug);
 						expect(subject).property('module');
-						expect(subject).property('semester', 'Wintersemester');
-						expect(subject).property('status', 'active');
+						expect(subject).property('semester', subjects.wba1Wise1415.semester);
+						expect(subject).property('status', subjects.wba1Wise1415.status);
 
 						var module = subject.module;
-						expect(module).property('shortName', 'WBA 1');
-						expect(module).property('name', 'Web-basierte Anwendungen 1');
+						expect(module).property('shortName', subjects.wba1Wise1415.module.shortName);
+						expect(module).property('name', subjects.wba1Wise1415.module.name);
 
 						next(err);
 					});
@@ -237,14 +237,14 @@ describe('ModuleSubjectController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(subject, 'Subject should be not null');
 
-						expect(subject).property('slug', 'wise1415');
+						expect(subject).property('slug', subjects.wba1Wise1415.slug);
 						expect(subject).property('module');
-						expect(subject).property('semester', 'Wintersemester');
+						expect(subject).property('semester', subjects.wba1Wise1415.semester);
 						expect(subject).property('status', 'inactive');
 
 						var module = subject.module;
-						expect(module).property('shortName', 'WBA 1');
-						expect(module).property('name', 'Web-basierte Anwendungen 1');
+						expect(module).property('shortName', subjects.wba1Wise1415.module.shortName);
+						expect(module).property('name', subjects.wba1Wise1415.module.name);
 
 						next(err);
 					}, 'wba1', 2014, 'Wintersemester', newsubjectdata);
@@ -254,14 +254,14 @@ describe('ModuleSubjectController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(subject, 'Subject should be not null');
 
-						expect(subject).property('slug', 'wise1415');
+						expect(subject).property('slug', subjects.wba1Wise1415.slug);
 						expect(subject).property('module');
-						expect(subject).property('semester', 'Wintersemester');
+						expect(subject).property('semester', subjects.wba1Wise1415.semester);
 						expect(subject).property('status', 'inactive');
 
 						var module = subject.module;
-						expect(module).property('shortName', 'WBA 1');
-						expect(module).property('name', 'Web-basierte Anwendungen 1');
+						expect(module).property('shortName', subjects.wba1Wise1415.module.shortName);
+						expect(module).property('name', subjects.wba1Wise1415.module.name);
 
 						next(err);
 					});
