@@ -393,6 +393,7 @@ table > tbody > tr > .students-table-element{
     vertical-align: middle;
     display: inline-block;
     height: 90px; 
+    margin: 20px 0px;
 }
 
 tr > td.table-element-padding-left{
