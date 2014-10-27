@@ -14,4 +14,10 @@ modules.wba2 = {
 	name: 'Web-basierte Anwendungen 2'
 };
 
+modules.eis = {
+	slug: 'eis',
+	shortName: 'EIS',
+	name: 'Entwicklung interaktiver Systeme'
+};
+
 module.exports = modules;

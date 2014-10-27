@@ -67,7 +67,7 @@ describe.skip('Modules Subjects API', function() {
 
 				var modules = res.body;
 
-				modules.should.have.a.lengthOf(2);
+				modules.should.have.a.lengthOf(3);
 
 				modules[0].should.containEql({
 					slug: 'wba1',
@@ -79,6 +79,12 @@ describe.skip('Modules Subjects API', function() {
 					slug: 'wba2',
 					shortName: 'WBA 2',
 					name: 'Webbasierte Anwendungen 2'
+				});
+
+				modules[2].should.containEql({
+					slug: 'eis',
+					shortName: 'EIS',
+					name: 'Entwicklung interaktiver Systeme'
 				});
 
 				done(err);

@@ -51,6 +51,9 @@ module.exports.initializeTestData = function(callback) {
 			new Module(modules.wba2).save(next);
 		},
 		function(next) {
+			new Module(modules.eis).save(next);
+		},
+		function(next) {
 			Module.findOne({ slug: subjects.wba1Wise1415.module.slug }, function(err, module) {
 				if (err) {
 					return next(err);

@@ -5,6 +5,7 @@ require('should-http');
 var	should = require('should'),
 	db = require('../db'),
 	async = require('async'),
+	modules = require('../modules'),
 	agentsAPI = require('../agents');
 
 describe('Modules API', function() {
@@ -67,18 +68,24 @@ describe('Modules API', function() {
 
 				var modules = res.body;
 
-				modules.should.have.a.lengthOf(2);
+				modules.should.have.a.lengthOf(3);
 
 				modules[0].should.containEql({
-					slug: 'wba1',
-					shortName: 'WBA 1',
-					name: 'Web-basierte Anwendungen 1'
+					slug: modules.wba1.slug,
+					shortName: modules.wba1.shortName,
+					name: modules.wba1.name
 				});
 
 				modules[1].should.containEql({
-					slug: 'wba2',
-					shortName: 'WBA 2',
-					name: 'Web-basierte Anwendungen 2'
+					slug: modules.wba2.slug,
+					shortName: modules.wba2.shortName,
+					name: modules.wba2.name
+				});
+
+				modules[2].should.containEql({
+					slug: modules.eis.slug,
+					shortName: modules.eis.shortName,
+					name: modules.eis.name
 				});
 
 				done(err);
@@ -89,9 +96,9 @@ describe('Modules API', function() {
 		agents.admin1
 			.post('/api/modules')
 			.send({
-				slug: 'eis',
-				shortName: 'EIS',
-				name: 'Entwicklung interaktiver System'
+				slug: modules.eis.slug,
+				shortName: modules.eis.shortName,
+				name: modules.eis.name
 			})
 			.set('Accept', 'application/json')
 			.end(function(err, res) {
@@ -100,9 +107,9 @@ describe('Modules API', function() {
 				res.should.be.json;
 				should.exist(res.body);
 
-				res.body.should.have.property('slug').and.be.equal('eis');
-				res.body.should.have.property('shortName').and.be.equal('EIS');
-				res.body.should.have.property('name').and.be.equal('Entwicklung interaktiver System');
+				res.body.should.have.property('slug').and.be.equal(modules.eis.slug);
+				res.body.should.have.property('shortName').and.be.equal(modules.eis.shortName);
+				res.body.should.have.property('name').and.be.equal(modules.eis.name);
 
 				done(err);
 			});
@@ -118,9 +125,9 @@ describe('Modules API', function() {
 				res.should.be.json;
 				should.exist(res.body);
 
-				res.body.should.have.property('slug').and.be.equal('wba1');
-				res.body.should.have.property('shortName').and.be.equal('WBA 1');
-				res.body.should.have.property('name').and.be.equal('Web-basierte Anwendungen 1');
+				res.body.should.have.property('slug').and.be.equal(modules.wba1.slug);
+				res.body.should.have.property('shortName').and.be.equal(modules.wba1.shortName);
+				res.body.should.have.property('name').and.be.equal(modules.wba1.name);
 
 				done(err);
 			});
@@ -158,7 +165,7 @@ describe('Modules API', function() {
 		agents.admin1
 			.put('/api/modules/wba1')
 			.send({
-				name: 'Web-basierte Anwendungen 1'
+				name: modules.wba1.name
 			})
 			.set('Accept', 'application/json')
 			.end(function(err, res) {
@@ -167,9 +174,9 @@ describe('Modules API', function() {
 				res.should.be.json;
 				should.exist(res.body);
 
-				res.body.should.have.property('slug').and.be.equal('wba1');
-				res.body.should.have.property('shortName').and.be.equal('WBA 1');
-				res.body.should.have.property('name').and.be.equal('Web-basierte Anwendungen 1');
+				res.body.should.have.property('slug').and.be.equal(modules.wba1.slug);
+				res.body.should.have.property('shortName').and.be.equal(modules.wba1.shortName);
+				res.body.should.have.property('name').and.be.equal(modules.wba1.name);
 
 				done(err);
 			});
