@@ -81,7 +81,7 @@ moduleSubjects.get('/', function (req, res) {
 	 else
 	 delete req.query.semester;
 	 */
-	ModuleSubjectController.list(_helpers.sendResult(res));
+	ModuleSubjectController.list(_helpers.sendResult(res), req.module);
 });
 
 /**
@@ -92,7 +92,7 @@ moduleSubjects.get('/:slug', function (req, res) {
 });
 
 moduleSubjects.post('/', function (req, res) {
-	ModuleSubjectController.create(_helpers.sendResult(res), req.body);
+	ModuleSubjectController.create(_helpers.sendResult(res), req.module, req.body.year, req.body.semester, req.body);
 });
 
 /**
@@ -123,11 +123,13 @@ moduleSubjects.post('/', function (req, res) {
  * Delete one subject by slug for a module
  */
 moduleSubjects.delete('/:slug', function (req, res) {
-	ModuleSubjectController.delete(_helpers.sendResult(res), req.params.slug);
+	ModuleSubjectController.delete(_helpers.sendResult(res), req.module, req.params.slug);
 });
 
 moduleSubjects.use('/tasks', require('./tasks'));
 moduleSubjects.use('/students', require('./students'));
 moduleSubjects.use('/assistants', require('./assistants'));
+
+modules.use('/:module/subjects', moduleSubjects);
 
 module.exports = modules;

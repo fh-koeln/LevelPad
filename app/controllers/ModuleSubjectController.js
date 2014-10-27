@@ -108,7 +108,7 @@ exports.create = function(callback, module, year, semester, subjectData) {
 				yearSlug = year.toString()[2] + year.toString()[3];
 			} else if (semester === 'Wintersemester') {
 				semesterSlug = 'wise';
-				yearSlug = year.toString()[2] + year.toString()[3] + nextYear.toString()[2] +  nextYear.toString()[3];
+				yearSlug = year.toString()[2] + year.toString()[3] + nextYear.toString()[2] + nextYear.toString()[3];
 			}
 
 			subject.slug = (semesterSlug + yearSlug).toLowerCase();
