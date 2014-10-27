@@ -64,20 +64,19 @@ describe('Modules Subjects API', function() {
 				should.not.exist(err);
 				res.should.have.status(200);
 				res.should.be.json;
-
 				should.exist(res.body);
 
 				done(err);
 			});
 	});
 
-	it('should return 200 (change to 201!) when an admin creates a new module subject', function(done) {
+	it.skip('should return 200 (change to 201!) when an admin creates a new module subject', function(done) {
 		agents.admin1
-			.post('/api/modules/' + subjects.eisSose13.module.slug + '/subjects')
+			.post('/api/modules/' + subjects.wba2Sose13.module.slug + '/subjects')
 			.send({
-				semester: subjects.eisSose13.semester,
-				year: subjects.eisSose13.semester,
-				status: subjects.eisSose13.status
+				semester: subjects.wba2Sose13.semester,
+				year: subjects.wba2Sose13.semester,
+				status: subjects.wba2Sose13.status
 			})
 			.set('Accept', 'application/json')
 			.end(function(err, res) {
