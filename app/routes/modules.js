@@ -9,47 +9,50 @@ var express = require('express'),
 	ModuleSubjectController = require('../controllers/ModuleSubjectController'),
 	_helpers = require('./_helpers');
 
-// TODO check if we could replace the :slug param or delete below.
-modules.param('module', function (req, res, next, moduleSlug) {
+modules.param('moduleSlug', function (req, res, next, moduleSlug) {
 	ModuleController.read(function(err, module) {
+		if (err && err.name === 'NotFoundError') {
+			return res.status(404).json(err);
+		}
+
 		req.module = module;
 		next(err);
 	}, moduleSlug);
 });
 
 /**
- * Get all modules
+ * Get all modules.
  */
 modules.get('/', function (req, res) {
 	ModuleController.list(_helpers.sendResult(res));
 });
 
 /**
- * Get one module.
- */
-modules.get('/:slug', function (req, res) {
-	ModuleController.read(_helpers.sendResult(res), req.params.slug);
-});
-
-/**
- * Create a new module.
+ * Create a module.
  */
 modules.post('/', function (req, res) {
 	ModuleController.create(_helpers.sendResult(res), req.body);
 });
 
 /**
- * Update one module.
+ * Read a module.
  */
-modules.put('/:slug', function (req, res) {
-	ModuleController.update(_helpers.sendResult(res), req.params.slug, req.body);
+modules.get('/:moduleSlug', function (req, res) {
+	ModuleController.read(_helpers.sendResult(res), req.params.moduleSlug);
 });
 
 /**
- * Delete one module.
+ * Update a module.
  */
-modules.delete('/:slug', function (req, res) {
-	ModuleController.delete(_helpers.sendResult(res), req.params.slug);
+modules.put('/:moduleSlug', function (req, res) {
+	ModuleController.update(_helpers.sendResult(res), req.params.moduleSlug, req.body);
+});
+
+/**
+ * Delete a module.
+ */
+modules.delete('/:moduleSlug', function (req, res) {
+	ModuleController.delete(_helpers.sendResult(res), req.params.moduleSlug);
 });
 
 //
@@ -57,7 +60,7 @@ modules.delete('/:slug', function (req, res) {
 //
 
 /**
- * Get all subjects for a module
+ * Get all subjects for a module.
  */
 moduleSubjects.get('/', function (req, res) {
 
@@ -85,51 +88,43 @@ moduleSubjects.get('/', function (req, res) {
 });
 
 /**
- * Get one specific subject by slug (semester-year) for a module
+ * Create a new subject.
  */
-moduleSubjects.get('/:slug', function (req, res) {
-	ModuleSubjectController.read(_helpers.sendResult(res), req.module, req.params.slug);
-});
-
 moduleSubjects.post('/', function (req, res) {
 	ModuleSubjectController.create(_helpers.sendResult(res), req.module, req.body);
 });
 
 /**
- * Create or update one module by short name for a module.
+ * Read a subject for a module.
  */
-// moduleSubjects.put('/:year(\\d{4})/:semester(ss|ws)/:module', function (req, res) {
-
-// 	 //generate slug
-// 	 var moduleSlug = req.body.module.slug;
-
-// 	 req.body.module = req.body.module._id;
-// 	 req.body.semester = req.body.semester === 'sose' ? 'Sommersemester' : 'Wintersemester';
-
-// 	 new Subject(req.body).save(_helpers.sendResult(res));
-
-
-// 	// Variante 2
-// 	Module.findByShortName(req.params.module, function (err, module) {
-// 		req.params.module = module._id;
-// 		req.body.module = module._id;
-// 		Subject.findOneAndUpdate(req.params, req.body, {
-// 			upsert: true
-// 		}, _helper.sendResult(res));
-// 	});
-// });
-
-/**
- * Delete one subject by slug for a module
- */
-moduleSubjects.delete('/:slug', function (req, res) {
-	ModuleSubjectController.delete(_helpers.sendResult(res), req.module, req.params.slug);
+moduleSubjects.get('/:subjectSlug', function (req, res) {
+	ModuleSubjectController.read(_helpers.sendResult(res), req.module, req.params.subjectSlug);
 });
 
-moduleSubjects.use('/tasks', require('./tasks'));
-moduleSubjects.use('/students', require('./students'));
-moduleSubjects.use('/assistants', require('./assistants'));
+/**
+ * Update a subject for a module.
+ */
+moduleSubjects.put('/:subjectSlug', function (req, res) {
+	ModuleSubjectController.update(_helpers.sendResult(res), req.module, req.params.subjectSlug, req.body);
+});
 
-modules.use('/:module/subjects', moduleSubjects);
+/**
+ * Delete a subject for a module.
+ */
+moduleSubjects.delete('/:subjectSlug', function (req, res) {
+	ModuleSubjectController.delete(_helpers.sendResult(res), req.module, req.params.subjectSlug);
+});
+
+/**
+ * Register subresources for subjects.
+ */
+moduleSubjects.use('/:subjectSlug/tasks', require('./tasks'));
+moduleSubjects.use('/:subjectSlug/students', require('./students'));
+moduleSubjects.use('/:subjectSlug/assistants', require('./assistants'));
+
+/**
+ * Register subresources for modules.
+ */
+modules.use('/:moduleSlug/subjects', moduleSubjects);
 
 module.exports = modules;

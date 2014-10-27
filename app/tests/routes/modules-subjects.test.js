@@ -41,6 +41,7 @@ describe('Modules Subjects API', function() {
 			});
 	});
 
+	// Needs ACL
 	it.skip('should return 200 when a student is a member of a module subject', function(done) {
 		agents.student2
 			.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects')
@@ -56,6 +57,7 @@ describe('Modules Subjects API', function() {
 			});
 	});
 
+	// Needs ACL
 	it.skip('should return 200 when a lecture is a creator of a module subject', function(done) {
 		agents.lecturer1
 			.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects')
@@ -82,6 +84,9 @@ describe('Modules Subjects API', function() {
 
 				should.exist(res.body);
 
+				var apiSubjects = res.body;
+
+				apiSubjects.should.have.a.lengthOf(1);
 
 				done(err);
 			});
@@ -108,9 +113,51 @@ describe('Modules Subjects API', function() {
 			});
 	});
 
-	it.skip('should return 200 and data when a lecturer read a module', function(done) {
+	it('should return 200 and data when an admin reads a subject', function(done) {
 		agents.admin1
-			.get('/api/modules/wba1')
+			.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug)
+			.set('Accept', 'application/json')
+			.end(function(err, res) {
+				should.not.exist(err);
+				res.should.have.status(200);
+				res.should.be.json;
+
+				should.exist(res.body);
+
+				res.body.should.have.property('slug').and.be.equal(subjects.wba1Wise1415.slug);
+				res.body.should.have.property('semester').and.be.equal(subjects.wba1Wise1415.semester);
+				res.body.should.have.property('year').and.be.equal(subjects.wba1Wise1415.year);
+
+				done(err);
+			});
+	});
+
+	it('should return 200 when an admin updates a subject', function(done) {
+		agents.admin1
+			.put('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug)
+			.send({
+				status: 'inactive'
+			})
+			.set('Accept', 'application/json')
+			.end(function(err, res) {
+				should.not.exist(err);
+				res.should.have.status(200);
+				res.should.be.json;
+
+				should.exist(res.body);
+
+				res.body.should.have.property('slug').and.be.equal(subjects.wba1Wise1415.slug);
+				res.body.should.have.property('semester').and.be.equal(subjects.wba1Wise1415.semester);
+				res.body.should.have.property('year').and.be.equal(subjects.wba1Wise1415.year);
+				res.body.should.have.property('status').and.be.equal('inactive');
+
+				done(err);
+			});
+	});
+
+	it('should return 200 when an admin deletes a module', function(done) {
+		agents.admin1
+			.delete('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug)
 			.set('Accept', 'application/json')
 			.end(function(err, res) {
 				should.not.exist(err);
@@ -118,31 +165,13 @@ describe('Modules Subjects API', function() {
 				res.should.be.json;
 				should.exist(res.body);
 
-				res.body.should.have.property('slug').and.be.equal('wba1');
-				res.body.should.have.property('shortName').and.be.equal('WBA 1');
-				res.body.should.have.property('name').and.be.equal('Webbasierte Anwendungen 1');
-
 				done(err);
 			});
 	});
 
-	it.skip('should return 200 when an admin deletes a module', function(done) {
-		agents.admin1
-			.delete('/api/modules/wba1')
-			.set('Accept', 'application/json')
-			.end(function(err, res) {
-				should.not.exist(err);
-				res.should.have.status(200);
-				res.should.be.json;
-				should.exist(res.body);
-
-				done(err);
-			});
-	});
-
-	it.skip('should return 403 when a lecturer deletes a module', function(done) {
-		agents.lecturer1
-			.delete('/api/modules/wba1')
+	it('should return 403 when a student deletes a subject', function(done) {
+		agents.student3
+			.delete('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug)
 			.set('Accept', 'application/json')
 			.end(function(err, res) {
 				should.not.exist(err);
@@ -154,30 +183,37 @@ describe('Modules Subjects API', function() {
 			});
 	});
 
-	it.skip('should return 200 when an admin updates a module', function(done) {
-		agents.admin1
-			.put('/api/modules/wba1')
-			.send({
-				name: 'Web-basierte Anwendungen 1'
-			})
+	it('should return 403 when a guest deletes a subject', function(done) {
+		agents.student3
+			.delete('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug)
 			.set('Accept', 'application/json')
 			.end(function(err, res) {
 				should.not.exist(err);
-				res.should.have.status(200);
+				res.should.have.status(403);
 				res.should.be.json;
 				should.exist(res.body);
-
-				res.body.should.have.property('slug').and.be.equal('wba1');
-				res.body.should.have.property('shortName').and.be.equal('WBA 1');
-				res.body.should.have.property('name').and.be.equal('Web-basierte Anwendungen 1');
 
 				done(err);
 			});
 	});
 
-	it.skip('should return 404 for unknown module', function(done) {
+	it('should return 404 for unknown module', function(done) {
 		agents.admin1
-			.get('/api/modules/foo')
+			.get('/api/modules/' + 'unknown' + '/subjects/' + subjects.wba1Wise1415.slug)
+			.set('Accept', 'application/json')
+			.end(function(err, res) {
+				should.not.exist(err);
+				res.should.have.status(404);
+				res.should.be.json;
+				should.exist(res.body);
+
+				done(err);
+			});
+	});
+
+	it('should return 404 for unknown subject', function(done) {
+		agents.admin1
+			.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + 'sose18')
 			.set('Accept', 'application/json')
 			.end(function(err, res) {
 				should.not.exist(err);

@@ -26,6 +26,41 @@ describe('Users API', function() {
 		], done);
 	});
 
+
+	it('should return 403 when students reads users', function(done) {
+		agents.student2
+			.get('/api/users/')
+			.set('Accept', 'application/json')
+			.end(function(err, res) {
+				should.not.exist(err);
+				res.should.have.status(403);
+				res.should.be.json;
+
+				should.exist(res.body);
+
+				done(err);
+			});
+	});
+
+	it('should return 200 and users when admin reads users', function(done) {
+		agents.admin1
+			.get('/api/users/')
+			.set('Accept', 'application/json')
+			.end(function(err, res) {
+				should.not.exist(err);
+				res.should.have.status(200);
+				res.should.be.json;
+
+				should.exist(res.body);
+
+				var apiUsers = res.body;
+
+				apiUsers.should.have.a.lengthOf(5);
+
+				done(err);
+			});
+	});
+
 	it('should return 400 when a guest creates a user with no data', function(done) {
 		agents.student3
 			.post('/api/users')
@@ -264,7 +299,7 @@ describe('Users API', function() {
 				res.body.should.have.property('firstname').and.be.equal(users.student3.firstname);
 				res.body.should.have.property('lastname').and.be.equal(users.student3.lastname);
 				res.body.should.have.property('email').and.be.equal(users.student3.email);
-				res.body.should.have.property('role').and.be.equal(users.student3.role); // @todo This will fail in future, change to student
+				res.body.should.have.property('role').and.be.equal(users.student3.role);
 
 				done(err);
 			});
@@ -286,7 +321,7 @@ describe('Users API', function() {
 				res.body.should.have.property('firstname').and.be.equal(users.student1.firstname);
 				res.body.should.have.property('lastname').and.be.equal(users.student1.lastname);
 				res.body.should.have.property('email').and.be.equal(users.student1.email);
-				res.body.should.have.property('role').and.be.equal(users.student1.role); // @todo This will fail in future, change to student
+				res.body.should.have.property('role').and.be.equal(users.student1.role);
 
 				done(err);
 			});

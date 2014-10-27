@@ -176,7 +176,7 @@ exports.update = function(callback, module, slug, subjectData) {
 };
 
 /**
- * Remove a subject by module, year and semester.
+ * Remove a subject by module and subject.
  *
  * @param callback
  * @param module
