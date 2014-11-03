@@ -68,7 +68,7 @@ describe('Modules API', function() {
 
 				var apiModules = res.body;
 
-				apiModules.should.have.a.lengthOf(2);
+				apiModules.should.have.a.lengthOf(3);
 
 				apiModules[0].should.containEql({
 					slug: modules.wba1.slug,

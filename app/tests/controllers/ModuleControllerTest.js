@@ -22,7 +22,7 @@ describe('ModuleController', function() {
 			ModuleController.list(function(err, modules) {
 				assert.isNull(err, 'Error should be null');
 				assert.isNotNull(modules, 'Modules should be not null');
-				assert.lengthOf(modules, 2, 'Modules array has length of 2');
+				assert.lengthOf(modules, 3, 'Modules array has length of 2');
 				done();
 			});
 		});

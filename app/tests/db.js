@@ -5,6 +5,7 @@ var async = require('async'),
 	Module = require('../models/Module'),
 	Subject = require('../models/Subject'),
 	Task = require('../models/Task'),
+	Member = require('../models/Member'),
 	users = require('./users'),
 	modules = require('./modules'),
 	subjects = require('./subjects');
@@ -51,6 +52,9 @@ module.exports.initializeTestData = function(callback) {
 			new Module(modules.wba2).save(next);
 		},
 		function(next) {
+			new Module(modules.cga).save(next);
+		},
+		function(next) {
 			Module.findOne({ slug: subjects.wba1Wise1415.module.slug }, function(err, module) {
 				if (err) {
 					return next(err);
@@ -61,6 +65,48 @@ module.exports.initializeTestData = function(callback) {
 					year: subjects.wba1Wise1415.year,
 					semester: subjects.wba1Wise1415.semester,
 					status: subjects.wba1Wise1415.status,
+				};
+				new Subject(subject).save(next);
+			});
+		},
+		function(next) {
+			Module.findOne({ slug: subjects.wba1Wise1415.module.slug }, function(err, module) {
+				if (err) {
+					return next(err);
+				}
+
+				Subject.findOne({ slug: subjects.wba1Wise1415.slug, module: module._id }, function(err, subject) {
+					if (err) {
+						return next(err);
+					}
+
+					User.findOne({ username: users.student1.username }, function(err, user) {
+						if (err) {
+							return next(err);
+						}
+
+						var member = new Member();
+						member.user = user._id;
+						member.role = 'member';
+						member.save( function(err, member) {
+							subject.members.push(member._id);
+							subject.save(next);
+						});
+					});
+				});
+			});
+		},
+		function(next) {
+			Module.findOne({ slug: subjects.cgaWise1415.module.slug }, function(err, module) {
+				if (err) {
+					return next(err);
+				}
+				var subject = {
+					slug: subjects.cgaWise1415.slug,
+					module: module,
+					year: subjects.cgaWise1415.year,
+					semester: subjects.cgaWise1415.semester,
+					status: subjects.cgaWise1415.status,
 				};
 				new Subject(subject).save(next);
 			});
