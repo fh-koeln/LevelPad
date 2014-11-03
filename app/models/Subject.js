@@ -15,7 +15,8 @@ var subjectSchema = new Schema({
 	registration_active: { type: Boolean, default: false },
 	registration_expires_at: Date,
 	registration_password: String,
-	tasks: [ { type: ObjectId, ref: 'Task' } ]
+	tasks: [ { type: ObjectId, ref: 'Task' } ],
+	members: [ { type: ObjectId, ref: 'Member' } ]
 });
 
 subjectSchema.index({ slug: 1, module: 1}, { unique: true });

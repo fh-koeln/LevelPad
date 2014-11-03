@@ -119,8 +119,9 @@ moduleSubjects.delete('/:subjectSlug', function (req, res) {
  * Register subresources for subjects.
  */
 moduleSubjects.use('/:subjectSlug/tasks', require('./tasks'));
-moduleSubjects.use('/:subjectSlug/students', require('./students'));
-moduleSubjects.use('/:subjectSlug/assistants', require('./assistants'));
+moduleSubjects.use('/:subjectSlug/members', require('./members'));
+//moduleSubjects.use('/:subjectSlug/students', require('./students'));
+//moduleSubjects.use('/:subjectSlug/assistants', require('./assistants'));
 
 /**
  * Register subresources for modules.
