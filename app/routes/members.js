@@ -18,11 +18,15 @@ members.get('/', function(req, res) {
 /**
  * Get one assstant for the current subject.
  */
-members.get('/:slug', function(req, res) {
-	Member.findOne({
-//		user: user,
-//		subject: subject
-	}, helpers.sendResult(res));
+members.get('/:memberId', function(req, res) {
+	ModuleSubjectMemberController.read(helpers.sendResult(res), req.subject, req.params.memberId);
+});
+
+/**
+ * Get one assstant for the current subject.
+ */
+members.put('/:memberId', function(req, res) {
+	ModuleSubjectMemberController.update(helpers.sendResult(res), req.subject, req.params.memberId, req.body);
 });
 
 /**

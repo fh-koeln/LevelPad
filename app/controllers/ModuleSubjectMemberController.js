@@ -43,8 +43,26 @@ exports.list = function(callback, subject) {
  * @param year
  * @param semester
  */
-exports.read = function(callback, module, slug) {
+exports.read = function(callback, subject, memberId) {
+	async.waterfall([
+		function(next) {
+			if (!subject || !subject._id) {
+				return next(new errors.NotFoundError('Subject'));
+			}
 
+			next(null, subject);
+		},
+		function(subject, next) {
+			var memberExists = subject.members.some(function (member) {
+			    return member.equals(memberId);
+			});
+
+			if (!memberExists) {
+					return next(new errors.NotFoundError('Member'));
+			}
+			Member.findById(memberId, next);
+		}
+	], callback);
 };
 
 /**
@@ -104,8 +122,18 @@ exports.create = function(callback, subject, memberData) {
  * @param semester
  * @param subjectData
  */
-exports.update = function(callback, module, slug, subjectData) {
-
+exports.update = function(callback, subject, memberId, memberData) {
+	async.waterfall([
+		function(next) {
+			exports.read(next, subject, memberId);
+		},
+		function(member, next) {
+			if (memberData.role !== undefined) {
+				member.role = memberData.role;
+			}
+			member.save(next);
+		}
+	], callback);
 };
 
 /**
