@@ -164,12 +164,13 @@ table {
 }
 
 .interaction-bar {
-    padding: 20px 0;
     border-left: 1px solid lightgrey;
 }
 
 .interaction-link{
     color: #77aabb;
+    vertical-align: middle;
+    padding: 10px 0;
 }
 
 .module-time {
@@ -248,11 +249,11 @@ table {
 }
 
 .interaction-tools {
-    padding-top: 8px;
+    vertical-align: center;
 }
 
 .search-bar {
-    padding-right: 6px;
+    padding: 10px;
 }
 
 .subtitle{
@@ -268,9 +269,14 @@ table {
 
 .arrow-right {
     font-family: "Helvetica Neue";
-    font-size: 40px;
+    font-size: 60px;
     color: #6399AE;
+}
 
+.arrow-right-small {
+    font-family: "Helvetica Neue";
+    font-size: 30px;
+    color: #6399AE;
 }
 
 .nav-tabs,
@@ -326,16 +332,22 @@ fieldset > .radio-items{
     padding: 20px 0;
 }
 
-.add-student{
-    padding: 15px 0;
-}
-
 span.student-lastname{
     font-weight: 600;
 }
 
-.table-normal-font{
+.small-font{
+    margin-bottom: 0;
     font-weight: normal;
+}
+
+.table > tbody > tr > th.table-student{
+    font-weight: normal;
+    vertical-align: middle;
+}
+
+.table-student-align{
+    padding-top: 17px;
 }
 
 .nav-dropdown{
@@ -350,10 +362,13 @@ table.borderless-table {
     vertical-align: top;
 }
 
-tr.table-headline > th{
+tr.table-headline > th {
     border-top: 1px solid lightgray;
     border-bottom: 0;
     color: lightgray;
+}
+
+tr.table-headline > th {
     font-weight: normal;
 }
 
@@ -368,6 +383,7 @@ table > tbody > tr > .students-table-element{
 	height: 25px; 
     background-color: lightgray;
     display: inline-block;
+    margin: 2px;
 	/ width and height can be anything, as long as they're equal /
 }
 
@@ -376,7 +392,11 @@ table > tbody > tr > .students-table-element{
 	width: 50px;
 	height: 50px; 
     background-color: lightgray;
+    vertical-align: middle;
     display: inline-block;
+    text-align: center;
+    padding-top: 13px;
+    margin: 2px;
 	/ width and height can be anything, as long as they're equal /
 }
 
@@ -386,18 +406,76 @@ table > tbody > tr > .students-table-element{
 	height: 89px; 
     background-color: lightgray;
     display: inline-block;
+    text-align: center;
+    padding-top: 35px;
+    margin: 2px;
 	/ width and height can be anything, as long as they're equal /
 }
 
-.rating-align{
-    vertical-align: middle;
+.circle-center-table{
+    margin-left: 13px;
+}
+
+.rating-box{
     display: inline-block;
     height: 90px; 
-    margin: 20px 0px;
+    margin-bottom: 20px;
+    vertical-align: middle;
+    padding: 0;
+}
+
+.rating-box-text{
+    display: inline-block;
+}
+
+.rating-box-large{
+    padding: 0;   
+}
+
+.rating-box-medium{
+    margin-top: 21px;
+    padding: 0; 
+}
+
+.gewichtung-font{
+    color: lightgray;   
 }
 
 tr > td.table-element-padding-left{
     padding-left: 10px;
+}
+
+@media (max-width: 991px) {
+    
+    .rating-box-large{
+        text-align: center;
+        margin-top: 0;
+        padding-left: 0;
+    }
+    .rating-box-medium{
+        text-align: center;
+        margin-top: 0;
+        padding-left: 15px;
+    }
+    
+    .large-circle {
+        border-radius: 50%;
+        width: 50px;
+        height: 50px; 
+        background-color: lightgray;
+        vertical-align: middle;
+        display: inline-block;
+        text-align: center;
+        padding-top: 13px;
+        margin: 2px;
+        / width and height can be anything, as long as they're equal /
+    }
+    
+    .rating-box{
+        margin-top: 5px;
+        margin-bottom: 0;
+    }
+    
 }
 
 @media (max-width: 767px) {
@@ -436,18 +514,35 @@ tr > td.table-element-padding-left{
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
 	}*/
-    
-    .container{
-        padding-left: 0px;
-        padding-right: 0px;
-    }
 
     .dropdown-toggle{
-        padding: 10px 15px;
+        padding: 10px 0px;
     }
     
     .search-bar {
     padding: 10px 10px;
+    }
+    
+    .rating-box-text{
+        display: block;
+    }
+    
+    .table-student-align{
+        padding-top: 0;
+        padding-bottom: 20px;
+        padding-left: 0;
+    }
+    
+    .table-circle-align{
+        padding-left: 0;   
+    }
+    
+    .arrow-right-small{
+        font-size: 20;   
+    }
+    
+    table > tbody > tr > .students-table-element{
+        height: 50px;
     }
     
 }

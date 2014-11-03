@@ -14,7 +14,7 @@
 -->
 <ul class="nav nav-tabs hidden-xs " data-ng-init="filterStatus='test1'"> <!--Filterstatus muss geaendert werden fuer Aktiv und inaktive-->
 	<li class="col-md-2,5" data-ng-class="{ 'active': filterStatus=='test1' }"><a data-ng-click="test1">Teilnehmer (120)</a></li> <!--Teilnehmerzahl dynamisch-->
-	<li class="col-md-2,5"  data-ng-class="{ 'active': filterStatus=='test2' }"><a data-ng-click="test2">Learning Outcomes</a></li>
+	<li class="col-md-2,5"  data-ng-class="{ 'active': filterStatus=='test2' }"><a href="/:module/:subject/tasks">Learning Outcomes</a></li>
     <li class="col-md-2,5"  data-ng-class="{ 'active': filterStatus=='test3' }"><a data-ng-click="test3">Einstellungen</a></li>
 </ul>
 
@@ -22,11 +22,11 @@
     Searchbar und neue Veranstaltung für große Devices
 -->
 
-<div class="container hidden-xs">
-    <div class="col-md-12 col-sm-12 add-student">
+<div class="container interaction-bar hidden-xs">
+    <div class="col-md-12 col-sm-12 interaction-link">
 			<a class="interaction-link" data-ng-href="/student/new" data-ng-click="showCreateDialog(); $event.preventDefault();">+ Teilnehmer hinzufügen</a>
     </div>
-	<div class="row interaction-bar" >
+	<div class="row " >
 		<div class="col-md-6 col-sm-6 col-xs-12 search-bar">
 			<div class="input-group">
 				<div class="input-group-addon">
@@ -39,6 +39,11 @@
             <label>
                 <input type="checkbox"> Bewertung anzeigen
             </label>
+            <div>
+                <a class="interaction-link" data-ng-href="" data-ng-click="">
+                    <span class="glyphicon glyphicon-print"></span> Bewertungen drucken
+                </a>
+            </div>
 	   </div>
     </div>
 </div>
@@ -108,47 +113,47 @@
         <tr>
             <th class="col-xs-10 col-sm-4 col-md-4 studentname students-table-element">
                 
-                    <span class="table-normal-font">Peter </span>
+                    <span class="small-font">Peter </span>
                     <span class="student-lastname"> Wackel</span>
                 
-                <p class="table-normal-font hidden-md hidden-lg hidden-sm"> 110 876 54 </p>
+                <p class="small-font hidden-md hidden-lg hidden-sm"> 110 876 54 </p>
             </th>
             <td class="col-sm-2 col-md-2 hidden-xs students-table-element">
                 <span class="student-matrikelnummer text-right"> 110 876 54 </span>
             </td>
             <td class="col-sm-2 col-md-2 hidden-xs"> 
-                <div class="circle"> </div>
+                <div class="medium-circle">1 </div>
             </td>
             <td class="col-sm-2 col-md-2 hidden-xs"> 
-                <div class="circle"> </div>
+                <div class="medium-circle">2 </div>
             </td>
             <td class="col-sm-2 col-md-2 hidden-xs"> 
-                <div class="circle"> </div>
+                <div class="medium-circle">4,0 </div>
             </td>
-            <td class="col-xs-2 hidden-md hidden-lg hidden-sm text-right arrow-right"> ⟩ </td>
+            <td class="col-xs-2 hidden-md hidden-lg hidden-sm text-right arrow-right-small"> ⟩ </td>
         </tr>
         
-        <tr>
+       <tr>
             <th class="col-xs-10 col-sm-4 col-md-4 studentname students-table-element">
                 
-                    <span class="table-normal-font">Das ist ein sehr </span>
-                    <span class="student-lastname">Langer Namen</span>
+                    <span class="small-font">Das ist ein </span>
+                    <span class="student-lastname"> Sehr langer Name</span>
                 
-                <p class="student-matrikelnummer hidden-md hidden-lg hidden-sm"> 110 876 54 </p>
+                <p class="small-font hidden-md hidden-lg hidden-sm"> 110 876 55 </p>
             </th>
             <td class="col-sm-2 col-md-2 hidden-xs students-table-element">
-                <span class="table-normal-font text-right"> 110 876 54 </span>
+                <span class="student-matrikelnummer text-right"> 110 876 55 </span>
             </td>
             <td class="col-sm-2 col-md-2 hidden-xs"> 
-                <div class="medium-circle"> </div>
+                <div class="medium-circle">3 </div>
             </td>
             <td class="col-sm-2 col-md-2 hidden-xs"> 
-                <div class="medium-circle"> </div>
+                <div class="medium-circle">3 </div>
             </td>
             <td class="col-sm-2 col-md-2 hidden-xs"> 
-                <div class="medium-circle"> </div>
+                <div class="medium-circle">5,0 </div>
             </td>
-            <td class="col-xs-2 hidden-md hidden-lg hidden-sm text-right arrow-right"> ⟩ </td>
+            <td class="col-xs-2 hidden-md hidden-lg hidden-sm text-right arrow-right-small"> ⟩ </td>
         </tr>
 	</tbody>
 </table>
