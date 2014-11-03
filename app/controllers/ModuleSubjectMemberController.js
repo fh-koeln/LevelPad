@@ -20,10 +20,16 @@ exports.list = function(callback, subject) {
 				return next(new errors.NotFoundError('Subject'));
 			}
 
-		Subject.findById(subject._id).select('members -_id').populate('members').exec(function(err, members) {
-			User.populate(members, {
+		Subject.findById(subject._id).select('members -_id').populate('members').exec(function(err, subjectWithMembers) {
+			User.populate(subjectWithMembers, {
 			    path: 'members.user',
-			  }, next);
+			  }, function(err, subjectWithMembersAndUsers) {
+			  	if (err) {
+			  		return next(err);
+			  	}
+
+			  	next(null, subjectWithMembersAndUsers.members);
+			  });
 		});
 		}
 	], callback);
@@ -78,7 +84,7 @@ exports.create = function(callback, subject, memberData) {
 
 				member.save(function(err) {
 					if (err) {
-						next(err);
+						return next(err);
 					}
 					subject.members.push(member._id);
 					subject.save(next);
