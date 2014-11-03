@@ -20,7 +20,7 @@ exports.list = function(callback, subject) {
 				return next(new errors.NotFoundError('Subject'));
 			}
 
-		Subject.findById(subject._id).select('members -_id').populate('members').populate('user').exec(function(err, members) {
+		Subject.findById(subject._id).select('members -_id').populate('members').exec(function(err, members) {
 			User.populate(members, {
 			    path: 'members.user',
 			  }, next);
