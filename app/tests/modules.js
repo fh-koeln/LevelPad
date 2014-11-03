@@ -20,4 +20,11 @@ modules.eis = {
 	name: 'Entwicklung interaktiver Systeme'
 };
 
+modules.cga = {
+	slug: 'cga',
+	shortName: 'cga',
+	name: 'Computergrafik und Animation'
+};
+
+
 module.exports = modules;

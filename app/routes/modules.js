@@ -20,6 +20,17 @@ modules.param('moduleSlug', function (req, res, next, moduleSlug) {
 	}, moduleSlug);
 });
 
+moduleSubjects.param('subjectSlug', function (req, res, next, subjectSlug) {
+	ModuleSubjectController.read(function(err, subject) {
+		if (err && err.name === 'NotFoundError') {
+			return res.status(404).json(err);
+		}
+
+		req.subject = subject;
+		next(err);
+	}, req.module, subjectSlug);
+});
+
 /**
  * Get all modules.
  */
@@ -119,7 +130,7 @@ moduleSubjects.delete('/:subjectSlug', function (req, res) {
  * Register subresources for subjects.
  */
 moduleSubjects.use('/:subjectSlug/tasks', require('./tasks'));
-//moduleSubjects.use('/:subjectSlug/members', require('./members'));
+moduleSubjects.use('/:subjectSlug/members', require('./members'));
 //moduleSubjects.use('/:subjectSlug/students', require('./students'));
 //moduleSubjects.use('/:subjectSlug/assistants', require('./assistants'));
 

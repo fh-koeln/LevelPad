@@ -11,6 +11,22 @@ subjects.wba1Wise1415 = {
 	status: 'active'
 };
 
+subjects.wba1Wise1516 = {
+	slug: 'wise1515',
+	semester: 'Wintersemester',
+	year: 2016,
+	module: modules.wba1,
+	status: 'inactive'
+};
+
+subjects.cgaWise1415 = {
+	slug: 'wise1415',
+	semester: 'Wintersemester',
+	year: 2014,
+	module: modules.cga,
+	status: 'inactive'
+};
+
 subjects.wba2Sose14 = {
 	slug: 'sose14',
 	semester: 'Sommersemester',
