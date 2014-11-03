@@ -7,11 +7,10 @@ var Subject = require('../models/Subject'),
 	acl = require('../../config/acl');
 
 /**
- * List all subjects by module and apply an optional filter.
+ * List all members by subject and apply an optional filter.
  *
  * @param callback
- * @param module
- * @param filter
+ * @param subject
  */
 exports.list = function(callback, subject) {
 	async.waterfall([
@@ -36,12 +35,11 @@ exports.list = function(callback, subject) {
 };
 
 /**
- * Find subject by module and subject slug.
+ * Find member by subject and member id.
  *
  * @param callback
- * @param module
- * @param year
- * @param semester
+ * @param subject
+ * @param memberId
  */
 exports.read = function(callback, subject, memberId) {
 	async.waterfall([
@@ -66,13 +64,11 @@ exports.read = function(callback, subject, memberId) {
 };
 
 /**
- * Create a new subject based on the given subjectData.
+ * Create a new member based on the given memberData.
  *
  * @param callback
- * @param module
- * @param year
- * @param semester
- * @param subjectdata
+ * @param subject
+ * @param memberData
  */
 exports.create = function(callback, subject, memberData) {
 		async.waterfall([
@@ -113,14 +109,12 @@ exports.create = function(callback, subject, memberData) {
 };
 
 /**
- * Update the module with given moduleSlug. Moduledata are optional
- * and the module slug ifself could not changed (currently).
+ * Update the member with given memberData.
  *
  * @param callback
- * @param module
- * @param year
- * @param semester
- * @param subjectData
+ * @param subject
+ * @param memberId
+ * @param memberData
  */
 exports.update = function(callback, subject, memberId, memberData) {
 	async.waterfall([
@@ -137,13 +131,24 @@ exports.update = function(callback, subject, memberId, memberData) {
 };
 
 /**
- * Remove a subject by module and subject.
+ * Remove a member by subject and member id.
  *
  * @param callback
- * @param module
- * @param year
- * @param semester
+ * @param subject
+ * @param memberId
  */
-exports.delete = function(callback, module, slug) {
-
+exports.delete = function(callback, subject, memberId) {
+	async.waterfall([
+		function(next) {
+			exports.read(next, subject, memberId);
+		},
+		function(member, next) {
+			member.remove(next);
+		},
+		function(member, next) {
+			var indexedMember = subject.members.indexOf(member._id);
+			subject.members.splice(indexedMember, 1);
+			subject.save(next);
+		}
+	], callback);
 };

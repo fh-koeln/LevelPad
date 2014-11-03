@@ -16,31 +16,31 @@ members.get('/', function(req, res) {
 });
 
 /**
- * Get one assstant for the current subject.
+ * Get one member for the current subject.
  */
 members.get('/:memberId', function(req, res) {
 	ModuleSubjectMemberController.read(helpers.sendResult(res), req.subject, req.params.memberId);
 });
 
 /**
- * Get one assstant for the current subject.
+ * Update one member for the current subject.
  */
 members.put('/:memberId', function(req, res) {
 	ModuleSubjectMemberController.update(helpers.sendResult(res), req.subject, req.params.memberId, req.body);
 });
 
 /**
- * Add a assistant to the current subject.
+ * Add a member to the current subject.
  */
 members.post('/', function(req, res) {
 	ModuleSubjectMemberController.create(helpers.sendResult(res), req.subject, req.body);
 });
 
 /**
- * Remove a assistant from the current subject.
+ * Remove a member from the current subject.
  */
-members.delete('/:slug', function(req, res) {
-	Module.findOneAndRemove(req.params, helpers.sendResult(res));
+members.delete('/:memberId', function(req, res) {
+	ModuleSubjectMemberController.delete(helpers.sendResult(res), req.subject, req.params.memberId);
 });
 
 module.exports = members;
