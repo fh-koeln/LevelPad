@@ -15,8 +15,7 @@ var taskSchema = new Schema({
 	slug: { type: Number, require: true},
 	title: { type: String, required: true },
 	threshold: {type: ObjectId, require: true},
-	weight: {type: Number, ref: 'Level', required:true}					
-	
+	weight: {type: Number, ref: 'Level', required:true}
 });
 
 module.exports = mongoose.model('Task', taskSchema);

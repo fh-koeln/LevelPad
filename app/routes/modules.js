@@ -20,6 +20,17 @@ modules.param('moduleSlug', function (req, res, next, moduleSlug) {
 	}, moduleSlug);
 });
 
+moduleSubjects.param('subjectSlug', function (req, res, next, subjectSlug) {
+	ModuleSubjectController.read(function(err, subject) {
+		if (err && err.name === 'NotFoundError') {
+			return res.status(404).json(err);
+		}
+
+		req.subject = subject;
+		next(err);
+	}, req.module, subjectSlug);
+});
+
 /**
  * Get all modules.
  */
