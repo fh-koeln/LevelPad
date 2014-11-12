@@ -49,9 +49,9 @@ OSX/Linux: `npm run-script test-cov` / Windows: `npm run-script test-cov-win`
 (Please remember that we already enabled production-mode on heroku with `heroku config:set NODE_ENV=production`.)
 
 
-[travis-image]: https://img.shields.io/travis/fh-koeln/LevelPad.svg?style=flat-square
+[travis-image]: https://img.shields.io/travis/fh-koeln/LevelPad/master.svg?style=flat-square
 [travis-url]: https://travis-ci.org/fh-koeln/LevelPad
-[coveralls-image]: https://img.shields.io/coveralls/fh-koeln/LevelPad.svg?style=flat-square
+[coveralls-image]: https://img.shields.io/coveralls/fh-koeln/LevelPad/master.svg?style=flat-square
 [coveralls-url]: https://coveralls.io/r/fh-koeln/LevelPad
 [dependency-image]: http://img.shields.io/david/fh-koeln/LevelPad.svg?style=flat-square
 [dependency-url]: https://david-dm.org/fh-koeln/LevelPad

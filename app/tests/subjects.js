@@ -8,13 +8,16 @@ subjects.wba1Wise1415 = {
 	semester: 'Wintersemester',
 	year: 2014,
 	module: modules.wba1,
-	status: 'active'
+	status: 'active',
+	members: [
+
+	]
 };
 
 subjects.wba1Wise1516 = {
-	slug: 'wise1515',
+	slug: 'wise1516',
 	semester: 'Wintersemester',
-	year: 2016,
+	year: 2015,
 	module: modules.wba1,
 	status: 'inactive'
 };

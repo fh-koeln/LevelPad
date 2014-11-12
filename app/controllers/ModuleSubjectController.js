@@ -3,7 +3,7 @@ var Subject = require('../models/Subject'),
 	Module = require('../models/Module'),
 	async = require('async'),
 	errors = require('common-errors'),
-	acl = require('../../config/acl');
+	moduleSubjectMemberController = require('./moduleSubjectMemberController');
 
 /**
  * List all subjects by module and apply an optional filter.
@@ -89,6 +89,10 @@ exports.create = function(callback, module, subjectData) {
 				return next(new errors.ArgumentNullError('semester'));
 			}
 
+			if (!subjectData.creator) {
+				return next(new errors.ArgumentNullError('creator'));
+			}
+
 			next(null);
 		},
 		function(next) {
@@ -131,18 +135,14 @@ exports.create = function(callback, module, subjectData) {
 			subject.save(next);
 		},
 		function(subject, numberAffected, next) {
+			moduleSubjectMemberController.create(next, subject, {
+				id: subjectData.creator,
+				role: 'creator'
+			});
+		},
+		function(subject, numberAffected, next) {
 			// populate module
 			Subject.findOne({ _id: subject._id }).populate('module').exec(next);
-		},
-		function(subject, next) {
-
-			// TODO: should be need to extend the ACLs now???
-
-//			acl.setRole(subject.username, subject.role, function(err) {
-//				next(err, subject); // keep module result from mongoose
-//			});
-
-			next(null, subject);
 		}
 	], callback);
 };
