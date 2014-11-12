@@ -2,9 +2,11 @@
 
 var ModuleSubjectController = require('../../controllers/ModuleSubjectController'),
 	Module = require('../../models/Module'),
+	User = require('../../models/User'),
 	assert = require('chai').assert,
 	expect = require('chai').expect,
 	db = require('../db'),
+	users = require('../users'),
 	subjects = require('../subjects'),
 	async = require('async');
 
@@ -109,9 +111,19 @@ describe('ModuleSubjectController', function() {
 			var subjectData = {
 				year: 2013,
 				semester: 'Wintersemester',
-				status: 'active',
+				status: 'active'
 			};
 			async.series([
+				function(next) {
+					User.findOne({ username: users.lecturer1.username }, function(err, user) {
+						if (err) {
+							return next(err);
+						}
+
+						subjectData.creator = user._id;
+						next();
+					});
+				},
 				function(next) {
 					ModuleSubjectController.create(function (err, subject) {
 						assert.isNull(err, 'Error should be null');
@@ -165,7 +177,8 @@ describe('ModuleSubjectController', function() {
 		it('should fail for an already existing subject (WBA 1 2014 Wintersemester)', function(done) {
 			var subjectData = {
 				year: 2014,
-				semester: 'Wintersemester'
+				semester: 'Wintersemester',
+				creator: '234567890'
 			};
 			ModuleSubjectController.create(function(err, subject) {
 				assert.isNotNull(err, 'Error should be not null');

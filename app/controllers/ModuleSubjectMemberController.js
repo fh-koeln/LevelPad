@@ -3,8 +3,7 @@ var Subject = require('../models/Subject'),
 	Member = require('../models/Member'),
 	User = require('../models/User'),
 	async = require('async'),
-	errors = require('common-errors'),
-	acl = require('../../config/acl');
+	errors = require('common-errors');
 
 /**
  * List all members by subject and apply an optional filter.
@@ -19,17 +18,17 @@ exports.list = function(callback, subject) {
 				return next(new errors.NotFoundError('Subject'));
 			}
 
-		Subject.findById(subject._id).select('members -_id').populate('members').exec(function(err, subjectWithMembers) {
-			User.populate(subjectWithMembers, {
-			    path: 'members.user',
-			  }, function(err, subjectWithMembersAndUsers) {
-			  	if (err) {
-			  		return next(err);
-			  	}
+			Subject.findById(subject._id).select('members -_id').populate('members').exec(function(err, subjectWithMembers) {
+				User.populate(subjectWithMembers, {
+					path: 'members.user',
+				}, function(err, subjectWithMembersAndUsers) {
+					if (err) {
+						return next(err);
+					}
 
-			  	next(null, subjectWithMembersAndUsers.members);
-			  });
-		});
+					next(null, subjectWithMembersAndUsers.members);
+				});
+			});
 		}
 	], callback);
 };
@@ -56,7 +55,7 @@ exports.read = function(callback, subject, memberId) {
 			});
 
 			if (!memberExists) {
-					return next(new errors.NotFoundError('Member'));
+				return next(new errors.NotFoundError('Member'));
 			}
 			Member.findById(memberId, next);
 		}
@@ -94,6 +93,7 @@ exports.create = function(callback, subject, memberData) {
 				var member = new Member();
 
 				member.user = memberData.id;
+				member.subject = subject._id;
 				member.role = memberData.role;
 
 				member.save(function(err) {

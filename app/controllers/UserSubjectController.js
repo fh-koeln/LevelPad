@@ -1,10 +1,9 @@
 
-var Subject = require('../models/Subject'),
-	Member = require('../models/Member'),
+var Member = require('../models/Member'),
 	User = require('../models/User'),
+	Module = require('../models/Module'),
 	async = require('async'),
-	errors = require('common-errors'),
-	acl = require('../../config/acl');
+	errors = require('common-errors');
 
 /**
  * List all subjects by user and apply an optional filter.
@@ -26,7 +25,17 @@ exports.list = function(callback, user) {
 				return next(new errors.NotFoundError('User'));
 			}
 
-			Member.find({ user: user._id }).populate('subject').exec(next);
+			Member.find({ user: user._id }).select('-user').populate('subject').exec(function(err, memberWithSubject) {
+				Module.populate(memberWithSubject, {
+					path: 'subject.module',
+				}, function(err, memberWithSubjectAndModule) {
+					if (err) {
+						return next(err);
+					}
+
+					next(null, memberWithSubjectAndModule);
+				});
+			});
 		}
 	], callback);
 
