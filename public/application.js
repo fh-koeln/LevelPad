@@ -203,6 +203,10 @@ app.config(function($routeProvider, $locationProvider) {
 		templateUrl: 'views/tasks/edit.html',
 		controller: 'TaskDetailController'
 	});
+	$routeProvider.when('/tasks/import', {
+		templateUrl: 'views/tasks/import.html',
+		controller: 'TaskImportController'
+	});
 	$routeProvider.when('/:module/:subject/tasks/:task', {
 		templateUrl: 'views/tasks/edit.html',
 		controller: 'TaskDetailController'
