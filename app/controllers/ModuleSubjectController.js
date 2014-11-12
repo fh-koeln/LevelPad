@@ -3,7 +3,7 @@ var Subject = require('../models/Subject'),
 	Module = require('../models/Module'),
 	async = require('async'),
 	errors = require('common-errors'),
-	moduleSubjectMemberController = require('./moduleSubjectMemberController');
+	moduleSubjectMemberController = require('./ModuleSubjectMemberController');
 
 /**
  * List all subjects by module and apply an optional filter.

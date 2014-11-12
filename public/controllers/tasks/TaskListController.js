@@ -56,6 +56,20 @@ angular.module('levelPad').controller('TaskListController', [
 		$scope.task = angular.copy(task);
 		$('#edit').modal();
 	};
+		
+	$scope.showImportDialog = function() {
+			var dialog = new DialogService('/tasks/import');
+			dialog.scope.task = new Task();
+			dialog.scope.submit = function() {
+				dialog.scope.module.$save(function() {
+					dialog.submit();
+					$scope.update();
+				}, function() {
+					alert('Fehler!');
+				});
+			};
+			dialog.open();
+		};
 
 	$scope.showDeleteDialog = function(task) {
 		$scope.task = angular.copy(task);

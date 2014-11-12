@@ -1,0 +1,67 @@
+<form name="form" role="form" class="form-horizontal" data-ng-submit="submit();">
+    <nav>
+        <header class="modal-header">
+            <h4 id="edit-title" class="modal-title">Learning Outcomes importieren </h4>
+        </header>
+    </nav>
+        
+	<div class="modal-body">
+		
+		<div class="form-group" data-ng-hide="subject._id" data-ng-class="{ 'has-error': form.module.$invalid }">
+			<label for="module" class="col-sm-2 col-md-2 control-label">Modul</label>
+			<div class="col-sm-10 col-md-10">
+				<select id="module" name="module"
+						data-ng-model="subject.module"
+						data-ng-options="m.key as m.name for m in modules"
+						required="required"
+						class="form-control"></select>
+			</div>
+		</div>
+        
+       
+
+		<div class="form-group" data-ng-class="{ 'has-error': form.semester.$invalid }">
+			<label for="semester" class="col-md-2 col-sm-2 control-label">Semester</label>
+			<div class="col-sm-10 col-md-10">
+				<select id="semester" name="semester"
+							data-ng-model="subject.semester"
+							data-ng-options="s.key as s.name for s in semester"
+							required="required"
+							class="form-control"></select>
+			</div>
+		</div>
+
+
+        <fieldset class="radio-box">
+            <legend class="radio-box">Learning Outcomes</legend>
+            <div class="form-group">
+				<div class="col-sm-12 ">
+					<form role="form">
+						<div class="checkbox col-sm-12">
+						  <label><input type="checkbox" value="">Angebot und Anschreiben</label>
+						</div>
+						<div class="checkbox col-sm-12">
+						  <label><input type="checkbox" value="">Designpanel und Styleguide</label>
+						</div>
+						<div class="checkbox col-sm-12">
+						  <label><input type="checkbox" value="">Dieser Text kann auch mehrzeilig sein, falls man ein riesiges Artefakt erstellt hat was einen wirklich langen Namen trägt</label>
+						</div>
+					</form>
+                </div>
+            </div>
+        </fieldset>
+
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-default pull-left"
+				data-ng-show="cancel" data-ng-click="cancel();">
+            <div class="interaction-color">Abbrechen</div>
+        </button>
+		<button type="button" class="btn btn-default pull-left"
+                data-ng-show="subject._id" data-ng-click="showDeleteDialog();">
+            <div class="delete-color">Le Outcome löschen</div>
+        </button>
+		<button type="submit" class="btn btn-primary pull-right"
+				data-ng-disabled="form.$invalid" >Le Outcome anlegen</button>
+	</div>
+</form>
