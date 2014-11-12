@@ -437,12 +437,47 @@ table > tbody > tr > .students-table-element{
     padding: 0; 
 }
 
+.positive{
+	color: #72CE1F;
+}
+
+.neutral{
+	color: lightgray;
+}
+
 .gewichtung-font{
     color: lightgray;   
 }
 
 tr > td.table-element-padding-left{
     padding-left: 10px;
+}
+
+.learning-outcome-weight{
+	padding: 5px 10px;
+}
+
+input[type='range'] {
+		-webkit-appearance: none;
+		border-radius: 5px;
+		box-shadow: inset 0 0 1px #999;
+		background-color: lightgray;
+		height: 10px;
+		vertical-align: middle;
+}
+
+input[type='range']::-moz-range-track {
+	-moz-appearance: none;
+	border-radius: 5px;
+	box-shadow: inset 0 0 1px #999;
+	background-color: lightgray;
+	height: 10px;
+}
+
+input[type='range']:focus {
+	border-color: #cccccc;
+	outline: 0;
+	box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(204, 204, 204, 0.6);
 }
 
 @media (max-width: 991px) {

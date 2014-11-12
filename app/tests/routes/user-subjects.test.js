@@ -4,6 +4,7 @@ var should = require('should'),
 	db = require('../db'),
 	agentsAPI = require('../agents'),
 	async = require('async'),
+	subjects = require('../subjects'),
 	users = require('../users');
 
 describe('User Subjects API', function() {
@@ -54,7 +55,7 @@ describe('User Subjects API', function() {
 			});
 	});
 
-	it('should return subjects at beginning for students', function(done) {
+	it('should return subjects at beginning a student', function(done) {
 		agents.student1
 			.get('/api/users/' + users.student1.username + '/subjects')
 			.set('Accept', 'application/json')
@@ -64,6 +65,18 @@ describe('User Subjects API', function() {
 				res.should.be.json;
 
 				should.exist(res.body);
+
+				var apiSubjects = res.body;
+				apiSubjects.should.have.a.lengthOf(1);
+
+				apiSubjects[0].should.have.property( 'subject' )
+					.and.have.property('semester')
+					.and.be.equal(subjects.wba1Wise1415.semester);
+
+				apiSubjects[0].should.have.property( 'subject' )
+					.and.have.property('module')
+					.and.have.property('name')
+					.and.be.equal(subjects.wba1Wise1415.module.name);
 
 				done(err);
 			});
@@ -124,6 +137,18 @@ describe('User Subjects API', function() {
 				res.should.be.json;
 
 				should.exist(res.body);
+
+				var apiSubjects = res.body;
+				apiSubjects.should.have.a.lengthOf(1);
+
+				apiSubjects[0].should.have.property( 'subject' )
+					.and.have.property('semester')
+					.and.be.equal(subjects.wba1Wise1415.semester);
+
+				apiSubjects[0].should.have.property( 'subject' )
+					.and.have.property('module')
+					.and.have.property('name')
+					.and.be.equal(subjects.wba1Wise1415.module.name);
 
 				done(err);
 			});

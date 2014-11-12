@@ -1,8 +1,7 @@
 
 var User = require('../models/User'),
 	async = require('async'),
-	errors = require('common-errors'),
-	acl = require('../../config/acl');
+	errors = require('common-errors');
 
 /**
  * List all users and apply optional filter.

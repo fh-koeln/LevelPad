@@ -1,8 +1,8 @@
 /* global angular, alert */
 
 angular.module('levelPad').controller('SubjectListController', [
-	'$scope', '$http', '$routeParams', '$location', '$log', 'Module', 'Subject', 'CurrentModule', 'CurrentSubject',
-	function ($scope, $http, $routeParams, $location, $log, Module, Subject, CurrentModule, CurrentSubject) {
+	'$scope', '$http', '$routeParams', '$location', '$log', 'Module', 'Subject', 'DialogService', 'CurrentModule', 'CurrentSubject',
+	function ($scope, $http, $routeParams, $location, $log, Module, Subject, DialogService, CurrentModule, CurrentSubject) {
 	'use strict';
 	$scope.module = CurrentModule;
 	$scope.subject = CurrentSubject;
@@ -25,9 +25,18 @@ angular.module('levelPad').controller('SubjectListController', [
 	$scope.update();
 
     $scope.showCreateDialog = function() {
-		$scope.subject = new Subject();
-		$('#edit').modal();
-	};
+        var dialog = new DialogService('/subjects/new');
+        dialog.scope.subject = new Subject();
+        dialog.scope.submit = function() {
+            dialog.scope.module.$save(function() {
+                dialog.submit();
+                $scope.update();
+            }, function() {
+                alert('Fehler!');
+            });
+        };
+        dialog.open();
+    };
 
 	$scope.showEditDialog = function(subject) {
 		$scope.subject = angular.copy(subject);

@@ -117,6 +117,7 @@ moduleSubjects.get('/', {
 moduleSubjects.post('/', {
 	
 }, function (req, res) {
+	req.body.creator = req.user._id;
 	ModuleSubjectController.create(_helpers.sendResult(res), req.module, req.body);
 });
 

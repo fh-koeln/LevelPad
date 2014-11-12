@@ -70,6 +70,7 @@ module.exports.initializeTestData = function(callback) {
 			});
 		},
 		function(next) {
+
 			Module.findOne({ slug: subjects.wba1Wise1415.module.slug }, function(err, module) {
 				if (err) {
 					return next(err);
@@ -80,17 +81,32 @@ module.exports.initializeTestData = function(callback) {
 						return next(err);
 					}
 
-					User.findOne({ username: users.student1.username }, function(err, user) {
+					User.findOne({ username: users.lecturer1.username }, function(err, user) {
 						if (err) {
 							return next(err);
 						}
 
 						var member = new Member();
 						member.user = user._id;
-						member.role = 'member';
+						member.subject = subject._id;
+						member.role = 'creator';
 						member.save( function(err, member) {
 							subject.members.push(member._id);
-							subject.save(next);
+
+							User.findOne({ username: users.student1.username }, function(err, user) {
+								if (err) {
+									return next(err);
+								}
+
+								var member = new Member();
+								member.user = user._id;
+								member.subject = subject._id;
+								member.role = 'member';
+								member.save( function(err, member) {
+									subject.members.push(member._id);
+									subject.save(next);
+								});
+							});
 						});
 					});
 				});

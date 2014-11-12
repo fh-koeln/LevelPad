@@ -55,7 +55,7 @@ describe('Modules Subjects Members API', function() {
 				should.exist(res.body);
 
 				var apiMembers = res.body;
-				apiMembers.should.have.a.lengthOf(1);
+				apiMembers.should.have.a.lengthOf(2);
 
 				done(err);
 			});
