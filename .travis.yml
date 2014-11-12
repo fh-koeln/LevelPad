@@ -1,14 +1,23 @@
 language: node_js
-services:
-  - mongodb
 
-# test on two node.js versions: 0.10 (stable) and 0.11 (dev)
+services:
+- mongodb
+
 node_js:
-  - "0.10"
-  - "0.11"
+- '0.10'
+- '0.11'
 
 script:
-  - "npm run-script test-cov"
+- npm run-script test-cov
 
 after_script:
-  - "cat ./coverage/lcov.info | node_modules/.bin/coveralls"
+- cat ./coverage/lcov.info | node_modules/.bin/coveralls
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: CReZ9NerhhFMkn4u8PhJALoRocoQBsuevxWifTRNXt2uEVbYayfpMn4DSqvYNv2xGmRCFeiXPYPK1tGLiXkuI5qlMbXFU4v3RVUhD4PHDwEK1krmHsUlgtvUJIHxNZ6MyLIXr/dubdQfCtU8hZcdpfiSJcGF5dYx4rdocuW3PpA=
+  app: levelpad
+  strategy: git
+  on:
+    repo: fh-koeln/LevelPad
