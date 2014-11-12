@@ -199,7 +199,7 @@ app.config(function($routeProvider, $locationProvider) {
 		templateUrl: 'views/tasks/list.html',
 		controller: 'TaskListController'
 	});
-	$routeProvider.when('/:module/:subject/tasks/new', {
+	$routeProvider.when('/tasks/new', {
 		templateUrl: 'views/tasks/edit.html',
 		controller: 'TaskDetailController'
 	});

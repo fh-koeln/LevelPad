@@ -1,12 +1,13 @@
 /* global angular, alert */
 
 angular.module('levelPad').controller('TaskListController', [
-	'$scope', '$routeParams', '$location', '$log', 'Module', 'Subject', 'CurrentModule', 'CurrentSubject',
-	function ($scope, $routeParams, $location, $log, Module, Subject, CurrentModule, CurrentSubject) {
+	'$scope', '$routeParams', '$location', '$log', 'Module', 'Subject', 'Task', 'DialogService', 'CurrentModule', 'CurrentSubject', 'CurrentTask',
+	function ($scope, $routeParams, $location, $log, Module, Subject, Task, DialogService, CurrentModule, CurrentSubject, CurrentTask) {
 
 	'use strict';
 	$scope.module = CurrentModule;
 	$scope.subject = CurrentSubject;
+    $scope.task = CurrentTask;
 
 	$scope.openTasks = function(module, subject) {
 		if (module && subject) {
@@ -37,7 +38,31 @@ angular.module('levelPad').controller('TaskListController', [
 	};
 	$scope.update();
 
-	$scope.tasks = [
+      $scope.showCreateDialog = function() {
+			var dialog = new DialogService('/tasks/new');
+			dialog.scope.task = new Task();
+			dialog.scope.submit = function() {
+				dialog.scope.task.$save(function() {
+					dialog.submit();
+					$scope.update();
+				}, function() {
+					alert('Fehler!');
+				});
+			};
+			dialog.open();
+		};
+
+	$scope.showEditDialog = function(task) {
+		$scope.task = angular.copy(task);
+		$('#edit').modal();
+	};
+
+	$scope.showDeleteDialog = function(task) {
+		$scope.task = angular.copy(task);
+		$('#delete').modal();
+	};    
+        
+	$scope.task = [
 		{
 			title: 'Hallo'
 		}
