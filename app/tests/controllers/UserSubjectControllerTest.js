@@ -22,8 +22,6 @@ describe('UserSubjectController', function() {
 				should.not.exist(err);
 				should.exist(apiSubjects);
 
-				console.log(apiSubjects);
-
 				apiSubjects.should.have.a.lengthOf(1);
 
 				apiSubjects[0].should.have.property( 'subject' )
