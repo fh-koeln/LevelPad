@@ -8,9 +8,9 @@ var express = require('express'),
 
 users._spec.addDefinition('User', {
 	properties: {
-		username: { type: 'string' },
-		firstname: { type: 'string' },
-		lastname: { type: 'string' }
+		username: { type: String, example: 'mmuster' },
+		firstname: { type: String, example: 'Max' },
+		lastname: { type: String, example: 'Mustermann' }
 	}
 });
 
@@ -56,9 +56,6 @@ users.get('/', {
 				items: {
 					$ref: 'User'
 				}
-			},
-			examples: {
-
 			}
 		},
 		default: {
