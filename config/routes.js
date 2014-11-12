@@ -1,7 +1,8 @@
 'use strict';
 
 var express = require('express'),
-	api = express.Router(),
+	swag = require('bo-swag'),
+	api = swag.router(express.Router()),
 	acl = require('../config/acl');
 
 // API is only available for authenticated users.
@@ -22,6 +23,13 @@ api.use('/semesters', require('../app/routes/semesters'));
 
 var routes = express.Router();
 routes.use('/api', api);
+
+var spec = swag.spec();
+spec.setTitle('hallo');
+spec.addDefinition('Error', {
+	properties: {}
+});
+routes.use('/explorer', swag.swaggerUI(spec, { basePath: '/api' }, api));
 
 if (process.env.NODE_ENV === 'development') {
 	routes.use('/acl', acl.debugRoute);
