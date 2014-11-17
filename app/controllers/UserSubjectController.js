@@ -1,3 +1,4 @@
+'use strict';
 
 var Member = require('../models/Member'),
 	User = require('../models/User'),
@@ -38,5 +39,4 @@ exports.list = function(callback, user) {
 			});
 		}
 	], callback);
-
 };

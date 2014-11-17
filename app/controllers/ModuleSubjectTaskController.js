@@ -1,3 +1,4 @@
+'use strict';
 
 var Task = require('../models/Task'),
 	async = require('async'),

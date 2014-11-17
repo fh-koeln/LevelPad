@@ -1,3 +1,4 @@
+'use strict';
 
 var Subject = require('../models/Subject'),
 	Member = require('../models/Member'),
@@ -51,7 +52,7 @@ exports.read = function(callback, subject, memberId) {
 		},
 		function(subject, next) {
 			var memberExists = subject.members.some(function (member) {
-			    return member.equals(memberId);
+				return member.equals(memberId);
 			});
 
 			if (!memberExists) {

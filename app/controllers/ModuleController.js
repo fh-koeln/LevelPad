@@ -1,3 +1,4 @@
+'use strict';
 
 var Module = require('../models/Module'),
 	Subject = require('../models/Subject'),
@@ -97,10 +98,6 @@ exports.update = function(callback, moduleSlug, moduleData) {
 exports.delete = function(callback, moduleSlug) {
 
 	// TODO add force parameter and remove module with subjects only if this parameter is true.
-
-	// TODO: could we remove the find here and change the check based on the numberAffected callback argument?
-	// currently replaced because findOneAndRemove will not throw an error if the module doesn't exist anymore.
-//	Module.findOneAndRemove({ slug: moduleSlug }, callback);
 
 	async.waterfall([
 		function(next) {

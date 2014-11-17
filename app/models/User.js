@@ -35,11 +35,11 @@ function validateStudentNumber(studentNumber) {
 		return false;
 	}
 
-  	if ( /^[0-9]{8}$/.test(studentNumber) ) {
-    	return true;
+	if ( /^[0-9]{8}$/.test(studentNumber) ) {
+		return true;
 	} else {
-    	return false;
-    }
+		return false;
+	}
 }
 
 function validateEmail(email) {
@@ -47,12 +47,12 @@ function validateEmail(email) {
 		return false;
 	}
 
-  	var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if ( re.test(email) ) {
-    	return true;
+	var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	if ( re.test(email) ) {
+		return true;
 	} else {
-    	return false;
-    }
+		return false;
+	}
 }
 
 var userNameValidations = [

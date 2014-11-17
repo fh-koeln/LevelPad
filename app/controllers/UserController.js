@@ -1,3 +1,4 @@
+'use strict';
 
 var User = require('../models/User'),
 	async = require('async'),
@@ -38,7 +39,6 @@ exports.read = function(callback, username) {
 exports.create = function(callback, userdata) {
 	var user = new User(userdata);
 
-	// TODO Change to 'student'
 	user.role = 'student';
 
 	async.waterfall([
@@ -89,7 +89,6 @@ exports.create = function(callback, userdata) {
  * @param userdata
  */
 exports.update = function(callback, username, userdata) {
-	// TODO: could we remove the find here and change the check based on the numberAffected callback argument?
 	async.waterfall([
 		function(next) {
 			exports.read(next, username);
@@ -148,10 +147,6 @@ exports.update = function(callback, username, userdata) {
  * @param username
  */
 exports.delete = function(callback, username) {
-	// TODO: could we remove the find here and change the check based on the numberAffected callback argument?
-	// currently replaced because findOneAndRemove will not throw an error if the user doesn't exist anymore.
-//	User.findOneAndRemove({ username: username }, callback);
-
 	async.waterfall([
 		function(next) {
 			exports.read(next, username);
