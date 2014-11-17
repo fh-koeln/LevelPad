@@ -2,6 +2,10 @@
 
 var Task = require('../models/Task'),
 	async = require('async'),
+	getSlug = require('speakingurl').createSlug({
+		lang: 'de',
+		truncate: 40
+	}),
 	errors = require('common-errors');
 
 /**
@@ -17,8 +21,7 @@ exports.list = function(callback, subject) {
 				return next(new errors.NotFoundError('Subject'));
 			}
 
-			// TODO
-			next();
+			next(null, subject.tasks);
 		}
 	], callback);
 };
@@ -40,8 +43,12 @@ exports.read = function(callback, subject, taskId) {
 			next(null, subject);
 		},
 		function(subject, next) {
-			// TODO
-			next();
+			var task = subject.tasks.id( taskId );
+			if (!task) {
+				return next(new errors.NotFoundError('Task'));
+			}
+
+			next(null, task);
 		}
 	], callback);
 };
@@ -56,8 +63,40 @@ exports.read = function(callback, subject, taskId) {
 exports.create = function(callback, subject, taskData) {
 		async.waterfall([
 			function(next) {
-				// TODO
-				next();
+				if (!subject || !subject._id) {
+					return next(new errors.NotFoundError('Subject'));
+				}
+
+				next(null, subject);
+			},
+			function(subject, next) {
+				if (!taskData.title) {
+					return next(new errors.ArgumentNullError('title'));
+				}
+
+				if (!taskData.description) {
+					return next(new errors.ArgumentNullError('description'));
+				}
+
+				if (!taskData.weight) {
+					return next(new errors.ArgumentNullError('weight'));
+				}
+
+				next(null, subject);
+			},
+			function(subject, next) {
+				var task = new Task();
+
+				task.title = taskData.title;
+				task.description = taskData.description;
+				task.slug = getSlug(taskData.title),
+				task.weight = taskData.weight;
+
+				subject.tasks.push(task);
+
+				subject.save(function(err) {
+					next(err, task);
+				});
 			}
 		], callback);
 };
@@ -73,8 +112,36 @@ exports.create = function(callback, subject, taskData) {
 exports.update = function(callback, subject, taskId, taskData) {
 	async.waterfall([
 		function(next) {
-			// TODO
-			next();
+			if (!subject || !subject._id) {
+				return next(new errors.NotFoundError('Subject'));
+			}
+
+			next(null, subject);
+		},
+		function(subject, next) {
+			var task = subject.tasks.id( taskId );
+			if (!task) {
+				return next(new errors.NotFoundError('Task'));
+			}
+
+			next(null, task);
+		},
+		function(task, next) {
+			if (taskData.title !== undefined) {
+				task.title = taskData.title;
+			}
+			if (taskData.description !== undefined) {
+				task.description = taskData.description;
+			}
+			if (taskData.weight !== undefined) {
+				task.weight = taskData.weight;
+			}
+			next(null, task);
+		},
+		function(task, next) {
+			subject.save(function(err) {
+				next(err, task);
+			});
 		}
 	], callback);
 };
@@ -89,8 +156,26 @@ exports.update = function(callback, subject, taskId, taskData) {
 exports.delete = function(callback, subject, taskId) {
 	async.waterfall([
 		function(next) {
-			// TODO
-			next();
+			if (!subject || !subject._id) {
+				return next(new errors.NotFoundError('Subject'));
+			}
+
+			next(null, subject);
+		},
+		function(subject, next) {
+			var task = subject.tasks.id( taskId );
+			if (!task) {
+				return next(new errors.NotFoundError('Task'));
+			}
+
+			task.remove();
+
+			next(null, task);
+		},
+		function(task, next) {
+			subject.save(function(err) {
+				next(err, task);
+			});
 		}
 	], callback);
 };

@@ -99,7 +99,48 @@ module.exports.initializeTestData = function(callback) {
 				new Subject(subject).save(next);
 			});
 		},
-		function(next) {
+		function(next) { // Add tasks
+			async.waterfall([
+				function(callback) {
+					Module.findOne({ slug: subjects.wba1Wise1415.module.slug }, function(err, module) {
+						if (err) {
+							return callback(err);
+						}
+
+						callback(null, module);
+					});
+				},
+				function(module, callback) {
+					Subject.findOne({ slug: subjects.wba1Wise1415.slug, module: module._id }, function(err, subject) {
+						if (err) {
+							return callback(err);
+						}
+
+						callback(null, subject);
+					});
+				},
+				function(subject, callback) {
+					var tasks = subjects.wba1Wise1415.tasks;
+
+					tasks.forEach(function(data) {
+						var task = new Task();
+
+						task.title = data.title;
+						task.description = data.description;
+						task.slug = data.slug;
+						task.weight = data.weight;
+
+						subject.tasks.push(task);
+					});
+
+					callback(null, subject);
+				},
+				function(subject, callback) {
+					subject.save(callback);
+				},
+			], next);
+		},
+		function(next) { // Add members
 			async.waterfall([
 				function(callback) {
 					Module.findOne({ slug: subjects.wba1Wise1415.module.slug }, function(err, module) {

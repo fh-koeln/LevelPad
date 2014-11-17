@@ -13,5 +13,4 @@ var evaluationSchema = new Schema({
 	artifact: ObjectId // Artifact model
 });
 
-
 module.exports = mongoose.model('Evaluation', evaluationSchema);

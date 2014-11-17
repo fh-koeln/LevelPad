@@ -7,12 +7,11 @@ var mongoose = require('mongoose'),
 	Level = require('./Level');
 
 var taskSchema = new Schema({
-	levels: [Level],
-	description: { type: String },
-	slug: { type: Number, require: true},
 	title: { type: String, required: true },
-	threshold: {type: Number, require: true},
-	weight: {type: Number, required:true}
+	description:{ type: String, required: true },
+	slug: { type: String, require: true },
+	levels: [ Level ],
+	weight: { type: Number, required: true, min: 0, max: 100 }
 });
 
 module.exports = mongoose.model('Task', taskSchema);

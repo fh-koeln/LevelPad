@@ -9,6 +9,26 @@ subjects.wba1Wise1415 = {
 	year: 2014,
 	module: modules.wba1,
 	status: 'active',
+	tasks: [
+		{
+			title: 'Dies ist der Titel der Aufgabe 1',
+			description: 'Dies ist die Beschreibung der Aufgabe 1',
+			slug: 'dies-ist-der-titel-der-aufgabe-1',
+			weight: 25
+		},
+		{
+			title: 'Dies ist der Titel der Aufgabe 2',
+			description: 'Dies ist die Beschreibung der Aufgabe 2',
+			slug: 'dies-ist-der-titel-der-aufgabe-2',
+			weight: 25
+		},
+		{
+			title: 'Dies ist der Titel der Aufgabe 3',
+			description: 'Dies ist die Beschreibung der Aufgabe 3',
+			slug: 'dies-ist-der-titel-der-aufgabe-3',
+			weight: 50
+		}
+	],
 	members: [
 
 	]

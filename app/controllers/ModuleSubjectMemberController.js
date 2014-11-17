@@ -20,6 +20,10 @@ exports.list = function(callback, subject) {
 			}
 
 			Subject.findById(subject._id).select('members -_id').populate('members').exec(function(err, subjectWithMembers) {
+				if (err) {
+					return next(err);
+				}
+
 				User.populate(subjectWithMembers, {
 					path: 'members.user',
 				}, function(err, subjectWithMembersAndUsers) {
@@ -73,19 +77,19 @@ exports.read = function(callback, subject, memberId) {
 exports.create = function(callback, subject, memberData) {
 		async.waterfall([
 			function(next) {
+				if (!subject || !subject._id) {
+					return next(new errors.NotFoundError('Subject'));
+				}
+
+				next(null, subject);
+			},
+			function(subject, next) {
 				if (!memberData.id) {
 					return next(new errors.ArgumentNullError('id'));
 				}
 
 				if (!memberData.role) {
 					return next(new errors.ArgumentNullError('role'));
-				}
-
-				next(null, subject);
-			},
-			function(subject, next) {
-				if (!subject || !subject._id) {
-					return next(new errors.NotFoundError('Subject'));
 				}
 
 				next(null, subject);
