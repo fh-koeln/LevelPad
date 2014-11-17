@@ -191,7 +191,7 @@ describe('UserController', function() {
 
 		it('should fail for an already known studentNumber (student1)', function(done) {
 			var userdata = {
-				username: 'student1',
+				username: 'student5',
 				firstname: 'Manuel',
 				lastname: 'Manoli',
 				studentNumber: '11111111'
@@ -238,7 +238,8 @@ describe('UserController', function() {
 
 		it('should successfully update a known user (admin1) with data', function(done) {
 			var newuserdata = {
-				firstname: 'Maximilan'
+				firstname: 'Maximilan',
+				lastname: 'Musterfrau'
 			};
 			async.series([
 				function(next) {
@@ -262,7 +263,7 @@ describe('UserController', function() {
 
 						expect(user).property('username', 'admin1');
 						expect(user).property('firstname', 'Maximilan');
-						expect(user).property('lastname', 'Mustermann');
+						expect(user).property('lastname', 'Musterfrau');
 						expect(user).property('email', 'max.mustermann@fh-koeln.de');
 						expect(user).property('role', 'administrator');
 
@@ -276,7 +277,7 @@ describe('UserController', function() {
 
 						expect(user).property('username', 'admin1');
 						expect(user).property('firstname', 'Maximilan');
-						expect(user).property('lastname', 'Mustermann');
+						expect(user).property('lastname', 'Musterfrau');
 						expect(user).property('email', 'max.mustermann@fh-koeln.de');
 						expect(user).property('role', 'administrator');
 

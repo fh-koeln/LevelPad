@@ -46,6 +46,14 @@ describe('ModuleSubjectController', function() {
 				}
 			], done);
 		});
+
+		it('should fail for an unknown module via broken object', function(done) {
+			ModuleSubjectController.list(function(err, subject) {
+				assert.isNotNull(err, 'Error should be not null');
+				assert.isUndefined(subject, 'Subject should be null or undefined');
+				done();
+			}, {} );
+		});
 	});
 
 	describe('read', function() {
@@ -172,6 +180,37 @@ describe('ModuleSubjectController', function() {
 
 				done();
 			}, 'wba1', subjectData);
+		});
+
+		it('should fail if subject has missing creator attribute', function(done) {
+			var subjectData = {
+				year: 2014,
+				semester: 'Wintersemester',
+			};
+			ModuleSubjectController.create(function(err, subject) {
+				assert.isNotNull(err, 'Error should be not null');
+				assert.isUndefined(subject, 'Subject should be null or undefined');
+
+				expect(err).property('name', 'ArgumentNullError');
+
+				done();
+			}, 'wba1', subjectData);
+		});
+
+		it('should fail for an broken module object', function(done) {
+			var subjectData = {
+				year: 2014,
+				semester: 'Wintersemester',
+				creator: '234567890'
+			};
+			ModuleSubjectController.create(function(err, subject) {
+				assert.isNotNull(err, 'Error should be not null');
+				assert.isUndefined(subject, 'Subject should be null or undefined');
+
+				expect(err).property('name', 'NotFoundError');
+
+				done();
+			}, {}, subjectData);
 		});
 
 		it('should fail for an already existing subject (WBA 1 2014 Wintersemester)', function(done) {

@@ -55,9 +55,14 @@ exports.read = function(callback, subject, memberId) {
 			next(null, subject);
 		},
 		function(subject, next) {
-			var memberExists = subject.members.some(function (member) {
-				return member.equals(memberId);
-			});
+			var memberExists;
+			try {
+				memberExists = subject.members.some(function (member) {
+					return member.equals(memberId);
+				});
+			} catch (e) {
+				return next(new errors.TypeError('Member ID must be a single String of 12 bytes or a string of 24 hex characters'));
+			}
 
 			if (!memberExists) {
 				return next(new errors.NotFoundError('Member'));

@@ -56,6 +56,15 @@ describe('UserSubjectController', function() {
 				done();
 			}, users.lecturer1.username);
 		});
+
+		it('should return an error for an invalid user object', function(done) {
+			UserSubjectController.list(function(err, apiSubjects) {
+				should.exist(err);
+				should.not.exist(apiSubjects);
+
+				done();
+			}, {});
+		});
 	});
 
 });

@@ -61,12 +61,68 @@ describe('Modules Subjects Members API', function() {
 			});
 	});
 
+	it('should return 400 when an admin creates a new member with missing id', function(done) {
+		async.waterfall([
+			function(next) {
+				agents.admin1
+					.post('/api/modules/' + subjects.wba2Sose14.module.slug + '/subjects/' + subjects.wba2Sose14.slug + '/members/')
+					.send({
+						role: 'member',
+					})
+					.set('Accept', 'application/json')
+					.end(function(err, res) {
+						should.not.exist(err);
+						res.should.have.status(400);
+						res.should.be.json;
+
+						should.exist(res.body);
+
+						res.body.should.have.property('name')
+							.and.be.equal('ArgumentNullError');
+
+						res.body.should.have.property('argumentName')
+							.and.be.equal('id');
+
+						next(err);
+					});
+			}
+		], done);
+	});
+
+	it('should return 400 when an admin creates a new member with missing role', function(done) {
+		async.waterfall([
+			function(next) {
+				agents.admin1
+					.post('/api/modules/' + subjects.wba2Sose14.module.slug + '/subjects/' + subjects.wba2Sose14.slug + '/members/')
+					.send({
+						id: '546a1b22c6da9447692f6df9',
+					})
+					.set('Accept', 'application/json')
+					.end(function(err, res) {
+						should.not.exist(err);
+						res.should.have.status(400);
+						res.should.be.json;
+
+						should.exist(res.body);
+
+						res.body.should.have.property('name')
+							.and.be.equal('ArgumentNullError');
+
+						res.body.should.have.property('argumentName')
+							.and.be.equal('role');
+
+						next(err);
+					});
+			}
+		], done);
+	});
+
 	it('should return 200 (change to 201!) when an admin creates a new member', function(done) {
 		async.waterfall([
-			function(next){
+			function(next) {
 				User.findOne({ username: users.student2.username }, next);
 			},
-			function(user, next){
+			function(user, next) {
 				agents.admin1
 					.post('/api/modules/' + subjects.wba2Sose14.module.slug + '/subjects/' + subjects.wba2Sose14.slug + '/members/')
 					.send({
@@ -81,6 +137,46 @@ describe('Modules Subjects Members API', function() {
 
 						should.exist(res.body);
 
+						next(err);
+					});
+			}
+		], done);
+	});
+
+	it('should return 400 when an admin reads an invalid member id', function(done) {
+		async.waterfall([
+			function(next) {
+				agents.admin1
+					.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/doesnotexit')
+					.set('Accept', 'application/json')
+					.end(function(err, res) {
+						should.not.exist(err);
+						res.should.have.status(400);
+						res.should.be.json;
+
+						should.exist(res.body);
+
+						res.body.should.have.property('name')
+							.and.be.equal('TypeError');
+
+						next(err);
+					});
+			}
+		], done);
+	});
+
+	it('should return 404 when an admin reads an not existing member', function(done) {
+		async.waterfall([
+			function(next) {
+				agents.admin1
+					.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/546a1b22c6da9447692f6df9')
+					.set('Accept', 'application/json')
+					.end(function(err, res) {
+						should.not.exist(err);
+						res.should.have.status(404);
+						res.should.be.json;
+
+						should.exist(res.body);
 
 						next(err);
 					});
@@ -90,7 +186,7 @@ describe('Modules Subjects Members API', function() {
 
 	it('should return 200 when an admin updates a member', function(done) {
 		async.waterfall([
-			function(next){
+			function(next) {
 				agents.admin1
 					.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/')
 					.set('Accept', 'application/json')
@@ -128,7 +224,7 @@ describe('Modules Subjects Members API', function() {
 
 	it('should return 200 when an admin deletes a member', function(done) {
 		async.waterfall([
-			function(next){
+			function(next) {
 				agents.admin1
 					.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/')
 					.set('Accept', 'application/json')

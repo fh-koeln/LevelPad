@@ -92,6 +92,56 @@ describe('Modules Subjects API', function() {
 			});
 	});
 
+	it('should return 400 when an admin creates a new module subject with missing year', function(done) {
+		agents.admin1
+			.post('/api/modules/' + subjects.wba2Sose13.module.slug + '/subjects')
+			.send({
+				semester: subjects.wba2Sose13.semester,
+				status: subjects.wba2Sose13.status
+			})
+			.set('Accept', 'application/json')
+			.end(function(err, res) {
+				should.not.exist(err);
+				res.should.have.status(400);
+				res.should.be.json;
+
+				should.exist(res.body);
+
+				res.body.should.have.property('name')
+					.and.be.equal('ArgumentNullError');
+
+				res.body.should.have.property('argumentName')
+					.and.be.equal('year');
+
+				done(err);
+			});
+	});
+
+	it('should return 400 when an admin creates a new module subject with missing semester', function(done) {
+		agents.admin1
+			.post('/api/modules/' + subjects.wba2Sose13.module.slug + '/subjects')
+			.send({
+				year: subjects.wba2Sose13.year,
+				status: subjects.wba2Sose13.status
+			})
+			.set('Accept', 'application/json')
+			.end(function(err, res) {
+				should.not.exist(err);
+				res.should.have.status(400);
+				res.should.be.json;
+
+				should.exist(res.body);
+
+				res.body.should.have.property('name')
+					.and.be.equal('ArgumentNullError');
+
+				res.body.should.have.property('argumentName')
+					.and.be.equal('semester');
+
+				done(err);
+			});
+	});
+
 	it('should return 200 (change to 201!) when an admin creates a new module subject', function(done) {
 		agents.admin1
 			.post('/api/modules/' + subjects.wba2Sose13.module.slug + '/subjects')
@@ -107,7 +157,6 @@ describe('Modules Subjects API', function() {
 				res.should.be.json;
 
 				should.exist(res.body);
-
 
 				done(err);
 			});

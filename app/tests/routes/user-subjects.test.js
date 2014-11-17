@@ -82,6 +82,21 @@ describe('User Subjects API', function() {
 			});
 	});
 
+	it('should return 404 for an unknown user', function(done) {
+		agents.admin1
+			.get('/api/users/doesnotexist/subjects')
+			.set('Accept', 'application/json')
+			.end(function(err, res) {
+				should.not.exist(err);
+				res.should.have.status(404);
+				res.should.be.json;
+
+				should.exist(res.body);
+
+				done(err);
+			});
+	});
+
 	it('should return no subjects of other users for students', function(done) {
 		agents.student1
 			.get('/api/users/' + users.student2.username + '/subjects')
