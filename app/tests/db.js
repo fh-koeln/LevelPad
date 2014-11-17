@@ -70,49 +70,6 @@ module.exports.initializeTestData = function(callback) {
 			});
 		},
 		function(next) {
-
-			Module.findOne({ slug: subjects.wba1Wise1415.module.slug }, function(err, module) {
-				if (err) {
-					return next(err);
-				}
-
-				Subject.findOne({ slug: subjects.wba1Wise1415.slug, module: module._id }, function(err, subject) {
-					if (err) {
-						return next(err);
-					}
-
-					User.findOne({ username: users.lecturer1.username }, function(err, user) {
-						if (err) {
-							return next(err);
-						}
-
-						var member = new Member();
-						member.user = user._id;
-						member.subject = subject._id;
-						member.role = 'creator';
-						member.save( function(err, member) {
-							subject.members.push(member._id);
-
-							User.findOne({ username: users.student1.username }, function(err, user) {
-								if (err) {
-									return next(err);
-								}
-
-								var member = new Member();
-								member.user = user._id;
-								member.subject = subject._id;
-								member.role = 'member';
-								member.save( function(err, member) {
-									subject.members.push(member._id);
-									subject.save(next);
-								});
-							});
-						});
-					});
-				});
-			});
-		},
-		function(next) {
 			Module.findOne({ slug: subjects.cgaWise1415.module.slug }, function(err, module) {
 				if (err) {
 					return next(err);
@@ -141,6 +98,135 @@ module.exports.initializeTestData = function(callback) {
 				};
 				new Subject(subject).save(next);
 			});
+		},
+		function(next) {
+			async.waterfall([
+				function(callback) {
+					Module.findOne({ slug: subjects.wba1Wise1415.module.slug }, function(err, module) {
+						if (err) {
+							return callback(err);
+						}
+
+						callback(null, module);
+					});
+				},
+				function(module, callback) {
+					Subject.findOne({ slug: subjects.wba1Wise1415.slug, module: module._id }, function(err, subject) {
+						if (err) {
+							return callback(err);
+						}
+
+						callback(null, subject);
+					});
+				},
+				function(subject, callback) {
+					User.findOne({ username: users.lecturer1.username }, function(err, lecturer) {
+						if (err) {
+							return callback(err);
+						}
+
+						callback(null, subject, lecturer);
+					});
+				},
+				function(subject, lecturer, callback) {
+					var member = new Member();
+					member.user = lecturer._id;
+					member.subject = subject._id;
+					member.role = 'creator';
+					member.save( function(err, member) {
+						if (err) {
+							return callback(err);
+						}
+
+						callback(null, subject, member);
+					});
+				},
+				function(subject, member, callback) {
+					subject.members.push(member._id);
+					callback(null, subject);
+				},
+				function(subject, callback) {
+					User.findOne({ username: users.student1.username }, function(err, student1) {
+						if (err) {
+							return callback(err);
+						}
+
+						callback(null, subject, student1);
+					});
+				},
+				function(subject, student1, callback) {
+					var member = new Member();
+					member.user = student1._id;
+					member.subject = subject._id;
+					member.role = 'member';
+					member.save( function(err, member) {
+						if (err) {
+							return callback(err);
+						}
+
+						callback(null, subject, member);
+					});
+				},
+				function(subject, member, callback) {
+					subject.members.push(member._id);
+					callback(null, subject);
+				},
+				function(subject, callback) {
+					User.findOne({ username: users.student2.username }, function(err, student2) {
+						if (err) {
+							return callback(err);
+						}
+
+						callback(null, subject, student2);
+					});
+				},
+				function(subject, student2, callback) {
+					var member = new Member();
+					member.user = student2._id;
+					member.subject = subject._id;
+					member.role = 'member';
+					member.save( function(err, member) {
+						if (err) {
+							return callback(err);
+						}
+
+						callback(null, subject, member);
+					});
+				},
+				function(subject, member, callback) {
+					subject.members.push(member._id);
+					callback(null, subject);
+				},
+				function(subject, callback) {
+					User.findOne({ username: users.assistant1.username }, function(err, assistant1) {
+						if (err) {
+							return callback(err);
+						}
+
+						callback(null, subject, assistant1);
+					});
+				},
+				function(subject, assistant1, callback) {
+					var member = new Member();
+					member.user = assistant1._id;
+					member.subject = subject._id;
+					member.role = 'assistant';
+					member.save( function(err, member) {
+						if (err) {
+							return callback(err);
+						}
+
+						callback(null, subject, member);
+					});
+				},
+				function(subject, member, callback) {
+					subject.members.push(member._id);
+					callback(null, subject);
+				},
+				function(subject, callback) {
+					subject.save(callback);
+				},
+			], next);
 		},
 		function(next) {
 			// Create guest user which has to sign up

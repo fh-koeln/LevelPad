@@ -55,7 +55,7 @@ describe('Modules Subjects Members API', function() {
 				should.exist(res.body);
 
 				var apiMembers = res.body;
-				apiMembers.should.have.a.lengthOf(2);
+				apiMembers.should.have.a.lengthOf(4);
 
 				done(err);
 			});
@@ -68,7 +68,7 @@ describe('Modules Subjects Members API', function() {
 			},
 			function(user, next){
 				agents.admin1
-					.post('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/')
+					.post('/api/modules/' + subjects.wba2Sose14.module.slug + '/subjects/' + subjects.wba2Sose14.slug + '/members/')
 					.send({
 						id: user._id,
 						role: 'member',
