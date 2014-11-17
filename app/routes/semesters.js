@@ -1,3 +1,8 @@
+'use strict';
+
+/**
+ * RESTful API for semesters.
+ */
 
 var express = require('express'),
 	swag = require('bo-swag'),
@@ -6,7 +11,7 @@ var express = require('express'),
 	_helpers = require('./_helpers');
 
 semesters.get('/', {
-	
+
 }, function (req, res) {
 	SemesterController.list(_helpers.sendResult(res));
 });

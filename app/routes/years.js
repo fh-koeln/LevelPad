@@ -1,3 +1,8 @@
+'use strict';
+
+/**
+ * RESTful API for years.
+ */
 
 var express = require('express'),
 	swag = require('bo-swag'),

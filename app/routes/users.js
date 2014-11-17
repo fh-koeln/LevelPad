@@ -1,3 +1,8 @@
+'use strict';
+
+/**
+ * RESTful API for users.
+ */
 
 var express = require('express'),
 	swag = require('bo-swag'),
@@ -103,7 +108,7 @@ users.get('/me', {
  * Find user by username.
  */
 users.get('/:username', {
-	
+
 }, function(req, res) {
 	UserController.read(_helpers.sendResult(res), req.params.username);
 });
@@ -112,7 +117,7 @@ users.get('/:username', {
  * Create a new user based on the given userdata.
  */
 users.post('/', {
-	
+
 }, function(req, res) {
 	UserController.create(_helpers.sendResult(res), req.body);
 });
@@ -122,7 +127,7 @@ users.post('/', {
  * and the username ifself could not changed (currently).
  */
 users.put('/:username', {
-	
+
 }, function(req, res) {
 	UserController.update(_helpers.sendResult(res), req.params.username, req.body);
 });
@@ -131,7 +136,7 @@ users.put('/:username', {
  * Removes the user with the given username.
  */
 users.delete('/:username', {
-	
+
 }, function(req, res) {
 	UserController.delete(_helpers.sendResult(res), req.params.username);
 });
@@ -140,7 +145,7 @@ users.delete('/:username', {
  * List all subjects for the given username.
  */
 users.get('/:username/subjects', {
-	
+
 }, function (req, res) {
 	UserSubjectController.list(_helpers.sendResult(res), req.params.username);
 });

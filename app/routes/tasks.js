@@ -1,47 +1,58 @@
+'use strict';
+
+/**
+ * RESTful API for tasks.
+ */
 
 var express = require('express'),
-	tasks = express.Router(),
-	Task = require('../models/Task'),
+	swag = require('bo-swag'),
+	tasks = swag.router(express.Router()),
+	ModuleSubjectTaskController = require('../controllers/ModuleSubjectTaskController'),
 	helpers = require('./_helpers');
 
 /**
  * Get all tasks for the current subject.
  */
-tasks.get('/', function(req, res) {
-	Task.find(helpers.sendResult(res));
+tasks.get('/', {
+
+}, function(req, res) {
+	ModuleSubjectTaskController.list(helpers.sendResult(res), req.subject);
 });
 
 /**
  * Get one task for the current subject.
  */
-tasks.get('/:slug', function(req, res) {
-	Task.findOne(req.params, helpers.sendResult(res));
+tasks.get('/:taskId', {
+
+}, function(req, res) {
+	ModuleSubjectTaskController.read(helpers.sendResult(res), req.subject, req.params.taskId);
 });
 
 /**
- * Create a new task for the current subject.
+ * Update one task for the current subject.
  */
-tasks.post('/', function(req, res) {
-	req.body.slug = 1;
+tasks.put('/:taskId', {
 
-	new Task(req.body).save(helpers.sendResult(res));
+}, function(req, res) {
+	ModuleSubjectTaskController.update(helpers.sendResult(res), req.subject, req.params.taskId, req.body);
 });
 
 /**
- * Update task for the current subject.
+ * Add a task to the current subject.
  */
-tasks.put('/:slug', function(req, res) {
-	// TODO: Verify that the ID and the slug is not changed!?
-	req.body.slug = req.params.slug;
+tasks.post('/', {
 
-	Task.findOneAndUpdate(req.params, req.body, helpers.sendResult(res));
+}, function(req, res) {
+	ModuleSubjectTaskController.create(helpers.sendResult(res), req.subject, req.body);
 });
 
 /**
- * Delete task for the current subject.
+ * Remove a task from the current subject.
  */
-tasks.delete('/:slug', function(req, res) {
-	Task.findOneAndRemove(req.params, helpers.sendResult(res));
+tasks.delete('/:taskId', {
+
+}, function(req, res) {
+	ModuleSubjectTaskController.delete(helpers.sendResult(res), req.subject, req.params.taskId);
 });
 
 module.exports = tasks;
