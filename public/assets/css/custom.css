@@ -215,6 +215,10 @@ table {
     text-decoration: none;
 }
 
+.description-head{
+	padding-left: 0;
+}
+
 .table > tbody > tr > th.subject-item-title{
     padding: 10px 0 10px 15px;
 }
@@ -441,12 +445,35 @@ table > tbody > tr > .students-table-element{
 	color: #72CE1F;
 }
 
+.positive-row{
+	background-color: #E0F4C6;
+	padding-left: 30px;
+}
+
 .neutral{
 	color: lightgray;
 }
 
+.negative-row{
+	background-color: #F3C7DD;
+}
+
+.table-drag-drop > tr{
+	height: 40px;
+	color: #4D4C4C;
+}
+
+.table-drag-drop > tr:hover{
+	background-color: currentColor;
+}
+
 .gewichtung-font{
     color: lightgray;   
+}
+
+.table-headline{
+	font-weight: 600;
+	padding: 0 0 10px 0;
 }
 
 tr > td.table-element-padding-left{

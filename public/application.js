@@ -199,6 +199,10 @@ app.config(function($routeProvider, $locationProvider) {
 		templateUrl: 'views/tasks/list.html',
 		controller: 'TaskListController'
 	});
+	$routeProvider.when('/:module/:subject/tasks/:task', {
+		templateUrl: 'views/tasks/show.html',
+		controller: 'TaskDetailController'
+	});
 	$routeProvider.when('/tasks/new', {
 		templateUrl: 'views/tasks/edit.html',
 		controller: 'TaskDetailController'
@@ -207,7 +211,7 @@ app.config(function($routeProvider, $locationProvider) {
 		templateUrl: 'views/tasks/import.html',
 		controller: 'TaskImportController'
 	});
-	$routeProvider.when('/:module/:subject/tasks/:task', {
+	$routeProvider.when('/:module/:subject/tasks/:task/edit', {
 		templateUrl: 'views/tasks/edit.html',
 		controller: 'TaskDetailController'
 	});

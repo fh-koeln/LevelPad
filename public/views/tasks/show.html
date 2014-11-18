@@ -1,0 +1,60 @@
+<div class="container show-subject-head">
+	<div class="subject-title">
+		Learning Outcome
+	</div>
+	<div class="subject-semester">Angebot und Anschreiben erstellen  
+		<a class=" btn btn-glyphicon interaction-link" data-ng-href="/tasks/new" data-ng-click="showCreateDialog(); $event.preventDefault();">
+			<span class="glyphicon glyphicon-pencil interaction-color"></span>
+		</a>
+	</div>
+	<div>
+		<div class="col-sm-10 description-head">
+			Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+		</div>
+		<div class="col-sm-2 text-center">
+			<div class="subject-title">Gewichtung</div>
+			<div class="large-circle ">20%</div>
+		</div>
+	</div>
+</div>
+
+<!--
+    Navbar, Searchbtn, newBtn für kleine Devices
+-->
+<div class="container table-headline">
+	<div class="subject-title">Niveaustufen</div>
+</div>
+
+<table id="sort" class="table table-hover grid" ng-init="predicate='name'; reverse=false;">
+	<thead>
+        <tr class="table-headline">
+            <th>
+					<a class="interaction-link" data-ng-href="/tasks/new" data-ng-click="showCreateDialog(); $event.preventDefault();">
+                		+ Niveaustufe hinzufügen
+            		</a>
+            </th>
+			<th>
+			</th>
+        </tr>
+    </thead>
+    <tbody class="table-drag-drop">
+        <tr class="positive-row">
+            <td>
+				<span class="glyphicon glyphicon-play"></span>
+                <span class="small-font">Beste Lösung</span>
+            </td>
+            <td>
+                <div class="text-right"><span class="glyphicon glyphicon-align-justify interaction-color"></span></div>
+            </td>
+        </tr>
+        <tr class="negative-row">
+            <th>
+				<span class="glyphicon glyphicon-play"></span>
+                <span class="small-font">Schlechte Lösung</span>
+            </th>
+            <td>
+                <div class="text-right"><span class="glyphicon glyphicon-align-justify interaction-color"></span></div>
+            </td>
+        </tr>
+	</tbody>
+</table>
