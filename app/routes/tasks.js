@@ -67,7 +67,7 @@ tasks.delete('/:taskId', {
 });
 
 /**
- * Register subresources for subjects.
+ * Register subresources for tasks.
  */
 tasks.use('/:taskId/levels', require('./levels'));
 
