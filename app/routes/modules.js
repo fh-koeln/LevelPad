@@ -31,7 +31,7 @@ modules.param('moduleSlug', function (req, res, next, moduleSlug) {
  * Get all modules.
  */
 modules.get('/', {
-	summary: 'Get all tasks',
+	summary: 'Get all modules',
 	description: 'List all tasks and apply optional filter.',
 	tags: [ 'Module' ],
 }, function (req, res) {
