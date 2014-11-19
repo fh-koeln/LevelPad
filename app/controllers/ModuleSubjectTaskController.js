@@ -21,6 +21,9 @@ exports.list = function(callback, subject) {
 				return next(new errors.NotFoundError('Subject'));
 			}
 
+			next(null, subject);
+		},
+		function(subject, next) {
 			next(null, subject.tasks);
 		}
 	], callback);
@@ -131,12 +134,15 @@ exports.update = function(callback, subject, taskId, taskData) {
 			if (taskData.title !== undefined) {
 				task.title = taskData.title;
 			}
+
 			if (taskData.description !== undefined) {
 				task.description = taskData.description;
 			}
+
 			if (taskData.weight !== undefined) {
 				task.weight = taskData.weight;
 			}
+
 			next(null, task);
 		},
 		function(task, next) {
