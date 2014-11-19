@@ -43,6 +43,7 @@ evaluations.put('/:evaluationId', {
 evaluations.post('/', {
 
 }, function(req, res) {
+	req.body.createdBy = req.user._id;
 	ModuleSubjectMemberEvaluationController.create(helpers.sendResult(res), req.member, req.body);
 });
 
