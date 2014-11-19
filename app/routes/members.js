@@ -31,7 +31,7 @@ members.param('memberId', function (req, res, next, memberId) {
  * Get all members for the current subject.
  */
 members.get('/', {
-
+	tags: [ 'Member' ]
 }, function(req, res) {
 	ModuleSubjectMemberController.list(helpers.sendResult(res), req.subject);
 });
@@ -40,7 +40,7 @@ members.get('/', {
  * Get one member for the current subject.
  */
 members.get('/:memberId', {
-
+	tags: [ 'Member' ]
 }, function(req, res) {
 	ModuleSubjectMemberController.read(helpers.sendResult(res), req.subject, req.params.memberId);
 });
@@ -49,7 +49,7 @@ members.get('/:memberId', {
  * Update one member for the current subject.
  */
 members.put('/:memberId', {
-
+	tags: [ 'Member' ]
 }, function(req, res) {
 	ModuleSubjectMemberController.update(helpers.sendResult(res), req.subject, req.params.memberId, req.body);
 });
@@ -58,7 +58,7 @@ members.put('/:memberId', {
  * Add a member to the current subject.
  */
 members.post('/', {
-
+	tags: [ 'Member' ]
 }, function(req, res) {
 	ModuleSubjectMemberController.create(helpers.sendResult(res), req.subject, req.body);
 });
@@ -67,7 +67,7 @@ members.post('/', {
  * Remove a member from the current subject.
  */
 members.delete('/:memberId', {
-
+	tags: [ 'Member' ]
 }, function(req, res) {
 	ModuleSubjectMemberController.delete(helpers.sendResult(res), req.subject, req.params.memberId);
 });

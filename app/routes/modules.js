@@ -31,7 +31,9 @@ modules.param('moduleSlug', function (req, res, next, moduleSlug) {
  * Get all modules.
  */
 modules.get('/', {
-
+	summary: 'Get all tasks',
+	description: 'List all tasks and apply optional filter.',
+	tags: [ 'Module' ],
 }, function (req, res) {
 	ModuleController.list(_helpers.sendResult(res));
 });
@@ -40,7 +42,9 @@ modules.get('/', {
  * Create a module.
  */
 modules.post('/', {
-
+	summary: 'Create a module',
+	description: 'Create a new module.',
+	tags: [ 'Module' ],
 }, function (req, res) {
 	ModuleController.create(_helpers.sendResult(res), req.body);
 });
@@ -49,7 +53,9 @@ modules.post('/', {
  * Read a module.
  */
 modules.get('/:moduleSlug', {
-
+	summary: 'Get a module',
+	description: 'Get an existing module.',
+	tags: [ 'Module' ],
 }, function (req, res) {
 	ModuleController.read(_helpers.sendResult(res), req.params.moduleSlug);
 });
@@ -58,7 +64,9 @@ modules.get('/:moduleSlug', {
  * Update a module.
  */
 modules.put('/:moduleSlug', {
-
+	summary: 'Update a module',
+	description: 'Update an existing module.',
+	tags: [ 'Module' ],
 }, function (req, res) {
 	ModuleController.update(_helpers.sendResult(res), req.params.moduleSlug, req.body);
 });
@@ -67,7 +75,9 @@ modules.put('/:moduleSlug', {
  * Delete a module.
  */
 modules.delete('/:moduleSlug', {
-
+	summary: 'Delete a module',
+	description: 'Delete an existing module.',
+	tags: [ 'Module' ],
 }, function (req, res) {
 	ModuleController.delete(_helpers.sendResult(res), req.params.moduleSlug);
 });
