@@ -44,6 +44,7 @@ exports.read = function(callback, subject, taskId) {
 		},
 		function(subject, next) {
 			var task = subject.tasks.id(taskId);
+
 			if (!task) {
 				return next(new errors.NotFoundError('Task'));
 			}

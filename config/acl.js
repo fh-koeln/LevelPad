@@ -269,6 +269,8 @@ db.connection.on('connected', function() {
 				{resources: 'modules/:module/subjects/:subject', permissions: ['GET', 'PUT', 'DELETE']},
 				{resources: 'modules/:module/subjects/:subject/members', permissions: ['GET', 'POST']},
 				{resources: 'modules/:module/subjects/:subject/members/:member', permissions: ['GET', 'PUT', 'DELETE']},
+				{resources: 'modules/:module/subjects/:subject/members/:member/evaluations', permissions: ['GET', 'POST']},
+				{resources: 'modules/:module/subjects/:subject/members/:member/evaluations/:evaluation', permissions: ['GET', 'PUT', 'DELETE']},
 				{resources: 'modules/:module/subjects/:subject/tasks', permissions: ['GET', 'POST']},
 				{resources: 'modules/:module/subjects/:subject/tasks/:task', permissions: ['GET', 'PUT', 'DELETE']},
 				{resources: 'modules/:module/subjects/:subject/tasks/:task/levels', permissions: ['GET', 'POST']},

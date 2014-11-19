@@ -10,6 +10,17 @@ var express = require('express'),
 	ModuleSubjectTaskController = require('../controllers/ModuleSubjectTaskController'),
 	helpers = require('./_helpers');
 
+tasks.param('taskId', function (req, res, next, taskId) {
+	ModuleSubjectTaskController.read(function(err, task) {
+		if (err && err.name === 'NotFoundError') {
+			return res.status(404).json(err);
+		}
+
+		req.task = task;
+		next(err);
+	}, req.subject, taskId);
+});
+
 /**
  * Get all tasks for the current subject.
  */
@@ -54,5 +65,10 @@ tasks.delete('/:taskId', {
 }, function(req, res) {
 	ModuleSubjectTaskController.delete(helpers.sendResult(res), req.subject, req.params.taskId);
 });
+
+/**
+ * Register subresources for tasks.
+ */
+tasks.use('/:taskId/levels', require('./levels'));
 
 module.exports = tasks;

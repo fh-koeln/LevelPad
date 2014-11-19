@@ -61,7 +61,7 @@ describe('Modules Subjects Tasks API', function() {
 		], done);
 	});
 
-	it('should return 200 when an admin reads level of a task', function(done) {
+	it('should return 200 when an admin reads levels of a task', function(done) {
 		async.waterfall([
 			function(next){
 				agents.admin1
@@ -90,6 +90,9 @@ describe('Modules Subjects Tasks API', function() {
 
 						should.exist(res.body);
 
+						var apiLevels = res.body;
+						apiLevels.should.have.a.lengthOf(4);
+
 						next(err);
 					});
 			}
@@ -110,7 +113,7 @@ describe('Modules Subjects Tasks API', function() {
 						should.exist(res.body);
 
 						var taskId = res.body[0]._id;
-						var levelId = res.body[0].levels._id;
+						var levelId = res.body[0].levels[0]._id;
 
 						next(err, taskId, levelId);
 					});
@@ -146,12 +149,11 @@ describe('Modules Subjects Tasks API', function() {
 						should.exist(res.body);
 
 						var taskId = res.body[0]._id;
-						var levelId = res.body[0].levels._id;
 
-						next(err, taskId, levelId);
+						next(err, taskId);
 					});
 			},
-			function(taskId, levelId, next){
+			function(taskId, next){
 				agents.admin1
 					.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/tasks/' + taskId + '/levels/doesnotexist')
 					.set('Accept', 'application/json')
@@ -250,7 +252,7 @@ describe('Modules Subjects Tasks API', function() {
 							.and.be.equal('ArgumentNullError');
 
 						res.body.should.have.property('argumentName')
-							.and.be.equal('title');
+							.and.be.equal('description');
 
 						next(err);
 					});
@@ -309,6 +311,9 @@ describe('Modules Subjects Tasks API', function() {
 
 						res.body.should.have.property('title')
 							.and.be.equal('Lörem ipsüm dolor sit ämet, consetetur sedipscing elitr');
+
+						res.body.should.have.property('isMinimum')
+							.and.be.equal(true);
 
 						next(err);
 					});
@@ -370,7 +375,7 @@ describe('Modules Subjects Tasks API', function() {
 						should.exist(res.body);
 
 						var taskId = res.body[0]._id;
-						var levelId = res.body[0].levels._id;
+						var levelId = res.body[0].levels[0]._id;
 
 						next(err, taskId, levelId);
 					});
@@ -455,7 +460,7 @@ describe('Modules Subjects Tasks API', function() {
 						should.exist(res.body);
 
 						var taskId = res.body[0]._id;
-						var levelId = res.body[0].levels._id;
+						var levelId = res.body[0].levels[0]._id;
 
 						next(err, taskId, levelId);
 					});

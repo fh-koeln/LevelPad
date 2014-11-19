@@ -4,12 +4,14 @@
 
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
-	ObjectId = Schema.ObjectId;
+	ObjectId = Schema.ObjectId,
+	Evaluation = require('./Evaluation');
 
 var memberSchema = new Schema({
 	user: { type: ObjectId, ref: 'User', required: true }, // User model
 	subject: { type: ObjectId, ref: 'Subject', required: true }, // Subject model
-	role: { type: String, required: true, enum: [ 'member', 'assistant', 'creator' ] }
+	role: { type: String, required: true, enum: [ 'member', 'assistant', 'creator' ] },
+	evaluations: [ Evaluation.schema ], // Embedded document
 });
 
 memberSchema.index({ user: 1, subject: 1}, { unique: true });

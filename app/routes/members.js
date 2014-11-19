@@ -10,6 +10,17 @@ var express = require('express'),
 	ModuleSubjectMemberController = require('../controllers/ModuleSubjectMemberController'),
 	helpers = require('./_helpers');
 
+	members.param('memberId', function (req, res, next, memberId) {
+	ModuleSubjectMemberController.read(function(err, member) {
+		if (err && err.name === 'NotFoundError') {
+			return res.status(404).json(err);
+		}
+
+		req.member = member;
+		next(err);
+	}, memberId);
+});
+
 /**
  * Get all members for the current subject.
  */
@@ -54,5 +65,10 @@ members.delete('/:memberId', {
 }, function(req, res) {
 	ModuleSubjectMemberController.delete(helpers.sendResult(res), req.subject, req.params.memberId);
 });
+
+/**
+ * Register subresources for members.
+ */
+ members.use('/:memberId/evaluations', require('./evaluations'));
 
 module.exports = members;

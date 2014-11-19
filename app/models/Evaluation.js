@@ -7,10 +7,11 @@ var mongoose = require('mongoose'),
 	ObjectId = Schema.ObjectId;
 
 var evaluationSchema = new Schema({
-	createdAt: {type: Date, default: Date.now},
+	createdAt: { type: Date, default: Date.now },
+	createdBy: { type: ObjectId, ref: 'User', require: true },
 	comment: { type: String, default: '' },
-	level: ObjectId, // Level model
-	artifact: ObjectId // Artifact model
+	task: { type: ObjectId, ref: 'Task', require: true },
+	level: { type: ObjectId, ref: 'Level', require: true }
 });
 
 module.exports = mongoose.model('Evaluation', evaluationSchema);
