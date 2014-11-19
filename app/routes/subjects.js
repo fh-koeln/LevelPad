@@ -13,13 +13,7 @@ var express = require('express'),
 subjects.param('subjectSlug', function (req, res, next, subjectSlug) {
 	ModuleSubjectController.read(function(err, subject) {
 		if (err) {
-			if (err.name === 'ValidationError' || err.name === 'AlreadyInUseError' || err.name === 'ArgumentNullError' || err.name === 'TypeError') {
-				return res.status(400).json(err);
-			} else if (err.name === 'NotFoundError') {
-				return res.status(404).json(err);
-			} else {
-				return res.status(500).json(err);
-			}
+			return _helpers.sendResult(res)(err);
 		}
 
 		req.subject = subject;

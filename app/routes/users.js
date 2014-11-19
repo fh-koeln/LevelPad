@@ -23,13 +23,7 @@ users._spec.addDefinition('User', {
 users.param('user', function(req, res, next, username) {
 	UserController.read(function(err, user) {
 		if (err) {
-			if (err.name === 'ValidationError' || err.name === 'AlreadyInUseError' || err.name === 'ArgumentNullError' || err.name === 'TypeError') {
-				return res.status(400).json(err);
-			} else if (err.name === 'NotFoundError') {
-				return res.status(404).json(err);
-			} else {
-				return res.status(500).json(err);
-			}
+			return _helpers.sendResult(res)(err);
 		}
 
 		req.user = user;
