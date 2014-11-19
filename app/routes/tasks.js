@@ -12,8 +12,14 @@ var express = require('express'),
 
 tasks.param('taskId', function (req, res, next, taskId) {
 	ModuleSubjectTaskController.read(function(err, task) {
-		if (err && err.name === 'NotFoundError') {
-			return res.status(404).json(err);
+		if (err) {
+			if (err.name === 'ValidationError' || err.name === 'AlreadyInUseError' || err.name === 'ArgumentNullError' || err.name === 'TypeError') {
+				return res.status(400).json(err);
+			} else if (err.name === 'NotFoundError') {
+				return res.status(404).json(err);
+			} else {
+				return res.status(500).json(err);
+			}
 		}
 
 		req.task = task;

@@ -1,15 +1,14 @@
 'use strict';
 
 var Evaluation = require('../models/Evaluation'),
-	Member = require('../models/Member'),
 	async = require('async'),
 	errors = require('common-errors');
 
 /**
- * List all members by subject and apply an optional filter.
+ * List all evaluations by member and apply an optional filter.
  *
  * @param callback
- * @param subject
+ * @param member
  */
 exports.list = function(callback, member) {
 	async.waterfall([
@@ -17,25 +16,21 @@ exports.list = function(callback, member) {
 			if (!member || !member._id) {
 				return next(new errors.NotFoundError('Member'));
 			}
-		},
-		function(next) {
-			Member.findById(member._id).exec(function(err, memberData) {
-				if (err) {
-					return next(err);
-				}
 
-				next(null, memberData.evaluations);
-			});
+			next(null, member);
+		},
+		function(member, next) {
+			next(null, member.evaluation);
 		}
 	], callback);
 };
 
 /**
- * Find member by subject and member id.
+ * Find evaluation by member and evaluation id.
  *
  * @param callback
- * @param subject
- * @param memberId
+ * @param member
+ * @param evaluationId
  */
 exports.read = function(callback, member, evaluationId) {
 	async.waterfall([
@@ -44,9 +39,9 @@ exports.read = function(callback, member, evaluationId) {
 				return next(new errors.NotFoundError('Member'));
 			}
 
-			next(null);
+			next(null, member);
 		},
-		function(next) {
+		function(member, next) {
 			var evaluation = member.evaluations.id(evaluationId);
 
 			if (!evaluation) {
@@ -59,71 +54,76 @@ exports.read = function(callback, member, evaluationId) {
 };
 
 /**
- * Create a new member based on the given memberData.
+ * Create a new evaluation based on the given evaluationData.
  *
  * @param callback
- * @param subject
- * @param memberData
+ * @param member
+ * @param evaluationData
  */
 exports.create = function(callback, member, evaluationData) {
-		async.waterfall([
-			function(next) {
-				if (!member || !member._id) {
-					return next(new errors.NotFoundError('Member'));
-				}
-
-				next(null);
-			},
-			function(next) {
-				if (!evaluationData.createdBy) {
-					return next(new errors.ArgumentNullError('createdBy'));
-				}
-
-				if (!evaluationData.task) {
-					return next(new errors.ArgumentNullError('task'));
-				}
-
-				if (!evaluationData.level) {
-					return next(new errors.ArgumentNullError('level'));
-				}
-
-				next(null);
-			},
-			function(next) {
-				var evaluation = new Evaluation();
-
-				evaluation.createdBy = evaluationData.createdBy;
-				evaluation.task = evaluationData.task;
-				evaluation.level = evaluationData.level;
-
-				evaluation.save(function(err) {
-					if (err) {
-						return next(err);
-					}
-					member.evaluation.push(evaluation._id);
-					evaluation.save(next);
-				});
-
+	async.waterfall([
+		function(next) {
+			if (!member || !member._id) {
+				return next(new errors.NotFoundError('Member'));
 			}
-		], callback);
+
+			next(null, member);
+		},
+		function(member, next) {
+			if (!evaluationData.createdBy) {
+				return next(new errors.ArgumentNullError('createdBy'));
+			}
+
+			if (!evaluationData.comment) {
+				return next(new errors.ArgumentNullError('comment'));
+			}
+
+			if (!evaluationData.task) {
+				return next(new errors.ArgumentNullError('task'));
+			}
+
+			if (!evaluationData.level) {
+				return next(new errors.ArgumentNullError('level'));
+			}
+
+			next(null, member);
+		},
+		function(member, next) {
+			var evaluation = new Evaluation();
+
+			evaluation.createdBy = evaluationData.createdBy;
+			evaluation.comment = evaluationData.comment;
+			evaluation.task = evaluationData.task;
+			evaluation.level = evaluationData.level;
+
+			member.evaluation.push(evaluation);
+
+			member.save(function(err) {
+				next(err, evaluation);
+			});
+		}
+	], callback);
 };
 
 /**
- * Update the member with given memberData.
+ * Update an evaluation with given evaluationData.
  *
  * @param callback
- * @param subject
- * @param memberId
- * @param memberData
+ * @param member
+ * @param evaluationData
  */
-exports.update = function(callback, member, evaluation, evaluationData) {
+exports.update = function(callback, member, evaluationId, evaluationData) {
 	async.waterfall([
 		function(next) {
-			exports.read(next, member, evaluation);
+			exports.read(next, member, evaluationId);
 		},
 		function(evaluation, next) {
 			if (evaluationData.createdBy !== undefined) {
 				evaluation.createdBy = evaluationData.createdBy;
+			}
+
+			if (evaluationData.comment !== undefined) {
+				evaluation.comment = evaluationData.comment;
 			}
 
 			if (evaluationData.task !== undefined) {
@@ -134,17 +134,19 @@ exports.update = function(callback, member, evaluation, evaluationData) {
 				evaluation.level = evaluationData.level;
 			}
 
-			evaluation.save(next);
+			member.save(function(err) {
+				next(err, evaluation);
+			});
 		}
 	], callback);
 };
 
 /**
- * Remove a member by subject and member id.
+ * Remove an evaluation by member and evaluation id.
  *
  * @param callback
- * @param subject
- * @param memberId
+ * @param member
+ * @param evaluationId
  */
 exports.delete = function(callback, member, evaluationId) {
 	async.waterfall([
@@ -152,10 +154,14 @@ exports.delete = function(callback, member, evaluationId) {
 			exports.read(next, member, evaluationId);
 		},
 		function(evaluation, next) {
-			evaluation.remove(next);
+			evaluation.remove();
+
+			next(null, evaluation);
 		},
 		function(evaluation, next) {
-			member.save(next);
+			member.save(function(err) {
+				next(err, evaluation);
+			});
 		}
 	], callback);
 };

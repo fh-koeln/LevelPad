@@ -10,15 +10,21 @@ var express = require('express'),
 	ModuleSubjectMemberController = require('../controllers/ModuleSubjectMemberController'),
 	helpers = require('./_helpers');
 
-	members.param('memberId', function (req, res, next, memberId) {
+members.param('memberId', function (req, res, next, memberId) {
 	ModuleSubjectMemberController.read(function(err, member) {
-		if (err && err.name === 'NotFoundError') {
-			return res.status(404).json(err);
+		if (err) {
+			if (err.name === 'ValidationError' || err.name === 'AlreadyInUseError' || err.name === 'ArgumentNullError' || err.name === 'TypeError') {
+				return res.status(400).json(err);
+			} else if (err.name === 'NotFoundError') {
+				return res.status(404).json(err);
+			} else {
+				return res.status(500).json(err);
+			}
 		}
 
 		req.member = member;
 		next(err);
-	}, memberId);
+	}, req.subject, memberId);
 });
 
 /**
