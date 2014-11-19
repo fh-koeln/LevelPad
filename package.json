@@ -31,7 +31,7 @@
   "dependencies": {
     "acl": "~0.4.4",
     "async": "~0.9.0",
-    "bo-swag": "~0.0.4",
+    "bo-swag": "~0.0.5",
     "body-parser": "~1.9.2",
     "common-errors": "~0.4.17",
     "compression": "~1.2.0",
