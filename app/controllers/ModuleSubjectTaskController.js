@@ -43,7 +43,7 @@ exports.read = function(callback, subject, taskId) {
 			next(null, subject);
 		},
 		function(subject, next) {
-			var task = subject.tasks.id( taskId );
+			var task = subject.tasks.id(taskId);
 			if (!task) {
 				return next(new errors.NotFoundError('Task'));
 			}
@@ -119,7 +119,7 @@ exports.update = function(callback, subject, taskId, taskData) {
 			next(null, subject);
 		},
 		function(subject, next) {
-			var task = subject.tasks.id( taskId );
+			var task = subject.tasks.id(taskId);
 			if (!task) {
 				return next(new errors.NotFoundError('Task'));
 			}
@@ -163,7 +163,7 @@ exports.delete = function(callback, subject, taskId) {
 			next(null, subject);
 		},
 		function(subject, next) {
-			var task = subject.tasks.id( taskId );
+			var task = subject.tasks.id(taskId);
 			if (!task) {
 				return next(new errors.NotFoundError('Task'));
 			}
