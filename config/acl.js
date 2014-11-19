@@ -271,10 +271,8 @@ db.connection.on('connected', function() {
 				{resources: 'modules/:module/subjects/:subject/members/:member', permissions: ['GET', 'PUT', 'DELETE']},
 				{resources: 'modules/:module/subjects/:subject/tasks', permissions: ['GET', 'POST']},
 				{resources: 'modules/:module/subjects/:subject/tasks/:task', permissions: ['GET', 'PUT', 'DELETE']},
-				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams', permissions: ['GET', 'POST', 'DELETE']},
-				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team', permissions: ['GET', 'POST', 'DELETE']},
-				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team/feedbacks', permissions: ['GET', 'POST', 'DELETE']},
-				{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team/feedbacks/:feedback', permissions: ['GET', 'PUT', 'DELETE']},
+				{resources: 'modules/:module/subjects/:subject/tasks/:task/levels', permissions: ['GET', 'POST']},
+				{resources: 'modules/:module/subjects/:subject/tasks/:task/levels/:level', permissions: ['GET', 'PUT', 'DELETE']},
 			]
 		}
 	]);

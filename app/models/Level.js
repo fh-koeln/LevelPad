@@ -6,7 +6,7 @@ var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
 var levelSchema = new Schema({
-	level: { type: Number, required: true },
+	rank: { type: Number, required: true },
 	title: { type: String, require: true },
 	description: { type: String, required: true },
 	isMinimum: { type: Boolean, default: false }

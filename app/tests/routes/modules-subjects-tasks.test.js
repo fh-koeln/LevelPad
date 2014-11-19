@@ -94,7 +94,7 @@ describe('Modules Subjects Tasks API', function() {
 			},
 			function(taskId, next){
 				agents.admin1
-					.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/tasks/' + taskId)
+					.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/tasks/' + taskId + '/levels/')
 					.set('Accept', 'application/json')
 					.end(function(err, res) {
 						should.not.exist(err);
