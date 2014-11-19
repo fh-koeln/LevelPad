@@ -72,7 +72,55 @@ subjects.cgaWise1415 = {
 	semester: 'Wintersemester',
 	year: 2014,
 	module: modules.cga,
-	status: 'inactive'
+	status: 'inactive',
+	tasks: [
+		{
+			title: 'Dies ist der Titel der Aufgabe 1',
+			description: 'Dies ist die Beschreibung der Aufgabe 1',
+			slug: 'dies-ist-der-titel-der-aufgabe-1',
+			weight: 25,
+			levels: [
+				{
+					rank: 1,
+					title: 'Dies ist der Titel der Niveaustufe 1',
+					description: 'Dies ist die Beschreibung der Niveaustufe 1',
+					isMinimum: false,
+				},
+				{
+					rank: 2,
+					title: 'Dies ist der Titel der Niveaustufe 2',
+					description: 'Dies ist die Beschreibung der Niveaustufe 2',
+					isMinimum: false,
+				},
+				{
+					rank: 3,
+					title: 'Dies ist der Titel der Niveaustufe 3',
+					description: 'Dies ist die Beschreibung der Niveaustufe 3',
+					isMinimum: true,
+				},
+				{
+					rank: 4,
+					title: 'Dies ist der Titel der Niveaustufe 4',
+					description: 'Dies ist die Beschreibung der Niveaustufe 4',
+					isMinimum: false,
+				}
+			]
+		},
+		{
+			title: 'Dies ist der Titel der Aufgabe 2',
+			description: 'Dies ist die Beschreibung der Aufgabe 2',
+			slug: 'dies-ist-der-titel-der-aufgabe-2',
+			weight: 25
+		},
+		{
+			title: 'Dies ist der Titel der Aufgabe 3',
+			description: 'Dies ist die Beschreibung der Aufgabe 3',
+			slug: 'dies-ist-der-titel-der-aufgabe-3',
+			weight: 50
+		}
+	],
+	members: [
+	]
 };
 
 subjects.wba2Sose14 = {

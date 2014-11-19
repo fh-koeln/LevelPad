@@ -154,6 +154,60 @@ module.exports.initializeTestData = function(callback) {
 				},
 			], next);
 		},
+		function(next) { // Add tasks
+			async.waterfall([
+				function(callback) {
+					Module.findOne({ slug: subjects.cgaWise1415.module.slug }, function(err, module) {
+						if (err) {
+							return callback(err);
+						}
+
+						callback(null, module);
+					});
+				},
+				function(module, callback) {
+					Subject.findOne({ slug: subjects.cgaWise1415.slug, module: module._id }, function(err, subject) {
+						if (err) {
+							return callback(err);
+						}
+
+						callback(null, subject);
+					});
+				},
+				function(subject, callback) {
+					var tasks = subjects.cgaWise1415.tasks;
+
+					tasks.forEach(function(data) {
+						var task = new Task();
+
+						task.title = data.title;
+						task.description = data.description;
+						task.slug = data.slug;
+						task.weight = data.weight;
+
+						if (data.levels) {
+							data.levels.forEach(function(data) {
+								var level = new Level();
+
+								level.rank = data.rank;
+								level.title = data.title;
+								level.description = data.description;
+								level.isMinimum = data.isMinimum;
+
+								task.levels.push(level);
+							});
+						}
+
+						subject.tasks.push(task);
+					});
+
+					callback(null, subject);
+				},
+				function(subject, callback) {
+					subject.save(callback);
+				},
+			], next);
+		},
 		function(next) { // Add members
 			async.waterfall([
 				function(callback) {
