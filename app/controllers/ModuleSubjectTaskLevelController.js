@@ -10,14 +10,18 @@ var Level = require('../models/Level'),
  * @param callback
  * @param subject
  */
-exports.list = function(callback, subject) {
+exports.list = function(callback, subject, task) {
 	async.waterfall([
 		function(next) {
 			if (!subject || !subject._id) {
 				return next(new errors.NotFoundError('Subject'));
 			}
 
-			next(null, subject.levels);
+			if (!task || !task._id) {
+				return next(new errors.NotFoundError('Task'));
+			}
+
+			next(null, task.levels);
 		}
 	], callback);
 };
@@ -29,17 +33,21 @@ exports.list = function(callback, subject) {
  * @param subject
  * @param levelId
  */
-exports.read = function(callback, subject, levelId) {
+exports.read = function(callback, subject, task, levelId) {
 	async.waterfall([
 		function(next) {
 			if (!subject || !subject._id) {
 				return next(new errors.NotFoundError('Subject'));
 			}
 
-			next(null, subject);
+			if (!task || !task._id) {
+				return next(new errors.NotFoundError('Task'));
+			}
+
+			next(null);
 		},
-		function(subject, next) {
-			var level = subject.levels.id(levelId);
+		function(next) {
+			var level = task.levels.id(levelId);
 			if (!level) {
 				return next(new errors.NotFoundError('Level'));
 			}
@@ -56,16 +64,20 @@ exports.read = function(callback, subject, levelId) {
  * @param subject
  * @param levelData
  */
-exports.create = function(callback, subject, levelData) {
+exports.create = function(callback, subject, task, levelData) {
 		async.waterfall([
 			function(next) {
 				if (!subject || !subject._id) {
 					return next(new errors.NotFoundError('Subject'));
 				}
 
-				next(null, subject);
+				if (!task || !task._id) {
+					return next(new errors.NotFoundError('Task'));
+				}
+
+				next(null);
 			},
-			function(subject, next) {
+			function(next) {
 				if (!levelData.title) {
 					return next(new errors.ArgumentNullError('title'));
 				}
@@ -74,10 +86,10 @@ exports.create = function(callback, subject, levelData) {
 					return next(new errors.ArgumentNullError('description'));
 				}
 
-				next(null, subject);
+				next(null);
 			},
-			function(subject, next) {
-				var existingLevels = subject.levels,
+			function(next) {
+				var existingLevels = task.levels,
 					level = new Level(), maxRate;
 
 				// Get the highest current rate (http://stackoverflow.com/a/4020842)
@@ -96,7 +108,7 @@ exports.create = function(callback, subject, levelData) {
 					level.isMinimum = levelData.isMinimum;
 				}
 
-				subject.levels.push(level);
+				task.levels.push(level);
 
 				subject.save(function(err) {
 					next(err, level);
@@ -113,17 +125,21 @@ exports.create = function(callback, subject, levelData) {
  * @param levelId
  * @param levelData
  */
-exports.update = function(callback, subject, levelId, levelData) {
+exports.update = function(callback, subject, task, levelId, levelData) {
 	async.waterfall([
 		function(next) {
 			if (!subject || !subject._id) {
 				return next(new errors.NotFoundError('Subject'));
 			}
 
-			next(null, subject);
+			if (!task || !task._id) {
+				return next(new errors.NotFoundError('Task'));
+			}
+
+			next(null);
 		},
-		function(subject, next) {
-			var level = subject.levels.id(levelId);
+		function(next) {
+			var level = task.levels.id(levelId);
 			if (!level) {
 				return next(new errors.NotFoundError('Level'));
 			}
@@ -157,17 +173,21 @@ exports.update = function(callback, subject, levelId, levelData) {
  * @param subject
  * @param levelId
  */
-exports.delete = function(callback, subject, levelId) {
+exports.delete = function(callback, subject, task, levelId) {
 	async.waterfall([
 		function(next) {
 			if (!subject || !subject._id) {
 				return next(new errors.NotFoundError('Subject'));
 			}
 
-			next(null, subject);
+			if (!task || !task._id) {
+				return next(new errors.NotFoundError('Task'));
+			}
+
+			next(null);
 		},
-		function(subject, next) {
-			var level = subject.levels.id(levelId);
+		function(next) {
+			var level = task.levels.id(levelId);
 			if (!level) {
 				return next(new errors.NotFoundError('Level'));
 			}
