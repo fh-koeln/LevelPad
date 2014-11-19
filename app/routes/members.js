@@ -10,7 +10,7 @@ var express = require('express'),
 	ModuleSubjectMemberController = require('../controllers/ModuleSubjectMemberController'),
 	helpers = require('./_helpers');
 
-	members.param('memberId', function (req, res, next, memberId) {
+members.param('memberId', function (req, res, next, memberId) {
 	ModuleSubjectMemberController.read(function(err, member) {
 		if (err) {
 			if (err.name === 'ValidationError' || err.name === 'AlreadyInUseError' || err.name === 'ArgumentNullError' || err.name === 'TypeError') {

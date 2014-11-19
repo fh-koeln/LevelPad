@@ -9,7 +9,7 @@ var mongoose = require('mongoose'),
 var evaluationSchema = new Schema({
 	createdAt: { type: Date, default: Date.now },
 	createdBy: { type: ObjectId, ref: 'User', require: true },
-	comment: { type: String, default: '' },
+	comment: { type: String, require: true },
 	task: { type: ObjectId, ref: 'Task', require: true },
 	level: { type: ObjectId, ref: 'Level', require: true }
 });
