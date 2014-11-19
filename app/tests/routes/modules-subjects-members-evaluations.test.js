@@ -26,7 +26,7 @@ describe('Modules Subjects Tasks API', function() {
 		], done);
 	});
 
-	it.skip('should return 403 when a guest wants to access module subject members evaluations', function(done) {
+	it('should return 403 when a guest wants to access module subject members evaluations', function(done) {
 		async.waterfall([
 			function(next){
 				agents.admin1
@@ -61,7 +61,7 @@ describe('Modules Subjects Tasks API', function() {
 		], done);
 	});
 
-	it.skip('should return 404 when an admin reads evaluation of an unknown member', function(done) {
+	it('should return 404 when an admin reads evaluation of an unknown member', function(done) {
 		async.waterfall([
 			function(next){
 				agents.admin1
@@ -110,7 +110,7 @@ describe('Modules Subjects Tasks API', function() {
 						should.exist(res.body);
 
 						var apiTasks = res.body;
-						apiTasks.should.have.a.lengthOf(3);
+						apiTasks.should.have.a.lengthOf(1);
 
 						next(err);
 					});
@@ -118,7 +118,7 @@ describe('Modules Subjects Tasks API', function() {
 		], done);
 	});
 
-	it.skip('should return 200 when an admin reads a single evaluation', function(done) {
+	it('should return 200 when an admin reads a single evaluation', function(done) {
 		async.waterfall([
 			function(next){
 				agents.admin1
@@ -132,7 +132,7 @@ describe('Modules Subjects Tasks API', function() {
 						should.exist(res.body);
 
 						var memberId = res.body[0]._id;
-						var evaluationId = res.body[0].evalautions[0]._id;
+						var evaluationId = res.body[0].evaluations[0]._id;
 
 						next(err, memberId, evaluationId);
 					});
@@ -154,7 +154,7 @@ describe('Modules Subjects Tasks API', function() {
 		], done);
 	});
 
-	it.skip('should return 404 when an admin reads an unknown evaluation', function(done) {
+	it('should return 404 when an admin reads an unknown evaluation', function(done) {
 			async.waterfall([
 				function(next){
 					agents.admin1
@@ -189,7 +189,7 @@ describe('Modules Subjects Tasks API', function() {
 			], done);
 		});
 
-	it.skip('should return 400 when an admin creates an evaluation with missing task', function(done) {
+	it('should return 400 when an admin creates an evaluation with missing task', function(done) {
 		async.waterfall([
 			function(next){
 				agents.admin1
@@ -234,7 +234,7 @@ describe('Modules Subjects Tasks API', function() {
 		], done);
 	});
 
-	it.skip('should return 400 when an admin creates an evaluation with missing task', function(done) {
+	it('should return 400 when an admin creates an evaluation with missing task', function(done) {
 		async.waterfall([
 					function(next){
 						agents.admin1
@@ -279,7 +279,7 @@ describe('Modules Subjects Tasks API', function() {
 				], done);
 			});
 
-	it.skip('should return 400 when an admin creates an evaluation with missing comment', function(done) {
+	it('should return 400 when an admin creates an evaluation with missing comment', function(done) {
 		async.waterfall([
 					function(next){
 						agents.admin1
@@ -324,7 +324,7 @@ describe('Modules Subjects Tasks API', function() {
 				], done);
 			});
 
-	it.skip('should return 200 when an admin creates an evaluation', function(done) {
+	it('should return 200 when an admin creates an evaluation', function(done) {
 		async.waterfall([
 			function(next){
 				agents.admin1
@@ -338,14 +338,13 @@ describe('Modules Subjects Tasks API', function() {
 						should.exist(res.body);
 
 						var memberId = res.body[0]._id;
-						var evaluationId = res.body[0].evaluations[0]._id;
 
-						next(err, memberId, evaluationId);
+						next(err, memberId);
 					});
 			},
-			function(memberId, evaluationId, next){
+			function(memberId, next){
 				agents.admin1
-					.post('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/' + memberId + '/evaluations/' + evaluationId)
+					.post('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/' + memberId + '/evaluations/')
 					.send({
 						task: '546a1b22c6da9447692f6df9',
 						level: '646a1b22c6da9447692f6df9',
@@ -360,7 +359,7 @@ describe('Modules Subjects Tasks API', function() {
 						should.exist(res.body);
 						res.body.should.have.property('_id');
 
-						next(err, memberId, evaluationId);
+						next(err, memberId, res.body._id);
 					});
 			},
 			function(memberId, evaluationId, next){
@@ -389,7 +388,7 @@ describe('Modules Subjects Tasks API', function() {
 		], done);
 	});
 
-	it.skip('should return 404 when an admin updates an unknown evaluation', function(done) {
+	it('should return 404 when an admin updates an unknown evaluation', function(done) {
 		async.waterfall([
 			function(next){
 				agents.admin1
@@ -429,7 +428,7 @@ describe('Modules Subjects Tasks API', function() {
 		], done);
 	});
 
-	it.skip('should return 200 when an admin updates a single evaluation', function(done) {
+	it('should return 200 when an admin updates a single evaluation', function(done) {
 		async.waterfall([
 			function(next){
 				agents.admin1
@@ -479,7 +478,7 @@ describe('Modules Subjects Tasks API', function() {
 		], done);
 	});
 
-	it.skip('should return 404 when an admin deletes an unknown evaluation', function(done) {
+	it('should return 404 when an admin deletes an unknown evaluation', function(done) {
 		async.waterfall([
 			function(next){
 				agents.admin1
@@ -514,7 +513,7 @@ describe('Modules Subjects Tasks API', function() {
 		], done);
 	});
 
-	it.skip('should return 200 when an admin deletes a single evaluation', function(done) {
+	it('should return 200 when an admin deletes a single evaluation', function(done) {
 		async.waterfall([
 			function(next){
 				agents.admin1
