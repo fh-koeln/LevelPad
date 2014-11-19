@@ -11,7 +11,9 @@ var express = require('express'),
 	_helpers = require('./_helpers');
 
 semesters.get('/', {
-
+	summary: 'Get semesters',
+	description: 'Get some semesters',
+	tags: [ 'Misc' ],
 }, function (req, res) {
 	SemesterController.list(_helpers.sendResult(res));
 });

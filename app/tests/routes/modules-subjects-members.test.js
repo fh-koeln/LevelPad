@@ -61,6 +61,24 @@ describe('Modules Subjects Members API', function() {
 			});
 	});
 
+	it('should return 200 when an admin reads the creator of a module subject', function(done) {
+		agents.admin1
+			.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/?role=creator')
+			.set('Accept', 'application/json')
+			.end(function(err, res) {
+				should.not.exist(err);
+				res.should.have.status(200);
+				res.should.be.json;
+
+				should.exist(res.body);
+
+				var apiMembers = res.body;
+				apiMembers.should.have.a.lengthOf(1);
+
+				done(err);
+			});
+	});
+
 	it('should return 400 when an admin creates a new member with missing id', function(done) {
 		async.waterfall([
 			function(next) {

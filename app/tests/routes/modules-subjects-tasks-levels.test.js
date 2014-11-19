@@ -8,7 +8,7 @@ var	should = require('should'),
 	agentsAPI = require('../agents'),
 	subjects = require('../subjects');
 
-describe('Modules Subjects Tasks API', function() {
+describe('Modules Subjects Tasks Levels API', function() {
 	var agents;
 
 	function setUpAgents(done) {
@@ -23,6 +23,41 @@ describe('Modules Subjects Tasks API', function() {
 			db.clear,
 			db.initializeTestData,
 			setUpAgents
+		], done);
+	});
+
+	it('should return 403 when a guest wants to access module subject members evaluations', function(done) {
+		async.waterfall([
+			function(next){
+				agents.admin1
+					.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/tasks/')
+					.set('Accept', 'application/json')
+					.end(function(err, res) {
+						should.not.exist(err);
+						res.should.have.status(200);
+						res.should.be.json;
+
+						should.exist(res.body);
+
+						var taskId = res.body[0]._id;
+
+						next(err, taskId);
+					});
+			},
+			function(taskId, next){
+				agents.student1
+					.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/tasks/' + taskId + '/levels/')
+					.set('Accept', 'application/json')
+					.end(function(err, res) {
+						should.not.exist(err);
+						res.should.have.status(403);
+						res.should.be.json;
+
+						should.exist(res.body);
+
+						next(err);
+					});
+			}
 		], done);
 	});
 

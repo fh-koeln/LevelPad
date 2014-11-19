@@ -11,7 +11,9 @@ var express = require('express'),
 	_helpers = require('./_helpers');
 
 years.get('/', {
-
+	summary: 'Get years',
+	description: 'Get some year',
+	tags: [ 'Misc' ],
 }, function (req, res) {
 	YearController.list(_helpers.sendResult(res));
 });

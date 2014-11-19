@@ -10,31 +10,37 @@ var express = require('express'),
 	ModuleSubjectMemberController = require('../controllers/ModuleSubjectMemberController'),
 	helpers = require('./_helpers');
 
-	members.param('memberId', function (req, res, next, memberId) {
+members.param('memberId', function (req, res, next, memberId) {
 	ModuleSubjectMemberController.read(function(err, member) {
-		if (err && err.name === 'NotFoundError') {
-			return res.status(404).json(err);
+		if (err) {
+			if (err.name === 'ValidationError' || err.name === 'AlreadyInUseError' || err.name === 'ArgumentNullError' || err.name === 'TypeError') {
+				return res.status(400).json(err);
+			} else if (err.name === 'NotFoundError') {
+				return res.status(404).json(err);
+			} else {
+				return res.status(500).json(err);
+			}
 		}
 
 		req.member = member;
 		next(err);
-	}, memberId);
+	}, req.subject, memberId);
 });
 
 /**
  * Get all members for the current subject.
  */
 members.get('/', {
-
+	tags: [ 'Member' ]
 }, function(req, res) {
-	ModuleSubjectMemberController.list(helpers.sendResult(res), req.subject);
+	ModuleSubjectMemberController.list(helpers.sendResult(res), req.subject, req.query);
 });
 
 /**
  * Get one member for the current subject.
  */
 members.get('/:memberId', {
-
+	tags: [ 'Member' ]
 }, function(req, res) {
 	ModuleSubjectMemberController.read(helpers.sendResult(res), req.subject, req.params.memberId);
 });
@@ -43,7 +49,7 @@ members.get('/:memberId', {
  * Update one member for the current subject.
  */
 members.put('/:memberId', {
-
+	tags: [ 'Member' ]
 }, function(req, res) {
 	ModuleSubjectMemberController.update(helpers.sendResult(res), req.subject, req.params.memberId, req.body);
 });
@@ -52,7 +58,7 @@ members.put('/:memberId', {
  * Add a member to the current subject.
  */
 members.post('/', {
-
+	tags: [ 'Member' ]
 }, function(req, res) {
 	ModuleSubjectMemberController.create(helpers.sendResult(res), req.subject, req.body);
 });
@@ -61,7 +67,7 @@ members.post('/', {
  * Remove a member from the current subject.
  */
 members.delete('/:memberId', {
-
+	tags: [ 'Member' ]
 }, function(req, res) {
 	ModuleSubjectMemberController.delete(helpers.sendResult(res), req.subject, req.params.memberId);
 });
@@ -69,6 +75,6 @@ members.delete('/:memberId', {
 /**
  * Register subresources for members.
  */
- members.use('/:memberId/evaluations', require('./evaluations'));
+members.use('/:memberId/evaluations', require('./evaluations'));
 
 module.exports = members;
