@@ -25,35 +25,83 @@
 	<div class="subject-title">Niveaustufen</div>
 </div>
 
-<table id="sort" class="table table-hover grid" ng-init="predicate='name'; reverse=false;">
+<table class="table grid" ng-init="predicate='name'; reverse=false;">
 	<thead>
         <tr class="table-headline">
-            <th>
-					<a class="interaction-link" data-ng-href="/tasks/new" data-ng-click="showCreateDialog(); $event.preventDefault();">
-                		+ Niveaustufe hinzufügen
-            		</a>
-            </th>
+			<th>
+				<a class="interaction-link" data-ng-href="/tasks/new" data-ng-click="showCreateDialog(); $event.preventDefault();">
+					+ <span class="level-name">Niveaustufe hinzufügen</span>
+				</a>
+			</th>
 			<th>
 			</th>
         </tr>
     </thead>
-    <tbody class="table-drag-drop">
-        <tr class="positive-row">
-            <td>
-				<span class="glyphicon glyphicon-play"></span>
-                <span class="small-font">Beste Lösung</span>
+    <tbody class="table-drag-drop" ui:sortable="{'handle': '.myHandle'}">
+        <tr class="positive-row item">
+            <td >
+				<span class="glyphicon glyphicon-play collapse-icon" ng-click="isOpen1 = !isOpen1" data-ng-class="{ 'collapse-icon-clicked': isOpen1 }"></span>
+				<span class="small-font level-name">Beste Lösung</span>
+				<div>
+					<ul class="level-list" collapse="!isOpen1">
+						<li>
+							Anforderung 1
+						</li>
+						<li>
+							Anforderung 2
+						</li>
+						<li>
+							Anforderung 3
+						</li>
+					</ul>	
+				</div>
             </td>
-            <td>
-                <div class="text-right"><span class="glyphicon glyphicon-align-justify interaction-color"></span></div>
+            <td class="drag-handle">
+                <div class="text-right"><span class="glyphicon glyphicon-align-justify interaction-color myHandle"></span></div>
             </td>
         </tr>
-        <tr class="negative-row">
-            <th>
-				<span class="glyphicon glyphicon-play"></span>
-                <span class="small-font">Schlechte Lösung</span>
-            </th>
-            <td>
-                <div class="text-right"><span class="glyphicon glyphicon-align-justify interaction-color"></span></div>
+		<tr class="positive-row item">
+            <td >
+				<span class="glyphicon glyphicon-play collapse-icon" ng-click="isOpen2 = !isOpen2" data-ng-class="{ 'collapse-icon-clicked': isOpen2 }"></span>
+				<span class="small-font level-name">Gute Lösung</span>
+				<div>
+					<ul class="level-list" collapse="!isOpen2">
+						<li>
+							Anforderung 1
+						</li>
+						<li>
+							Anforderung 2
+						</li>
+						<li>
+							Anforderung 3
+						</li>
+					</ul>	
+				</div>
+            </td>
+            <td class="drag-handle">
+                <div class="text-right"><span class="glyphicon glyphicon-align-justify interaction-color myHandle"></span></div>
+            </td>
+        </tr>
+		<tr class="negative-row item">
+            <td >
+				<span class="glyphicon glyphicon-play collapse-icon" ng-click="isOpen3 = !isOpen3" data-ng-class="{ 'collapse-icon-clicked': isOpen3 }"></span>
+				<span class="small-font level-name">Schlechte Lösung</span>
+				<div>
+					<ul class="level-list" collapse="!isOpen3">
+						<li>
+							Anforderung 1
+						</li>
+						<li>
+							Anforderung 2
+						</li>
+						<li>
+							Anforderung 3
+						</li>
+					</ul>	
+				</div>
+            </td>
+            <td class="drag-handle">
+                <div class="text-right"><span class="glyphicon glyphicon-align-justify interaction-color myHandle"></span></div>
             </td>
         </tr>
 	</tbody>
