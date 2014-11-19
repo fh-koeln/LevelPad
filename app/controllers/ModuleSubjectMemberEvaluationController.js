@@ -20,7 +20,7 @@ exports.list = function(callback, member) {
 			next(null, member);
 		},
 		function(member, next) {
-			next(null, member.evaluation);
+			next(null, member.evaluations);
 		}
 	], callback);
 };
@@ -96,7 +96,7 @@ exports.create = function(callback, member, evaluationData) {
 			evaluation.task = evaluationData.task;
 			evaluation.level = evaluationData.level;
 
-			member.evaluation.push(evaluation);
+			member.evaluations.push(evaluation);
 
 			member.save(function(err) {
 				next(err, evaluation);

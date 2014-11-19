@@ -14,7 +14,7 @@ var express = require('express'),
  * Get all evaluations for the current member.
  */
 evaluations.get('/', {
-
+	tags: [ 'Evaluation' ]
 }, function(req, res) {
 	ModuleSubjectMemberEvaluationController.list(helpers.sendResult(res), req.member);
 });
@@ -23,7 +23,7 @@ evaluations.get('/', {
  * Get one evaluation of the current member.
  */
 evaluations.get('/:evaluationId', {
-
+	tags: [ 'Evaluation' ]
 }, function(req, res) {
 	ModuleSubjectMemberEvaluationController.read(helpers.sendResult(res), req.member, req.params.evaluationId);
 });
@@ -32,7 +32,7 @@ evaluations.get('/:evaluationId', {
  * Update one evaluation of the current member.
  */
 evaluations.put('/:evaluationId', {
-
+	tags: [ 'Evaluation' ]
 }, function(req, res) {
 	ModuleSubjectMemberEvaluationController.update(helpers.sendResult(res), req.member, req.params.evaluationId, req.body);
 });
@@ -41,7 +41,7 @@ evaluations.put('/:evaluationId', {
  * Add an evaluation to the current member.
  */
 evaluations.post('/', {
-
+	tags: [ 'Evaluation' ]
 }, function(req, res) {
 	req.body.createdBy = req.user._id;
 	ModuleSubjectMemberEvaluationController.create(helpers.sendResult(res), req.member, req.body);
@@ -51,7 +51,7 @@ evaluations.post('/', {
  * Remove an evaluation from the current member.
  */
 evaluations.delete('/:evaluationId', {
-
+	tags: [ 'Evaluation' ]
 }, function(req, res) {
 	ModuleSubjectMemberEvaluationController.delete(helpers.sendResult(res), req.member, req.params.evaluationId);
 });

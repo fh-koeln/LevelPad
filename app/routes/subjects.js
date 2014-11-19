@@ -31,7 +31,9 @@ subjects.param('subjectSlug', function (req, res, next, subjectSlug) {
  * Get all subjects for a module.
  */
 subjects.get('/', {
-
+	summary: 'Get all subjects',
+	description: 'List all subjects and apply optional filter.',
+	tags: [ 'Subject' ],
 }, function (req, res) {
 	ModuleSubjectController.list(_helpers.sendResult(res), req.module);
 });
@@ -40,7 +42,9 @@ subjects.get('/', {
  * Create a new subject for a module.
  */
 subjects.post('/', {
-
+	summary: 'Create an subject',
+	description: 'Create a new subject.',
+	tags: [ 'Subject' ],
 }, function (req, res) {
 	req.body.creator = req.user._id;
 	ModuleSubjectController.create(_helpers.sendResult(res), req.module, req.body);
@@ -50,7 +54,9 @@ subjects.post('/', {
  * Read a subject for a module.
  */
 subjects.get('/:subjectSlug', {
-
+	summary: 'Get a subject',
+	description: 'Get information about a subject.',
+	tags: [ 'Subject' ],
 }, function (req, res) {
 	ModuleSubjectController.read(_helpers.sendResult(res), req.module, req.params.subjectSlug);
 });
@@ -59,7 +65,9 @@ subjects.get('/:subjectSlug', {
  * Update a subject for a module.
  */
 subjects.put('/:subjectSlug', {
-
+	summary: 'Update a subject',
+	description: 'Update an existing subject.',
+	tags: [ 'Subject' ],
 }, function (req, res) {
 	ModuleSubjectController.update(_helpers.sendResult(res), req.module, req.params.subjectSlug, req.body);
 });
@@ -68,7 +76,9 @@ subjects.put('/:subjectSlug', {
  * Delete a subject for a module.
  */
 subjects.delete('/:subjectSlug', {
-
+	summary: 'Delete an subject',
+	description: 'Delete an existing subject.',
+	tags: [ 'Subject' ],
 }, function (req, res) {
 	ModuleSubjectController.delete(_helpers.sendResult(res), req.module, req.params.subjectSlug);
 });

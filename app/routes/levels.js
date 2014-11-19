@@ -14,7 +14,7 @@ var express = require('express'),
  * Get all levels for the current subject.
  */
 levels.get('/', {
-
+	tags: [ 'Level' ]
 }, function(req, res) {
 	ModuleSubjectTaskLevelController.list(helpers.sendResult(res), req.subject, req.task);
 });
@@ -23,7 +23,7 @@ levels.get('/', {
  * Get one task for the current subject.
  */
 levels.get('/:levelId', {
-
+	tags: [ 'Level' ]
 }, function(req, res) {
 	ModuleSubjectTaskLevelController.read(helpers.sendResult(res), req.subject, req.task, req.params.levelId);
 });
@@ -32,7 +32,7 @@ levels.get('/:levelId', {
  * Update one task for the current subject.
  */
 levels.put('/:levelId', {
-
+	tags: [ 'Level' ]
 }, function(req, res) {
 	ModuleSubjectTaskLevelController.update(helpers.sendResult(res), req.subject, req.task, req.params.levelId, req.body);
 });
@@ -41,7 +41,7 @@ levels.put('/:levelId', {
  * Add a task to the current subject.
  */
 levels.post('/', {
-
+	tags: [ 'Level' ]
 }, function(req, res) {
 	ModuleSubjectTaskLevelController.create(helpers.sendResult(res), req.subject, req.task, req.body);
 });
@@ -50,7 +50,7 @@ levels.post('/', {
  * Remove a task from the current subject.
  */
 levels.delete('/:levelId', {
-
+	tags: [ 'Level' ]
 }, function(req, res) {
 	ModuleSubjectTaskLevelController.delete(helpers.sendResult(res), req.subject, req.task, req.params.levelId);
 });

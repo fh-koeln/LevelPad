@@ -12,27 +12,26 @@ var Subject = require('../models/Subject'),
  * @param callback
  * @param subject
  */
-exports.list = function(callback, subject) {
+exports.list = function(callback, subject, queryArgs) {
 	async.waterfall([
 		function(next) {
 			if (!subject || !subject._id) {
 				return next(new errors.NotFoundError('Subject'));
 			}
 
-			Subject.findById(subject._id).select('members -_id').populate('members').exec(function(err, subjectWithMembers) {
+			var filter = {};
+			filter._id = { $in : subject.members };
+
+			if ( queryArgs.role ) {
+				filter.role = queryArgs.role;
+			}
+
+			Member.find(filter).populate('user').exec( function(err, members) {
 				if (err) {
 					return next(err);
 				}
 
-				User.populate(subjectWithMembers, {
-					path: 'members.user',
-				}, function(err, subjectWithMembersAndUsers) {
-					if (err) {
-						return next(err);
-					}
-
-					next(null, subjectWithMembersAndUsers.members);
-				});
+				next(null, members);
 			});
 		}
 	], callback);

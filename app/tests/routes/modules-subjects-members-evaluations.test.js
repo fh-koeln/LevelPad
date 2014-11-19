@@ -30,7 +30,7 @@ describe('Modules Subjects Members Evaluations API', function() {
 		async.waterfall([
 			function(next){
 				agents.admin1
-					.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/')
+					.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/?role=member')
 					.set('Accept', 'application/json')
 					.end(function(err, res) {
 						should.not.exist(err);
@@ -65,11 +65,11 @@ describe('Modules Subjects Members Evaluations API', function() {
 		async.waterfall([
 			function(next){
 				agents.admin1
-					.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/doesnotexist/evaluations/')
+					.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/546a1b22c6da9447692f6df9/evaluations/')
 					.set('Accept', 'application/json')
 					.end(function(err, res) {
 						should.not.exist(err);
-						res.should.have.status(403);
+						res.should.have.status(404);
 						res.should.be.json;
 
 						should.exist(res.body); // @todo Check error response
@@ -84,7 +84,7 @@ describe('Modules Subjects Members Evaluations API', function() {
 		async.waterfall([
 			function(next){
 				agents.admin1
-					.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/')
+					.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/?role=member')
 					.set('Accept', 'application/json')
 					.end(function(err, res) {
 						should.not.exist(err);
@@ -110,7 +110,7 @@ describe('Modules Subjects Members Evaluations API', function() {
 						should.exist(res.body);
 
 						var apiTasks = res.body;
-						apiTasks.should.have.a.lengthOf(3);
+						apiTasks.should.have.a.lengthOf(1);
 
 						next(err);
 					});
@@ -122,7 +122,7 @@ describe('Modules Subjects Members Evaluations API', function() {
 		async.waterfall([
 			function(next){
 				agents.admin1
-					.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/')
+					.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/?role=member')
 					.set('Accept', 'application/json')
 					.end(function(err, res) {
 						should.not.exist(err);
@@ -132,7 +132,7 @@ describe('Modules Subjects Members Evaluations API', function() {
 						should.exist(res.body);
 
 						var memberId = res.body[0]._id;
-						var evaluationId = res.body[0].evalautions[0]._id;
+						var evaluationId = res.body[0].evaluations[0]._id;
 
 						next(err, memberId, evaluationId);
 					});
@@ -158,7 +158,7 @@ describe('Modules Subjects Members Evaluations API', function() {
 			async.waterfall([
 				function(next){
 					agents.admin1
-						.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/')
+						.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/?role=member')
 						.set('Accept', 'application/json')
 						.end(function(err, res) {
 							should.not.exist(err);
@@ -193,7 +193,7 @@ describe('Modules Subjects Members Evaluations API', function() {
 		async.waterfall([
 			function(next){
 				agents.admin1
-					.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/')
+					.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/?role=member')
 					.set('Accept', 'application/json')
 					.end(function(err, res) {
 						should.not.exist(err);
@@ -238,7 +238,7 @@ describe('Modules Subjects Members Evaluations API', function() {
 		async.waterfall([
 					function(next){
 						agents.admin1
-							.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/')
+							.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/?role=member')
 							.set('Accept', 'application/json')
 							.end(function(err, res) {
 								should.not.exist(err);
@@ -283,7 +283,7 @@ describe('Modules Subjects Members Evaluations API', function() {
 		async.waterfall([
 					function(next){
 						agents.admin1
-							.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/')
+							.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/?role=member')
 							.set('Accept', 'application/json')
 							.end(function(err, res) {
 								should.not.exist(err);
@@ -328,7 +328,7 @@ describe('Modules Subjects Members Evaluations API', function() {
 		async.waterfall([
 			function(next){
 				agents.admin1
-					.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/')
+					.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/?role=member')
 					.set('Accept', 'application/json')
 					.end(function(err, res) {
 						should.not.exist(err);
@@ -338,14 +338,13 @@ describe('Modules Subjects Members Evaluations API', function() {
 						should.exist(res.body);
 
 						var memberId = res.body[0]._id;
-						var evaluationId = res.body[0].evaluations[0]._id;
 
-						next(err, memberId, evaluationId);
+						next(err, memberId);
 					});
 			},
-			function(memberId, evaluationId, next){
+			function(memberId, next){
 				agents.admin1
-					.post('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/' + memberId + '/evaluations/' + evaluationId)
+					.post('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/' + memberId + '/evaluations/')
 					.send({
 						task: '546a1b22c6da9447692f6df9',
 						level: '646a1b22c6da9447692f6df9',
@@ -360,7 +359,7 @@ describe('Modules Subjects Members Evaluations API', function() {
 						should.exist(res.body);
 						res.body.should.have.property('_id');
 
-						next(err, memberId, evaluationId);
+						next(err, memberId, res.body._id);
 					});
 			},
 			function(memberId, evaluationId, next){
@@ -393,7 +392,7 @@ describe('Modules Subjects Members Evaluations API', function() {
 		async.waterfall([
 			function(next){
 				agents.admin1
-					.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/')
+					.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/?role=member')
 					.set('Accept', 'application/json')
 					.end(function(err, res) {
 						should.not.exist(err);
@@ -433,7 +432,7 @@ describe('Modules Subjects Members Evaluations API', function() {
 		async.waterfall([
 			function(next){
 				agents.admin1
-					.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/')
+					.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/?role=member')
 					.set('Accept', 'application/json')
 					.end(function(err, res) {
 						should.not.exist(err);
@@ -483,7 +482,7 @@ describe('Modules Subjects Members Evaluations API', function() {
 		async.waterfall([
 			function(next){
 				agents.admin1
-					.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/')
+					.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/?role=member')
 					.set('Accept', 'application/json')
 					.end(function(err, res) {
 						should.not.exist(err);
@@ -518,7 +517,7 @@ describe('Modules Subjects Members Evaluations API', function() {
 		async.waterfall([
 			function(next){
 				agents.admin1
-					.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/')
+					.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/?role=member')
 					.set('Accept', 'application/json')
 					.end(function(err, res) {
 						should.not.exist(err);

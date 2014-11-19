@@ -25,7 +25,7 @@ var routes = express.Router();
 routes.use('/api', api);
 
 var spec = swag.spec();
-spec.setTitle('hallo');
+spec.setTitle('LevelPad');
 spec.addDefinition('Error', {
 	properties: {}
 });
