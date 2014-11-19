@@ -48,6 +48,7 @@ exports.read = function(callback, subject, task, levelId) {
 		},
 		function(next) {
 			var level = task.levels.id(levelId);
+
 			if (!level) {
 				return next(new errors.NotFoundError('Level'));
 			}

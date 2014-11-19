@@ -131,8 +131,8 @@ module.exports.initializeTestData = function(callback) {
 						task.slug = data.slug;
 						task.weight = data.weight;
 
-						if (task.levels.length > 0) {
-							tasks.forEach(function(data) {
+						if (data.levels) {
+							data.levels.forEach(function(data) {
 								var level = new Level();
 
 								level.rank = data.rank;
