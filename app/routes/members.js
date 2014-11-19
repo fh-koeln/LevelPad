@@ -33,7 +33,7 @@ members.param('memberId', function (req, res, next, memberId) {
 members.get('/', {
 	tags: [ 'Member' ]
 }, function(req, res) {
-	ModuleSubjectMemberController.list(helpers.sendResult(res), req.subject);
+	ModuleSubjectMemberController.list(helpers.sendResult(res), req.subject, req.query);
 });
 
 /**
@@ -75,6 +75,6 @@ members.delete('/:memberId', {
 /**
  * Register subresources for members.
  */
- members.use('/:memberId/evaluations', require('./evaluations'));
+members.use('/:memberId/evaluations', require('./evaluations'));
 
 module.exports = members;

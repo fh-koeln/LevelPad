@@ -7,6 +7,7 @@ var async = require('async'),
 	Member = require('../models/Member'),
 	Task = require('../models/Task'),
 	Level = require('../models/Level'),
+	Evaluation = require('../models/Evaluation'),
 	users = require('./users'),
 	modules = require('./modules'),
 	subjects = require('./subjects');
@@ -16,6 +17,9 @@ module.exports.clear = function(callback) {
 	async.series([
 		function(next) {
 			Task.remove(next);
+		},
+		function(next) {
+			Member.remove(next);
 		},
 		function(next) {
 			Subject.remove(next);
@@ -268,6 +272,15 @@ module.exports.initializeTestData = function(callback) {
 					member.user = student1._id;
 					member.subject = subject._id;
 					member.role = 'member';
+
+					var evaluation = new Evaluation();
+					evaluation.createdBy = '546a1b22c6da9447692f6df9';
+					evaluation.comment = 'Beschreibung für die Bewertung';
+					evaluation.task = '146a1b22c6da9447692f6df9';
+					evaluation.level = '346a1b22c6da9442922f6df9';
+
+					member.evaluations.push(evaluation);
+
 					member.save( function(err, member) {
 						if (err) {
 							return callback(err);
@@ -294,6 +307,15 @@ module.exports.initializeTestData = function(callback) {
 					member.user = student2._id;
 					member.subject = subject._id;
 					member.role = 'member';
+
+					var evaluation = new Evaluation();
+					evaluation.createdBy = '546a1b22c6da9447692f6df9';
+					evaluation.comment = 'Beschreibung für die Bewertung';
+					evaluation.task = '146a1b22c6da9447692f6df9';
+					evaluation.level = '346a1b22c6da9442922f6df9';
+
+					member.evaluations.push(evaluation);
+
 					member.save( function(err, member) {
 						if (err) {
 							return callback(err);
