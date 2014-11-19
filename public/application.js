@@ -6,7 +6,8 @@ var app = angular.module('levelPad', [
 	'ngSanitize',
 	'ngRoute',
 	'ui.bootstrap',
-	'ui'
+	'ui',
+	'tc.chartjs'
 ]);
 
 app.config(['$logProvider', function($logProvider) {

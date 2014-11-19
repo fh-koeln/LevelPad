@@ -387,38 +387,39 @@ table > tbody > tr > .students-table-element{
 }
 
 .small-circle {
-	border-radius: 50%;
-	width: 25px;
-	height: 25px; 
-    background-color: lightgray;
-    display: inline-block;
-    margin: 2px;
-	/ width and height can be anything, as long as they're equal /
-}
-
-.medium-circle {
-	border-radius: 50%;
-	width: 50px;
-	height: 50px; 
-    background-color: lightgray;
+	height: 25px;
     vertical-align: middle;
     display: inline-block;
     text-align: center;
-    padding-top: 13px;
-    margin: 2px;
-	/ width and height can be anything, as long as they're equal /
+}
+
+.small-circle canvas {
+	max-height: 100% !important;
+	width: auto !important;
+}
+
+.medium-circle {
+	height: 60px;
+    vertical-align: middle;
+    display: inline-block;
+    text-align: center;
+}
+
+.medium-circle canvas {
+	max-height: 100% !important;
+	width: auto !important;
 }
 
 .large-circle {
-	border-radius: 50%;
-	width: 89px;
-	height: 89px; 
-    background-color: lightgray;
+	height: 89px;
+    vertical-align: middle;
     display: inline-block;
     text-align: center;
-    padding-top: 35px;
-    margin: 2px;
-	/ width and height can be anything, as long as they're equal /
+}
+
+.large-circle canvas {
+	max-height: 100% !important;
+	width: auto !important;
 }
 
 .circle-center-table{
@@ -524,6 +525,14 @@ table > tbody > tr > .students-table-element{
 
 .ui-sortable-helper > td.drag-handle{
 	display: none;
+}
+
+.change-level-invisible{
+	display: none;
+}
+
+.change-level-visible{
+	display: inline;
 }
 
 .table-headline{
