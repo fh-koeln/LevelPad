@@ -8,7 +8,7 @@ var	should = require('should'),
 	agentsAPI = require('../agents'),
 	subjects = require('../subjects');
 
-describe('Modules Subjects Tasks API', function() {
+describe('Modules Subjects Members Evaluations API', function() {
 	var agents;
 
 	function setUpAgents(done) {
