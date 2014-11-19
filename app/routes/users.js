@@ -22,6 +22,16 @@ users._spec.addDefinition('User', {
 // TODO check if we could replace the :username param or delete below.
 users.param('user', function(req, res, next, username) {
 	UserController.read(function(err, user) {
+		if (err) {
+			if (err.name === 'ValidationError' || err.name === 'AlreadyInUseError' || err.name === 'ArgumentNullError' || err.name === 'TypeError') {
+				return res.status(400).json(err);
+			} else if (err.name === 'NotFoundError') {
+				return res.status(404).json(err);
+			} else {
+				return res.status(500).json(err);
+			}
+		}
+
 		req.user = user;
 		next(err);
 	}, username);
