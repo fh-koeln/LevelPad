@@ -4,8 +4,9 @@ var async = require('async'),
 	User = require('../models/User'),
 	Module = require('../models/Module'),
 	Subject = require('../models/Subject'),
-	Task = require('../models/Task'),
 	Member = require('../models/Member'),
+	Task = require('../models/Task'),
+	Level = require('../models/Level'),
 	users = require('./users'),
 	modules = require('./modules'),
 	subjects = require('./subjects');
@@ -129,6 +130,19 @@ module.exports.initializeTestData = function(callback) {
 						task.description = data.description;
 						task.slug = data.slug;
 						task.weight = data.weight;
+
+						if (task.levels.length > 0) {
+							tasks.forEach(function(data) {
+								var level = new Level();
+
+								level.rank = data.rank;
+								level.title = data.title;
+								level.description = data.description;
+								level.isMinimum = data.isMinimum;
+
+								task.levels.push(level);
+							});
+						}
 
 						subject.tasks.push(task);
 					});

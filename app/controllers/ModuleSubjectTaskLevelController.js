@@ -74,18 +74,27 @@ exports.create = function(callback, subject, levelData) {
 					return next(new errors.ArgumentNullError('description'));
 				}
 
-				if (!levelData.isMinimum) {
-					return next(new errors.ArgumentNullError('isMinimum'));
-				}
-
 				next(null, subject);
 			},
 			function(subject, next) {
-				var level = new Level();
+				var existingLevels = subject.levels,
+					level = new Level(), maxRate;
 
+				// Get the highest current rate (http://stackoverflow.com/a/4020842)
+				maxRate = Math.max.apply( Math, existingLevels.map(function(level) {
+					return level.rate;
+				}));
+
+				if (!maxRate) {
+					maxRate = 0;
+				}
+
+				level.rank = maxRate + 1;
 				level.title = levelData.title;
 				level.description = levelData.description;
-				level.isMinimum = levelData.isMinimum;
+				if (levelData.isMinimum) {
+					level.isMinimum = levelData.isMinimum;
+				}
 
 				subject.levels.push(level);
 

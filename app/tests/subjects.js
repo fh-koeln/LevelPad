@@ -14,7 +14,33 @@ subjects.wba1Wise1415 = {
 			title: 'Dies ist der Titel der Aufgabe 1',
 			description: 'Dies ist die Beschreibung der Aufgabe 1',
 			slug: 'dies-ist-der-titel-der-aufgabe-1',
-			weight: 25
+			weight: 25,
+			levels: [
+				{
+					rank: 1,
+					title: 'Dies ist der Titel der Niveaustufe 1',
+					description: 'Dies ist die Beschreibung der Niveaustufe 1',
+					isMinimum: false,
+				},
+				{
+					rank: 2,
+					title: 'Dies ist der Titel der Niveaustufe 2',
+					description: 'Dies ist die Beschreibung der Niveaustufe 2',
+					isMinimum: false,
+				},
+				{
+					rank: 3,
+					title: 'Dies ist der Titel der Niveaustufe 3',
+					description: 'Dies ist die Beschreibung der Niveaustufe 3',
+					isMinimum: true,
+				},
+				{
+					rank: 4,
+					title: 'Dies ist der Titel der Niveaustufe 4',
+					description: 'Dies ist die Beschreibung der Niveaustufe 4',
+					isMinimum: false,
+				}
+			]
 		},
 		{
 			title: 'Dies ist der Titel der Aufgabe 2',
@@ -30,7 +56,6 @@ subjects.wba1Wise1415 = {
 		}
 	],
 	members: [
-
 	]
 };
 
