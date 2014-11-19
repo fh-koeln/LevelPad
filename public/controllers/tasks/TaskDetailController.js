@@ -1,14 +1,14 @@
 /* global angular, alert */
 
 angular.module('levelPad').controller('TaskDetailController', [
-	'$scope', '$routeParams', '$location', '$log', 'Module', 'Subject', 'Task', 'CurrentModule', 'CurrentSubject', 'CurrentTask',
-	function ($scope, $routeParams, $location, $log, Module, Subject, Task, CurrentModule, CurrentSubject, CurrentTask) {
+	'$scope', '$routeParams', '$location', '$log', 'Module', 'Subject', 'Task', 'CurrentModule', 'CurrentSubject', 'CurrentTask', 'ChartOption',
+	function ($scope, $routeParams, $location, $log, Module, Subject, Task, CurrentModule, CurrentSubject, CurrentTask, ChartOption) {
 
 		'use strict';
 		$scope.module = CurrentModule;
 		$scope.subject = CurrentSubject;
         $scope.task = CurrentTask;
-
+		
 		$scope.go = function(path) {
 			$location.path(path);
 		};
@@ -48,4 +48,33 @@ angular.module('levelPad').controller('TaskDetailController', [
 				title: 'Hallo'
 			}
 		];
+		
+		//Pie Chart Magic
+		$scope.options = ChartOption;
+		$scope.task ={
+			amountRange: 50
+		};
+		
+		$scope.$watch(
+			function( $scope ) {
+				return( $scope.task.amountRange );
+			},
+			function( newValue ) {
+				newValue = parseInt(newValue, 10);
+				$scope.data = [
+				  {
+					title:'Learning Outcome',
+					value: newValue,
+					color: '#77cc00',
+					highlight: '#88dd11'
+				  },
+				  {
+					title:'Rest',
+					value: 100 - newValue,
+					color:'lightgray',
+					highlight: 'lightgray'
+				  }
+				];
+			}
+		);
 	}]);

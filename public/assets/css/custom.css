@@ -387,15 +387,13 @@ table > tbody > tr > .students-table-element{
 }
 
 .small-circle {
-	height: 25px;
-    vertical-align: middle;
+	border-radius: 50%;
+	width: 25px;
+	height: 25px; 
+    background-color: lightgray;
     display: inline-block;
-    text-align: center;
-}
-
-.small-circle canvas {
-	max-height: 100% !important;
-	width: auto !important;
+    margin: 2px;
+	/ width and height can be anything, as long as they're equal /
 }
 
 .medium-circle {
@@ -585,17 +583,16 @@ input[type='range']:focus {
     }
     
     .large-circle {
-        border-radius: 50%;
-        width: 50px;
-        height: 50px; 
-        background-color: lightgray;
-        vertical-align: middle;
-        display: inline-block;
-        text-align: center;
-        padding-top: 13px;
-        margin: 2px;
-        / width and height can be anything, as long as they're equal /
-    }
+		height: 60px;
+		vertical-align: middle;
+		display: inline-block;
+		text-align: center;
+	}
+
+	.large-circle canvas {
+		max-height: 100% !important;
+		width: auto !important;
+	}
     
     .rating-box{
         margin-top: 5px;

@@ -48,7 +48,7 @@
             </a>
 			<ul class="dropdown-menu" role="menu"> <!-- TODO: Change the Dropdown Text-->
 				<li class="col-md-2,5" data-ng-class="">
-					<a data-ng-click="/subjects/:subject">Teilnehmer</a>
+					<a href="/subject/:subject">Teilnehmer</a>
 				</li>
 				<li class="col-md-2,5"  data-ng-class="">
 					<a data-ng-click="">Learning Outcomes</a>
@@ -91,7 +91,7 @@
                 <span class="small-font">Angebot und Anschreiben erstellen</span>
             </th>
             <td class="col-xs-2 col-sm-2 col-md-2 text-center"> 
-                <div class="medium-circle" ng-app="myModule" ng-controller="myController">
+                <div class="medium-circle">
     				<canvas class="medium-circle" tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
 				</div>
             <td class="col-xs-1 hidden-md hidden-lg hidden-sm">
@@ -103,7 +103,7 @@
                 <span class="small-font">Styleguide</span>
             </th>
             <td class="col-xs-2 col-sm-2 col-md-2 text-center"> 
-                <div class="medium-circle" ng-app="myModule" ng-controller="myController">
+                <div class="medium-circle">
 					<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
 				</div>
             <td class="col-xs-1 hidden-md hidden-lg hidden-sm">

@@ -26,21 +26,27 @@
     </div>
     
     <div class="col-xs-12 col-sm-7 rating-box">
-        <div class="col-xs-4 col-sm-4 col-md-5 rating-box-large">
-            <div class="large-circle">5</div>
-            <span class="rating-box-text">absolute Note</span>
+        <div class="col-xs-4 col-sm-4 col-md-6 rating-box-large text-center">
+            <div class="large-circle">
+				<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
+			</div>
+            <div>absolute Note</div>
         </div>
-        <div class="col-xs-4 col-sm-4 rating-box-medium">
-            <div class="medium-circle">3,3</div>
-            <span class="rating-box-text">relative Note</span>
+        <div class="col-xs-4 col-sm-4 col-md-3 rating-box-medium text-center">
+            <div class="medium-circle">
+				<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
+			</div>
+            <div>relative Note</div>
         </div>
-        <div class="col-xs-4 col-sm-3 rating-box-medium">
-            <div class="medium-circle">4</div>
-            <span class="rating-box-text">Artefakte (5)</span>
+        <div class="col-xs-4 col-sm-4 col-md-3 rating-box-medium text-center">
+            <div class="medium-circle">
+				<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
+			</div>
+            <div>Artefakte (5)</div>
         </div>
     </div>
 </div>
-
+<br/>
 
 <table class="table table-striped table-hover" ng-init="predicate='name'; reverse=false;">
 	<thead>
@@ -50,7 +56,7 @@
                 <span class="hidden-md hidden-lg hidden-sm">Bezeichnung (Gewichtung)<br/>Niveaustufe</span>
                 <div class="col-sm-6 col-md-6 hidden-xs">Niveaustufe</div>
             </th>
-            <th class="col-sm-2 col-md-2 hidden-xs">
+            <th class="col-sm-2 col-md-2 hidden-xs text-center">
                 Gewichtung
             </th>
             <th class=" col-xs-2 hidden-md hidden-lg hidden-sm">
@@ -71,11 +77,12 @@
                     <div class="small-circle"> </div> 
                     <br/>
                     akzeptable Lösung
-            
                 </div>
             </th>
-            <td class="col-sm-2 col-md-2 hidden-xs circle-table"> 
-                <div class="medium-circle circle-center-table">30%</div>
+            <td class="col-sm-2 col-md-2 hidden-xs circle-table text-center"> 
+                <div class="medium-circle text-center">
+					<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
+				</div>
             </td>
             <td class="col-xs-2 hidden-md hidden-lg hidden-sm text-right arrow-right"> ⟩ </td>
         </tr>
@@ -94,11 +101,12 @@
                     <div class="small-circle"> </div>
                     <br/>
                     gute Lösung
-            
                 </div>
             </th>
-            <td class="col-sm-2 col-md-2 hidden-xs circle-table"> 
-                <div class="medium-circle circle-center-table">70%</div>
+            <td class="col-sm-2 col-md-2 hidden-xs circle-table text-center"> 
+                <div class="medium-circle ">
+					<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
+				</div>
             </td>
             <td class="col-xs-2 hidden-md hidden-lg hidden-sm text-right arrow-right"> ⟩ </td>
         </tr>

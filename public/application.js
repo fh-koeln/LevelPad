@@ -240,7 +240,7 @@ app.config(function($routeProvider, $locationProvider) {
 	});
 	$routeProvider.when('/:module/:subject/students/:student', {
 		templateUrl: 'views/students/show.html',
-		controller: 'StudentDetailController'
+		controller: 'StudentListController'
 	});
     $routeProvider.when('/:module/:subject/students/:student/edit', {
 		templateUrl: 'views/students/edit.html',

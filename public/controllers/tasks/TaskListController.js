@@ -1,8 +1,8 @@
 /* global angular, alert */
 
 angular.module('levelPad').controller('TaskListController', [
-	'$scope', '$routeParams', '$location', '$log', 'Module', 'Subject', 'Task', 'DialogService', 'CurrentModule', 'CurrentSubject', 'CurrentTask',
-	function ($scope, $routeParams, $location, $log, Module, Subject, Task, DialogService, CurrentModule, CurrentSubject, CurrentTask) {
+	'$scope', '$routeParams', '$location', '$log', 'Module', 'Subject', 'Task', 'DialogService', 'CurrentModule', 'CurrentSubject', 'CurrentTask', 'ChartOption',
+	function ($scope, $routeParams, $location, $log, Module, Subject, Task, DialogService, CurrentModule, CurrentSubject, CurrentTask, ChartOption) {
 
 	'use strict';
 	$scope.module = CurrentModule;
@@ -86,5 +86,23 @@ angular.module('levelPad').controller('TaskListController', [
 		{
 			title: 'Hallo'
 		}
+	];
+		
+	//Pie Chart Magic
+	$scope.options = ChartOption;
+	// Chart.js Data
+	$scope.data = [
+	  {
+		title:'Learning Outcome',
+		value: 20,
+		color: '#77cc00',
+		highlight: '#88dd11'
+	  },
+	  {
+		title:'Rest',
+		value: 100-20,
+		color:'lightgray',
+		highlight: 'lightgray'
+	  }
 	];
 }]);
