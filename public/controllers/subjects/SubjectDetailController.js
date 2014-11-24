@@ -5,8 +5,8 @@ angular.module('levelPad').controller('SubjectDetailController', [
 	function ($scope, $routeParams, $location, $log, DialogService, Module, Subject, CurrentModule, CurrentSubject, ChartOption) {
 
 		'use strict';
-		$scope.module = CurrentModule;
-	//	$scope.subject = CurrentSubject;
+		$scope.module = $scope.module || CurrentModule || new Module();
+		$scope.subject = $scope.subject || CurrentSubject || new Subject();
 
 		$scope.update = function() {
 			$scope.modules = Module.query(function() {
@@ -17,7 +17,7 @@ angular.module('levelPad').controller('SubjectDetailController', [
 		};
 		$scope.update();
 
-        $scope.showCreateDialog = function() {
+		$scope.showCreateDialog = function() {
 			var dialog = new DialogService('/subjects/new');
 			dialog.scope.subject = new Subject();
 			dialog.scope.submit = function() {
