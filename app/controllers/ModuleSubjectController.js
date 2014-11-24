@@ -171,6 +171,15 @@ exports.update = function(callback, module, slug, subjectData) {
 			if (subjectData.status !== undefined) {
 				subject.status = subjectData.status;
 			}
+			if (subjectData.registrationActive !== undefined) {
+				subject.registrationActive = subjectData.registrationActive;
+			}
+			if (subjectData.registrationExpiresAt !== undefined) {
+				subject.registrationExpiresAt = subjectData.registrationExpiresAt;
+			}
+			if (subjectData.registrationActive !== undefined) {
+				subject.registrationPassword = subjectData.registrationPassword;
+			}
 			subject.save(next);
 		}
 	], callback);

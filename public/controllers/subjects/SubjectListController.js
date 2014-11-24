@@ -45,7 +45,9 @@ angular.module('levelPad').controller('SubjectListController', [
 		dialog.scope.submit = function() {
 			var module = dialog.scope.subject.module;
 			delete dialog.scope.subject.module;
-			dialog.scope.subject.registrationExpiresAt = dialog.scope.subject.registrationExpiresAt.timestamp;
+			if (dialog.scope.subject.registrationExpiresAt) {
+				dialog.scope.subject.registrationExpiresAt = dialog.scope.subject.registrationExpiresAt.timestamp;
+			}
 			dialog.scope.subject.year = dialog.scope.subject.year.year;
 			dialog.scope.subject.semester = dialog.scope.subject.semester.name;
 
