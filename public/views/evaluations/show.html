@@ -9,19 +9,128 @@
 		</div>
 	</header>
 	<div class="modal-body">
-
-		<div class="form-group" data-ng-class="{ 'has-error': form.shortName.$invalid && form.shortName.$dirty }">
-			<label for="shortName" class="col-sm-4 control-label">Kürzel</label>
-			<div class="col-sm-8">
-				<input id="shortName" name="shortName" type="text"
-					   data-ng-model="module.shortName"
-					   maxlength="8"
-					   required="required"
-					   class="form-control"/>
+		<div class="col-sm-8" data-ng-init="checked='third'">
+			<div class="task-box" data-ng-class="{'active-task': checked=='first'}">
+				<span class="task-color">Beste Lösung</span>
+				<label class=" right-radio">
+					<input type="radio" name="rating" id="first" value="0" data-ng-click="checked='first'">
+				</label>
+				<div>
+					<ul class="level-list">
+						<li>
+							Angebot enthält alle notwendigen Arbeitsschritte/-pakete mit verständlichen und präzisen Beschreibungen, sowie mit Preisen (Aufwandsschätzungen).
+						</li>
+						<li>
+							Anschreiben spiegelt die wesentlichen Punkte des Kundengespräches/-briefings wieder. 
+						</li>
+						<li>
+							Angebot und Anschreiben enthalten alle notwendigen Angaben.
+						</li>
+						<li>
+							Angebot und Anschreiben sind sehr übersichtlich, sprachlich sehr gut und fehlerfrei. 
+						</li>
+						<li>
+							Angebot und Anschreiben sind sauber, gut gestaltet, professionell und vertrauensbildend. 
+						</li>
+					</ul>	
+				</div>
+			</div>
+			<div class="task-box" data-ng-class="{'active-task': checked=='second'}">
+				<span class="task-color">Gute Lösung</span>
+				<label class=" right-radio">
+					<input type="radio" name="rating" id="second" value="0" data-ng-click="checked='second'">
+				</label>
+				<div>
+					<ul class="level-list">
+						<li>
+							Angebot enthält fast alle notwendigen Arbeitsschritte/-pakete mit guten Beschreibungen, sowie mit Preisen (Aufwandsschätzungen).
+						</li>
+						<li>
+							Anschreiben spiegelt die wichtige Punkte des Kundengespräches/-briefings wieder. 
+						</li>
+						<li>
+							Angebot und Anschreiben enthalten viele notwendigen Angaben.
+						</li>
+						<li>
+							Angebot und Anschreiben sind  übersichtlich, sprachlich gut und fehlerfrei. 
+						</li>
+						<li>
+							Angebot und Anschreiben sind sauber, gut gestaltet und vertrauensbildend. 
+						</li>
+					</ul>	
+				</div>
+			</div>
+			<div class="task-box" data-ng-class="{'active-task': checked=='third'}">
+				<span class="task-color">Schlechteste Lösung</span>
+				<label class=" right-radio">
+					<input type="radio" name="rating" id="third" value="0" data-ng-click="checked='third'" checked>
+				</label>
+				<div>
+					<ul class="level-list">
+						<li>
+							Angebot enthält keine Arbeitsschritte/-pakete ohne Beschreibung, sowie keine Preise (Aufwandsschätzungen).
+						</li>
+						<li>
+							Anschreiben spiegelt keinen Punkt des Kundengespräches/-briefings wieder. 
+						</li>
+						<li>
+							Angebot und Anschreiben enthalten keine notwendigen Angaben.
+						</li>
+						<li>
+							Angebot und Anschreiben sind unübersichtlich, sprachlich schwach und fehlerbehaftet. 
+						</li>
+						<li>
+							Angebot und Anschreiben sind unsauber, schlecht gestaltet und shitty. 
+						</li>
+					</ul>	
+				</div>
 			</div>
 		</div>
+		<div class="col-sm-4">
+			<label>
+                <input type="checkbox" ng-model="showComments" value="1"> <span class="head-font-normal">Kommentare einblenden</span>
+            </label>
+			<div data-ng-show="showComments == 1" data-ng-init="comments='add'">
+				<a class="interaction-link" data-ng-click="comments='new'" data-ng-class="{'hidden': comments=='new'}" >+ Kommentar hinzufügen</a>
+				<div class="new-comment" data-ng-class="{'hidden': comments=='add'}" >
+					<div class="bubble">
+						<div class="comment-text">
+							<textarea class="comment-textarea" placeholder="Kommentar eingeben..."></textarea>
+						</div>
+						<div class="comment-tools">
+							<table>
+								<tbody>
+									<tr>
+									<td class="comment-tool-column">
+										<a class="interaction-link"><span class="glyphicon glyphicon-ok"></span> speichern</a>
+									</td>
+									<td>
+										<a class="interaction-link" data-ng-click="comments='add'"><span class="glyphicon glyphicon-remove"></span> abbrechen</a>
+									</td>
+								</tr>
+								<tr>
+									<td class="comment-tool-column">
+										<a class="interaction-link"><span class="glyphicon glyphicon-trash"></span> löschen</a>
+									</td>
+									<td>
+										<span class="head-font-normal"><input type="checkbox" name="private"> privater Kommentar</span>
+									</td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="comments">
+					<div class="bubble">
+						Die Lösung ist ganz in Ordnung. Allerdings fehlen noch ein paar Dinge bis zur “Besten Lösung”.
+					</div>
+					<div class="comment-author">
+						Johannis <span class="head-font-bold">Bär</span> - 24.11.2014 - 19 Uhr
+					</div>
+				</div>
+			</div>
+			
+		</div>
 
-	<div class="modal-footer">
-
-	</div>
 </form>

@@ -8,6 +8,7 @@ angular.module('levelPad').controller('EvaluationDetailController', [
 		
 		$scope.module = CurrentModule;
 		$scope.subject = CurrentSubject;
+		$scope.showComments = 0;
 		
 		$scope.member = [
 			{
