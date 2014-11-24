@@ -196,7 +196,10 @@ app.config(function($routeProvider, $locationProvider) {
 	$routeProvider.when('/:module/:subject', {
 		redirectTo: '/:module/:subject/tasks'
 	});
-
+	$routeProvider.when('/:module/:subject/edit', {
+		templateUrl: 'views/subjects/edit.html',
+		controller: 'SubjectDetailController'
+	});
 	$routeProvider.when('/:module/:subject/tasks', {
 		templateUrl: 'views/tasks/list.html',
 		controller: 'TaskListController'
