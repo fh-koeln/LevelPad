@@ -14,7 +14,7 @@ exports.list = function (callback) {
 		}
 
 		var from = firstYearSubject ? firstYearSubject.year : new Date().getFullYear(),
-			to = new Date().getFullYear() + 1,
+			to = new Date().getFullYear() + 2,
 			years = [];
 
 		if (from > to) {

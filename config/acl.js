@@ -249,6 +249,7 @@ db.connection.on('connected', function() {
 				{resources: 'users/:currentUser/subjects', permissions: ['GET']},
 				{resources: 'modules', permissions: ['GET']},
 				{resources: 'years', permissions: ['GET']},
+				{resources: 'semesters', permissions: ['GET']},
 				{resources: 'modules/:module', permissions: ['GET']},
 			]
 		},
@@ -263,6 +264,7 @@ db.connection.on('connected', function() {
 				{resources: 'users/:user/subjects', permissions: ['GET']},
 				{resources: 'users/:currentUser/subjects', permissions: ['GET']},
 				{resources: 'years', permissions: ['GET']},
+				{resources: 'semesters', permissions: ['GET']},
 				{resources: 'modules', permissions: ['GET', 'POST']},
 				{resources: 'modules/:module', permissions: ['GET', 'PUT', 'DELETE']},
 				{resources: 'modules/:module/subjects', permissions: ['GET', 'POST']},

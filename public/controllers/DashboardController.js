@@ -33,9 +33,19 @@ angular.module('levelPad').controller('DashboardController', [
 			});
 		};
 
+		$http.get('/api/years').success(function(years) {
+			$scope.years = years;
+		});
+
+		$http.get('/api/semesters').success(function(semesters) {
+			$scope.semesters = semesters;
+		});
+
 		$scope.showCreateDialog = function() {
 			var dialog = new DialogService('/subjects/new');
 			dialog.scope.subject = new Subject();
+			dialog.scope.years = $scope.years;
+			dialog.scope.semesters = $scope.semesters;
 			dialog.scope.submit = function() {
 				dialog.scope.module.$save(function() {
 					dialog.submit();

@@ -52,6 +52,16 @@ angular.module('levelPad').service('Subject', ['RestfulResource', function(Restf
 }]);
 
 /**
+ * Provides a Module -> Subject REST API.
+ */
+angular.module('levelPad').service('Subject', ['RestfulResource', function(RestfulResource) {
+	return RestfulResource('/api/modules/:module/subjects/:subject', {
+		module: '@module.slug',
+		subject: '@slug'
+	});
+}]);
+
+/**
  * Provides a Module -> Subject -> Task REST API.
  */
 angular.module('levelPad').service('Task', ['RestfulResource', function(RestfulResource) {
@@ -63,26 +73,13 @@ angular.module('levelPad').service('Task', ['RestfulResource', function(RestfulR
 }]);
 
 /**
- * Provides a Module -> Subject -> Task -> Team REST API.
- */
-angular.module('levelPad').service('Team', ['RestfulResource', function(RestfulResource) {
-	return RestfulResource('/api/modules/:module/subjects/:subject/tasks/:task/teams/:team', {
-		module: '@task.subject.module.slug',
-		subject: '@task.subject.slug',
-		task: '@task.slug',
-		team: '@slug',
-	});
-}]);
-
-/**
  * Provides an API which contains all models as dictionary.
  */
-angular.module('levelPad').service('API', ['User', 'Module', 'Subject', 'Task', 'Team', function(User, Module, Subject, Task, Team) {
+angular.module('levelPad').service('API', ['User', 'Module', 'Subject', 'Task', function(User, Module, Subject, Task) {
 	return {
 		User: User,
 		Module: Module,
 		Subject: Subject,
 		Task: Task,
-		Team: Team
 	};
 }]);
