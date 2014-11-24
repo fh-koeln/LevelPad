@@ -12,7 +12,7 @@ var subjectSchema = new Schema({
 	module: { type: ObjectId, ref: 'Module', required: true },
 	year: { type: Number, required: true },
 	semester: { type: String, enum: [ 'Wintersemester', 'Sommersemester' ], required: true },
-	status: { type: String, enum: [ 'active', 'inactive' ], required: true },
+	status: { type: String, enum: [ 'active', 'inactive' ], default: 'active' },
 	registrationActive: { type: Boolean, default: false },
 	registrationExpiresAt: { type: Date },
 	registrationPassword: { type: String, default: '' },

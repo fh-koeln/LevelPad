@@ -41,6 +41,9 @@ angular.module('levelPad').controller('DashboardController', [
 			$scope.semesters = semesters;
 		});
 
+		$scope.update = function() {
+			$scope.reload();
+		};
 
 		function generatePassword() {
 			var password = '',
@@ -94,12 +97,30 @@ angular.module('levelPad').controller('DashboardController', [
 			dialog.scope.subject.registrationExpiresAt = dialog.scope.expireDates[0];
 			dialog.scope.subject.registrationActive = 1;
 			dialog.scope.subject.registrationPassword = generatePassword();
+			dialog.scope.subject._registrationPasswordCheck = 0;
 
 			dialog.scope.generatePassword = function() {
 				dialog.scope.subject.registrationPassword = generatePassword();
 			};
+
 			dialog.scope.submit = function() {
-				dialog.scope.subject.$save(function() {
+				var module = dialog.scope.subject.module;
+				delete dialog.scope.subject.module;
+				dialog.scope.subject.registrationExpiresAt = dialog.scope.subject.registrationExpiresAt.timestamp;
+				dialog.scope.subject.year = dialog.scope.subject.year.year;
+				dialog.scope.subject.semester = dialog.scope.subject.semester.name;
+
+				if (dialog.scope.subject.registrationActive === '0') {
+					dialog.scope.subject.registrationExpiresAt = 0;
+				}
+
+				if (dialog.scope.subject._registrationPasswordCheck === '0') {
+					dialog.scope.subject.registrationPassword = '';
+				}
+
+				delete dialog.scope.subject._registrationPasswordCheck;
+
+				dialog.scope.subject.$save({module: module.slug}, function() {
 					dialog.submit();
 					$scope.update();
 				}, function() {

@@ -2,24 +2,22 @@
 <form name="form" role="form" class="form-horizontal" data-ng-submit="submit();">
 	<nav>
 		<header class="modal-header">
+			<button type="button" class="close" aria-hidden="true"
+					data-ng-show="cancel" data-ng-click="cancel();">&times;</button>
 			<h4 id="edit-title" class="modal-title">{{ !subject._id ? 'Neue Veranstaltung ' : 'Veranstaltung ändern' }}</h4>
 		</header>
 	</nav>
 
 	<div class="modal-body">
 
-		<div class="form-group col-sm-12 col-md-12" data-ng-show="subject._id">
-			<div class="col-sm-2 col-md-2">Modul</div>
-			<div class="col-sm-10 col-md-10">{{ subject.module.name }}</div>
-		</div>
-
-		<div class="form-group" data-ng-hide="subject._id" data-ng-class="{ 'has-error': form.module.$invalid }">
+		<div class="form-group" data-ng-class="{ 'has-error': form.module.$invalid && form.module.$dirty }">
 			<label for="module" class="col-sm-2 col-md-2 control-label">Modul</label>
 			<div class="col-sm-10 col-md-10">
 				<select
 					id="module" name="module"
 					data-ng-model="subject.module"
 					data-ng-options="m.name for m in modules track by m.slug"
+					data-ng-disabled="subject._id"
 					required="required"
 					class="form-control">
 				</select>
@@ -27,14 +25,15 @@
 		</div>
 
 		<div class="row">
-			<div class="col-sm-8 col-md-8" data-ng-class="{ 'has-error': form.semester.$invalid }">
+			<div class="col-sm-8 col-md-8" data-ng-class="{ 'has-error': form.semester.$invalid && form.semester.$dirty }">
 				<div class="form-group">
 					<label for="semester" class="col-md-3 col-sm-3 control-label">Semester</label>
 					<div class="col-sm-9 col-md-9">
 						<select
 							id="semester" name="semester"
 							data-ng-model="subject.semester"
-							data-ng-options="s.name for s in semesters track by s.slug"
+							data-ng-options="s.name for s in semesters track by s.name"
+							data-ng-disabled="subject._id"
 							required="required"
 							class="form-control">
 						</select>
@@ -42,7 +41,7 @@
 				</div>
 			</div>
 
-			<div class="col-sm-4 col-md-4" data-ng-class="{ 'has-error': form.year.$invalid }">
+			<div class="col-sm-4 col-md-4" data-ng-class="{ 'has-error': form.year.$invalid && form.year.$dirty }">
 				<div class="form-group">
 					<label for="year" class="control-label col-sm-3 col-md-3">Jahr</label>
 					<div class="col-sm-9 col-md-9">
@@ -50,6 +49,7 @@
 							id="year" name="year"
 							data-ng-model="subject.year"
 							data-ng-options="y.name for y in years track by y.year"
+							data-ng-disabled="subject._id"
 							required="required"
 							class="form-control">
 						</select>
@@ -81,6 +81,7 @@
 					/> aktiv bis
 					</label>
 					<select id="registration-expires-at" name="registration-expires-at"
+						data-ng-disabled="subject.registrationActive == 0"
 						data-ng-model="subject.registrationExpiresAt"
 						data-ng-options="e.name for e in expireDates track by e.timestamp"
 						class="form-control subject-activeTill"></select>
@@ -93,21 +94,22 @@
 			<div class="form-group radio-items">
 				<div class="col-md-12">
 					<label class="control-label">
-						<input type="radio" name="anmeldeSchluessel" id="nichtAktiv" value="0" checked> nicht aktiv
+						<input type="radio" name="anmeldeSchluessel" id="nichtAktiv" value="0" data-ng-model="subject._registrationPasswordCheck"> nicht aktiv
 					</label>
 				</div>
 				<div class="col-md-12">
 					<label class="control-label">
-						<input type="radio" name="anmeldeSchluessel" id="aktiv" value="1"> aktiv
+						<input type="radio" name="anmeldeSchluessel" id="aktiv" value="1" data-ng-model="subject._registrationPasswordCheck"> aktiv
 					</label>
 					<div class="subject-password-generator">
 						<span class="glyphicon glyphicon-lock"></span>
 						<input
-							id="generatedPassword" name="subject."
+							id="generatedPassword" name="generatedPassword"
+							ng-disabled="subject._registrationPasswordCheck == 0"
 							data-ng-model="subject.registrationPassword"
 							required="required"
 							class="form-control password-field"/>
-						<button ng-click="generatePassword();" type="button" class="btn btn-default password-btn">
+						<button data-ng-click="generatePassword();" type="button" data-ng-disabled="subject._registrationPasswordCheck == 0" class="btn btn-default password-btn">
 
 							<span class="glyphicon glyphicon-refresh"></span>
 						</button>
@@ -115,18 +117,34 @@
 				</div>
 			</div>
 		</fieldset>
+		<br/>
+		<fieldset class="radio-box" data-ng-show="subject._id">
+			<legend class="radio-box">Status der Veranstaltung</legend>
+			<div class="form-group radio-items">
+				<div class="col-md-12">
+					<label class="control-label">
+						<input type="checkbox" name="status" value="inactive" data-ng-true-value="'inactive'" data-ng-false-value="'active'" data-ng-model="subject.status"> archiviert
+					</label>
+				</div>
+			</div>
+		</fieldset>
 
 	</div>
 	<div class="modal-footer">
-		<button type="button" class="btn btn-default pull-left"
-				data-ng-show="cancel" data-ng-click="cancel();">
-			<div class="interaction-color">Abbrechen</div>
+		<button
+			type="button" class="btn btn-default pull-left"
+			data-ng-show="cancel" data-ng-click="cancel();">
+			<span class="interaction-color">Abbrechen</span>
 		</button>
-		<button type="button" class="btn btn-default pull-left"
-				data-ng-show="subject._id" data-ng-click="showDeleteDialog();">
-			<div class="delete-color">Veranstaltung löschen</div>
+		<button
+			type="button" class="btn btn-default pull-left"
+			data-ng-show="subject._id" data-ng-click="showDeleteDialog();">
+			<span class="delete-color">Löschen</span>
 		</button>
-		<button type="submit" class="btn btn-primary pull-right"
-				data-ng-disabled="form.$invalid" >Veranstaltung anlegen</button>
+		<button
+			type="submit" class="btn btn-primary pull-right"
+			data-ng-disabled="form.$invalid">
+			{{ subject._id ? 'Änderungen speichern' : 'Veranstaltung anlegen' }}
+		</button>
 	</div>
 </form>
