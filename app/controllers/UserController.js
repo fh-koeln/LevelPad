@@ -39,9 +39,20 @@ exports.read = function(callback, username) {
 exports.create = function(callback, userdata) {
 	var user = new User(userdata);
 
-	user.role = 'student';
-
 	async.waterfall([
+		function(next) {
+			User.find({}).limit(1).exec(function(err, existingUsers) {
+				if (err) {
+					next(err);
+				} else if (existingUsers.length > 0) {
+					user.role = 'student';
+					next(null);
+				} else {
+					user.role = 'administrator';
+					next(null);
+				}
+			});
+		},
 		function(next) {
 			if (userdata.email !== undefined) {
 				user.email = userdata.email;
