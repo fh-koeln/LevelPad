@@ -5,6 +5,7 @@ angular.module('levelPad').controller('TaskListController', [
 	function ($scope, $routeParams, $location, $log, Module, Subject, Task, DialogService, CurrentModule, CurrentSubject, CurrentTask, ChartOption) {
 
 	'use strict';
+		
 	$scope.module = CurrentModule;
 	$scope.subject = CurrentSubject;
     $scope.task = CurrentTask;

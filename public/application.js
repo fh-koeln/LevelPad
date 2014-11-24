@@ -219,20 +219,28 @@ app.config(function($routeProvider, $locationProvider) {
 	});
 
 	$routeProvider.when('/:module/:subject/members', {
-		templateUrl: 'views/teams/list.html',
-		controller: 'TeamListController'
+		templateUrl: 'views/members/list.html',
+		controller: 'MemberListController'
 	});
 	$routeProvider.when('/:module/:subject/members/new', {
-		templateUrl: 'views/teams/edit.html',
-		controller: 'TeamDetailController'
+		templateUrl: 'views/members/edit.html',
+		controller: 'MemberListController'
 	});
 	$routeProvider.when('/:module/:subject/members/:member', {
-		templateUrl: 'views/teams/edit.html',
-		controller: 'TeamDetailController'
+		templateUrl: 'views/members/show.html',
+		controller: 'MemberListController'
+	});
+	$routeProvider.when('/:module/:subject/members/:member/edit', {
+		templateUrl: 'views/members/edit.html',
+		controller: 'MemberListController'
 	});
 	$routeProvider.when('/:module/:subject/settings', {
 		templateUrl: 'views/subjects/settings.html',
 		controller: 'SubjectDetailController'
+	});
+	$routeProvider.when('/:module/:subject/members/:member/evaluation', {
+		templateUrl: 'views/evaluations/show.html',
+		controller: 'EvaluationDetailController'
 	});
 
 	// Fallback

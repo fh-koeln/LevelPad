@@ -1,0 +1,27 @@
+
+<form name="form" role="form" class="form-horizontal" data-ng-submit="submit();">
+	<header class="modal-header">
+		<button type="button" class="close"
+				data-ng-show="cancel" data-ng-click="cancel();">&times;</button>
+		<div id="edit-title" class="modal-title">
+			<span class="head-font-bold">Bewertung </span>
+			<span class="head-font-normal">- Angebot und Anschreiben erstellen</span>
+		</div>
+	</header>
+	<div class="modal-body">
+
+		<div class="form-group" data-ng-class="{ 'has-error': form.shortName.$invalid && form.shortName.$dirty }">
+			<label for="shortName" class="col-sm-4 control-label">Kürzel</label>
+			<div class="col-sm-8">
+				<input id="shortName" name="shortName" type="text"
+					   data-ng-model="module.shortName"
+					   maxlength="8"
+					   required="required"
+					   class="form-control"/>
+			</div>
+		</div>
+
+	<div class="modal-footer">
+
+	</div>
+</form>

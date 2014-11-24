@@ -546,6 +546,19 @@ tr > td.table-element-padding-left{
 	padding: 5px 10px;
 }
 
+.password-field{
+		display: inline-block;
+		width: 50%;
+}
+
+.password-btn{
+	border: none;
+}
+
+.password-btn:hover{
+	background: none;
+}
+
 input[type='range'] {
 		-webkit-appearance: none;
 		border-radius: 5px;
@@ -618,6 +631,14 @@ input[type='range']:focus {
     .menu-bar{
         width: 12%;
     }
+	
+	.head-font-normal{
+		font-weight: normal;
+	}
+	
+	span.head-font-bold{
+		font-weight: 600;
+	}
     
     .subject-password-generator{
         margin-left: 0px;

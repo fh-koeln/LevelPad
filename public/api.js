@@ -73,6 +73,17 @@ angular.module('levelPad').service('Task', ['RestfulResource', function(RestfulR
 }]);
 
 /**
+ * Provides a Module -> Subject -> Member REST API.
+ */
+angular.module('levelPad').service('Member', ['RestfulResource', function(RestfulResource) {
+	return RestfulResource('/api/modules/:module/subjects/:subject/members/:member', {
+		module: '@subject.module.slug',
+		subject: '@subject.slug',
+		member: '@id'
+	});
+}]);
+
+/**
  * Provides an API which contains all models as dictionary.
  */
 angular.module('levelPad').service('API', ['User', 'Module', 'Subject', 'Task', function(User, Module, Subject, Task) {
