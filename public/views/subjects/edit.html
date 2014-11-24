@@ -83,7 +83,6 @@
 					<select id="registration-expires-at" name="registration-expires-at"
 						data-ng-model="subject.registrationExpiresAt"
 						data-ng-options="e.name for e in expireDates track by e.timestamp"
-						required="required"
 						class="form-control subject-activeTill"></select>
 				</div>
 			</div>
@@ -94,19 +93,18 @@
 			<div class="form-group radio-items">
 				<div class="col-md-12">
 					<label class="control-label">
-						<input type="radio" name="anmeldeSchluessel" id="nichtAktiv" value="option1" checked> nicht aktiv
+						<input type="radio" name="anmeldeSchluessel" id="nichtAktiv" value="0" checked> nicht aktiv
 					</label>
 				</div>
 				<div class="col-md-12">
 					<label class="control-label">
-						<input type="radio" name="anmeldeSchluessel" id="aktiv" value="option2"> aktiv
+						<input type="radio" name="anmeldeSchluessel" id="aktiv" value="1"> aktiv
 					</label>
 					<div class="subject-password-generator">
 						<span class="glyphicon glyphicon-lock"></span>
 						<input
 							id="generatedPassword" name="subject."
 							data-ng-model="subject.registrationPassword"
-							required="required"
 							class="form-control"/>
 						<button ng-click="generatePassword();" type="button" class="btn btn-default">
 							<span class="glyphicon glyphicon-refresh"></span>
