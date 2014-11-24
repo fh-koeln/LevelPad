@@ -63,7 +63,7 @@
 <table class="table table-striped table-hover">
 	<tbody>
 	<tr data-ng-repeat="subject in subjects | filter:searchText">
-		<th class="col-xs-10 col-md-10 subject-item-title">
+		<th class="col-xs-10 col-md-10 subject-item-title" data-ng-click="showEditDialog(subject); $event.preventDefault();">
 			<a data-ng-href="{{ subject.module.slug || subject.subject.module.slug }}/{{ subject.slug || subject.subject.slug }}/edit">
 				<span class="module-name">{{ subject.module.name || subject.subject.module.name }}</span><br/>
 				<span class="module-time">{{ subject.semester || subject.subject.semester }} {{ subject.year || subject.subject.year }}</span>

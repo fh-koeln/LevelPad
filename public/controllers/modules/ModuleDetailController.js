@@ -1,3 +1,4 @@
+/* global alert */
 
 angular.module('levelPad').controller('ModuleDetailController', [
 	'$scope', '$routeParams', '$log', 'DialogService', 'Module', 'Subject', 'CurrentModule',
@@ -9,11 +10,6 @@ angular.module('levelPad').controller('ModuleDetailController', [
 	$scope.module = $scope.module || CurrentModule || new Module();
 
 	$scope.update = function () {
-		$scope.semester = [
-			{ key: 'sose', name: 'Sommersemester' },
-			{ key: 'wise', name: 'Wintersemester' }
-		];
-
 		// Get all subjects for the current module
 		if ($scope.module && $scope.module._id && $scope.module.slug) {
 			Subject.query({

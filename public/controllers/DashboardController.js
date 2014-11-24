@@ -114,6 +114,12 @@ angular.module('levelPad').controller('DashboardController', [
 					dialog.scope.subject.registrationExpiresAt = 0;
 				}
 
+				if (dialog.scope.subject._registrationPasswordCheck === '0') {
+					dialog.scope.subject.registrationPassword = '';
+				}
+
+				delete dialog.scope.subject._registrationPasswordCheck;
+
 				dialog.scope.subject.$save({module: module.slug}, function() {
 					dialog.submit();
 					$scope.update();
