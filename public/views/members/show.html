@@ -1,0 +1,114 @@
+<div class="row">
+    <div class="col-sm-5 col-xs-12">
+        <table class="borderless-table">
+            <tbody>
+                <tr>
+                    <th class="table-normal-font">
+                        Name:
+                    </th>
+                    <td class="table-element-padding-left">
+                        Peter <span class="student-lastname">Wackel</span> 
+                        <a class=" btn interaction-link hidden-xs" data-ng-href="/subjects/new" data-ng-click="showCreateDialog(); $event.preventDefault();">
+                <span class="glyphicon glyphicon-pencil interaction-color"></span>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="table-normal-font">
+                        Matrikelnr:
+                    </th>
+                    <td class="table-element-padding-left">
+                        110 840 54
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="col-xs-12 col-sm-7 rating-box">
+        <div class="col-xs-4 col-sm-4 col-md-6 rating-box-large text-center">
+            <div class="large-circle">
+				<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
+			</div>
+            <div>absolute Note</div>
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-3 rating-box-medium text-center">
+            <div class="medium-circle">
+				<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
+			</div>
+            <div>relative Note</div>
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-3 rating-box-medium text-center">
+            <div class="medium-circle">
+				<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
+			</div>
+            <div>Artefakte (5)</div>
+        </div>
+    </div>
+</div>
+<br/>
+
+<table class="table table-striped table-hover" ng-init="predicate='name'; reverse=false;">
+	<thead>
+        <tr class="table-headline">
+            <th class="col-xs-12 col-sm-10 col-md-10">
+                <span class="col-sm-6 col-md-6 hidden-xs">Bezeichnung</span>
+                <span class="hidden-md hidden-lg hidden-sm">Bezeichnung (Gewichtung)<br/>Niveaustufe</span>
+                <div class="col-sm-6 col-md-6 hidden-xs">Niveaustufe</div>
+            </th>
+            <th class="col-sm-2 col-md-2 hidden-xs text-center">
+                Gewichtung
+            </th>
+            <th class=" col-xs-2 hidden-md hidden-lg hidden-sm">
+            </th>
+        </tr>
+        
+    </thead>
+    <tbody>
+        <tr>
+            <th class="col-xs-10 col-sm-10 col-md-10 table-student">
+                <div class="col-sm-6 col-md-6 table-student-align">Angebot und Anschreiben erstellen
+                    <span class="hidden-md hidden-lg hidden-sm gewichtung-font"> (30%)</span>
+                </div>
+                <div class="col-sm-6 col-md-6 table-circle-align">
+                    <div class="small-circle"> </div>
+                    <div class="small-circle"> </div>
+                    <div class="small-circle"> </div>
+                    <div class="small-circle"> </div> 
+                    <br/>
+                    akzeptable Lösung
+                </div>
+            </th>
+            <td class="col-sm-2 col-md-2 hidden-xs circle-table text-center"> 
+                <div class="medium-circle text-center">
+					<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
+				</div>
+            </td>
+            <td class="col-xs-2 hidden-md hidden-lg hidden-sm text-right arrow-right"> ⟩ </td>
+        </tr>
+        <tr>
+            <th class="col-xs-10 col-sm-10 col-md-10 table-student">
+                <div class="col-sm-6 col-md-6 table-student-align">Styleguide
+                    <span class="hidden-md hidden-lg hidden-sm gewichtung-font"> (70%)</span>
+                </div>
+                <div class="col-sm-6 col-md-6 table-circle-align">
+                    <div class="small-circle"> </div>
+                    <div class="small-circle"> </div>
+                    <div class="small-circle"> </div>
+                    <div class="small-circle"> </div> 
+                    <div class="small-circle"> </div>
+                    <div class="small-circle"> </div>
+                    <div class="small-circle"> </div>
+                    <br/>
+                    gute Lösung
+                </div>
+            </th>
+            <td class="col-sm-2 col-md-2 hidden-xs circle-table text-center"> 
+                <div class="medium-circle ">
+					<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
+				</div>
+            </td>
+            <td class="col-xs-2 hidden-md hidden-lg hidden-sm text-right arrow-right"> ⟩ </td>
+        </tr>
+	</tbody>
+</table>
