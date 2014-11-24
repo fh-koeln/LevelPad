@@ -42,18 +42,19 @@ angular.module('levelPad').controller('DashboardController', [
 		});
 
 
-		function generatePassword(subject) {
-			var tempPassword = '',
+		function generatePassword() {
+			var password = '',
 				temp;
 
 			for(var i = 0; i < 10; i++) {
-				 temp = 0;
+				temp = 0;
 				while(!((temp > 48 && temp < 57) || (temp > 65 && temp < 90) || (temp > 97 && temp < 122))) {
 					temp = Math.floor(Math.random() * 74) + 48;
 				}
-				tempPassword += String.fromCharCode(temp);
+				password += String.fromCharCode(temp);
 			}
-			subject.registrationPassword = tempPassword;
+
+			return password;
 		}
 
 		function zeroize(x) {
@@ -70,7 +71,7 @@ angular.module('levelPad').controller('DashboardController', [
 
 			dates.push({
 				name: 'Unbeschränkt',
-				timestamp: -1
+				timestamp: 0
 			});
 
 			while (today <= todayInTwoWeeks) {
@@ -89,11 +90,14 @@ angular.module('levelPad').controller('DashboardController', [
 			dialog.scope.subject = new Subject();
 			dialog.scope.years = $scope.years;
 			dialog.scope.semesters = $scope.semesters;
-			generatePassword(dialog.scope.subject);
-			dialog.scope.generatePassword = function() { generatePassword(dialog.scope.subject); };
 			dialog.scope.expireDates = getExpireDates();
-			dialog.scope.subject.registrationExpiresAt = dialog.scope.expireDates[0].timestamp;
+			dialog.scope.subject.registrationExpiresAt = dialog.scope.expireDates[0];
 			dialog.scope.subject.registrationActive = 1;
+			dialog.scope.subject.registrationPassword = generatePassword();
+
+			dialog.scope.generatePassword = function() {
+				dialog.scope.subject.registrationPassword = generatePassword();
+			};
 			dialog.scope.submit = function() {
 				dialog.scope.subject.$save(function() {
 					dialog.submit();
