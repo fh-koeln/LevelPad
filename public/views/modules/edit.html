@@ -32,9 +32,11 @@
 	<div class="modal-footer">
 		<button type="button" class="btn btn-default pull-left"
 				data-ng-show="cancel" data-ng-click="cancel();">Abbrechen</button>
-		<button type="button" class="btn btn-default pull-left"
-				data-ng-show="module._id" data-ng-click="showDeleteDialog();">Löschen</button>
+		<button type="button" class="btn btn-default pull-left delete-color"
+				data-ng-show="module._id" data-ng-click="showDeleteDialog();">
+			<div class="delete-color">Löschen</div>
+		</button>
 		<button type="submit" class="btn btn-primary pull-right"
-				data-ng-disabled="form.$invalid" >Speichern</button>
+				data-ng-disabled="form.$invalid" >Änderung Speichern</button>
 	</div>
 </form>
