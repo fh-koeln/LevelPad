@@ -41,6 +41,7 @@ angular.module('levelPad').controller('DashboardController', [
 			$scope.semesters = semesters;
 		});
 
+
 		function generatePassword(subject) {
 			var tempPassword = '',
 				temp;
@@ -55,6 +56,34 @@ angular.module('levelPad').controller('DashboardController', [
 			subject.registrationPassword = tempPassword;
 		}
 
+		function zeroize(x) {
+			return (x < 10) ? '0' + x : x;
+		}
+
+		function getExpireDates() {
+			var dates = [],
+				today, actualDate, todayInTwoWeeks;
+
+			actualDate = new Date(),
+			today = new Date(actualDate.getFullYear(), actualDate.getMonth() ,actualDate.getDate(), 23, 59, 59);
+			todayInTwoWeeks = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 14);
+
+			dates.push({
+				name: 'Unbeschränkt',
+				timestamp: -1
+			});
+
+			while (today <= todayInTwoWeeks) {
+				dates.push({
+					name: zeroize(today.getDate()) + '.' +  zeroize(today.getMonth() + 1) + '.' + today.getFullYear(),
+					timestamp: today.getTime()
+				});
+				today.setDate(today.getDate() + 1);
+			}
+
+			return dates;
+		}
+
 		$scope.showCreateDialog = function() {
 			var dialog = new DialogService('/subjects/new');
 			dialog.scope.subject = new Subject();
@@ -62,8 +91,11 @@ angular.module('levelPad').controller('DashboardController', [
 			dialog.scope.semesters = $scope.semesters;
 			generatePassword(dialog.scope.subject);
 			dialog.scope.generatePassword = function() { generatePassword(dialog.scope.subject); };
+			dialog.scope.expireDates = getExpireDates();
+			dialog.scope.subject.registrationExpiresAt = dialog.scope.expireDates[0].timestamp;
+			dialog.scope.subject.registrationActive = 1;
 			dialog.scope.submit = function() {
-				dialog.scope.module.$save(function() {
+				dialog.scope.subject.$save(function() {
 					dialog.submit();
 					$scope.update();
 				}, function() {

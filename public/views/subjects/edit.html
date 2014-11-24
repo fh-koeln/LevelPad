@@ -63,23 +63,28 @@
 			<div class="form-group radio-items">
 				<div class="col-md-12">
 					<label class="control-label">
-						<input type="radio" name="veranstaltungAnmelde" id="nichtAktiv" value="option1" checked> nicht aktiv
+						<input
+							type="radio"
+							name="registration-active"
+							data-ng-model="subject.registrationActive"
+							value="0"
+						/> nicht aktiv
 					</label>
 				</div>
 				<div class="col-md-12">
 					<label class="control-label">
-						<input type="radio" name="veranstaltungAnmelde" id="aktiv" value="option2"> aktiv
+					<input
+						type="radio"
+						name="registration-active"
+						data-ng-model="subject.registrationActive"
+						value="1"
+					/> aktiv bis
 					</label>
-				</div>
-				<div class="col-md-12 col-sm-12">
-					<label class="control-label">
-						<input type="radio" name="veranstaltungAnmelde" id="aktivBis" value="option3"> aktiv bis
-					</label>
-					<select id="day" name="day" type="day"
-						data-ng-model="xxx"
-						data-ng-options=""
+					<select id="registration-expires-at" name="registration-expires-at"
+						data-ng-model="subject.registrationExpiresAt"
+						data-ng-options="e.name for e in expireDates track by e.timestamp"
 						required="required"
-						class="form-control subject-activeTill "></select>
+						class="form-control subject-activeTill"></select>
 				</div>
 			</div>
 		</fieldset>
