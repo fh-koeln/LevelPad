@@ -218,33 +218,17 @@ app.config(function($routeProvider, $locationProvider) {
 		controller: 'TaskDetailController'
 	});
 
-	$routeProvider.when('/:module/:subject/teams', {
+	$routeProvider.when('/:module/:subject/members', {
 		templateUrl: 'views/teams/list.html',
 		controller: 'TeamListController'
 	});
-	$routeProvider.when('/:module/:subject/teams/new', {
+	$routeProvider.when('/:module/:subject/members/new', {
 		templateUrl: 'views/teams/edit.html',
 		controller: 'TeamDetailController'
 	});
-	$routeProvider.when('/:module/:subject/teams/:team', {
+	$routeProvider.when('/:module/:subject/members/:member', {
 		templateUrl: 'views/teams/edit.html',
 		controller: 'TeamDetailController'
-	});
-	$routeProvider.when('/:module/:subject/students', {
-		templateUrl: 'views/students/list.html',
-		controller: 'StudentListController'
-	});
-	$routeProvider.when('/:module/:subject/students/new', {
-		templateUrl: 'views/students/edit.html',
-		controller: 'StudentDetailController'
-	});
-	$routeProvider.when('/:module/:subject/students/:student', {
-		templateUrl: 'views/students/show.html',
-		controller: 'StudentListController'
-	});
-    $routeProvider.when('/:module/:subject/students/:student/edit', {
-		templateUrl: 'views/students/edit.html',
-		controller: 'StudentDetailController'
 	});
 	$routeProvider.when('/:module/:subject/settings', {
 		templateUrl: 'views/subjects/settings.html',
