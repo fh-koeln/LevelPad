@@ -1,6 +1,5 @@
-/* global angular, alert */
 
-angular.module('levelPad').controller('TeamListController', [
+angular.module('levelPad').controller('MemberListController', [
 	'$scope', '$routeParams', '$location', '$log', 'Module', 'Subject', 'CurrentModule', 'CurrentSubject',
 	function ($scope, $routeParams, $location, $log, Module, Subject, CurrentModule, CurrentSubject) {
 		'use strict';
@@ -18,20 +17,5 @@ angular.module('levelPad').controller('TeamListController', [
 
 		};
 		$scope.update();
-
-		$scope.teams = [
-			{
-				students: [
-					{ name: 'Dominik' },
-					{ name: 'Dennis' }
-				]
-			},
-			{
-				students: [
-					{ name: 'Ben'},
-					{ name: 'Dario'}
-				]
-			}
-		];
 
 	}]);
