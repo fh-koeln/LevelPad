@@ -2,11 +2,11 @@
 	<header class="modal-header">
 		<button type="button" class="close" aria-hidden="true"
 				data-ng-show="cancel" data-ng-click="cancel();">&times;</button>
-		<h4 id="delete-title" class="delete-title">Modul wirklich löschen?</h4>
+		<h4 id="delete-title" class="delete-title">Veranstaltung wirklich löschen?</h4>
 	</header>
 	<div class="modal-body">
 		<p>
-			Möchten Sie die Veranstaltung ({{ subject.module.shortName }}) {{ subject.module.name }}
+			Möchten Sie die Veranstaltung {{ subject.module.name }}
 			{{ subject.semester }} {{ subject.year }} wirklich löschen?
 		</p>
 		<p>
@@ -20,6 +20,6 @@
 		<button type="button" class="btn btn-default pull-left"
 				data-ng-show="cancel" data-ng-click="cancel();">Abbrechen</button>
 		<button type="submit" class="btn btn-danger pull-right"
-				data-ng-disabled="validationInput !== subject.year">Unwiderruflich Löschen</button>
+				data-ng-disabled="validationInput != subject.year">Unwiderruflich Löschen</button>
 	</div>
 </form>

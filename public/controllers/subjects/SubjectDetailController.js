@@ -14,6 +14,15 @@ angular.module('levelPad').controller('SubjectDetailController', [
 			$scope.semesters = semesters;
 		});
 
+		$scope.update = function() {
+			$scope.modules = Module.query(function() {
+
+			}, function() {
+				alert('Could not load modules.');
+			});
+		};
+		$scope.update();
+
 		function generatePassword() {
 			var password = '',
 				temp;
@@ -98,15 +107,43 @@ angular.module('levelPad').controller('SubjectDetailController', [
 			});
 		}
 
-		$scope.update = function() {
-			$scope.modules = Module.query(function() {
+		if (!$scope.submit) {
+			$scope.submit = function () {
+				var module = $scope.subject.module;
+				delete $scope.subject.module;
+				$scope.subject.$save({module: module.slug}, function() {
+					$scope.update();
+				}, function () {
+					alert('Error!');
+				});
+			};
+		}
 
-			}, function() {
-				alert('Could not load modules.');
-			});
-		};
-		$scope.update();
+		if (!$scope.delete) {
+			$scope.delete = function () {
+				$scope.subject.$delete({module: $scope.subject.module.slug}, function() {
+					$scope.update();
+				}, function () {
+					alert('Error!');
+				});
+			};
+		}
 
+		if (!$scope.showDeleteDialog) {
+			$scope.showDeleteDialog = function (subject) {
+				var dialog = new DialogService('/subjects/:subject/delete');
+				dialog.scope.subject = angular.copy(subject);
+				dialog.scope.delete = function () {
+					dialog.scope.subject.$delete({module: dialog.scope.subject.module.slug}, function() {
+						dialog.submit();
+						$scope.update();
+					}, function () {
+						alert('Fehler!');
+					});
+				};
+				dialog.open();
+			};
+		}
 
 		//Pie Chart Magic
 		$scope.options = ChartOption;
