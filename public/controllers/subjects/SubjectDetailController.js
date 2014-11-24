@@ -6,8 +6,8 @@ angular.module('levelPad').controller('SubjectDetailController', [
 
 		'use strict';
 		$scope.module = CurrentModule;
-		$scope.subject = CurrentSubject;
-		
+	//	$scope.subject = CurrentSubject;
+
 		$scope.update = function() {
 			$scope.modules = Module.query(function() {
 
@@ -35,7 +35,7 @@ angular.module('levelPad').controller('SubjectDetailController', [
 		$scope.assistants = [
 			{ name: 'Volker '}
 		];
-		
+
 		//Pie Chart Magic
 		$scope.options = ChartOption;
 		// Chart.js Data

@@ -97,8 +97,13 @@
 						<input type="radio" name="anmeldeSchluessel" id="aktiv" value="option2"> aktiv
 					</label>
 					<div class="subject-password-generator">
-						<span class="glyphicon glyphicon-lock"></span> St4rTK7
-						<button type="button" class="btn btn-default ">
+						<span class="glyphicon glyphicon-lock"></span>
+						<input
+							id="generatedPassword" name="subject."
+							data-ng-model="subject.registrationPassword"
+							required="required"
+							class="form-control"/>
+						<button ng-click="generatePassword();" type="button" class="btn btn-default">
 							<span class="glyphicon glyphicon-refresh"></span>
 						</button>
 					</div>

@@ -41,11 +41,27 @@ angular.module('levelPad').controller('DashboardController', [
 			$scope.semesters = semesters;
 		});
 
+		function generatePassword(subject) {
+			var tempPassword = '',
+				temp;
+
+			for(var i = 0; i < 10; i++) {
+				 temp = 0;
+				while(!((temp > 48 && temp < 57) || (temp > 65 && temp < 90) || (temp > 97 && temp < 122))) {
+					temp = Math.floor(Math.random() * 74) + 48;
+				}
+				tempPassword += String.fromCharCode(temp);
+			}
+			subject.registrationPassword = tempPassword;
+		}
+
 		$scope.showCreateDialog = function() {
 			var dialog = new DialogService('/subjects/new');
 			dialog.scope.subject = new Subject();
 			dialog.scope.years = $scope.years;
 			dialog.scope.semesters = $scope.semesters;
+			generatePassword(dialog.scope.subject);
+			dialog.scope.generatePassword = function() { generatePassword(dialog.scope.subject); };
 			dialog.scope.submit = function() {
 				dialog.scope.module.$save(function() {
 					dialog.submit();
