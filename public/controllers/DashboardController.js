@@ -94,6 +94,7 @@ angular.module('levelPad').controller('DashboardController', [
 			dialog.scope.subject.registrationExpiresAt = dialog.scope.expireDates[0];
 			dialog.scope.subject.registrationActive = 1;
 			dialog.scope.subject.registrationPassword = generatePassword();
+			dialog.scope.subject._registrationPasswordCheck = 0;
 
 			dialog.scope.generatePassword = function() {
 				dialog.scope.subject.registrationPassword = generatePassword();
