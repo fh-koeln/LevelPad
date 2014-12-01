@@ -34,20 +34,26 @@
             <legend class="radio-box">Gewichtung</legend>
             <div class="form-group">
 				<div class="col-sm-12 ">
-					<div class="col-sm-6 col-xs-12 learning-outcome-weight">
+					<div class="col-sm-5 col-xs-12 learning-outcome-weight">
 						<form>
-							<input type="range" name="amountRange" data-ng-model="task.amountRange" min="0" max="100" value="0"/>
+							<input type="range" name="amountRange" 
+								   data-ng-model="task.amountRange" 
+								   min="0" max="{{ 100 - task.belegt }}" value="0"/>
 						</form>
 					</div>
-					<div class="col-sm-1 col-xs-2">
+					<div class="col-sm-2 col-xs-2">
 						Anteil: 
 						<br/>
 						Rest: 
+						<br/>
+						Belegt: 
 					</div>
 					<div class="col-sm-2 col-xs-3">
 						<span class="positive">{{ task.amountRange }}%</span>
 						<br/>
-						<span class="neutral">{{ 100 - task.amountRange }}%
+						<span class="neutral">{{ 100 - task.amountRange - task.belegt }}%</span>
+						<br/>
+						<span class="negative">{{ task.belegt }}%</span>
 					</div>
                    	<div class="col-sm-3 col-xs-9">
 						<div class="medium-circle ">
