@@ -10,7 +10,7 @@
 	</header>
 	<div class="modal-body">
 		<div class="col-sm-8" data-ng-init="checked='third'">
-			<div class="task-box" data-ng-class="{'active-task': checked=='first'}">
+			<div class="task-box" data-ng-class="{'positive-task': checked=='first'}">
 				<span class="task-color">Beste Lösung</span>
 				<label class=" right-radio">
 					<input type="radio" name="rating" id="first" value="0" data-ng-click="checked='first'">
@@ -35,7 +35,7 @@
 					</ul>	
 				</div>
 			</div>
-			<div class="task-box" data-ng-class="{'active-task': checked=='second'}">
+			<div class="task-box" data-ng-class="{'positive-task': checked=='second'}">
 				<span class="task-color">Gute Lösung</span>
 				<label class=" right-radio">
 					<input type="radio" name="rating" id="second" value="0" data-ng-click="checked='second'">
@@ -60,8 +60,8 @@
 					</ul>	
 				</div>
 			</div>
-			<div class="task-box" data-ng-class="{'active-task': checked=='third'}">
-				<span class="task-color">Schlechteste Lösung</span>
+			<div class="task-box" data-ng-class="{'negative-task': checked=='third'}">
+				<span class="task-bad-color">Schlechteste Lösung</span>
 				<label class=" right-radio">
 					<input type="radio" name="rating" id="third" value="0" data-ng-click="checked='third'" checked>
 				</label>
@@ -98,22 +98,37 @@
 							<textarea class="comment-textarea" placeholder="Kommentar eingeben..."></textarea>
 						</div>
 						<div class="comment-tools">
-							<table>
+							<table class="table-tools">
 								<tbody>
 									<tr>
 									<td class="comment-tool-column">
-										<a class="interaction-link"><span class="glyphicon glyphicon-ok"></span> speichern</a>
+										<a class="interaction-link">
+											<span class="glyphicon glyphicon-ok"></span> 
+											<span class="hidden-sm">speichern</span>
+											<span class="hidden-lg hidden-md hidden-xs">speich.</span>
+										</a>
 									</td>
-									<td>
-										<a class="interaction-link" data-ng-click="comments='add'"><span class="glyphicon glyphicon-remove"></span> abbrechen</a>
+									<td class="comment-tool-column">
+										<a class="interaction-link" data-ng-click="comments='add'">
+											<span class="glyphicon glyphicon-remove"></span> 
+											<span class="hidden-sm">abbrechen</span>
+											<span class="hidden-lg hidden-md hidden-xs">abbr.</span>
+										</a>
 									</td>
 								</tr>
 								<tr>
 									<td class="comment-tool-column">
-										<a class="interaction-link"><span class="glyphicon glyphicon-trash"></span> löschen</a>
+										<a class="interaction-link">
+											<span class="glyphicon glyphicon-trash"></span> 
+											<span class="hidden-sm">löschen</span>
+											<span class="hidden-lg hidden-md hidden-xs">lösch.</span>
+										</a>
 									</td>
-									<td>
-										<span class="head-font-normal"><input type="checkbox" name="private"> privater Kommentar</span>
+									<td class="comment-tool-column">
+										<span class="table-comment-interaction">
+											<input type="checkbox" name="private"> 
+											<span class="">intern</span>
+										</span>
 									</td>
 								</tr>
 								</tbody>
@@ -122,11 +137,28 @@
 					</div>
 				</div>
 				<div class="comments">
-					<div class="bubble">
+					<div class="bubble-comment">
 						Die Lösung ist ganz in Ordnung. Allerdings fehlen noch ein paar Dinge bis zur “Besten Lösung”.
 					</div>
 					<div class="comment-author">
-						Johannis <span class="head-font-bold">Bär</span> - 24.11.2014 - 19 Uhr
+						Johannis <span class="head-font-bold">Bär</span> - 
+						<span class="comment-inline">
+							24.11.2014 - 19 Uhr 
+							<span class="glyphicon glyphicon-pencil comment-edit"></span>
+						</span>
+					</div>
+				</div>
+				<div class="comments">
+					<div class="bubble-comment">
+						Nice!
+					</div>
+					<div class="comment-author">
+						<span class="glyphicon glyphicon-lock comment-locked"></span>
+						Dushanthan <span class="head-font-bold">Thetsanamorthy</span> - 
+						<span class="comment-inline">
+							24.12.2014 - 20 Uhr 
+							<span class="glyphicon glyphicon-pencil comment-edit"></span>
+						</span>
 					</div>
 				</div>
 			</div>
