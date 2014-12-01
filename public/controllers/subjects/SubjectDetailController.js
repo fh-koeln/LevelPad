@@ -197,8 +197,9 @@ angular.module('levelPad').controller('SubjectDetailController', [
 			};
 	//	}
 
-		if (!$scope.showDeleteDialog) {
+	//	if (!$scope.showDeleteDialog) {
 			$scope.showDeleteDialog = function (subject) {
+				console.log(subject);
 				var dialog = new DialogService('/subjects/:subject/delete');
 				dialog.scope.subject = angular.copy(subject);
 				dialog.scope.delete = function () {
@@ -211,7 +212,7 @@ angular.module('levelPad').controller('SubjectDetailController', [
 				};
 				dialog.open();
 			};
-		}
+	//	}
 
 		//Pie Chart Magic
 		$scope.options = ChartOption;
