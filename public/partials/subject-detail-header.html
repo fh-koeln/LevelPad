@@ -1,7 +1,7 @@
 <div class="show-subject-head hidden-xs">
 	<div class="subject-title">
 		{{ subject.module.name }}
-		<a class=" btn btn-glyphicon interaction-link" data-ng-href="/subjects/new" data-ng-click="showEditDialog(); $event.preventDefault();">
+		<a class=" btn btn-glyphicon interaction-link" data-ng-href="/subjects/new" data-ng-click="showEditDialog(subject); $event.preventDefault();">
 			<span class="glyphicon glyphicon-pencil interaction-color"></span>
 		</a>
 	</div>
