@@ -51,6 +51,8 @@ angular.module('levelPad').controller('SubjectDetailController', [
 
 		$scope.subject = $scope.subject || CurrentSubject || new Subject();
 
+		console.log('Subject in SDC', $scope.subject.registrationPassword, $scope.subject);
+
 		$scope.update = function(newSubject) {
 			if (newSubject) {
 				$scope.subject = newSubject;
