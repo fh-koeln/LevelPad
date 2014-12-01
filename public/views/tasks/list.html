@@ -6,12 +6,12 @@
 
 <div class="container interaction-bar col-md-12 col-sm-12 hidden-xs">
 	<div class="col-md-4 col-sm-5 interaction-link">
-			<a class="interaction-link" data-ng-href="/tasks/new" data-ng-click="showCreateDialog(); $event.preventDefault();">
+			<a class="interaction-link" data-ng-href="/{{ subject.module.slug }}/{{ subject.slug }}/tasks/new" data-ng-click="showCreateDialog(); $event.preventDefault();">
 				+ neues Learning Outcome hinzufügen
 			</a>
 	</div>
 	<div class="col-md-4 col-sm-5 interaction-link">
-			<a class="interaction-link" data-ng-href="/tasks/import" data-ng-click="showImportDialog(); $event.preventDefault();">
+			<a class="interaction-link" data-ng-href="/{{ subject.module.slug }}/{{ subject.slug }}/tasks/import" data-ng-click="showImportDialog(); $event.preventDefault();">
 				<span class="glyphicon glyphicon-import interaction-color"></span>
 				Learning Outcomes importieren
 			</a>

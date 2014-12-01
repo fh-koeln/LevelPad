@@ -8,12 +8,9 @@ angular.module('levelPad').controller('TaskListController', [
 	$scope.subject = $scope.subject || CurrentSubject || new Subject();
 
 	$scope.update = function() {
-		$scope.tasks = [];
-		// Get all subjects for the current module
-		Task.query({ module: $routeParams.module, subject: $routeParams.subject }, function(tasks) {
-			angular.forEach(tasks, function(task) {
-				$scope.tasks.push(task);
-			});
+		// Get all tasks for the current subject
+		$scope.tasks = Task.query({ module: $routeParams.module, subject: $routeParams.subject }, function(tasks) {
+
 		}, function() {
 			alert('Could not load tasks.');
 		});
@@ -21,7 +18,7 @@ angular.module('levelPad').controller('TaskListController', [
 	$scope.update();
 
 	$scope.showCreateDialog = function() {
-		var dialog = new DialogService('/tasks/new');
+		var dialog = new DialogService('/:module/:subject/tasks/new');
 		dialog.scope.task = new Task();
 		dialog.scope.submit = function() {
 			dialog.scope.task.$save(function() {
@@ -35,7 +32,7 @@ angular.module('levelPad').controller('TaskListController', [
 	};
 
 	$scope.showImportDialog = function() {
-		var dialog = new DialogService('/tasks/import');
+		var dialog = new DialogService('/:module/:subject/tasks/import');
 		dialog.scope.task = new Task();
 		dialog.scope.submit = function() {
 			dialog.scope.module.$save(function() {
