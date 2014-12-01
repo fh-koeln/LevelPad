@@ -201,6 +201,7 @@ angular.module('levelPad').controller('SubjectDetailController', [
 					dialog.scope.subject.$delete({module: dialog.scope.subject.module.slug}, function() {
 						dialog.submit();
 						$scope.update();
+						$location.path('/');
 					}, function () {
 						alert('Fehler!');
 					});
