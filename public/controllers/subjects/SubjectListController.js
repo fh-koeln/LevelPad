@@ -1,11 +1,10 @@
 /* global angular, alert */
 
 angular.module('levelPad').controller('SubjectListController', [
-	'$scope', '$http', '$routeParams', '$location', '$log', 'Module', 'Subject', 'DialogService', 'CurrentModule',
-	function ($scope, $http, $routeParams, $location, $log, Module, Subject, DialogService, CurrentModule) {
+	'$scope', '$http', '$routeParams', '$location', '$log', 'Module', 'Subject', 'DialogService',
+	function ($scope, $http, $routeParams, $location, $log, Module, Subject, DialogService) {
 
 	'use strict';
-	$scope.module = $scope.module || CurrentModule || new Module();
 
 	$scope.update = function () {
 		$scope.subjects = [];
@@ -35,11 +34,14 @@ angular.module('levelPad').controller('SubjectListController', [
 			dialog.scope.subject.year = dialog.scope.subject.year.year;
 			dialog.scope.subject.semester = dialog.scope.subject.semester.name;
 
-			if (dialog.scope.subject.registrationActive === '0') {
-				dialog.scope.subject.registrationExpiresAt = 0;
+			if (dialog.scope.subject.registrationActive === 'inactive') {
+				dialog.scope.subject.registrationActive = 0;
+				dialog.scope.subject.registrationExpiresAt = null;
+			} else {
+				dialog.scope.subject.registrationActive = 1;
 			}
 
-			if (dialog.scope.subject._registrationPasswordCheck === '0') {
+			if (dialog.scope.subject._registrationPasswordCheck === 'inactive') {
 				dialog.scope.subject.registrationPassword = '';
 			}
 
