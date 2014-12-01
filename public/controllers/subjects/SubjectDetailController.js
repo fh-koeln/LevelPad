@@ -197,22 +197,22 @@ angular.module('levelPad').controller('SubjectDetailController', [
 			};
 	//	}
 
-	//	if (!$scope.showDeleteDialog) {
+		if (!$scope.showDeleteDialog) {
 			$scope.showDeleteDialog = function (subject) {
-				console.log(subject);
 				var dialog = new DialogService('/subjects/:subject/delete');
 				dialog.scope.subject = angular.copy(subject);
 				dialog.scope.delete = function () {
 					dialog.scope.subject.$delete({module: dialog.scope.subject.module.slug}, function() {
 						dialog.submit();
 						$scope.update();
+						$location.path('/');
 					}, function () {
 						alert('Fehler!');
 					});
 				};
 				dialog.open();
 			};
-	//	}
+		}
 
 		//Pie Chart Magic
 		$scope.options = ChartOption;

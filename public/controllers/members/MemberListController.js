@@ -22,16 +22,6 @@ angular.module('levelPad').controller('MemberListController', [
 		};
 		$scope.update();
 
-		$scope.showEditDialog = function(member) {
-			$scope.member = angular.copy(member);
-			$('#edit').modal();
-		};
-
-		$scope.showDeleteDialog = function(member) {
-			$scope.member = angular.copy(member);
-			$('#delete').modal();
-		};
-
 		//Pie Chart Magic
 		$scope.options = ChartOption;
 		// Chart.js Data
