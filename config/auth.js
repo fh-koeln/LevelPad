@@ -44,11 +44,10 @@ passport.deserializeUser(function(username, done) {
  * with a user object.  In the real world, this would query a database;
  * however, in this example we are using a baked-in set of users.
  */
-if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
-	passport.use('fh-imap', DatabaseStrategy);
-} else {
-	passport.use('fh-imap', FHKIMAPStrategy);
-}
+var strategy = (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') ? 'fh-db' : 'fh-imap';
+
+passport.use('fh-db', DatabaseStrategy);
+passport.use('fh-imap', FHKIMAPStrategy);
 
 module.exports = function(app) {
 
@@ -66,7 +65,7 @@ module.exports = function(app) {
 	 * which, in this example, will redirect the user to the home page.
 	 *
 	 */
-	app.post('/api/login', passport.authenticate('fh-imap'), function(req, res) {
+	app.post('/api/login', passport.authenticate(strategy), function(req, res) {
 		res.status(200).json(req.user);
 	});
 

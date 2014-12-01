@@ -53,24 +53,5 @@ var checkCredentials = function(username, password, callback) {
 };
 
 module.exports = new LocalStrategy(function(username, password, done) {
-	checkCredentials(username, password, function(err) {
-		if (err) {
-			done(null, false, err);
-		} else {
-			User.findByUsername(username, function(err, user) {
-				if (err) {
-					done(null, false, err);
-				} else if (!user) {
-					// Create guest user which has to sign up
-					acl.addUserRoles(username, 'guest', function() {
-						user = new User();
-						user.username = username;
-						done(null, user);
-					});
-				} else {
-					done(null, user);
-				}
-			});
-		}
-	});
+	checkCredentials(username, password, done);
 });
