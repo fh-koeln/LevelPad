@@ -90,7 +90,7 @@ angular.module('levelPad').controller('SubjectDetailController', [
 		}
 
 		$scope.expireDates = getExpireDates();
-		if ($scope.subject.registrationExpiresAt) {
+		if ($scope.subject.registrationActive === 1 && $scope.subject.registrationExpiresAt > 0) {
 			var oldDate = new Date($scope.subject.registrationExpiresAt), dateObject, existingDateObject;
 
 			existingDateObject = objectFindByKey($scope.expireDates, 'timestamp', oldDate.getTime());
