@@ -7,18 +7,13 @@ var Subject = require('../models/Subject');
  */
 exports.list = function (callback) {
 
+	var thisYear = new Date().getFullYear();
+
 	Subject.findOne().lean().select('year').sort('year').exec(function(err, firstYearSubject) {
-		if (err) {
-			callback(err);
-			return;
-		}
+		var from = thisYear - 1, to = thisYear + 2, years = [];
 
-		var from = firstYearSubject ? firstYearSubject.year : new Date().getFullYear(),
-			to = new Date().getFullYear() + 2,
-			years = [];
-
-		if (from > to) {
-			from = to;
+		if (!err && firstYearSubject && firstYearSubject < from) {
+			from = firstYearSubject;
 		}
 
 		for (var year = from; year <= to; year++) {
