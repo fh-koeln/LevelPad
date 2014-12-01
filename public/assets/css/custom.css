@@ -341,8 +341,12 @@ fieldset > .radio-items{
     padding: 20px 0;
 }
 
-.active-task{
+.positive-task{
 	background: #E0F4C6;
+}
+
+.negative-task{
+	background: #F3C7DD;
 }
 
 .task-box{
@@ -354,11 +358,16 @@ fieldset > .radio-items{
 	color: #72CE1F;
 }
 
+.task-bad-color{
+	color: #EE497A;
+}
+
 .bubble {
 	position: relative;
-	width: 340px;
-	height: 111px;
-	background: lightgray;
+	width: 100%;
+	height: 100%;
+	padding: 5px;
+	background: #DDD;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
@@ -370,7 +379,7 @@ fieldset > .radio-items{
 	position: absolute;
 	border-style: solid;
 	border-width: 14px 10px 0;
-	border-color: lightgray transparent;
+	border-color: #DDD transparent;
 	display: block;
 	width: 0;
 	z-index: 1;
@@ -392,7 +401,12 @@ fieldset > .radio-items{
 }
 
 .comment-textarea{
-	width: 100%;
+	width: 102%;
+	width: calc(100% + 8px);
+	border-radius: 5px;
+	border-color: transparent;
+	margin: -9px 0px 0 -4px;
+	resize: vertical;
 }
 
 .comment-text{
@@ -400,12 +414,63 @@ fieldset > .radio-items{
 	padding: 5px 0 0 0;
 }
 
+.table-comment-interaction{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-right: 5px;
+	padding-left: 6px;
+	color: #77aabb;
+}
+
+.table-tools{
+	border: none;
+	width: 100%;
+}
+
 .comment-tools{
-	background: lightgray;
+	background: #DDD;
 }
 
 .comment-tool-column{
-	width: 45%;
+	width: 50%;
+}
+
+.bubble-comment {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	padding: 5px;
+	background: #FFF;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: #878787 solid 1px;
+}
+
+.bubble-comment:after {
+	content: '';
+	position: absolute;
+	border-style: solid;
+	border-width: 14px 10px 0;
+	border-color: #FFF transparent;
+	display: block;
+	width: 0;
+	z-index: 1;
+	bottom: -14px;
+	left: 15px;
+}
+
+.bubble-comment:before {
+	content: '';
+	position: absolute;
+	border-style: solid;
+	border-width: 14px 10px 0;
+	border-color: #878787 transparent;
+	display: block;
+	width: 0;
+	z-index: 0;
+	bottom: -15px;
+	left: 15px;
 }
 
 .comment-author{
@@ -414,8 +479,25 @@ fieldset > .radio-items{
 	color: #878787;
 }
 
+.comment-inline{
+	display: inline-block;
+}
+
 .new-comment{
 	padding: 5px 0 20px 0;
+}
+
+.comments{
+	padding: 5px 0;
+}
+
+.comment-edit{
+	color: #77aabb;
+	float: right;
+}
+
+.comment-locked{
+	color: #F3C7DD;
 }
 
 label.right-radio{
