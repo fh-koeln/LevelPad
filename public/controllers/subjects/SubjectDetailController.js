@@ -49,15 +49,12 @@ angular.module('levelPad').controller('SubjectDetailController', [
 		}
 		$scope.expireDates = getExpireDates();
 
-		$scope.subject = $scope.subject || CurrentSubject || new Subject();
+		//alert( 'foo' + $scope.subject);
+		//$scope.subject = CurrentSubject || new Subject();
 
-		console.log('Subject in SDC', $scope.subject.registrationPassword, $scope.subject);
+		//console.log('Subject in SDC', $scope.subject.registrationPassword, $scope.subject);
 
-		$scope.update = function(newSubject) {
-			if (newSubject) {
-				$scope.subject = newSubject;
-			}
-
+		function prepareSubject() {
 			if ($scope.subject.registrationPassword === undefined) {
 				$scope.subject.registrationPassword = generatePassword();
 				$scope.subject._registrationPasswordCheck = 'inactive';
@@ -94,15 +91,24 @@ angular.module('levelPad').controller('SubjectDetailController', [
 				$scope.subject.registrationExpiresAt = $scope.expireDates[0];
 				$scope.subject.registrationActive = 'active';
 			}
+		}
+
+		$scope.update = function() {
+			console.log('hello');
+			if ($routeParams.module && $routeParams.subject) {
+				$scope.subject = Subject.get({
+					module: $routeParams.module,
+					subject: $routeParams.subject
+				}, function() {
+					prepareSubject();
+				});
+			} else {
+				$scope.subject = new Subject();
+				prepareSubject();
+			}
 		};
 
-		if ($scope.subject.$promise) {
-			$scope.subject.$promise.then(function() {
-				$scope.update();
-			});
-		} else {
-			$scope.update();
-		}
+		$scope.update();
 
 		function generatePassword() {
 			var password = '',
@@ -133,69 +139,60 @@ angular.module('levelPad').controller('SubjectDetailController', [
 			$scope.subject.registrationPassword = generatePassword();
 		};
 
-		if (!$scope.submit) {
-			$scope.submit = function () {
-				var module = $scope.subject.module;
-				delete $scope.subject.module;
-				$scope.subject.$save({module: module.slug}, function() {
-					$scope.update();
-				}, function () {
-					alert('Error!');
+		$scope.save = function () {
+			var module = $scope.subject.module;
+			delete $scope.subject.module;
+
+			if ($scope.subject.registrationExpiresAt) {
+				$scope.subject.registrationExpiresAt = $scope.subject.registrationExpiresAt.timestamp;
+			}
+			$scope.subject.year = $scope.subject.year.year;
+			$scope.subject.semester = $scope.subject.semester.name;
+
+			if ($scope.subject.registrationActive === 'inactive') {
+				$scope.subject.registrationActive = 0;
+				$scope.subject.registrationExpiresAt = null;
+			} else {
+				$scope.subject.registrationActive = 1;
+			}
+
+			if ($scope.subject._registrationPasswordCheck === 'inactive') {
+				$scope.subject.registrationPassword = '';
+			}
+
+			delete $scope.subject._registrationPasswordCheck;
+
+			return $scope.subject.$save({module: module.slug}, function() {
+				prepareSubject();
+			}, function () {
+				alert('Error!');
+			});
+		};
+
+		$scope.delete = function () {
+			return $scope.subject.$delete({module: $scope.subject.module.slug}, function() {
+				$scope.update();
+			}, function () {
+				alert('Error!');
+			});
+		};
+
+		$scope.showEditDialog = function () {
+			var dialog = new DialogService('/subjects/:subject/edit');
+		//	dialog.scope.subject = angular.copy(subject);
+			dialog.scope.save = function() {
+				dialog.scope.$parent.save().$promise.then(function() {
+					dialog.submit();
+				}, function() {
+					alert('Fehler!');
 				});
 			};
-		}
-
-		if (!$scope.delete) {
-			$scope.delete = function () {
-				$scope.subject.$delete({module: $scope.subject.module.slug}, function() {
-					$scope.update();
-				}, function () {
-					alert('Error!');
-				});
+			dialog.scope.showDeleteDialog = function () {
+				dialog.cancel();
+				$scope.showDeleteDialog(subject);
 			};
-		}
-
-	//	if (!$scope.showEditDialog) {
-			$scope.showEditDialog = function (subject) {
-				var dialog = new DialogService('/subjects/:subject/edit');
-				dialog.scope.subject = angular.copy(subject);
-				dialog.scope.submit = function() {
-					var module = dialog.scope.subject.module;
-					delete dialog.scope.subject.module;
-
-					if (dialog.scope.subject.registrationExpiresAt) {
-						dialog.scope.subject.registrationExpiresAt = dialog.scope.subject.registrationExpiresAt.timestamp;
-					}
-					dialog.scope.subject.year = dialog.scope.subject.year.year;
-					dialog.scope.subject.semester = dialog.scope.subject.semester.name;
-
-					if (dialog.scope.subject.registrationActive === 'inactive') {
-						dialog.scope.subject.registrationActive = 0;
-						dialog.scope.subject.registrationExpiresAt = null;
-					} else {
-						dialog.scope.subject.registrationActive = 1;
-					}
-
-					if (dialog.scope.subject._registrationPasswordCheck === 'inactive') {
-						dialog.scope.subject.registrationPassword = '';
-					}
-
-					delete dialog.scope.subject._registrationPasswordCheck;
-
-					dialog.scope.subject.$save({module: module.slug}, function(newSubject) {
-						dialog.submit();
-						$scope.update(newSubject);
-					}, function () {
-						alert('Fehler!');
-					});
-				};
-				dialog.scope.showDeleteDialog = function () {
-					dialog.cancel();
-					$scope.showDeleteDialog(subject);
-				};
-				dialog.open();
-			};
-	//	}
+			dialog.open();
+		};
 
 		if (!$scope.showDeleteDialog) {
 			$scope.showDeleteDialog = function (subject) {

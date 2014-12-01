@@ -32,7 +32,7 @@
 						<select
 							id="semester" name="semester"
 							data-ng-model="subject.semester"
-							data-ng-options="s.name for s in semesters track by s.name"
+							data-ng-options="semester.name as semester.name for semester in semesters"
 							data-ng-disabled="subject._id"
 							required="required"
 							class="form-control">
@@ -48,7 +48,7 @@
 						<select
 							id="year" name="year"
 							data-ng-model="subject.year"
-							data-ng-options="y.name for y in years track by y.year"
+							data-ng-options="year.year as year.name for year in years"
 							data-ng-disabled="subject._id"
 							required="required"
 							class="form-control">

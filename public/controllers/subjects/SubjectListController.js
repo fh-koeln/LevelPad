@@ -24,10 +24,15 @@ angular.module('levelPad').controller('SubjectListController', [
 	$scope.update();
 
 	$scope.showCreateDialog = function() {
-		var dialog = new DialogService('/subjects/new');
-		dialog.scope.subject = new Subject();
+
+		$scope.subject = new Subject();
+
+		var dialog = new DialogService('/subjects/new', $scope.subject);
+		dialog.scope.subject = false;
 
 		dialog.scope.submit = function() {
+
+			console.log(dialog.scope);
 			var module = dialog.scope.subject.module;
 			delete dialog.scope.subject.module;
 			dialog.scope.subject.registrationExpiresAt = dialog.scope.subject.registrationExpiresAt.timestamp;
@@ -45,56 +50,6 @@ angular.module('levelPad').controller('SubjectListController', [
 			delete dialog.scope.subject._registrationPasswordCheck;
 
 			dialog.scope.subject.$save({module: module.slug}, function() {
-				dialog.submit();
-				$scope.update();
-			}, function() {
-				alert('Fehler!');
-			});
-		};
-		dialog.open();
-	};
-
-	$scope.showEditDialog = function(subject) {
-		var dialog = new DialogService('/subjects/:subject/edit');
-		dialog.scope.subject = angular.copy(subject);
-		dialog.scope.submit = function() {
-			var module = dialog.scope.subject.module;
-			delete dialog.scope.subject.module;
-			if (dialog.scope.subject.registrationExpiresAt) {
-				dialog.scope.subject.registrationExpiresAt = dialog.scope.subject.registrationExpiresAt.timestamp;
-			}
-			dialog.scope.subject.year = dialog.scope.subject.year.year;
-			dialog.scope.subject.semester = dialog.scope.subject.semester.name;
-
-			if (dialog.scope.subject.registrationActive === '0') {
-				dialog.scope.subject.registrationExpiresAt = 0;
-			}
-
-			if (dialog.scope.subject._registrationPasswordCheck === '0') {
-				dialog.scope.subject.registrationPassword = '';
-			}
-
-			delete dialog.scope.subject._registrationPasswordCheck;
-
-			dialog.scope.subject.$save({module: module.slug}, function() {
-				dialog.submit();
-				$scope.update();
-			}, function() {
-				alert('Fehler!');
-			});
-		};
-		dialog.scope.showDeleteDialog = function() {
-			dialog.cancel();
-			$scope.showDeleteDialog(subject);
-		};
-		dialog.open();
-	};
-
-	$scope.showDeleteDialog = function(subject) {
-		var dialog = new DialogService('/subjects/:subject/delete');
-		dialog.scope.subject = angular.copy(subject);
-		dialog.scope.delete = function() {
-			dialog.scope.subject.$delete({module: subject.module.slug}, function() {
 				dialog.submit();
 				$scope.update();
 			}, function() {
