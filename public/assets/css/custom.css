@@ -283,9 +283,11 @@ table {
 
 .arrow-right {
     font-family: "Helvetica Neue";
-    font-size: 60px;
+    font-size: 24px;
     color: #6399AE;
+    vertical-align: middle !important;
 }
+
 
 .arrow-right-small {
     font-family: "Helvetica Neue";
