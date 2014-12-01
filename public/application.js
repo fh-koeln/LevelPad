@@ -227,15 +227,7 @@ app.config(function($routeProvider, $locationProvider) {
 	});
 	$routeProvider.when('/:module/:subject/members/:member', {
 		templateUrl: 'views/members/show.html',
-		controller: 'MemberListController'
-	});
-	$routeProvider.when('/:module/:subject/members/:member/edit', {
-		templateUrl: 'views/members/edit.html',
-		controller: 'MemberListController'
-	});
-	$routeProvider.when('/:module/:subject/settings', {
-		templateUrl: 'views/subjects/settings.html',
-		controller: 'SubjectDetailController'
+		controller: 'MemberDetailController'
 	});
 	$routeProvider.when('/:module/:subject/members/:member/evaluation', {
 		templateUrl: 'views/evaluations/show.html',

@@ -1,56 +1,5 @@
 <div data-ng-controller="SubjectDetailController" data-ng-include="'partials/subject-detail-header.html'"></div>
 
-<div class="row">
-    <div class="col-sm-4">
-        <table class="borderless-table">
-            <tbody>
-                <tr>
-                    <th class="table-normal-font">
-                        Name:
-                    </th>
-                    <td class="table-element-padding-left">
-                        Peter <span class="student-lastname">Wackel</span>
-                        <a class=" btn interaction-link" data-ng-href="/subjects/new" data-ng-click="showCreateDialog(); $event.preventDefault();">
-                <span class="glyphicon glyphicon-pencil interaction-color"></span>
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <th class="table-normal-font">
-                        Matrikelnr:
-                    </th>
-                    <td class="table-element-padding-left">
-                        110 840 54
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="col-sm-8 rating-align">
-        <div class="col-sm-5 ">
-            <div class="large-circle"></div>
-            <div class="">absolute Note</div>
-        </div>
-        <div class="col-sm-4">
-            <div class="medium-circle"></div>
-            <div class="">relative Note</div>
-        </div>
-        <div class="col-sm-3">
-            <div class="medium-circle"></div>
-            <div class="">Artefakte</div>
-        </div>
-    </div>
-</div>
-
-<!--
-    Navbar für große Devices
--->
-<ul class="nav nav-tabs hidden-xs " data-ng-init="filterStatus='test1'"> <!--Filterstatus muss geaendert werden fuer Aktiv und inaktive-->
-	<li data-ng-class="{ 'active': filterStatus=='test1' }"><a data-ng-click="test1">Teilnehmer (120)</a></li> <!--Teilnehmerzahl dynamisch-->
-	<li data-ng-class="{ 'active': filterStatus=='test2' }"><a data-ng-click="test2">Learning Outcomes</a></li>
-    <li data-ng-class="{ 'active': filterStatus=='test3' }"><a data-ng-click="test3">Einstellungen</a></li>
-</ul>
-
 <!--
     Searchbar und neue Veranstaltung für große Devices
 -->
@@ -138,13 +87,13 @@
 
     </thead>
     <tbody>
-        <tr>
+		<tr data-ng-repeat="member in members | filter:searchText">
             <th class="col-xs-10 col-sm-4 col-md-4 studentname students-table-element">
-
-                    <span class="student-forename">Peter </span>
-                    <span class="student-lastname"> Wackel</span>
-
-                <p class="student-matrikelnummer hidden-md hidden-lg hidden-sm"> 110 876 54 </p>
+				<a data-ng-href="{{ subject.module.slug }}/{{ subject.slug }}/members/{{ member._id }}">
+					<span class="student-forename">{{ member.user.firstname }}</span>
+					<span class="student-lastname">{{ member.user.lastname }}</span>
+					<p class="student-matrikelnummer hidden-md hidden-lg hidden-sm">{{ member.user.studentNumber }}</p>
+				</a>
             </th>
             <td class="col-sm-2 col-md-2 hidden-xs students-table-element">
                 <span class="student-matrikelnummer text-right"> 110 876 54 </span>

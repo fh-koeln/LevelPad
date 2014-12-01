@@ -1,20 +1,26 @@
 /* global angular, alert */
 
 angular.module('levelPad').controller('MemberListController', [
-	'$scope', '$routeParams', '$location', '$log', 'Module', 'Subject', 'Task', 'DialogService', 'CurrentModule', 'CurrentSubject', 'CurrentTask', 'CurrentMember', 'ChartOption',
-	function ($scope, $routeParams, $location, $log, Module, Subject, Task, DialogService, CurrentModule, CurrentSubject, CurrentTask, CurrentMember, ChartOption) {
-		
+	'$scope', '$routeParams', '$location', '$log', 'Module', 'Subject', 'Member', 'DialogService', 'CurrentModule', 'CurrentSubject', 'ChartOption',
+	function ($scope, $routeParams, $location, $log, Module, Subject, Member, DialogService, CurrentModule, CurrentSubject, ChartOption) {
+
 		'use strict';
-		
+
 		$scope.module = CurrentModule;
 		$scope.subject = CurrentSubject;
-		$scope.task = CurrentTask;
-		$scope.member = CurrentMember;
-		
 
 		console.log('Current module', CurrentModule);
 		console.log('Current subject', CurrentSubject);
 
+		$scope.update = function() {
+			// Get all member for the current module and subject.
+			$scope.members = Member.query({ module: $routeParams.module, subject: $routeParams.subject }, function(members) {
+
+			}, function() {
+				alert('Could not load tasks.');
+			});
+		};
+		$scope.update();
 
 		$scope.showEditDialog = function(member) {
 			$scope.member = angular.copy(member);
@@ -24,8 +30,8 @@ angular.module('levelPad').controller('MemberListController', [
 		$scope.showDeleteDialog = function(member) {
 			$scope.member = angular.copy(member);
 			$('#delete').modal();
-		};    
-		
+		};
+
 		//Pie Chart Magic
 		$scope.options = ChartOption;
 		// Chart.js Data
@@ -43,17 +49,17 @@ angular.module('levelPad').controller('MemberListController', [
 			highlight: 'lightgray'
 		  }
 		];
-		
+
 		$scope.member = [
 		{
 			name: 'Peeta'
 		}
 		];
-		
+
 		$scope.update = function() {
 
 		};
-		
+
 		$scope.update();
-	
+
 	}]);
