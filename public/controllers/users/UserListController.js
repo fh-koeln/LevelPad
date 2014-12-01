@@ -27,7 +27,7 @@ angular.module('levelPad').controller('UserListController', ['$scope', '$route',
 	};
 
 	$scope.showEditDialog = function(user) {
-		var dialog = new DialogService('/users/:user/edit');
+		var dialog = new DialogService('/users/:username/edit');
 		dialog.scope.user = angular.copy(user);
 		dialog.scope.submit = function() {
 			dialog.scope.user.$save(function() {
@@ -45,7 +45,7 @@ angular.module('levelPad').controller('UserListController', ['$scope', '$route',
 	};
 
 	$scope.showDeleteDialog = function(user) {
-		var dialog = new DialogService('/users/:user/delete');
+		var dialog = new DialogService('/users/:username/delete');
 		dialog.scope.user = angular.copy(user);
 		dialog.scope.delete = function() {
 			dialog.scope.user.$delete(function() {
