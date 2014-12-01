@@ -1,14 +1,14 @@
 /* global angular, alert */
 
 angular.module('levelPad').controller('TaskDetailController', [
-	'$scope', '$routeParams', '$location', '$log', 'Module', 'Subject', 'Task', 'CurrentModule', 'CurrentSubject', 'CurrentTask', 'ChartOption',
-	function ($scope, $routeParams, $location, $log, Module, Subject, Task, CurrentModule, CurrentSubject, CurrentTask, ChartOption) {
+	'$scope', '$routeParams', '$location', '$log', 'DialogService', 'Module', 'Subject', 'Task', 'CurrentModule', 'CurrentSubject', 'CurrentTask', 'ChartOption',
+	function ($scope, $routeParams, $location, $log, DialogService, Module, Subject, Task, CurrentModule, CurrentSubject, CurrentTask, ChartOption) {
 
 		'use strict';
 		$scope.module = CurrentModule;
 		$scope.subject = CurrentSubject;
         $scope.task = CurrentTask;
-		
+
 		$scope.go = function(path) {
 			$location.path(path);
 		};
@@ -20,7 +20,7 @@ angular.module('levelPad').controller('TaskDetailController', [
 				alert('Could not load modules.');
 			});
 		};
-        
+
 		$scope.update();
 
         $scope.showCreateDialog = function() {
@@ -36,25 +36,13 @@ angular.module('levelPad').controller('TaskDetailController', [
 			};
 			dialog.open();
 		};
-        
-		$scope.tasks = [
-			{
-				title: 'Hallo'
-			}
-		];
 
-		$scope.levels = [
-			{
-				title: 'Hallo'
-			}
-		];
-		
 		//Pie Chart Magic
 		$scope.options = ChartOption;
 		$scope.task ={
 			amountRange: 50
 		};
-		
+
 		$scope.$watch(
 			function( $scope ) {
 				return( $scope.task.amountRange );

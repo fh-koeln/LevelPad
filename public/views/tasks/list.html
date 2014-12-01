@@ -1,115 +1,115 @@
 <div class="show-subject-head hidden-xs">
-    <div class="subject-title">
-        Grundlagen der visuellen Kommunikation 
-        <a class=" btn btn-glyphicon interaction-link" data-ng-href="/subjects/new" data-ng-click="showCreateDialog(); $event.preventDefault();">
-            <span class="glyphicon glyphicon-pencil interaction-color"></span>
-        </a>
-    </div>
-    <div class="subject-semester">Sommersemester 2014</div>
+	<div class="subject-title">
+		Grundlagen der visuellen Kommunikation
+		<a class=" btn btn-glyphicon interaction-link" data-ng-href="/subjects/new" data-ng-click="showCreateDialog(); $event.preventDefault();">
+			<span class="glyphicon glyphicon-pencil interaction-color"></span>
+		</a>
+	</div>
+	<div class="subject-semester">Sommersemester 2014</div>
 </div>
 
 
 <!--
-    Navbar für große Devices
+	Navbar für große Devices
 -->
-<ul class="nav nav-tabs hidden-xs " data-ng-init="filterStatus='test2'"> <!--Filterstatus muss geaendert werden fuer Aktiv und inaktive-->
-	<li class="col-md-2,5" data-ng-class="{ 'active': filterStatus=='test1' }"><a href="/subjects/:subject">Teilnehmer (120)</a></li> <!--Teilnehmerzahl dynamisch-->
-	<li class="col-md-2,5"  data-ng-class="{ 'active': filterStatus=='test2' }"><a data-ng-click="test2">Learning Outcomes</a></li>
-    <li class="col-md-2,5"  data-ng-class="{ 'active': filterStatus=='test3' }"><a data-ng-click="test3">Einstellungen</a></li>
+<ul class="nav nav-tabs hidden-xs " data-ng-init="filterStatus='test2'">
+	<li data-ng-class="{ 'active': filterStatus=='tas' }"><a href="/subjects/:subject">Teilnehmer (120)</a></li> <!--Teilnehmerzahl dynamisch-->
+	<li data-ng-class="{ 'active': filterStatus=='test2' }"><a data-ng-click="test2">Learning Outcomes</a></li>
+	<li data-ng-class="{ 'active': filterStatus=='test3' }"><a data-ng-click="test3">Einstellungen</a></li>
 </ul>
 
 <!--
-    Searchbar und neue Veranstaltung für große Devices
+	Searchbar und neue Veranstaltung für große Devices
 -->
 
 <div class="container interaction-bar col-md-12 col-sm-12 hidden-xs">
-    <div class="col-md-4 col-sm-5 interaction-link">
+	<div class="col-md-4 col-sm-5 interaction-link">
 			<a class="interaction-link" data-ng-href="/tasks/new" data-ng-click="showCreateDialog(); $event.preventDefault();">
-                + neues Learning Outcome hinzufügen
-            </a>
-    </div>
+				+ neues Learning Outcome hinzufügen
+			</a>
+	</div>
 	<div class="col-md-4 col-sm-5 interaction-link">
 			<a class="interaction-link" data-ng-href="/tasks/import" data-ng-click="showImportDialog(); $event.preventDefault();">
-                <span class="glyphicon glyphicon-import interaction-color"></span>
-                Learning Outcomes importieren
-            </a>
-    </div>
+				<span class="glyphicon glyphicon-import interaction-color"></span>
+				Learning Outcomes importieren
+			</a>
+	</div>
 </div>
 
 <!--
-    Navbar, Searchbtn, newBtn für kleine Devices
+	Navbar, Searchbtn, newBtn für kleine Devices
 -->
 
 <div class="container hidden-md hidden-lg hidden-sm nav-dropdown">
 	<div class="row" >
 		<div class="dropdown col-xs-8 dropdown-box">
 			<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                Learning Outcomes<span class="caret btn-dropdown"></span>
-            </a>
+				Learning Outcomes<span class="caret btn-dropdown"></span>
+			</a>
 			<ul class="dropdown-menu" role="menu"> <!-- TODO: Change the Dropdown Text-->
-				<li class="col-md-2,5" data-ng-class="">
+				<li data-ng-class="">
 					<a href="/subject/:subject">Teilnehmer</a>
 				</li>
-				<li class="col-md-2,5"  data-ng-class="">
+				<li data-ng-class="">
 					<a data-ng-click="">Learning Outcomes</a>
 				</li>
-                <li class="col-md-2,5"  data-ng-class="">
+				<li data-ng-class="">
 					<a data-ng-click="">Einstellungen</a>
 				</li>
 			</ul>
 		</div>
-        <div class="col-xs-2">
-            <button type="button" class="btn btn-default navbar-btn btn-glyphicon interaction-color">
-                <span class="glyphicon glyphicon-import"></span>
-            </button>
-        </div>
-        <div class="col-xs-2">
-            <button type="button" class="btn btn-default navbar-btn btn-glyphicon interaction-color" data-ng-href="/tasks/new" data-ng-click="showCreateDialog(); $event.preventDefault();">
-                <span class="glyphicon glyphicon-plus"></span>
-            </button>
-        </div>
+		<div class="col-xs-2">
+			<button type="button" class="btn btn-default navbar-btn btn-glyphicon interaction-color">
+				<span class="glyphicon glyphicon-import"></span>
+			</button>
+		</div>
+		<div class="col-xs-2">
+			<button type="button" class="btn btn-default navbar-btn btn-glyphicon interaction-color" data-ng-href="/tasks/new" data-ng-click="showCreateDialog(); $event.preventDefault();">
+				<span class="glyphicon glyphicon-plus"></span>
+			</button>
+		</div>
 	</div>
 </div>
 
 <table class="table table-striped table-hover" ng-init="predicate='name'; reverse=false;">
 	<thead>
-        <tr class="table-headline">
-            <th class="col-xs-9 col-sm-9 col-md-9">
-                <span>Bezeichnung</span>
-            </th>
-            <th class="col-xs-2 col-sm-3 col-md-3 text-center">
-                Gewichtung
-            </th>
-            <th class="col-xs-1 hidden-md hidden-lg hidden-sm">
-            </th>
-        </tr>
-        
-    </thead>
-    <tbody>
-        <tr >
-            <th class="col-xs-9 col-sm-10 col-md-10 studentname students-table-element">
-                <span class="small-font">Angebot und Anschreiben erstellen</span>
-            </th>
-            <td class="col-xs-2 col-sm-2 col-md-2 text-center"> 
-                <div class="medium-circle">
-    				<canvas class="medium-circle" tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
+		<tr class="table-headline">
+			<th class="col-xs-9 col-sm-9 col-md-9">
+				<span>Bezeichnung</span>
+			</th>
+			<th class="col-xs-2 col-sm-3 col-md-3 text-center">
+				Gewichtung
+			</th>
+			<th class="col-xs-1 hidden-md hidden-lg hidden-sm">
+			</th>
+		</tr>
+
+	</thead>
+	<tbody>
+		<tr >
+			<th class="col-xs-9 col-sm-10 col-md-10 studentname students-table-element">
+				<span class="small-font">Angebot und Anschreiben erstellen</span>
+			</th>
+			<td class="col-xs-2 col-sm-2 col-md-2 text-center">
+				<div class="medium-circle">
+					<canvas class="medium-circle" tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
 				</div>
-            <td class="col-xs-1 hidden-md hidden-lg hidden-sm">
-                <div class="text-right arrow-right-small"> ⟩ </div>
-            </td>
-        </tr>
-        <tr>
-            <th class="col-xs-9 col-sm-10 col-md-10 studentname students-table-element">
-                <span class="small-font">Styleguide</span>
-            </th>
-            <td class="col-xs-2 col-sm-2 col-md-2 text-center"> 
-                <div class="medium-circle">
+			<td class="col-xs-1 hidden-md hidden-lg hidden-sm">
+				<div class="text-right arrow-right-small"> ⟩ </div>
+			</td>
+		</tr>
+		<tr>
+			<th class="col-xs-9 col-sm-10 col-md-10 studentname students-table-element">
+				<span class="small-font">Styleguide</span>
+			</th>
+			<td class="col-xs-2 col-sm-2 col-md-2 text-center">
+				<div class="medium-circle">
 					<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
 				</div>
-            <td class="col-xs-1 hidden-md hidden-lg hidden-sm">
-                <div class="text-right arrow-right-small"> ⟩ </div>
-            </td>
-        </tr>
+			<td class="col-xs-1 hidden-md hidden-lg hidden-sm">
+				<div class="text-right arrow-right-small"> ⟩ </div>
+			</td>
+		</tr>
 	</tbody>
 </table>
 
