@@ -25,37 +25,32 @@ angular.module('levelPad').controller('SubjectListController', [
 
 	$scope.showCreateDialog = function() {
 
-		$scope.subject = new Subject();
-
-		var dialog = new DialogService('/subjects/new', $scope.subject);
-		dialog.scope.subject = false;
+		var dialog = new DialogService('/subjects/new');
 
 		dialog.scope.submit = function() {
+			var module = this.subject.module;
+			delete this.subject.module;
 
-			console.log(dialog.scope);
-			var module = dialog.scope.subject.module;
-			delete dialog.scope.subject.module;
-			dialog.scope.subject.registrationExpiresAt = dialog.scope.subject.registrationExpiresAt.timestamp;
-			dialog.scope.subject.year = dialog.scope.subject.year.year;
-			dialog.scope.subject.semester = dialog.scope.subject.semester.name;
+			this.subject.registrationExpiresAt = this.subject.registrationExpiresAt.timestamp;
 
-			if (dialog.scope.subject.registrationActive === '0') {
-				dialog.scope.subject.registrationExpiresAt = 0;
+			if (this.subject.registrationActive === '0') {
+				this.subject.registrationExpiresAt = 0;
 			}
 
-			if (dialog.scope.subject._registrationPasswordCheck === '0') {
-				dialog.scope.subject.registrationPassword = '';
+			if (this.subject._registrationPasswordCheck === '0') {
+				this.subject.registrationPassword = '';
 			}
 
-			delete dialog.scope.subject._registrationPasswordCheck;
+			delete this.subject._registrationPasswordCheck;
 
-			dialog.scope.subject.$save({module: module.slug}, function() {
+			this.subject.$save({module: module.slug}, function() {
 				dialog.submit();
 				$scope.update();
 			}, function() {
 				alert('Fehler!');
 			});
 		};
+
 		dialog.open();
 	};
 

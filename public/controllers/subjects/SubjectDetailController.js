@@ -94,7 +94,6 @@ angular.module('levelPad').controller('SubjectDetailController', [
 		}
 
 		$scope.update = function() {
-			console.log('hello');
 			if ($routeParams.module && $routeParams.subject) {
 				$scope.subject = Subject.get({
 					module: $routeParams.module,
