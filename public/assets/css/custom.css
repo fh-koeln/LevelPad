@@ -266,9 +266,15 @@ table {
     vertical-align: center;
 }
 
-.search-bar {
-    padding: 10px;
-}
+    .search-bar {
+	    padding: 15px;
+    }
+	
+	.is-search-bar-mobile {
+		padding: 15px 0;
+	}
+
+
 
 .subtitle{
     font-size: 14pt;
@@ -873,13 +879,10 @@ input[type=range]::-ms-fill-upper {
 		-moz-osx-font-smoothing: grayscale;
 	}*/
 
-    .dropdown-toggle{
+    .dropdown-toggle {
         padding: 10px 0px;
     }
     
-    .search-bar {
-    padding: 10px 10px;
-    }
     
     .rating-box-text{
         display: block;
