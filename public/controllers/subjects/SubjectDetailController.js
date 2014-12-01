@@ -78,6 +78,10 @@ angular.module('levelPad').controller('SubjectDetailController', [
 
 		$scope.subject = $scope.subject || CurrentSubject || new Subject();
 
+		$scope.generatePassword = function() {
+			$scope.subject.registrationPassword = generatePassword();
+		};
+
 		if (!$scope.subject.registrationPassword) {
 			$scope.subject.registrationPassword = generatePassword();
 			$scope.subject._registrationPasswordCheck = '0';
@@ -105,6 +109,9 @@ angular.module('levelPad').controller('SubjectDetailController', [
 			$scope.expireDates.sort(function(a, b) {
 				return a.timestamp - b.timestamp;
 			});
+		} else {
+			$scope.subject.registrationExpiresAt = $scope.expireDates[0];
+			$scope.subject.registrationActive = 1;
 		}
 
 		if (!$scope.submit) {
