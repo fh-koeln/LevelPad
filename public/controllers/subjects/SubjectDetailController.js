@@ -20,62 +20,6 @@ angular.module('levelPad').controller('SubjectDetailController', [
 			$scope.modules = modules;
 		});
 
-		$scope.subject = $scope.subject || CurrentSubject || new Subject();
-
-		$scope.update = function(newSubject) {
-			if (newSubject) {
-				$scope.subject = newSubject;
-			}
-
-			if (!$scope.subject.registrationPassword) {
-				$scope.subject.registrationPassword = generatePassword();
-				$scope.subject._registrationPasswordCheck = '0';
-			} else {
-				$scope.subject._registrationPasswordCheck = '1';
-			}
-
-			$scope.expireDates = getExpireDates();
-			if ($scope.subject.registrationActive === 1 && $scope.subject.registrationExpiresAt > 0) {
-				var oldDate = new Date($scope.subject.registrationExpiresAt), dateObject, existingDateObject;
-
-				existingDateObject = objectFindByKey($scope.expireDates, 'timestamp', oldDate.getTime());
-				if (!existingDateObject) {
-					dateObject = {
-						name: zeroize(oldDate.getDate()) + '.' +  zeroize(oldDate.getMonth() + 1) + '.' + oldDate.getFullYear(),
-						timestamp: oldDate.getTime()
-					};
-
-					$scope.expireDates.push(dateObject);
-					$scope.subject.registrationExpiresAt = dateObject;
-				} else {
-					$scope.subject.registrationExpiresAt = existingDateObject;
-				}
-
-				$scope.expireDates.sort(function(a, b) {
-					return a.timestamp - b.timestamp;
-				});
-			} else {
-				$scope.subject.registrationExpiresAt = $scope.expireDates[0];
-				$scope.subject.registrationActive = 1;
-			}
-		};
-		$scope.update();
-
-		function generatePassword() {
-			var password = '',
-				temp;
-
-			for(var i = 0; i < 10; i++) {
-				temp = 0;
-				while(!((temp > 48 && temp < 57) || (temp > 65 && temp < 90) || (temp > 97 && temp < 122))) {
-					temp = Math.floor(Math.random() * 74) + 48;
-				}
-				password += String.fromCharCode(temp);
-			}
-
-			return password;
-		}
-
 		function zeroize(x) {
 			return (x < 10) ? '0' + x : x;
 		}
@@ -102,6 +46,75 @@ angular.module('levelPad').controller('SubjectDetailController', [
 			}
 
 			return dates;
+		}
+		$scope.expireDates = getExpireDates();
+
+		$scope.subject = $scope.subject || CurrentSubject || new Subject();
+
+		$scope.update = function(newSubject) {
+			if (newSubject) {
+				$scope.subject = newSubject;
+			}
+
+			if ($scope.subject.registrationPassword === undefined) {
+				$scope.subject.registrationPassword = generatePassword();
+				$scope.subject._registrationPasswordCheck = 'inactive';
+			} else if ( $scope.subject.registrationPassword === '') {
+				$scope.subject._registrationPasswordCheck = 'inactive';
+			} else {
+				$scope.subject._registrationPasswordCheck = 'active';
+			}
+
+			if ($scope.subject.registrationActive === true) {
+				var oldDate = new Date($scope.subject.registrationExpiresAt), dateObject, existingDateObject;
+
+				existingDateObject = objectFindByKey($scope.expireDates, 'timestamp', oldDate.getTime());
+
+				if (!existingDateObject) {
+					dateObject = {
+						name: zeroize(oldDate.getDate()) + '.' +  zeroize(oldDate.getMonth() + 1) + '.' + oldDate.getFullYear(),
+						timestamp: oldDate.getTime()
+					};
+					$scope.expireDates.push(dateObject);
+					$scope.subject.registrationExpiresAt = dateObject;
+				} else {
+					$scope.subject.registrationExpiresAt = existingDateObject;
+				}
+
+				$scope.expireDates.sort(function(a, b) {
+					return a.timestamp - b.timestamp;
+				});
+				$scope.subject.registrationActive = 'active';
+			} else if ( $scope.subject.registrationActive === false ) {
+				$scope.subject.registrationExpiresAt = $scope.expireDates[0];
+				$scope.subject.registrationActive = 'inactive';
+			} else if ( $scope.subject.registrationActive === undefined ) {
+				$scope.subject.registrationExpiresAt = $scope.expireDates[0];
+				$scope.subject.registrationActive = 'active';
+			}
+		};
+
+		if ($scope.subject.$promise) {
+			$scope.subject.$promise.then(function() {
+				$scope.update();
+			});
+		} else {
+			$scope.update();
+		}
+
+		function generatePassword() {
+			var password = '',
+				temp;
+
+			for(var i = 0; i < 10; i++) {
+				temp = 0;
+				while(!((temp > 48 && temp < 57) || (temp > 65 && temp < 90) || (temp > 97 && temp < 122))) {
+					temp = Math.floor(Math.random() * 74) + 48;
+				}
+				password += String.fromCharCode(temp);
+			}
+
+			return password;
 		}
 
 		// Source: http://stackoverflow.com/a/11477986
@@ -154,17 +167,18 @@ angular.module('levelPad').controller('SubjectDetailController', [
 					dialog.scope.subject.year = dialog.scope.subject.year.year;
 					dialog.scope.subject.semester = dialog.scope.subject.semester.name;
 
-					if (dialog.scope.subject.registrationActive === '0') {
-						dialog.scope.subject.registrationExpiresAt = 0;
+					if (dialog.scope.subject.registrationActive === 'inactive') {
+						dialog.scope.subject.registrationActive = 0;
+						dialog.scope.subject.registrationExpiresAt = null;
+					} else {
+						dialog.scope.subject.registrationActive = 1;
 					}
 
-					if (dialog.scope.subject._registrationPasswordCheck === '0') {
+					if (dialog.scope.subject._registrationPasswordCheck === 'inactive') {
 						dialog.scope.subject.registrationPassword = '';
 					}
 
 					delete dialog.scope.subject._registrationPasswordCheck;
-
-					console.log(dialog.scope.subject);
 
 					dialog.scope.subject.$save({module: module.slug}, function(newSubject) {
 						dialog.submit();
