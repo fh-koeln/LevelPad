@@ -2,12 +2,13 @@
 	Navbar für große Devices
 -->
 <ul class="nav nav-tabs hidden-xs " data-ng-init="filterStatus='active'"> <!--Filterstatus muss geaendert werden fuer Aktiv und inaktive-->
-	<li class="" data-ng-class="{ 'active': filterStatus=='active' }"><a data-ng-click="filterStatus='active' ">Alle Aktive Veranstaltungen</a></li>
-	<li class="" data-ng-class="{ 'active': filterStatus=='inactive' }"><a data-ng-click="filterStatus='inactive'">Alle Inaktive Veranstaltungen</a></li>
+	<li class="" data-ng-class="{ 'active': filterStatus=='active' }"><a data-ng-click="filterStatus='active' ">Deine Aktive Veranstaltungen</a></li>
+	<li class="" data-ng-class="{ 'active': filterStatus=='inactive' }"><a data-ng-click="filterStatus='inactive'">Deine Inaktive Veranstaltungen</a></li>
+	<li><a href="/subjects">Alle Veranstaltungen anzeigen</a></li>
 </ul>
 
 <!--
-	Searchbar und neue Veranstaltung für große Devices
+	Searchbar für große Devices
 -->
 
 <div class="container hidden-xs">
@@ -19,9 +20,6 @@
 				</div>
 				<input type="text" placeholder="Veranstaltung, Jahr, ..." data-ng-model="searchText" autocomplete="off" class="form-control search-input" />
 			</div>
-		</div>
-		<div class="col-md-5 interaction-link">
-			<a class="interaction-link" data-ng-href="/subjects/new" data-ng-click="showCreateDialog(); $event.preventDefault();">+ neue Veranstaltung anlegen</a>
 		</div>
 	</div>
 </div>
@@ -64,12 +62,12 @@
 	<tbody>
 	<tr data-ng-repeat="subject in subjects | filter:filterStatus:true | filter:searchText">
 		<th class="col-xs-10 col-md-10 subject-item-title">
-			<a data-ng-href="{{ subject.module.slug }}/{{ subject.slug }}">
-				<span class="module-name">{{ subject.module.name }}</span><br/>
-				<span class="module-time">{{ subject.semester }} {{ subject.year }}</span>
+			<a data-ng-href="{{ subject.subject.module.slug }}/{{ subject.subject.slug }}">
+				<span class="module-name">{{ subject.subject.module.name }}</span><br/>
+				<span class="module-time">{{ subject.subject.semester }} {{ subject.subject.year }}</span>
 			</a>
 		</th>
-		<td class="col-md-2 hidden-xs text-right">{{ subject.members.length || 0 }} Teilnehmer</td>
+		<td class="col-md-2 hidden-xs text-right">{{ subject.subject.members.length || 0 }} Teilnehmer</td>
 		<td class="col-xs-2 hidden-md hidden-lg hidden-sm text-right arrow-right"> ⟩ </td>
 	</tr>
 	</tbody>
