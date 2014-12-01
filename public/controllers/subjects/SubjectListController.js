@@ -27,23 +27,8 @@ angular.module('levelPad').controller('SubjectListController', [
 
 		var dialog = new DialogService('/subjects/new');
 
-		dialog.scope.submit = function() {
-			var module = this.subject.module;
-			delete this.subject.module;
-
-			this.subject.registrationExpiresAt = this.subject.registrationExpiresAt.timestamp;
-
-			if (this.subject.registrationActive === '0') {
-				this.subject.registrationExpiresAt = 0;
-			}
-
-			if (this.subject._registrationPasswordCheck === '0') {
-				this.subject.registrationPassword = '';
-			}
-
-			delete this.subject._registrationPasswordCheck;
-
-			this.subject.$save({module: module.slug}, function() {
+		dialog.scope.save = function() {
+			this.save().$promise.then(function() {
 				dialog.submit();
 				$scope.update();
 			}, function() {

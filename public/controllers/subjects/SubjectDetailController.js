@@ -145,8 +145,6 @@ angular.module('levelPad').controller('SubjectDetailController', [
 			if ($scope.subject.registrationExpiresAt) {
 				$scope.subject.registrationExpiresAt = $scope.subject.registrationExpiresAt.timestamp;
 			}
-			$scope.subject.year = $scope.subject.year.year;
-			$scope.subject.semester = $scope.subject.semester.name;
 
 			if ($scope.subject.registrationActive === 'inactive') {
 				$scope.subject.registrationActive = 0;
@@ -178,7 +176,7 @@ angular.module('levelPad').controller('SubjectDetailController', [
 
 		$scope.showEditDialog = function () {
 			var dialog = new DialogService('/subjects/:subject/edit');
-		//	dialog.scope.subject = angular.copy(subject);
+
 			dialog.scope.save = function() {
 				dialog.scope.$parent.save().$promise.then(function() {
 					dialog.submit();
