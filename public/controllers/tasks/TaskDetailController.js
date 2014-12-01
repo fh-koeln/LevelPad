@@ -38,7 +38,8 @@ angular.module('levelPad').controller('TaskDetailController', [
 		//Pie Chart Magic
 		$scope.options = ChartOption;
 		$scope.task ={
-			amountRange: 50
+			amountRange: 50,
+			belegt : 15
 		};
 
 		$scope.$watch(
@@ -48,18 +49,24 @@ angular.module('levelPad').controller('TaskDetailController', [
 			function( newValue ) {
 				newValue = parseInt(newValue, 10);
 				$scope.data = [
-				  {
+				  	{
 					title:'Learning Outcome',
 					value: newValue,
 					color: '#77cc00',
 					highlight: '#88dd11'
-				  },
-				  {
+				  	},
+				  	{
 					title:'Rest',
-					value: 100 - newValue,
+					value: 100 - newValue - 15,
 					color:'lightgray',
 					highlight: 'lightgray'
-				  }
+				  	},
+					{
+					title:'Belegt',
+					value: 15,
+					color:'#EE497A',
+					highlight: '#F3537F'
+					}
 				];
 			}
 		);
