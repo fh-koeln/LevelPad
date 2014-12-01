@@ -138,22 +138,6 @@ angular.module('levelPad').controller('SubjectDetailController', [
 			};
 		}
 
-//		if (!$scope.showCreateDialog) {
-			$scope.showCreateDialog = function () {
-				var dialog = new DialogService('/subjects/new');
-				dialog.scope.subject = new Subject();
-				dialog.scope.submit = function () {
-					dialog.scope.module.$save(function () {
-						dialog.submit();
-						$scope.update();
-					}, function () {
-						alert('Fehler!');
-					});
-				};
-				dialog.open();
-			};
-//		}
-
 //		if (!$scope.showEditDialog) {
 			$scope.showEditDialog = function (subject) {
 				var dialog = new DialogService('/subjects/:subject/edit');
