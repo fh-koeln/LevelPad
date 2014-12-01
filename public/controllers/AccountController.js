@@ -7,6 +7,7 @@ angular.module('levelPad').controller('AccountController', ['$scope', '$rootScop
 		studentNumber: Session.user ? Session.user.studentNumber : '',
 		firstname: Session.user ? Session.user.firstname : '',
 		lastname: Session.user ? Session.user.lastname : '',
+		role: Session.role ? Session.user.role : 'guest',
 	};
 
 	$rootScope.$on(AUTH_EVENTS.loginRefreshed, function() {
@@ -16,9 +17,17 @@ angular.module('levelPad').controller('AccountController', ['$scope', '$rootScop
 			studentNumber: Session.user.studentNumber,
 			firstname: Session.user.firstname,
 			lastname: Session.user.lastname,
+			role: Session.user.role
 		};
 	});
 
+	$scope.roles = [
+		{ role: 'guest', name: 'Gast' },
+		{ role: 'lecturer', name: 'Professor' },
+		{ role: 'student', name: 'Student' },
+		{ role: 'assistant', name: 'Assistant' },
+		{ role: 'administrator', name: 'Administrator' },
+	];
 
 	/**
 	 * Handles logged in "save account" button.
@@ -31,7 +40,8 @@ angular.module('levelPad').controller('AccountController', ['$scope', '$rootScop
 			email: $scope.user.email,
 			studentNumber: $scope.user.studentNumber,
 			firstname: $scope.user.firstname,
-			lastname: $scope.user.lastname
+			lastname: $scope.user.lastname,
+			role: $scope.user.role
 		};
 
 		$($event.target).find('button[type=submit]').button('loading');

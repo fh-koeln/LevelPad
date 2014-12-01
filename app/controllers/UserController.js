@@ -111,6 +111,9 @@ exports.update = function(callback, username, userdata) {
 			if (userdata.lastname !== undefined) {
 				user.lastname = userdata.lastname;
 			}
+			if (userdata.role !== undefined) {
+				user.role = userdata.role;
+			}
 			next(null, user);
 		},
 		function(user, next) {

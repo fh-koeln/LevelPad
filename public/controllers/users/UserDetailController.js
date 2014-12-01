@@ -6,6 +6,15 @@ angular.module('levelPad').controller('UserDetailController', [
 		'use strict';
 		console.log('UserDetailController: routeParams:', $routeParams);
 
+		$scope.roles = [
+			{ role: 'guest', name: 'Gast' },
+			{ role: 'lecturer', name: 'Professor' },
+			{ role: 'student', name: 'Student' },
+			{ role: 'assistant', name: 'Assistant' },
+			{ role: 'administrator', name: 'Administrator' },
+		];
+
+
 		$scope.update = function () {
 			// Get the current user
 			if (!$scope.user && $routeParams.username) {
