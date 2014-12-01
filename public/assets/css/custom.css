@@ -173,9 +173,13 @@ table {
 }
 
 .interaction-link{
-    color: #77aabb;
+	color: #77aabb;
+    padding: 21px 5px;
     vertical-align: middle;
-    padding: 10px 5px;
+}
+
+.interaction-link > a {
+	color: #77aabb;
 }
 
 .module-time {
