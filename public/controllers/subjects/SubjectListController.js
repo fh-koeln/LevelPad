@@ -1,11 +1,10 @@
 /* global angular, alert */
 
 angular.module('levelPad').controller('SubjectListController', [
-	'$scope', '$http', '$routeParams', '$location', '$log', 'Module', 'Subject', 'DialogService', 'CurrentModule',
-	function ($scope, $http, $routeParams, $location, $log, Module, Subject, DialogService, CurrentModule) {
+	'$scope', '$http', '$routeParams', '$location', '$log', 'Module', 'Subject', 'DialogService',
+	function ($scope, $http, $routeParams, $location, $log, Module, Subject, DialogService) {
 
 	'use strict';
-	$scope.module = $scope.module || CurrentModule || new Module();
 
 	$scope.update = function () {
 		$scope.subjects = [];

@@ -190,7 +190,8 @@ app.config(function($routeProvider, $locationProvider) {
 		controller: 'ModuleDetailController'
 	});
 	$routeProvider.when('/:module/:subject', {
-		redirectTo: '/:module/:subject/tasks'
+		templateUrl: 'views/members/show.html',
+		controller: 'MemberDetailController'
 	});
 	$routeProvider.when('/:module/:subject/edit', {
 		templateUrl: 'views/subjects/edit.html',

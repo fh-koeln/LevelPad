@@ -9,33 +9,31 @@ angular.module('levelPad').controller('TaskDetailController', [
 		$scope.subject = CurrentSubject;
         $scope.task = CurrentTask;
 
-		$scope.go = function(path) {
-			$location.path(path);
-		};
-
 		$scope.update = function() {
-			$scope.modules = Module.query(function() {
 
-			}, function() {
-				alert('Could not load modules.');
-			});
 		};
 
 		$scope.update();
 
-        $scope.showCreateDialog = function() {
-			var dialog = new DialogService('/tasks/new');
-			dialog.scope.task = new Task();
-			dialog.scope.submit = function() {
-				dialog.scope.module.$save(function() {
-					dialog.submit();
+		if (!$scope.submit) {
+			$scope.submit = function () {
+				$scope.task.$save({ module: module.slug} , function() {
 					$scope.update();
-				}, function() {
-					alert('Fehler!');
+				}, function () {
+					alert('Error!');
 				});
 			};
-			dialog.open();
-		};
+		}
+
+		if (!$scope.delete) {
+			$scope.delete = function () {
+				$scope.task.$delete({ module: $scope.subject.module.slug }, function() {
+					$scope.update();
+				}, function () {
+					alert('Error!');
+				});
+			};
+		}
 
 		//Pie Chart Magic
 		$scope.options = ChartOption;
