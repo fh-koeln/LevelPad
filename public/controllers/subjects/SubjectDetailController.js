@@ -6,6 +6,8 @@ angular.module('levelPad').controller('SubjectDetailController', [
 
 		'use strict';
 
+		$scope.$location = $location;
+
 		$http.get('/api/years').success(function(years) {
 			$scope.years = years;
 		});
@@ -135,6 +137,60 @@ angular.module('levelPad').controller('SubjectDetailController', [
 				});
 			};
 		}
+
+//		if (!$scope.showCreateDialog) {
+			$scope.showCreateDialog = function () {
+				var dialog = new DialogService('/subjects/new');
+				dialog.scope.subject = new Subject();
+				dialog.scope.submit = function () {
+					dialog.scope.module.$save(function () {
+						dialog.submit();
+						$scope.update();
+					}, function () {
+						alert('Fehler!');
+					});
+				};
+				dialog.open();
+			};
+//		}
+
+//		if (!$scope.showEditDialog) {
+			$scope.showEditDialog = function (subject) {
+				var dialog = new DialogService('/subjects/:subject/edit');
+				dialog.scope.subject = angular.copy(subject);
+				dialog.scope.submit = function () {
+					var module = dialog.scope.subject.module;
+					delete dialog.scope.subject.module;
+					if (dialog.scope.subject.registrationExpiresAt) {
+						dialog.scope.subject.registrationExpiresAt = dialog.scope.subject.registrationExpiresAt.timestamp;
+					}
+					dialog.scope.subject.year = dialog.scope.subject.year.year;
+					dialog.scope.subject.semester = dialog.scope.subject.semester.name;
+
+					if (dialog.scope.subject.registrationActive === '0') {
+						dialog.scope.subject.registrationExpiresAt = 0;
+					}
+
+					if (dialog.scope.subject._registrationPasswordCheck === '0') {
+						dialog.scope.subject.registrationPassword = '';
+					}
+
+					delete dialog.scope.subject._registrationPasswordCheck;
+
+					dialog.scope.subject.$save({module: module.slug}, function () {
+						dialog.submit();
+						$scope.update();
+					}, function () {
+						alert('Fehler!');
+					});
+				};
+				dialog.scope.showDeleteDialog = function () {
+					dialog.cancel();
+					$scope.showDeleteDialog(subject);
+				};
+				dialog.open();
+			};
+//		}
 
 		if (!$scope.showDeleteDialog) {
 			$scope.showDeleteDialog = function (subject) {

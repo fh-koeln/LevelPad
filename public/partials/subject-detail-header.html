@@ -1,0 +1,25 @@
+<div class="show-subject-head hidden-xs">
+	<div class="subject-title">
+		{{ subject.module.name }}
+		<a class=" btn btn-glyphicon interaction-link" data-ng-href="/subjects/new" data-ng-click="showEditDialog(); $event.preventDefault();">
+			<span class="glyphicon glyphicon-pencil interaction-color"></span>
+		</a>
+	</div>
+	<div class="subject-semester">{{ subject.semester }} {{ subject.year }}</div>
+</div>
+
+
+<!--
+    Navbar für große Devices
+-->
+<ul class="nav nav-tabs hidden-xs">
+	<li data-ng-class="{ 'active': $location.path() == '/' + subject.module.slug + '/' + subject.slug + '/members' }">
+		<a href="{{ subject.module.slug }}/{{ subject.slug }}/members">Teilnehmer (120)</a><!--Teilnehmerzahl dynamisch-->
+	</li>
+	<li data-ng-class="{ 'active': $location.path() == '/' + subject.module.slug + '/' + subject.slug + '/tasks' }">
+		<a href="{{ subject.module.slug }}/{{ subject.slug }}/tasks">Learning Outcomes</a>
+	</li>
+	<li data-ng-class="{ 'active': $location.path() == '/' + subject.module.slug + '/' + subject.slug + '/settings' }">
+		<a href="{{ subject.module.slug }}/{{ subject.slug }}/settings">Einstellungen</a>
+	</li>
+</ul>

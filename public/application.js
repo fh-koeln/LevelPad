@@ -108,10 +108,6 @@ app.config(function($routeProvider, $locationProvider) {
 		templateUrl: 'views/dashboard/dashboard.html',
 		controller: 'DashboardController'
 	});
-	$routeProvider.when('/dashboard', {
-		templateUrl: 'views/dashboard.html',
-		controller: 'MainController'
-	});
 	$routeProvider.when('/account', {
 		templateUrl: 'views/account.html',
 		controller: 'AccountController',
