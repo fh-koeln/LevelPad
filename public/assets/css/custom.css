@@ -228,6 +228,11 @@ table {
     padding: 10px 0 10px 15px;
 }
 
+.table a {
+    display: block;
+    text-decoration: none;
+}
+
 .form-control::-moz-placeholder {
     color: #c0c0c0;
 }
