@@ -155,7 +155,7 @@ angular.module('levelPad').controller('SubjectDetailController', [
 			};
 		}
 
-		if (!$scope.showEditDialog) {
+	//	if (!$scope.showEditDialog) {
 			$scope.showEditDialog = function (subject) {
 				var dialog = new DialogService('/subjects/:subject/edit');
 				dialog.scope.subject = angular.copy(subject);
@@ -195,7 +195,7 @@ angular.module('levelPad').controller('SubjectDetailController', [
 				};
 				dialog.open();
 			};
-		}
+	//	}
 
 		if (!$scope.showDeleteDialog) {
 			$scope.showDeleteDialog = function (subject) {

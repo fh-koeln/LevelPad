@@ -34,14 +34,11 @@ angular.module('levelPad').controller('SubjectListController', [
 			dialog.scope.subject.year = dialog.scope.subject.year.year;
 			dialog.scope.subject.semester = dialog.scope.subject.semester.name;
 
-			if (dialog.scope.subject.registrationActive === 'inactive') {
-				dialog.scope.subject.registrationActive = 0;
-				dialog.scope.subject.registrationExpiresAt = null;
-			} else {
-				dialog.scope.subject.registrationActive = 1;
+			if (dialog.scope.subject.registrationActive === '0') {
+				dialog.scope.subject.registrationExpiresAt = 0;
 			}
 
-			if (dialog.scope.subject._registrationPasswordCheck === 'inactive') {
+			if (dialog.scope.subject._registrationPasswordCheck === '0') {
 				dialog.scope.subject.registrationPassword = '';
 			}
 
