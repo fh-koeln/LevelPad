@@ -64,7 +64,7 @@
 	<tbody>
 	<tr data-ng-repeat="subject in subjects | filter:filterStatus:true | filter:searchText">
 		<th class="col-xs-10 col-md-10 subject-item-title">
-			<a data-ng-href="{{ subject.module.slug }}/{{ subject.slug }}">
+			<a data-ng-href="{{ subject.module.slug }}/{{ subject.slug }}/members">
 				<span class="module-name">{{ subject.module.name }}</span><br/>
 				<span class="module-time">{{ subject.semester }} {{ subject.year }}</span>
 			</a>

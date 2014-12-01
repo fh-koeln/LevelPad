@@ -62,10 +62,12 @@
 	<tbody>
 	<tr data-ng-repeat="subject in subjects | filter:filterStatus:true | filter:searchText">
 		<th class="col-xs-10 col-md-10 subject-item-title">
-			<a data-ng-href="{{ subject.subject.module.slug }}/{{ subject.subject.slug }}">
-				<span class="module-name">{{ subject.subject.module.name }}</span><br/>
-				<span class="module-time">{{ subject.subject.semester }} {{ subject.subject.year }}</span>
-			</a>
+			<span class="module-name">{{ subject.subject.module.name }}</span><br/>
+			<span class="module-time">{{ subject.subject.semester }} {{ subject.subject.year }}</span>
+
+			<br/><br/>Eigene Rolle: {{ subject.role }}
+			-- <a data-ng-href="{{ subject.subject.module.slug }}/{{ subject.subject.slug }}/members" style="display: inline;">ADMIN LINK</a>
+			-- <a data-ng-href="{{ subject.subject.module.slug }}/{{ subject.subject.slug }}" style="display: inline;">STUDENT LINK</a>
 		</th>
 		<td class="col-md-2 hidden-xs text-right">{{ subject.subject.members.length || 0 }} Teilnehmer</td>
 		<td class="col-xs-2 hidden-md hidden-lg hidden-sm text-right arrow-right"> ⟩ </td>
