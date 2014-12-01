@@ -47,6 +47,13 @@
 					   class="form-control"
 					   data-ng-model="user.lastname" />
 			</div>
+			<div class="form-group" data-ng-class="{ 'has-error': form.role.$invalid && form.role.$dirty }">
+				<label for="role" class="control-label">Rolle:</label>
+				<select id="role" name="role"
+					data-ng-model="user.role"
+					data-ng-options="role.role as role.name for role in roles"
+					class="form-control"></select>
+			</div>
 
 			<div class="text-right">
 				<a href="/" class="btn">Abbrechen</a>

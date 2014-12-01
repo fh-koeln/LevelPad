@@ -7,25 +7,57 @@
 	</header>
 	<div class="modal-body">
 
-		<div class="form-group" data-ng-class="{ 'has-error': form.firstname.$invalid && form.firstname.$dirty }">
-			<label for="firstname" class="col-sm-4 control-label">Vorname</label>
-			<div class="col-sm-8">
-				<input id="firstname" name="firstname" type="text"
-					   data-ng-model="user.firstname"
-					   required="required"
-					   class="form-control"/>
-			</div>
-		</div>
-
-		<div class="form-group" data-ng-class="{ 'has-error': form.lastname.$invalid && form.lastname.$dirty }">
-			<label for="lastname" class="col-sm-4 control-label">Nachname</label>
-			<div class="col-sm-8">
-				<input id="lastname" name="lastname" type="text"
-					   data-ng-model="user.lastname"
-					   required="required"
-					   class="form-control"/>
-			</div>
-		</div>
+	<div class="form-group">
+		<label for="username" class="control-label">Campus-ID:</label>
+		<input type="text" id="username"
+			   name="username" value=""
+			   required="required"
+			   disabled="disabled"
+			   class="form-control"
+			   data-ng-model="user.username" />
+	</div>
+	<div class="form-group" data-ng-class="{ 'has-error': form.studentNumber.$invalid && form.studentNumber.$dirty }">
+		<label for="studentNumber" class="control-label">Matrikel-Nr.:</label>
+		<input type="text" id="studentNumber"
+			   name="studentNumber" value=""
+			   ng-pattern="/^[0-9]{8}$/"
+			   required="required"
+			   class="form-control"
+			   data-ng-model="user.studentNumber" />
+	</div>
+	<div class="form-group" data-ng-class="{ 'has-error': form.email.$invalid && form.email.$dirty }">
+		<label for="email" class="control-label">E-Mail:</label>
+		<input type="email" id="email"
+			   name="email" value=""
+			   required="required"
+			   class="form-control"
+			   data-ng-model="user.email" />
+	</div>
+	<div class="form-group" data-ng-class="{ 'has-error': form.firstname.$invalid && form.firstname.$dirty }">
+		<label for="firstname" class="control-label">Vorname:</label>
+		<input type="text" id="firstname"
+			   name="firstname" value=""
+			   data-ng-minlength="2"
+			   required="required"
+			   class="form-control"
+			   data-ng-model="user.firstname" />
+	</div>
+	<div class="form-group" data-ng-class="{ 'has-error': form.lastname.$invalid && form.lastname.$dirty }">
+		<label for="lastname" class="control-label">Nachname:</label>
+		<input type="text" id="lastname"
+			   name="lastname" value=""
+			   data-ng-minlength="2"
+			   required="required"
+			   class="form-control"
+			   data-ng-model="user.lastname" />
+	</div>
+	<div class="form-group" data-ng-class="{ 'has-error': form.role.$invalid && form.role.$dirty }">
+		<label for="role" class="control-label">Rolle:</label>
+		<select id="role" name="role"
+			data-ng-model="user.role"
+			data-ng-options="role.role as role.name for role in roles"
+			class="form-control"></select>
+	</div>
 
 	</div>
 	<div class="modal-footer">
