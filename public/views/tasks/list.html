@@ -1,22 +1,4 @@
-<div class="show-subject-head hidden-xs">
-    <div class="subject-title">
-        Grundlagen der visuellen Kommunikation 
-        <a class=" btn btn-glyphicon interaction-link" data-ng-href="/subjects/new" data-ng-click="showCreateDialog(); $event.preventDefault();">
-            <span class="glyphicon glyphicon-pencil interaction-color"></span>
-        </a>
-    </div>
-    <div class="subject-semester">Sommersemester 2014</div>
-</div>
-
-
-<!--
-    Navbar für große Devices
--->
-<ul class="nav nav-tabs hidden-xs " data-ng-init="filterStatus='test2'"> <!--Filterstatus muss geaendert werden fuer Aktiv und inaktive-->
-	<li class="col-md-2,5" data-ng-class="{ 'active': filterStatus=='test1' }"><a href="/subjects/:subject">Teilnehmer (120)</a></li> <!--Teilnehmerzahl dynamisch-->
-	<li class="col-md-2,5"  data-ng-class="{ 'active': filterStatus=='test2' }"><a data-ng-click="test2">Learning Outcomes</a></li>
-    <li class="col-md-2,5"  data-ng-class="{ 'active': filterStatus=='test3' }"><a data-ng-click="test3">Einstellungen</a></li>
-</ul>
+<div data-ng-controller="SubjectDetailController" data-ng-include="'partials/subject-detail-header.html'" data-ng-></div>
 
 <!--
     Searchbar und neue Veranstaltung für große Devices
@@ -83,14 +65,14 @@
             <th class="col-xs-1 hidden-md hidden-lg hidden-sm">
             </th>
         </tr>
-        
+
     </thead>
     <tbody>
         <tr >
             <th class="col-xs-9 col-sm-10 col-md-10 studentname students-table-element">
                 <span class="small-font">Angebot und Anschreiben erstellen</span>
             </th>
-            <td class="col-xs-2 col-sm-2 col-md-2 text-center"> 
+            <td class="col-xs-2 col-sm-2 col-md-2 text-center">
                 <div class="medium-circle">
     				<canvas class="medium-circle" tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
 				</div>
@@ -102,7 +84,7 @@
             <th class="col-xs-9 col-sm-10 col-md-10 studentname students-table-element">
                 <span class="small-font">Styleguide</span>
             </th>
-            <td class="col-xs-2 col-sm-2 col-md-2 text-center"> 
+            <td class="col-xs-2 col-sm-2 col-md-2 text-center">
                 <div class="medium-circle">
 					<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
 				</div>
