@@ -3,7 +3,6 @@ angular.module('levelPad').factory('CurrentMember', ['$routeParams', 'Member', f
 	return Member.get({
 		module: $routeParams.module,
 		subject: $routeParams.subject,
-		task: $routeParams.task,
 		member: $routeParams.member
 	});
 }]);

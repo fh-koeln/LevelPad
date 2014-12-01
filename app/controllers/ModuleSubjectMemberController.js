@@ -26,7 +26,7 @@ exports.list = function(callback, subject, queryArgs) {
 				filter.role = queryArgs.role;
 			}
 
-			Member.find(filter).populate('user').exec( function(err, members) {
+			Member.find(filter).populate('user').exec(function(err, members) {
 				if (err) {
 					return next(err);
 				}
@@ -66,7 +66,14 @@ exports.read = function(callback, subject, memberId) {
 			if (!memberExists) {
 				return next(new errors.NotFoundError('Member'));
 			}
-			Member.findById(memberId, next);
+
+			Member.findById(memberId).populate('user').exec(function(err, member) {
+				if (err) {
+					return next(err);
+				}
+
+				next(null, member);
+			});
 		}
 	], callback);
 };

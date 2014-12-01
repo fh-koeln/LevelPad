@@ -1,55 +1,55 @@
 <div data-ng-controller="SubjectDetailController" data-ng-include="'partials/subject-detail-header.html'" data-ng-></div>
 
 <!--
-    Searchbar und neue Veranstaltung für große Devices
+	Searchbar und neue Veranstaltung für große Devices
 -->
 
 <div class="container interaction-bar col-md-12 col-sm-12 hidden-xs">
-    <div class="col-md-4 col-sm-5 interaction-link">
-			<a class="interaction-link" data-ng-href="/tasks/new" data-ng-click="showCreateDialog(); $event.preventDefault();">
-                + neues Learning Outcome hinzufügen
-            </a>
-    </div>
 	<div class="col-md-4 col-sm-5 interaction-link">
-			<a class="interaction-link" data-ng-href="/tasks/import" data-ng-click="showImportDialog(); $event.preventDefault();">
-                <span class="glyphicon glyphicon-import interaction-color"></span>
-                Learning Outcomes importieren
-            </a>
-    </div>
+			<a class="interaction-link" data-ng-href="/{{ subject.module.slug }}/{{ subject.slug }}/tasks/new" data-ng-click="showCreateDialog(); $event.preventDefault();">
+				+ neues Learning Outcome hinzufügen
+			</a>
+	</div>
+	<div class="col-md-4 col-sm-5 interaction-link">
+			<a class="interaction-link" data-ng-href="/{{ subject.module.slug }}/{{ subject.slug }}/tasks/import" data-ng-click="showImportDialog(); $event.preventDefault();">
+				<span class="glyphicon glyphicon-import interaction-color"></span>
+				Learning Outcomes importieren
+			</a>
+	</div>
 </div>
 
 <!--
-    Navbar, Searchbtn, newBtn für kleine Devices
+	Navbar, Searchbtn, newBtn für kleine Devices
 -->
 
 <div class="container hidden-md hidden-lg hidden-sm nav-dropdown">
 	<div class="row" >
 		<div class="dropdown col-xs-8 dropdown-box">
 			<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                Learning Outcomes<span class="caret btn-dropdown"></span>
-            </a>
+				Learning Outcomes<span class="caret btn-dropdown"></span>
+			</a>
 			<ul class="dropdown-menu" role="menu"> <!-- TODO: Change the Dropdown Text-->
-				<li class="col-md-2,5" data-ng-class="">
+				<li data-ng-class="">
 					<a href="/subject/:subject">Teilnehmer</a>
 				</li>
-				<li class="col-md-2,5"  data-ng-class="">
+				<li data-ng-class="">
 					<a data-ng-click="">Learning Outcomes</a>
 				</li>
-                <li class="col-md-2,5"  data-ng-class="">
+				<li data-ng-class="">
 					<a data-ng-click="">Einstellungen</a>
 				</li>
 			</ul>
 		</div>
-        <div class="col-xs-2">
-            <button type="button" class="btn btn-default navbar-btn btn-glyphicon interaction-color">
-                <span class="glyphicon glyphicon-import"></span>
-            </button>
-        </div>
-        <div class="col-xs-2">
-            <button type="button" class="btn btn-default navbar-btn btn-glyphicon interaction-color" data-ng-href="/tasks/new" data-ng-click="showCreateDialog(); $event.preventDefault();">
-                <span class="glyphicon glyphicon-plus"></span>
-            </button>
-        </div>
+		<div class="col-xs-2">
+			<button type="button" class="btn btn-default navbar-btn btn-glyphicon interaction-color">
+				<span class="glyphicon glyphicon-import"></span>
+			</button>
+		</div>
+		<div class="col-xs-2">
+			<button type="button" class="btn btn-default navbar-btn btn-glyphicon interaction-color" data-ng-href="/tasks/new" data-ng-click="showCreateDialog(); $event.preventDefault();">
+				<span class="glyphicon glyphicon-plus"></span>
+			</button>
+		</div>
 	</div>
 </div>
 
@@ -88,10 +88,10 @@
                 <div class="medium-circle">
 					<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
 				</div>
-            <td class="col-xs-1 hidden-md hidden-lg hidden-sm">
-                <div class="text-right arrow-right-small"> ⟩ </div>
-            </td>
-        </tr>
+			<td class="col-xs-1 hidden-md hidden-lg hidden-sm">
+				<div class="text-right arrow-right-small"> ⟩ </div>
+			</td>
+		</tr>
 	</tbody>
 </table>
 

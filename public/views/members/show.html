@@ -7,10 +7,8 @@
                         Name:
                     </th>
                     <td class="table-element-padding-left">
-                        Peter <span class="student-lastname">Wackel</span> 
-                        <a class=" btn interaction-link hidden-xs" data-ng-href="/:module/:subject/members/:member/edit" data-ng-click="showCreateDialog(); $event.preventDefault();">
-                <span class="glyphicon glyphicon-pencil interaction-color"></span>
-                        </a>
+						<span class="student-firstname">{{ member.user.firstname }}</span>
+						<span class="student-lastname">{{ member.user.lastname }}</span>
                     </td>
                 </tr>
                 <tr>
@@ -18,13 +16,13 @@
                         Matrikelnr:
                     </th>
                     <td class="table-element-padding-left">
-                        110 840 54
+                        {{ member.user.studentNumber }}
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
-    
+
     <div class="col-xs-12 col-sm-7 rating-box">
         <div class="col-xs-4 col-sm-4 col-md-6 rating-box-large text-center">
             <div class="large-circle">
@@ -62,7 +60,7 @@
             <th class=" col-xs-2 hidden-md hidden-lg hidden-sm">
             </th>
         </tr>
-        
+
     </thead>
     <tbody>
         <tr>
@@ -74,12 +72,12 @@
                     <div class="small-circle"> </div>
                     <div class="small-circle"> </div>
                     <div class="small-circle"> </div>
-                    <div class="small-circle"> </div> 
+                    <div class="small-circle"> </div>
                     <br/>
                     akzeptable Lösung
                 </div>
             </th>
-            <td class="col-sm-2 col-md-2 hidden-xs circle-table text-center"> 
+            <td class="col-sm-2 col-md-2 hidden-xs circle-table text-center">
                 <div class="medium-circle text-center">
 					<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
 				</div>
@@ -95,7 +93,7 @@
                     <div class="small-circle"> </div>
                     <div class="small-circle"> </div>
                     <div class="small-circle"> </div>
-                    <div class="small-circle"> </div> 
+                    <div class="small-circle"> </div>
                     <div class="small-circle"> </div>
                     <div class="small-circle"> </div>
                     <div class="small-circle"> </div>
@@ -103,7 +101,7 @@
                     gute Lösung
                 </div>
             </th>
-            <td class="col-sm-2 col-md-2 hidden-xs circle-table text-center"> 
+            <td class="col-sm-2 col-md-2 hidden-xs circle-table text-center">
                 <div class="medium-circle ">
 					<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
 				</div>

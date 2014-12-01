@@ -75,16 +75,16 @@ app.config(function($routeProvider, $locationProvider) {
 	// Errors
 
 	$routeProvider.when('/403', {
-		templateUrl: 'views/errors/403.html',
+		templateUrl: 'views/errors/403.html'
 	});
 	$routeProvider.when('/404', {
-		templateUrl: 'views/errors/404.html',
+		templateUrl: 'views/errors/404.html'
 	});
 	$routeProvider.when('/500', {
-		templateUrl: 'views/errors/500.html',
+		templateUrl: 'views/errors/500.html'
 	});
 	$routeProvider.when('/503', {
-		templateUrl: 'views/errors/503.html',
+		templateUrl: 'views/errors/503.html'
 	});
 
 	// Login / Signup / Logout
@@ -114,7 +114,7 @@ app.config(function($routeProvider, $locationProvider) {
 		loginRequired: true
 	});
 
-	// Modules
+	// Administration -> Modules
 
 	$routeProvider.when('/modules', {
 		templateUrl: 'views/modules/list.html',
@@ -135,6 +135,29 @@ app.config(function($routeProvider, $locationProvider) {
 	$routeProvider.when('/modules/:module/delete', {
 		templateUrl: 'views/modules/delete.html',
 		controller: 'ModuleDetailController'
+	});
+
+	// Administration -> Users
+
+	$routeProvider.when('/users', {
+		templateUrl: 'views/users/list.html',
+		controller: 'UserListController'
+	});
+	$routeProvider.when('/users/new', {
+		templateUrl: 'views/users/edit.html',
+		controller: 'UserDetailController'
+	});
+	$routeProvider.when('/users/:username', {
+		templateUrl: 'views/users/show.html',
+		controller: 'UserDetailController'
+	});
+	$routeProvider.when('/users/:username/edit', {
+		templateUrl: 'views/users/edit.html',
+		controller: 'UserDetailController'
+	});
+	$routeProvider.when('/users/:username/delete', {
+		templateUrl: 'views/users/delete.html',
+		controller: 'UserDetailController'
 	});
 
 	// Subjects
@@ -160,29 +183,6 @@ app.config(function($routeProvider, $locationProvider) {
 		controller: 'SubjectDetailController'
 	});
 
-	// Users
-
-	$routeProvider.when('/users', {
-		templateUrl: 'views/users/list.html',
-		controller: 'UserListController'
-	});
-	$routeProvider.when('/users/new', {
-		templateUrl: 'views/users/edit.html',
-		controller: 'UserDetailController'
-	});
-	$routeProvider.when('/users/:username', {
-		templateUrl: 'views/users/show.html',
-		controller: 'UserDetailController'
-	});
-	$routeProvider.when('/users/:username/edit', {
-		templateUrl: 'views/users/edit.html',
-		controller: 'UserDetailController'
-	});
-	$routeProvider.when('/users/:username/delete', {
-		templateUrl: 'views/users/delete.html',
-		controller: 'UserDetailController'
-	});
-
 	// MAGIC RULES!!!!!!!
 
 	$routeProvider.when('/:module', {
@@ -196,26 +196,8 @@ app.config(function($routeProvider, $locationProvider) {
 		templateUrl: 'views/subjects/edit.html',
 		controller: 'SubjectDetailController'
 	});
-	$routeProvider.when('/:module/:subject/tasks', {
-		templateUrl: 'views/tasks/list.html',
-		controller: 'TaskListController'
-	});
-	$routeProvider.when('/:module/:subject/tasks/:task', {
-		templateUrl: 'views/tasks/show.html',
-		controller: 'TaskDetailController'
-	});
-	$routeProvider.when('/tasks/new', {
-		templateUrl: 'views/tasks/edit.html',
-		controller: 'TaskDetailController'
-	});
-	$routeProvider.when('/tasks/import', {
-		templateUrl: 'views/tasks/import.html',
-		controller: 'TaskImportController'
-	});
-	$routeProvider.when('/:module/:subject/tasks/:task/edit', {
-		templateUrl: 'views/tasks/edit.html',
-		controller: 'TaskDetailController'
-	});
+
+	// Subject -> Members
 
 	$routeProvider.when('/:module/:subject/members', {
 		templateUrl: 'views/members/list.html',
@@ -227,19 +209,34 @@ app.config(function($routeProvider, $locationProvider) {
 	});
 	$routeProvider.when('/:module/:subject/members/:member', {
 		templateUrl: 'views/members/show.html',
-		controller: 'MemberListController'
-	});
-	$routeProvider.when('/:module/:subject/members/:member/edit', {
-		templateUrl: 'views/members/edit.html',
-		controller: 'MemberListController'
-	});
-	$routeProvider.when('/:module/:subject/settings', {
-		templateUrl: 'views/subjects/settings.html',
-		controller: 'SubjectDetailController'
+		controller: 'MemberDetailController'
 	});
 	$routeProvider.when('/:module/:subject/members/:member/evaluation', {
 		templateUrl: 'views/evaluations/show.html',
 		controller: 'EvaluationDetailController'
+	});
+
+	// Subject -> Tasks
+
+	$routeProvider.when('/:module/:subject/tasks', {
+		templateUrl: 'views/tasks/list.html',
+		controller: 'TaskListController'
+	});
+	$routeProvider.when('/:module/:subject/tasks/new', {
+		templateUrl: 'views/tasks/edit.html',
+		controller: 'TaskDetailController'
+	});
+	$routeProvider.when('/:module/:subject/tasks/import', {
+		templateUrl: 'views/tasks/import.html',
+		controller: 'TaskImportController'
+	});
+	$routeProvider.when('/:module/:subject/tasks/:task', {
+		templateUrl: 'views/tasks/show.html',
+		controller: 'TaskDetailController'
+	});
+	$routeProvider.when('/:module/:subject/tasks/:task/edit', {
+		templateUrl: 'views/tasks/edit.html',
+		controller: 'TaskDetailController'
 	});
 
 	// Fallback
