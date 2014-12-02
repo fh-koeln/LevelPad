@@ -49,11 +49,6 @@ angular.module('levelPad').controller('SubjectDetailController', [
 		}
 		$scope.expireDates = getExpireDates();
 
-		//alert( 'foo' + $scope.subject);
-		//$scope.subject = CurrentSubject || new Subject();
-
-		//console.log('Subject in SDC', $scope.subject.registrationPassword, $scope.subject);
-
 		function prepareSubject() {
 			if ($scope.subject.registrationPassword === undefined) {
 				$scope.subject.registrationPassword = generatePassword();
@@ -138,7 +133,7 @@ angular.module('levelPad').controller('SubjectDetailController', [
 			$scope.subject.registrationPassword = generatePassword();
 		};
 
-		$scope.save = function () {
+		$scope.save = function() {
 			var module = $scope.subject.module;
 			delete $scope.subject.module;
 
@@ -159,11 +154,7 @@ angular.module('levelPad').controller('SubjectDetailController', [
 
 			delete $scope.subject._registrationPasswordCheck;
 
-			return $scope.subject.$save({module: module.slug}, function() {
-				prepareSubject();
-			}, function () {
-				alert('Error!');
-			});
+			return $scope.subject.$save({module: module.slug});
 		};
 
 		$scope.delete = function () {
@@ -174,19 +165,19 @@ angular.module('levelPad').controller('SubjectDetailController', [
 			});
 		};
 
-		$scope.showEditDialog = function () {
+		$scope.showEditDialog = function() {
 			var dialog = new DialogService('/subjects/:subject/edit');
-
-			dialog.scope.save = function() {
-				dialog.scope.$parent.save().$promise.then(function() {
+			dialog.scope.submit = function() {
+				this.save().then(function() {
+					prepareSubject();
 					dialog.submit();
 				}, function() {
 					alert('Fehler!');
 				});
 			};
-			dialog.scope.showDeleteDialog = function () {
+			dialog.scope.showDeleteDialog = function() {
 				dialog.cancel();
-				$scope.showDeleteDialog(subject);
+				$scope.showDeleteDialog();
 			};
 			dialog.open();
 		};

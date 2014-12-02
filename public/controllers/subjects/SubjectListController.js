@@ -8,7 +8,7 @@ angular.module('levelPad').controller('SubjectListController', [
 
 	$scope.update = function () {
 		$scope.subjects = [];
-		// Get all subjects for the current module
+		// Get all subjects for all modules
 		Module.query(function(modules) {
 			angular.forEach(modules, function(module) {
 				Subject.query({ module: module.slug}, function(subjects) {
@@ -27,10 +27,10 @@ angular.module('levelPad').controller('SubjectListController', [
 
 		var dialog = new DialogService('/subjects/new');
 
-		dialog.scope.save = function() {
-			this.save().$promise.then(function() {
-				dialog.submit();
+		dialog.scope.submit = function() {
+			this.save().then(function() {
 				$scope.update();
+				dialog.submit();
 			}, function() {
 				alert('Fehler!');
 			});
