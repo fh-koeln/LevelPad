@@ -10,10 +10,10 @@ exports.list = function (callback) {
 	var thisYear = new Date().getFullYear();
 
 	Subject.findOne().lean().select('year').sort('year').exec(function(err, firstYearSubject) {
-		var from = thisYear - 1, to = thisYear + 2, years = [];
+		var from = thisYear, to = thisYear + 2, years = [];
 
-		if (!err && firstYearSubject && firstYearSubject < from) {
-			from = firstYearSubject;
+		if (!err && firstYearSubject && firstYearSubject.year && firstYearSubject.year < from) {
+			from = firstYearSubject.year;
 		}
 
 		for (var year = from; year <= to; year++) {
