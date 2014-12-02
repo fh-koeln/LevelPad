@@ -1,9 +1,12 @@
 'use strict';
 
 var YearController = require('../../controllers/YearController'),
+	assert = require('chai').assert,
 	expect = require('chai').expect,
 	db = require('../db'),
-	async = require('async');
+	async = require('async'),
+	Subject = require('../../models/Subject');
+
 
 describe('YearController', function() {
 
@@ -16,24 +19,30 @@ describe('YearController', function() {
 
 	describe('list', function() {
 		it('should contain the current and at least the next year', function(done) {
-			YearController.list(function(err, years) {
+			async.waterfall([
+				function(next) {
+					Subject.findOne().lean().select('year').sort('year').exec(next);
+				},
+				function(firstYearSubject, next) {
+					var firstYear = firstYearSubject.year;
+					assert.isNotNull(firstYear, 'firstYear should be not null');
 
-				expect(err).to.be.null;
-				expect(years).to.have.length.above(1);
-				expect(years).to.have.length.below(28); // yep, will fail in ten years 2042
+					YearController.list(function(err, years) {
+						expect(err).to.be.null;
+						expect(years).to.have.length.above(2);
 
-				var firstYear = years[0];
-				expect(firstYear).property('slug', '2014');
-				expect(firstYear).property('name', '2014');
-				expect(firstYear).property('year', 2014);
+						expect(years[0]).property('slug', (firstYear).toString());
+						expect(years[0]).property('name', (firstYear).toString());
+						expect(years[0]).property('year', firstYear);
 
-				var nextYear = years[1];
-				expect(nextYear).property('slug', '2015');
-				expect(nextYear).property('name', '2015');
-				expect(nextYear).property('year', 2015);
+						expect(years[1]).property('slug', (firstYear + 1).toString());
+						expect(years[1]).property('name', (firstYear + 1).toString());
+						expect(years[1]).property('year', firstYear + 1);
 
-				done(err);
-			});
+						next(err);
+					});
+				}
+			], done);
 		});
 	});
 
