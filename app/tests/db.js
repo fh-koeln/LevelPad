@@ -8,6 +8,7 @@ var async = require('async'),
 	Task = require('../models/Task'),
 	Level = require('../models/Level'),
 	Evaluation = require('../models/Evaluation'),
+	Comment = require('../models/Comment'),
 	users = require('./users'),
 	modules = require('./modules'),
 	subjects = require('./subjects');
@@ -283,6 +284,13 @@ module.exports.initializeTestData = function(callback) {
 
 					member.evaluations.push(evaluation);
 
+					var comment = new Comment();
+					comment.createdBy = '546a1b22c6da9447692f6df9';
+					comment.task = '146a1b22c6da9447692f6df9';
+					comment.text = 'Ein Kommentar';
+
+					member.comments.push(comment);
+
 					member.save( function(err, member) {
 						if (err) {
 							return callback(err);
@@ -316,6 +324,13 @@ module.exports.initializeTestData = function(callback) {
 					evaluation.level = '346a1b22c6da9442922f6df9';
 
 					member.evaluations.push(evaluation);
+
+					var comment = new Comment();
+					comment.createdBy = '546a1b22c6da9447692f6df9';
+					comment.task = '246a1b22c6da9447692f6df9';
+					comment.text = 'Irgendein Kommentar';
+
+					member.comments.push(comment);
 
 					member.save( function(err, member) {
 						if (err) {
