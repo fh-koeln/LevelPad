@@ -70,5 +70,6 @@ members.delete('/:memberId', {
  * Register subresources for members.
  */
 members.use('/:memberId/evaluations', require('./evaluations'));
+members.use('/:memberId/comments', require('./comments'));
 
 module.exports = members;
