@@ -33,7 +33,6 @@ angular.module('levelPad').controller('SubjectListController', [
 				alert('Fehler!');
 			});
 		};
-
 		dialog.open();
 	};
 

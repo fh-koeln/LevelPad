@@ -5,11 +5,9 @@ angular.module('levelPad').controller('TaskListController', [
 	function ($scope, $routeParams, $location, $log, Module, Subject, Task, DialogService, CurrentModule, CurrentSubject, ChartOption) {
 
 	'use strict';
-	//$scope.subject = $scope.subject || CurrentSubject || new Subject();
 
 	$scope.update = function() {
 		$scope.tasks = [];
-
 		Task.query({ module: $routeParams.module, subject: $routeParams.subject }, function(tasks) {
 			$scope.tasks = tasks;
 		}, function() {
