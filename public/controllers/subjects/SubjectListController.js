@@ -24,9 +24,7 @@ angular.module('levelPad').controller('SubjectListController', [
 	$scope.update();
 
 	$scope.showCreateDialog = function() {
-
 		var dialog = new DialogService('/subjects/new');
-
 		dialog.scope.submit = function() {
 			this._save().then(function() {
 				$scope.update();

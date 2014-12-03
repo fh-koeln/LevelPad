@@ -4,12 +4,12 @@
             <h4 id="edit-title" class="modal-title">{{ !task._id ? 'Neues Learning Outcome ' : 'Learning Outcome ändern' }}</h4>
         </header>
     </nav>
-        
+
 	<div class="modal-body">
-		
+
 		<div class="form-group">
 			<div class="col-xs-12">
-				<span class="glyphicon glyphicon-info-sign neutral"></span> 
+				<span class="glyphicon glyphicon-info-sign neutral"></span>
 				Komplexere Learning Outcomes „kosten” in etwa 3 Credit Points (CP)
 			</div>
 		</div>
@@ -18,10 +18,10 @@
 			<label for="title" class="col-sm-2 col-md-2 control-label">Bezeichnung</label>
             <div class="col-sm-10 col-md-10">
                 <input type="text" name="title" id="title" class="form-control" data-ng-model="task.title"
-					   required="required"> 
+					   required="required">
             </div>
 		</div>
-        
+
         <div class="form-group" data-ng-class="{ 'has-error': form.description.$invalid }">
             <label for="description" class="col-md-2 col-sm-2 control-label">Beschreibung</label>
 			<div class="col-sm-10 col-md-10">
@@ -36,17 +36,17 @@
 				<div class="col-sm-12 ">
 					<div class="col-sm-5 col-xs-12 learning-outcome-weight">
 						<form>
-							<input type="range" name="amountRange" 
-								   data-ng-model="task.amountRange" 
+							<input type="range" name="amountRange"
+								   data-ng-model="task.amountRange"
 								   min="0" max="{{ 100 - task.belegt }}" value="0"/>
 						</form>
 					</div>
 					<div class="col-sm-2 col-xs-2">
-						Anteil: 
+						Anteil:
 						<br/>
-						Rest: 
+						Rest:
 						<br/>
-						Belegt: 
+						Belegt:
 					</div>
 					<div class="col-sm-2 col-xs-3">
 						<span class="positive">{{ task.amountRange }}%</span>
@@ -72,9 +72,9 @@
         </button>
 		<button type="button" class="btn btn-default pull-left"
                 data-ng-show="subject._id" data-ng-click="showDeleteDialog();">
-            <div class="delete-color">Le Outcome löschen</div>
+            <div class="delete-color">Löschen</div>
         </button>
 		<button type="submit" class="btn btn-primary pull-right"
-				data-ng-disabled="form.$invalid" >Le Outcome anlegen</button>
+				data-ng-disabled="form.$invalid">Learning Outcome anlegen</button>
 	</div>
 </form>
