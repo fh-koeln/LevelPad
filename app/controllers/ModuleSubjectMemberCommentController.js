@@ -74,10 +74,6 @@ exports.create = function(callback, member, commentData) {
 				return next(new errors.ArgumentNullError('createdBy'));
 			}
 
-			if (!commentData.comment) {
-				return next(new errors.ArgumentNullError('comment'));
-			}
-
 			if (!commentData.task) {
 				return next(new errors.ArgumentNullError('task'));
 			}
