@@ -133,7 +133,7 @@ angular.module('levelPad').controller('SubjectDetailController', [
 			$scope.subject.registrationPassword = generatePassword();
 		};
 
-		$scope.save = function() {
+		$scope._save = function() {
 			var module = $scope.subject.module;
 			delete $scope.subject.module;
 
@@ -157,47 +157,39 @@ angular.module('levelPad').controller('SubjectDetailController', [
 			return $scope.subject.$save({module: module.slug});
 		};
 
-		$scope.delete = function () {
-			return $scope.subject.$delete({module: $scope.subject.module.slug}, function() {
-				$scope.update();
-			}, function () {
-				alert('Error!');
-			});
+		$scope._delete = function() {
+			return $scope.subject.$delete({module: $scope.subject.module.slug});
+		};
+
+		$scope.showDeleteDialog = function() {
+			var dialog = new DialogService('/subjects/:subject/delete');
+			dialog.scope.delete = function () {
+				this._delete().then(function() {
+					dialog.submit();
+					$location.path('/');
+				}, function () {
+					alert('Fehler!');
+				});
+			};
+			dialog.open();
 		};
 
 		$scope.showEditDialog = function() {
 			var dialog = new DialogService('/subjects/:subject/edit');
 			dialog.scope.submit = function() {
-				this.save().then(function() {
+				this._save().then(function() {
 					prepareSubject();
 					dialog.submit();
 				}, function() {
 					alert('Fehler!');
 				});
 			};
-			dialog.scope.showDeleteDialog = function() {
+			dialog.scope.showConfirmDeleteDialog = function() {
 				dialog.cancel();
-				$scope.showDeleteDialog();
+				this.showDeleteDialog();
 			};
 			dialog.open();
 		};
-
-		if (!$scope.showDeleteDialog) {
-			$scope.showDeleteDialog = function (subject) {
-				var dialog = new DialogService('/subjects/:subject/delete');
-				dialog.scope.subject = angular.copy(subject);
-				dialog.scope.delete = function () {
-					dialog.scope.subject.$delete({module: dialog.scope.subject.module.slug}, function() {
-						dialog.submit();
-						$scope.update();
-						$location.path('/');
-					}, function () {
-						alert('Fehler!');
-					});
-				};
-				dialog.open();
-			};
-		}
 
 		//Pie Chart Magic
 		$scope.options = ChartOption;
