@@ -275,7 +275,6 @@ module.exports.initializeTestData = function(callback) {
 
 					var evaluation = new Evaluation();
 					evaluation.createdBy = '546a1b22c6da9447692f6df9';
-					evaluation.comment = 'Beschreibung für die Bewertung';
 					evaluation.task = '146a1b22c6da9447692f6df9';
 					evaluation.level = '346a1b22c6da9442922f6df9';
 
@@ -310,8 +309,7 @@ module.exports.initializeTestData = function(callback) {
 
 					var evaluation = new Evaluation();
 					evaluation.createdBy = '546a1b22c6da9447692f6df9';
-					evaluation.comment = 'Beschreibung für die Bewertung';
-					evaluation.task = '146a1b22c6da9447692f6df9';
+					evaluation.task = '246a1b22c6da9447692f6df9';
 					evaluation.level = '346a1b22c6da9442922f6df9';
 
 					member.evaluations.push(evaluation);

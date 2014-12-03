@@ -6,12 +6,11 @@ var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
 	ObjectId = Schema.ObjectId;
 
-var evaluationSchema = new Schema({
+var commentSchema = new Schema({
 	createdAt: { type: Date, default: Date.now },
 	createdBy: { type: ObjectId, ref: 'User', require: true },
+	text: { type: String, require: true },
 	task: { type: ObjectId, ref: 'Task', require: true },
-	level: { type: ObjectId, ref: 'Level', require: true }
 });
 
-evaluationSchema.index({ task: 1, level: 1}, { unique: true });
-module.exports = mongoose.model('Evaluation', evaluationSchema);
+module.exports = mongoose.model('Comment', commentSchema);
