@@ -27,18 +27,21 @@
         <div class="col-xs-4 col-sm-4 col-md-6 rating-box-large text-center">
             <div class="large-circle">
 				<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
+				<span class="large-circle-text">4,0</span>
 			</div>
             <div>absolute Note</div>
         </div>
         <div class="col-xs-4 col-sm-4 col-md-3 rating-box-medium text-center">
             <div class="medium-circle">
 				<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
+				<span class="circle-text">2,0</span>
 			</div>
             <div>relative Note</div>
         </div>
         <div class="col-xs-4 col-sm-4 col-md-3 rating-box-medium text-center">
             <div class="medium-circle">
 				<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
+				<span class="circle-text">2</span>
 			</div>
             <div>Artefakte (5)</div>
         </div>
@@ -69,10 +72,10 @@
                     <span class="hidden-md hidden-lg hidden-sm gewichtung-font"> (30%)</span>
                 </div>
                 <div class="col-sm-6 col-md-6 table-circle-align">
-                    <div class="small-circle"> </div>
-                    <div class="small-circle"> </div>
-                    <div class="small-circle"> </div>
-                    <div class="small-circle"> </div>
+                    <div class="small-circle negative-filled"> </div>
+                    <div class="small-circle positive-filled"> </div>
+                    <div class="small-circle positive-filled"> </div>
+                    <div class="small-circle positive-empty"> </div>
                     <br/>
                     akzeptable Lösung
                 </div>
@@ -80,6 +83,7 @@
             <td class="col-sm-2 col-md-2 hidden-xs circle-table text-center">
                 <div class="medium-circle text-center">
 					<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
+					<span class="circle-text">30%</span>
 				</div>
             </td>
             <td class="col-xs-2 hidden-md hidden-lg hidden-sm text-right arrow-right"> ⟩ </td>
@@ -90,13 +94,13 @@
                     <span class="hidden-md hidden-lg hidden-sm gewichtung-font"> (70%)</span>
                 </div>
                 <div class="col-sm-6 col-md-6 table-circle-align">
-                    <div class="small-circle"> </div>
-                    <div class="small-circle"> </div>
-                    <div class="small-circle"> </div>
-                    <div class="small-circle"> </div>
-                    <div class="small-circle"> </div>
-                    <div class="small-circle"> </div>
-                    <div class="small-circle"> </div>
+                    <div class="small-circle negative-empty"> </div>
+                    <div class="small-circle negative-empty"> </div>
+                    <div class="small-circle positive-empty"> </div>
+                    <div class="small-circle positive-empty"> </div>
+                    <div class="small-circle positive-empty"> </div>
+                    <div class="small-circle positive-empty"> </div>
+                    <div class="small-circle positive-empty"> </div>
                     <br/>
                     gute Lösung
                 </div>
@@ -104,6 +108,7 @@
             <td class="col-sm-2 col-md-2 hidden-xs circle-table text-center">
                 <div class="medium-circle ">
 					<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
+					<span class="circle-text">70%</span>
 				</div>
             </td>
             <td class="col-xs-2 hidden-md hidden-lg hidden-sm text-right arrow-right"> ⟩ </td>
