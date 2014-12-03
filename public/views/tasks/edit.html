@@ -40,7 +40,7 @@
 					<div class="col-sm-5 col-xs-12 learning-outcome-weight">
 							<input type="range" id="weight" name="weight"
 								data-ng-model="task.weight"
-								min="0" max="{{ 100 - usedPercent }}" value="0"/>
+								min="0" max="{{ 100 - usedPercent }}"/>
 					</div>
 					<div class="col-sm-2 col-xs-2">
 						Anteil:
@@ -76,6 +76,8 @@
             <div class="delete-color">Löschen</div>
         </button>
 		<button type="submit" class="btn btn-primary pull-right"
-				data-ng-disabled="form.$invalid" >Learning Outcome anlegen</button>
+				data-ng-disabled="form.$invalid" >
+			{{ task._id ? 'Änderung speichern' : 'Learning Outcome anlegen' }}
+		</button>
 	</div>
 </form>

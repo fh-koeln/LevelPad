@@ -5,19 +5,26 @@ angular.module('levelPad').controller('TaskDetailController', [
 	function ($scope, $routeParams, $location, $log, DialogService, Module, Subject, Task, CurrentModule, CurrentSubject, CurrentTask, ChartOption) {
 
 		'use strict';
-		$scope.usedPercent = 0;
+		if(!$scope.usedPercent){
+			$scope.usedPercent = 0;
+		}
+		$scope.newValue = 0;
+		$scope.subject = $routeParams.subject;
+		$scope.module = $routeParams.module;
 		
 		$scope.update = function() {
-			Task.query({ module: $routeParams.module, subject: $routeParams.subject }, function(tasks) {
-				angular.forEach(tasks, function(task) {
-					$scope.usedPercent += task.weight;
-				});
-				prepareTask();
+			if(!$scope.usedPercent){
+				Task.query({ module: $routeParams.module, subject: $routeParams.subject }, function(tasks) {
+					angular.forEach(tasks, function(task) {
+						$scope.usedPercent += task.weight;
+					});
+					prepareTask();
 			}, function() {
 				alert('Could not load tasks.');
 			});
+			}
 			if ($routeParams.task) {
-				$scope.task = Subject.get({
+				$scope.task = Task.get({
 					module: $routeParams.module,
 					subject: $routeParams.subject,
 					task: $routeParams.task
@@ -34,25 +41,40 @@ angular.module('levelPad').controller('TaskDetailController', [
 
 		function prepareTask() {
 			$scope.task._chartData = [
-				  {
+				{
 					title:'Learning Outcome',
 					value: $scope.task.weight,
 					color: '#77cc00',
 					highlight: '#88dd11'
-				  	},
-				  	{
+				},
+				{
 					title:'Rest',
 					value: 100 - $scope.task.weight - $scope.usedPercent,
 					color:'lightgray',
 					highlight: 'lightgray'
-				  	},
-					{
+				},
+				{
 					title:'Belegt',
 					value: $scope.usedPercent,
 					color:'#EE497A',
 					highlight: '#F3537F'
-					}
-				];
+				}
+			];
+			
+			$scope.task._currentTaskData = [
+				{
+					title:'Learning Outcome',
+					value: $scope.task.weight,
+					color: '#77cc00',
+					highlight: '#88dd11'
+				},
+				{
+					title:'Rest',
+					value: 100 - $scope.task.weight,
+					color:'lightgray',
+					highlight: 'lightgray'
+				},
+			];
 		}
 		
 		$scope._save = function () {
@@ -62,6 +84,25 @@ angular.module('levelPad').controller('TaskDetailController', [
 		$scope._delete = function () {
 			return $scope.task.$delete({ module: $scope.subject.module.slug });
 		};
+				
+		$scope.showEditDialog = function() {
+			var dialog = new DialogService('/:module/:subject/tasks/:task/edit');
+			dialog.scope.usedPercent = $scope.usedPercent - $scope.task.weight;
+			dialog.scope.submit = function() {
+				this._save().then(function() {
+					prepareTask();
+					dialog.submit();
+				}, function() {
+					alert('Fehler!');
+				});
+			};
+			dialog.scope.showConfirmDeleteDialog = function() {
+				dialog.cancel();
+				this.showDeleteDialog();
+			};
+			dialog.open();
+		};
+
 
 		//Pie Chart Magic
 		$scope.options = ChartOption;
