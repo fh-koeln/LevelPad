@@ -16,6 +16,9 @@ var async = require('async'),
 module.exports.clear = function(callback) {
 	async.series([
 		function(next) {
+			Evaluation.remove(next);
+		},
+		function(next) {
 			Task.remove(next);
 		},
 		function(next) {
