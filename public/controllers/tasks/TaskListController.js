@@ -5,12 +5,13 @@ angular.module('levelPad').controller('TaskListController', [
 	function ($scope, $routeParams, $location, $log, Module, Subject, Task, DialogService, CurrentModule, CurrentSubject, ChartOption) {
 
 	'use strict';
-	$scope.subject = $scope.subject || CurrentSubject || new Subject();
+	//$scope.subject = $scope.subject || CurrentSubject || new Subject();
 
 	$scope.update = function() {
-		// Get all tasks for the current subject
-		$scope.tasks = Task.query({ module: $routeParams.module, subject: $routeParams.subject }, function(tasks) {
+		$scope.tasks = [];
 
+		Task.query({ module: $routeParams.module, subject: $routeParams.subject }, function(tasks) {
+			$scope.tasks = tasks;
 		}, function() {
 			alert('Could not load tasks.');
 		});
@@ -19,11 +20,10 @@ angular.module('levelPad').controller('TaskListController', [
 
 	$scope.showCreateDialog = function() {
 		var dialog = new DialogService('/:module/:subject/tasks/new');
-		dialog.scope.task = new Task();
 		dialog.scope.submit = function() {
-			dialog.scope.task.$save(function() {
-				dialog.submit();
+			this._save().then(function() {
 				$scope.update();
+				dialog.submit();
 			}, function() {
 				alert('Fehler!');
 			});

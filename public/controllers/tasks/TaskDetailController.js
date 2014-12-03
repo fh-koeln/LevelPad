@@ -1,39 +1,31 @@
-/* global angular, alert */
+/* global angular */
 
 angular.module('levelPad').controller('TaskDetailController', [
 	'$scope', '$routeParams', '$location', '$log', 'DialogService', 'Module', 'Subject', 'Task', 'CurrentModule', 'CurrentSubject', 'CurrentTask', 'ChartOption',
 	function ($scope, $routeParams, $location, $log, DialogService, Module, Subject, Task, CurrentModule, CurrentSubject, CurrentTask, ChartOption) {
 
 		'use strict';
-		$scope.module = CurrentModule;
-		$scope.subject = CurrentSubject;
-        $scope.task = CurrentTask;
 
 		$scope.update = function() {
-
+			if ($routeParams.task) {
+				$scope.task = Subject.get({
+					module: $routeParams.module,
+					subject: $routeParams.subject,
+					task: $routeParams.task
+				});
+			} else {
+				$scope.task = new Task();
+			}
 		};
-
 		$scope.update();
 
-		if (!$scope.submit) {
-			$scope.submit = function () {
-				$scope.task.$save({ module: module.slug} , function() {
-					$scope.update();
-				}, function () {
-					alert('Error!');
-				});
-			};
-		}
+		$scope._save = function () {
+			return $scope.task.$save({ module: $routeParams.module, subject: $routeParams.subject });
+		};
 
-		if (!$scope.delete) {
-			$scope.delete = function () {
-				$scope.task.$delete({ module: $scope.subject.module.slug }, function() {
-					$scope.update();
-				}, function () {
-					alert('Error!');
-				});
-			};
-		}
+		$scope._delete = function () {
+			return $scope.task.$delete({ module: $scope.subject.module.slug });
+		};
 
 		//Pie Chart Magic
 		$scope.options = ChartOption;
