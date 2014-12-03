@@ -65,32 +65,21 @@
 
     </thead>
     <tbody>
-        <tr >
+		<tr data-ng-repeat="task in tasks" data-ng-href="/{{ task.slug }}">
             <th class="col-xs-9 col-sm-10 col-md-10 studentname students-table-element">
-                <span class="small-font">Angebot und Anschreiben erstellen</span>
+				<a data-ng-href="/{{module}}/{{subject}}/tasks/{{ task.slug }}">
+					<span class="small-font">{{ task.title }}</span>
+				</a>
             </th>
             <td class="col-xs-2 col-sm-2 col-md-2 text-center">
                 <div class="medium-circle">
-    				<canvas class="medium-circle" tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
-					<span class="circle-text">30%</span>
+    				<canvas class="medium-circle" tc-chartjs-pie chart-options="options" chart-data="task._chartData"></canvas>
+					<span class="circle-text">{{ task.weight }}%</span>
 				</div>
             <td class="col-xs-1 hidden-md hidden-lg hidden-sm">
                 <div class="text-right arrow-right-small"> ⟩ </div>
             </td>
         </tr>
-        <tr>
-            <th class="col-xs-9 col-sm-10 col-md-10 studentname students-table-element">
-                <span class="small-font">Styleguide</span>
-            </th>
-            <td class="col-xs-2 col-sm-2 col-md-2 text-center">
-                <div class="medium-circle">
-					<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
-					<span class="circle-text">70%</span>
-				</div>
-			<td class="col-xs-1 hidden-md hidden-lg hidden-sm">
-				<div class="text-right arrow-right-small"> ⟩ </div>
-			</td>
-		</tr>
 	</tbody>
 </table>
 

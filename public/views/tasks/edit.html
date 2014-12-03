@@ -40,7 +40,7 @@
 					<div class="col-sm-5 col-xs-12 learning-outcome-weight">
 							<input type="range" id="weight" name="weight"
 								data-ng-model="task.weight"
-								min="0" max="{{ 100 - task.belegt }}" value="0"/>
+								min="0" max="{{ 100 - usedPercent }}" value="0"/>
 					</div>
 					<div class="col-sm-2 col-xs-2">
 						Anteil:
@@ -52,13 +52,13 @@
 					<div class="col-sm-2 col-xs-3">
 						<span class="positive">{{ task.weight }}%</span>
 						<br/>
-						<span class="neutral">{{ 100 - task.weight - task.belegt }}%</span>
+						<span class="neutral">{{ 100 - task.weight - usedPercent }}%</span>
 						<br/>
-						<span class="negative">{{ task.belegt }}%</span>
+						<span class="negative">{{ usedPercent }}%</span>
 					</div>
                    	<div class="col-sm-3 col-xs-7">
 						<div class="medium-circle ">
-							<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
+							<canvas tc-chartjs-pie chart-options="options" chart-data="task._chartData"></canvas>
 						</div>
 					</div>
                 </div>

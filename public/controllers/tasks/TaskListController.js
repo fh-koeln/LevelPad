@@ -6,14 +6,20 @@ angular.module('levelPad').controller('TaskListController', [
 
 	'use strict';
 
+	$scope.subject = $routeParams.subject;
+	$scope.module = $routeParams.module;
+		
 	$scope.update = function() {
 		$scope.tasks = [];
 		Task.query({ module: $routeParams.module, subject: $routeParams.subject }, function(tasks) {
-			$scope.tasks = tasks;
+			angular.forEach(tasks, function(task) {
+				$scope.tasks.push(prepareTask(task));
+			});
 		}, function() {
 			alert('Could not load tasks.');
 		});
 	};
+		
 	$scope.update();
 
 	$scope.showCreateDialog = function() {
@@ -47,18 +53,21 @@ angular.module('levelPad').controller('TaskListController', [
 	//Pie Chart Magic
 	$scope.options = ChartOption;
 	// Chart.js Data
-	$scope.data = [
-	  {
-		title:'Learning Outcome',
-		value: 20,
-		color: '#77cc00',
-		highlight: '#88dd11'
-	  },
-	  {
-		title:'Rest',
-		value: 100-20,
-		color:'lightgray',
-		highlight: 'lightgray'
-	  }
-	];
+	function prepareTask(task) {
+			task._chartData = [
+				  {
+					title:'Learning Outcome',
+					value: task.weight,
+					color: '#77cc00',
+					highlight: '#88dd11'
+				  },
+				  {
+					title:'Rest',
+					value: 100 - task.weight,
+					color:'lightgray',
+					highlight: 'lightgray'
+				  }
+				];
+		return task;
+	}
 }]);
