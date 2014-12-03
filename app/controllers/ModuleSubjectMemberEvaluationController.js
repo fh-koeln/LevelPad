@@ -74,10 +74,6 @@ exports.create = function(callback, member, evaluationData) {
 				return next(new errors.ArgumentNullError('createdBy'));
 			}
 
-			if (!evaluationData.comment) {
-				return next(new errors.ArgumentNullError('comment'));
-			}
-
 			if (!evaluationData.task) {
 				return next(new errors.ArgumentNullError('task'));
 			}
@@ -92,7 +88,6 @@ exports.create = function(callback, member, evaluationData) {
 			var evaluation = new Evaluation();
 
 			evaluation.createdBy = evaluationData.createdBy;
-			evaluation.comment = evaluationData.comment;
 			evaluation.task = evaluationData.task;
 			evaluation.level = evaluationData.level;
 
@@ -120,10 +115,6 @@ exports.update = function(callback, member, evaluationId, evaluationData) {
 		function(evaluation, next) {
 			if (evaluationData.createdBy !== undefined) {
 				evaluation.createdBy = evaluationData.createdBy;
-			}
-
-			if (evaluationData.comment !== undefined) {
-				evaluation.comment = evaluationData.comment;
 			}
 
 			if (evaluationData.task !== undefined) {
