@@ -8,6 +8,7 @@ angular.module('levelPad').controller('TaskDetailController', [
 		if(!$scope.usedPercent){
 			$scope.usedPercent = 0;
 		}
+		
 		$scope.newValue = 0;
 		$scope.subject = $routeParams.subject;
 		$scope.module = $routeParams.module;
@@ -18,6 +19,7 @@ angular.module('levelPad').controller('TaskDetailController', [
 					angular.forEach(tasks, function(task) {
 						$scope.usedPercent += task.weight;
 					});
+					console.log('new sum:' + $scope.usedPercent);
 					prepareTask();
 			}, function() {
 				alert('Could not load tasks.');
@@ -87,10 +89,16 @@ angular.module('levelPad').controller('TaskDetailController', [
 				
 		$scope.showEditDialog = function() {
 			var dialog = new DialogService('/:module/:subject/tasks/:task/edit');
+			
 			dialog.scope.usedPercent = $scope.usedPercent - $scope.task.weight;
+			console.log(dialog.scope.usedPercent + '=' + $scope.usedPercent + '-' + $scope.task.weight);
+			
 			dialog.scope.submit = function() {
+				var self = this;
 				this._save().then(function() {
-					prepareTask();
+					$scope.usedPercent = self.usedPercent + self.task.weight;
+					console.log($scope.usedPercent);
+					$scope.update();
 					dialog.submit();
 				}, function() {
 					alert('Fehler!');
@@ -102,7 +110,6 @@ angular.module('levelPad').controller('TaskDetailController', [
 			};
 			dialog.open();
 		};
-
 
 		//Pie Chart Magic
 		$scope.options = ChartOption;
