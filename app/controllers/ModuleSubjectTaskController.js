@@ -138,7 +138,13 @@ exports.update = function(callback, subject, taskId, taskData) {
 			next(null, subject);
 		},
 		function(subject, next) {
-			var task = subject.tasks.id(taskId);
+			var task;
+			if (taskId.match(/^[0-9a-fA-F]{24}$/)) { // ObjectID
+				task = subject.tasks.id(taskId);
+			} else {
+				task = objectFindByKey(subject.tasks, 'slug', taskId);
+			}
+
 			if (!task) {
 				return next(new errors.NotFoundError('Task'));
 			}
@@ -185,7 +191,13 @@ exports.delete = function(callback, subject, taskId) {
 			next(null, subject);
 		},
 		function(subject, next) {
-			var task = subject.tasks.id(taskId);
+			var task;
+			if (taskId.match(/^[0-9a-fA-F]{24}$/)) { // ObjectID
+				task = subject.tasks.id(taskId);
+			} else {
+				task = objectFindByKey(subject.tasks, 'slug', taskId);
+			}
+
 			if (!task) {
 				return next(new errors.NotFoundError('Task'));
 			}
