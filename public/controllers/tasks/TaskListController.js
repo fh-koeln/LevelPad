@@ -29,19 +29,18 @@ angular.module('levelPad').controller('TaskListController', [
 		dialog.open();
 	};
 
-	$scope.showImportDialog = function() {
+	/*$scope.showImportDialog = function() {
 		var dialog = new DialogService('/:module/:subject/tasks/import');
-		dialog.scope.task = new Task();
 		dialog.scope.submit = function() {
-			dialog.scope.module.$save(function() {
-				dialog.submit();
+			this._save().then(function() {
 				$scope.update();
+				dialog.submit();
 			}, function() {
 				alert('Fehler!');
 			});
 		};
 		dialog.open();
-	};
+	};*/
 
 
 	//Pie Chart Magic
