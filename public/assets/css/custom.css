@@ -247,6 +247,10 @@ table {
     color: #c0c0c0;
 }
 
+.vertical-control{
+	resize: vertical;
+}
+
 .nav-tabs > li.active > a{
     font-weight: 600;
 }
