@@ -5,7 +5,6 @@ var LocalStrategy = require('passport-local').Strategy,
 	acl = require('../acl').acl;
 
 var checkCredentials = function(username, password, callback) {
-	console.log('Check IMAP credentials for user ' + username + '...');
 
 	// Asynchronous verification, for effect...
 	process.nextTick(function () {
@@ -46,7 +45,6 @@ var checkCredentials = function(username, password, callback) {
 		// Promise-Handler if login failed
 		//imap.once('error', callback);
 		imap.once('error', function(err) {
-			console.log(err);
 			callback(err);
 		});
 	});

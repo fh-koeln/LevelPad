@@ -44,7 +44,7 @@ passport.deserializeUser(function(username, done) {
  * with a user object.  In the real world, this would query a database;
  * however, in this example we are using a baked-in set of users.
  */
-var strategy = (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') ? 'fh-db' : 'fh-imap';
+var strategy = ((process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') && process.env.PW_STRATEGY !== 'fh-imap') ? 'fh-db' : 'fh-imap';
 
 passport.use('fh-db', DatabaseStrategy);
 passport.use('fh-imap', FHKIMAPStrategy);
@@ -68,6 +68,28 @@ module.exports = function(app) {
 	app.post('/api/login', passport.authenticate(strategy), function(req, res) {
 		res.status(200).json(req.user);
 	});
+
+
+	/*app.post('/api/login', function(req, res, next) {
+		passport.authenticate(strategy, function(err, user, info) {
+			console.log(arguments);
+			if (err && err.message === 'Timed out while authenticating with server') {
+				res.status(401).json({});
+			} else if (err) {
+				return next(err);
+			}
+
+			if (info && info.message === 'Missing credentials') {
+				res.status(400).json(info);
+			}
+
+			if (!user) {
+				res.status(401).json(info);
+			}
+			console.log('200');
+			res.status(200).json(user);
+		})(req, res, next);
+	});*/
 
 	/**
 	 * POST /api/logout logouts the current user.
