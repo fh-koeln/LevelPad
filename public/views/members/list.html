@@ -5,9 +5,6 @@
 -->
 
 <div class="container hidden-xs">
-    <div class="col-md-12 col-sm-12 add-student">
-			<a class="interaction-link" data-ng-href="/student/new" data-ng-click="showCreateDialog(); $event.preventDefault();">+ Teilnehmer hinzufügen</a>
-    </div>
 	<div class="row interaction-bar" >
 		<div class="col-md-6 col-sm-6 col-xs-12 search-bar">
 			<div class="input-group">
@@ -19,7 +16,7 @@
 		</div>
         <div class="col-sm-offset-2 col-sm-4 col-md-offset-3 col-md-3 checkbox">
             <label>
-                <input type="checkbox"> Bewertung anzeigen
+                <input type="checkbox" ng-model="showRating" value="1"> Bewertung anzeigen
             </label>
 	   </div>
     </div>
@@ -72,14 +69,14 @@
             <th class="col-sm-2 col-md-2 hidden-xs">
                 Matrikelnr.
             </th>
-            <th class="col-sm-2 col-md-2 hidden-xs">
-                Artefakte
+            <th class="col-sm-2 col-md-2 hidden-xs text-center">
+                <span data-ng-show="showRating == 1">Artefakte (Anz)</span>
             </th>
-            <th class="col-sm-2 col-md-2 hidden-xs">
-                relative Note
+            <th class="col-sm-2 col-md-2 hidden-xs text-center">
+                <span data-ng-show="showRating == 1">relative Note</span>
             </th>
-            <th class="col-sm-2 col-md-2 hidden-xs">
-                absolute Note
+            <th class="col-sm-2 col-md-2 hidden-xs text-center">
+                <span data-ng-show="showRating == 1">absolute Note</span>
             </th>
             <th class="col-xs-2 hidden-sm hidden-md hidden-lg ">
             </th>
@@ -98,14 +95,29 @@
             <td class="col-sm-2 col-md-2 hidden-xs students-table-element">
                 <span class="student-matrikelnummer text-right">{{ member.user.studentNumber }}</span>
             </td>
-            <td class="col-sm-2 col-md-2 hidden-xs">
-                <div class="small-circle"> </div>
+            <td class="col-sm-2 col-md-2 hidden-xs text-center">
+                <span data-ng-show="showRating == 1">
+					<div class="medium-circle">
+    					<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
+						<span class="circle-text">4</span>
+					</div>
+				</span>
             </td>
-            <td class="col-sm-2 col-md-2 hidden-xs">
-                <div class="medium-circle"> </div>
+            <td class="col-sm-2 col-md-2 hidden-xs text-center">
+                <span data-ng-show="showRating == 1">
+					<div class="medium-circle">
+    					<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
+						<span class="circle-text">2,0</span>
+					</div>
+				</span>
             </td>
-            <td class="col-sm-2 col-md-2 hidden-xs">
-                <div class="large-circle"> </div>
+            <td class="col-sm-2 col-md-2 hidden-xs text-center">
+                <span data-ng-show="showRating == 1">
+					<div class="medium-circle">
+    					<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
+						<span class="circle-text">4,0</span>
+					</div>
+				</span>
             </td>
             <td class="col-xs-2 hidden-md hidden-lg hidden-sm text-right arrow-right"> ⟩ </td>
         </tr>
