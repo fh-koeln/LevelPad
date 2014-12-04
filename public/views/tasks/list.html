@@ -65,7 +65,7 @@
 
     </thead>
     <tbody>
-		<tr data-ng-repeat="task in tasks" data-ng-href="/{{ task.slug }}">
+		<tr data-ng-repeat="task in tasks">
             <th class="col-xs-9 col-sm-10 col-md-10 studentname students-table-element">
 				<a data-ng-href="/{{module}}/{{subject}}/tasks/{{ task.slug }}">
 					<span class="small-font">{{ task.title }}</span>

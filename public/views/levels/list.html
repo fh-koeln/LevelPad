@@ -1,0 +1,122 @@
+
+<div class="container table-headline">
+	<div class="subject-title">Niveaustufen</div>
+</div>
+
+<table class="table grid">
+	<thead>
+		<tr class="table-headline">
+			<th>
+				<a class="interaction-link" data-ng-href="xxxxx" data-ng-click="showCreateDialog(); $event.preventDefault();">
+					+ <span class="level-name">Niveaustufe hinzufügen</span>
+				</a>
+			</th>
+			<th class="small-table-head">
+			</th>
+		</tr>
+	</thead>
+	<tbody class="table-drag-drop" ui:sortable="{'handle': '.myHandle'}">
+		<tr data-ng-repeat="level in levels" class="item">
+			<td>
+				<span class="glyphicon glyphicon-play collapse-icon" ng-click="isOpen1 = !isOpen1" data-ng-class="{ 'collapse-icon-clicked': isOpen1 }"></span>
+				<span class="small-font level-name">{{level.title}}</span>
+				<a class="btn btn-glyphicon interaction-link" data-ng-class="{ 'hidden': !isOpen1 }" data-ng-href="xxxxxx" data-ng-click="showEditDialog(); $event.preventDefault();">
+					<span class="glyphicon glyphicon-pencil interaction-color"></span>
+				</a>
+				<div class="task-text">
+					<ul class="level-list" collapse="!isOpen1">
+						<li data-ng-repeat="descriptionItem in level.descriptionItems">
+							{{descriptionItem}}
+						</li>
+					</ul>
+				</div>
+			</td>
+			<td class="drag-handle">
+				<div class="text-right">
+					<span class="glyphicon glyphicon-align-justify interaction-color myHandle"  data-ng-class="{ 'hidden': isOpen1 }"></span>
+				</div>
+			</td>
+		</tr>
+		<tr class="positive-row item">
+			<td>
+				<span class="glyphicon glyphicon-play collapse-icon" ng-click="isOpen1 = !isOpen1" data-ng-class="{ 'collapse-icon-clicked': isOpen1 }"></span>
+				<span class="small-font level-name">Beste Lösung</span>
+				<a class="btn btn-glyphicon interaction-link" data-ng-class="{ 'hidden': !isOpen1 }" data-ng-href="/tasks/new" data-ng-click="showCreateDialog(); $event.preventDefault();">
+					<span class="glyphicon glyphicon-pencil interaction-color"></span>
+				</a>
+				<div class="task-text">
+					<ul class="level-list" collapse="!isOpen1">
+						<li>
+							Anforderung 1
+						</li>
+						<li>
+							Anforderung 2
+						</li>
+						<li>
+							Anforderung 3
+						</li>
+					</ul>
+				</div>
+			</td>
+			<td class="drag-handle">
+				<div class="text-right">
+					<span class="glyphicon glyphicon-align-justify interaction-color myHandle"  data-ng-class="{ 'hidden': isOpen1 }"></span>
+				</div>
+			</td>
+		</tr>
+		<tr class="positive-row item">
+			<td >
+				<span class="glyphicon glyphicon-play collapse-icon" ng-click="isOpen2 = !isOpen2" data-ng-class="{ 'collapse-icon-clicked': isOpen2 }"></span>
+				<span class="small-font level-name">Gute Lösung</span>
+				<a class="btn btn-glyphicon interaction-link" data-ng-class="{ 'hidden': !isOpen2 }" data-ng-href="/tasks/new" data-ng-click="showCreateDialog(); $event.preventDefault();">
+					<span class="glyphicon glyphicon-pencil interaction-color"></span>
+				</a>
+				<div class="task-text">
+					<ul class="level-list" collapse="!isOpen2">
+						<li>
+							Anforderung 1
+						</li>
+						<li>
+							Anforderung 2
+						</li>
+						<li>
+							Anforderung 3
+						</li>
+					</ul>
+				</div>
+			</td>
+			<td class="drag-handle" >
+				<div class="text-right" >
+					<span class="glyphicon glyphicon-align-justify interaction-color myHandle" data-ng-class="{ 'hidden': isOpen2 }"></span>
+				</div>
+			</td>
+		</tr>
+		<tr class="negative-row item">
+			<td >
+				<span class="glyphicon glyphicon-play collapse-icon" ng-click="isOpen3 = !isOpen3" data-ng-class="{ 'collapse-icon-clicked': isOpen3 }"></span>
+				<span class="small-font level-name">Schlechte Lösung</span>
+				<a class="btn btn-glyphicon interaction-link" data-ng-class="{ 'hidden': !isOpen3 }" data-ng-href="/tasks/new" data-ng-click="showCreateDialog(); $event.preventDefault();">
+					<span class="glyphicon glyphicon-pencil interaction-color"></span>
+				</a>
+				<div class="task-text">
+					<ul class="level-list" collapse="!isOpen3">
+						<li>
+							Anforderung 1
+						</li>
+						<li>
+							Anforderung 2
+						</li>
+						<li>
+							Anforderung 3
+						</li>
+					</ul>
+				</div>
+			</td>
+			<td class="drag-handle">
+				<div class="text-right">
+					<span class="glyphicon glyphicon-align-justify interaction-color myHandle" data-ng-class="{ 'hidden': isOpen3 }"></span>
+				</div>
+			</td>
+		</tr>
+	</tbody>
+</table>

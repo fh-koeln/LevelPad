@@ -1,25 +1,21 @@
-/* global angular */
+/* global angular, alert */
 
 angular.module('levelPad').controller('TaskDetailController', [
 	'$scope', '$routeParams', '$location', '$log', 'DialogService', 'Module', 'Subject', 'Task', 'CurrentModule', 'CurrentSubject', 'CurrentTask', 'ChartOption',
 	function ($scope, $routeParams, $location, $log, DialogService, Module, Subject, Task, CurrentModule, CurrentSubject, CurrentTask, ChartOption) {
 
 		'use strict';
-		if(!$scope.usedPercent){
-			$scope.usedPercent = 0;
-		}
-		
 		$scope.newValue = 0;
 		$scope.subject = $routeParams.subject;
 		$scope.module = $routeParams.module;
-		
+
 		$scope.update = function() {
 			if(!$scope.usedPercent){
+				$scope.usedPercent = 0;
 				Task.query({ module: $routeParams.module, subject: $routeParams.subject }, function(tasks) {
 					angular.forEach(tasks, function(task) {
 						$scope.usedPercent += task.weight;
 					});
-					console.log('new sum:' + $scope.usedPercent);
 					prepareTask();
 			}, function() {
 				alert('Could not load tasks.');
@@ -30,7 +26,7 @@ angular.module('levelPad').controller('TaskDetailController', [
 					module: $routeParams.module,
 					subject: $routeParams.subject,
 					task: $routeParams.task
-				}, function () { 
+				}, function () {
 					prepareTask();
 				});
 			} else {
@@ -62,7 +58,7 @@ angular.module('levelPad').controller('TaskDetailController', [
 					highlight: '#F3537F'
 				}
 			];
-			
+
 			$scope.task._currentTaskData = [
 				{
 					title:'Learning Outcome',
@@ -78,7 +74,7 @@ angular.module('levelPad').controller('TaskDetailController', [
 				},
 			];
 		}
-		
+
 		$scope._save = function () {
 			return $scope.task.$save({ module: $routeParams.module, subject: $routeParams.subject });
 		};
@@ -86,18 +82,16 @@ angular.module('levelPad').controller('TaskDetailController', [
 		$scope._delete = function () {
 			return $scope.task.$delete({ module: $scope.subject.module.slug });
 		};
-				
+
 		$scope.showEditDialog = function() {
 			var dialog = new DialogService('/:module/:subject/tasks/:task/edit');
-			
+
 			dialog.scope.usedPercent = $scope.usedPercent - $scope.task.weight;
-			console.log(dialog.scope.usedPercent + '=' + $scope.usedPercent + '-' + $scope.task.weight);
-			
+
 			dialog.scope.submit = function() {
 				var self = this;
 				this._save().then(function() {
 					$scope.usedPercent = self.usedPercent + self.task.weight;
-					console.log($scope.usedPercent);
 					$scope.update();
 					dialog.submit();
 				}, function() {
@@ -121,18 +115,18 @@ angular.module('levelPad').controller('TaskDetailController', [
 			function( newValue ) {
 				newValue = parseInt(newValue, 10);
 				$scope.task._chartData = [
-				  	{
+					{
 					title:'Learning Outcome',
 					value: newValue,
 					color: '#77cc00',
 					highlight: '#88dd11'
-				  	},
-				  	{
+					},
+					{
 					title:'Rest',
 					value: 100 - newValue - $scope.usedPercent,
 					color:'lightgray',
 					highlight: 'lightgray'
-				  	},
+					},
 					{
 					title:'Belegt',
 					value: $scope.usedPercent,

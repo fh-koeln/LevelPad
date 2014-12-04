@@ -240,6 +240,25 @@ app.config(function($routeProvider, $locationProvider) {
 		controller: 'TaskDetailController'
 	});
 
+	// Tasks -> Level
+
+	$routeProvider.when('/:module/:subject/tasks/:task/levels', {
+		templateUrl: 'views/levels/list.html',
+		controller: 'LevelListController'
+	});
+	$routeProvider.when('/:module/:subject/tasks/:task/levels/new', {
+		templateUrl: 'views/levels/edit.html',
+		controller: 'LevelDetailController'
+	});
+	$routeProvider.when('/:module/:subject/tasks/:task/levels/:level', {
+		templateUrl: 'views/levels/show.html',
+		controller: 'LevelDetailController'
+	});
+	$routeProvider.when('/:module/:subject/tasks/:task/levels/:level/edit', {
+		templateUrl: 'views/levels/edit.html',
+		controller: 'LevelDetailController'
+	});
+
 	// Fallback
 
 	$routeProvider.otherwise({

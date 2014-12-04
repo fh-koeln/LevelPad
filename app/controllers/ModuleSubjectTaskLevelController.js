@@ -91,18 +91,18 @@ exports.create = function(callback, subject, task, levelData) {
 			},
 			function(next) {
 				var existingLevels = task.levels,
-					level = new Level(), maxRate;
+					level = new Level(), maxRank;
 
-				// Get the highest current rate (http://stackoverflow.com/a/4020842)
-				maxRate = Math.max.apply( Math, existingLevels.map(function(level) {
-					return level.rate;
-				}));
-
-				if (!maxRate) {
-					maxRate = 0;
+				if (existingLevels.length > 0) {
+					// Get the highest current rank (http://stackoverflow.com/a/4020842)
+					maxRank = Math.max.apply( Math, existingLevels.map(function(level) {
+						return level.rank;
+					}));
+				} else {
+					maxRank = 0;
 				}
 
-				level.rank = maxRate + 1;
+				level.rank = maxRank + 1;
 				level.title = levelData.title;
 				level.description = levelData.description;
 				if (levelData.isMinimum) {

@@ -63,6 +63,18 @@ angular.module('levelPad').service('Task', ['RestfulResource', function(RestfulR
 }]);
 
 /**
+ * Provides a Module -> Subject -> Task -> Level REST API.
+ */
+angular.module('levelPad').service('Level', ['RestfulResource', function(RestfulResource) {
+	return RestfulResource('/api/modules/:module/subjects/:subject/tasks/:task/levels/:level', {
+		module: '@subject.module.slug',
+		subject: '@subject.slug',
+		task: '@slug',
+		level: '@_id',
+	});
+}]);
+
+/**
  * Provides a Module -> Subject -> Member REST API.
  */
 angular.module('levelPad').service('Member', ['RestfulResource', function(RestfulResource) {

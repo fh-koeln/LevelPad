@@ -8,7 +8,7 @@ angular.module('levelPad').controller('TaskListController', [
 
 	$scope.subject = $routeParams.subject;
 	$scope.module = $routeParams.module;
-		
+
 	$scope.update = function() {
 		$scope.tasks = [];
 		Task.query({ module: $routeParams.module, subject: $routeParams.subject }, function(tasks) {
@@ -19,7 +19,7 @@ angular.module('levelPad').controller('TaskListController', [
 			alert('Could not load tasks.');
 		});
 	};
-		
+
 	$scope.update();
 
 	$scope.showCreateDialog = function() {
