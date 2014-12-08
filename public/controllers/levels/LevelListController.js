@@ -12,7 +12,6 @@ angular.module('levelPad').controller('LevelListController', [
 
 	function prepareLevel(level) {
 		level.descriptionItems = level.description.split('*');
-
 		return level;
 	}
 
@@ -66,17 +65,18 @@ angular.module('levelPad').controller('LevelListController', [
         var start = ui.item.data('start'),
             end = ui.item.index();
 
-        //$scope.levels.splice(end, 0,
-        //   $scope.levels.splice(start, 1)[0]);
-		$scope.levels[start].rank = end+1;
+        $scope.levels.splice(end, 0, $scope.levels.splice(start, 1)[0]);
 
-		console.log($scope.levels);
-
-		$scope.levels.sort(function (a, b) {
-    		return a.rank > b.rank;
-  		});
-
-        $scope.$apply();
+        for(var index in $scope.levels) {
+        	$scope.levels[index].rank = parseInt(index,10)+1;
+			$scope.levels[index].$save({
+				module: $routeParams.module,
+				subject: $routeParams.subject,
+				task: $routeParams.task,
+				level: $scope.levels[index]._id
+			});
+      	}
+		$scope.$apply();
     };
 
 	$scope.sortableOptions = {
@@ -84,5 +84,4 @@ angular.module('levelPad').controller('LevelListController', [
 		start: $scope.dragStart,
         update: $scope.dragEnd
 	};
-
 }]);
