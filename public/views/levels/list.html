@@ -21,7 +21,7 @@
 				<span class="levels-row">
 					<span class="glyphicon glyphicon-play collapse-icon" ng-click="isOpen1 = !isOpen1" data-ng-class="{ 'collapse-icon-clicked': isOpen1 }"></span>
 					<span class="small-font level-name">{{level.title}}</span>
-					<a class="btn btn-glyphicon interaction-link levels-edit-icon" data-ng-class="{ 'hidden': !isOpen1 }" data-ng-href="xxxxxx" data-ng-click="showEditDialog(); $event.preventDefault();">
+					<a class="btn btn-glyphicon interaction-link levels-edit-icon" data-ng-class="{ 'hidden': !isOpen1 }" data-ng-href="/{{ module }}/{{ subject }}/tasks/{{ task }}/levels/{{ level._id }}/edit" data-ng-click="showEditDialog(level); $event.preventDefault();">
 						<span class="glyphicon glyphicon-pencil interaction-color"></span>
 					</a>
 				</span>

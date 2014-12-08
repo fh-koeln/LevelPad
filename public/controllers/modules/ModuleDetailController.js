@@ -39,7 +39,6 @@ angular.module('levelPad').controller('ModuleDetailController', [
 			dialog.scope.delete = function () {
 				dialog.scope.module.$delete(function () {
 					dialog.submit();
-					$scope.update();
 				}, function () {
 					alert('Fehler!');
 				});

@@ -239,6 +239,10 @@ app.config(function($routeProvider, $locationProvider) {
 		templateUrl: 'views/tasks/edit.html',
 		controller: 'TaskDetailController'
 	});
+	$routeProvider.when('/:module/:subject/tasks/:task/delete', {
+		templateUrl: 'views/tasks/delete.html',
+		controller: 'TaskDetailController'
+	});
 
 	// Tasks -> Level
 
@@ -256,6 +260,10 @@ app.config(function($routeProvider, $locationProvider) {
 	});
 	$routeProvider.when('/:module/:subject/tasks/:task/levels/:level/edit', {
 		templateUrl: 'views/levels/edit.html',
+		controller: 'LevelDetailController'
+	});
+	$routeProvider.when('/:module/:subject/tasks/:task/levels/:level/delete', {
+		templateUrl: 'views/levels/delete.html',
 		controller: 'LevelDetailController'
 	});
 
