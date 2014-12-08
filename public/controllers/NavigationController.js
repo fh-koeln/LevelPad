@@ -2,7 +2,6 @@ angular.module('levelPad').controller('NavigationController', ['$scope', '$rootS
 	'use strict';
 
 	$scope.$location = $location;
-
 	$scope.user = Session.user;
 	$scope.loggedIn = false;
 	$rootScope.$on(AUTH_EVENTS.loginRefreshed, function() {
@@ -29,8 +28,8 @@ angular.module('levelPad').controller('NavigationController', ['$scope', '$rootS
 			$location.path('/signup');
 		}
 	};
-    
-    $scope.admin = function() {
+
+	$scope.admin = function() {
 		if ($location.path() !== '/modules') {
 			$location.path('/modules');
 		}

@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" data-ng-app="levelPad">
 	<head>
 		<title>LevelPad</title>
 		<base href="/">
@@ -31,7 +31,7 @@
 		<script src="Chart.js/Chart.min.js"></script>
 		<script src="tc-angular-chartjs/dist/tc-angular-chartjs.min.js"></script>
 	</head>
-	<body data-ng-app="levelPad">
+	<body data-ng-controller="ApplicationController">
 		<div data-ng-controller="NavigationController" data-ng-include="'partials/navigation.html'" class="container"></div>
 		<div data-ng-controller="AccountController"></div>
 
@@ -51,7 +51,7 @@
 		<script src="factories/CurrentTaskFactory.js"></script>
 		<script src="factories/CurrentMemberFactory.js"></script>
 		<script src="factories/ChartOptionFactory.js"></script>
-		<script src="assets/js/custom.js"></script>
+		<script src="controllers/ApplicationController.js"></script>
 		<script src="controllers/AlertController.js"></script>
 		<script src="controllers/SignupController.js"></script>
 		<script src="controllers/LoginController.js"></script>
@@ -73,5 +73,6 @@
 		<script src="controllers/members/MemberDetailController.js"></script>
 		<script src="controllers/users/UserListController.js"></script>
 		<script src="controllers/users/UserDetailController.js"></script>
+		<script src="assets/js/custom.js"></script>
 	</body>
 </html>
