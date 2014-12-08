@@ -36,5 +36,31 @@ angular.module('levelPad').controller('LevelListController', [
 		};
 		dialog.open();
 	};
+		
+	$scope.dragStart = function(e, ui) {
+        ui.item.data('start', ui.item.index());
+    }
+    $scope.dragEnd = function(e, ui) {
+        var start = ui.item.data('start'),
+            end = ui.item.index();
+        
+        //$scope.levels.splice(end, 0, 
+        //   $scope.levels.splice(start, 1)[0]);
+		$scope.levels[start].rank = end+1;
+		
+		console.log($scope.levels);
+        
+		$scope.levels.sort(function (a, b) {
+    		return a.rank > b.rank;
+  		});
+		
+        $scope.$apply();
+    }
+		
+	$scope.sortableOptions = {
+		'handle': '.myHandle',
+		start: $scope.dragStart,
+        update: $scope.dragEnd
+	};
 
 }]);

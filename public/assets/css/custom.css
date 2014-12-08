@@ -168,6 +168,14 @@ table {
     cursor: pointer;
 }
 
+.levels-row{
+	height: 38px;
+}
+
+a.levels-edit-icon{
+	padding: 0 10px;
+}
+
 .interaction-bar {
     border-left: 1px solid lightgrey;
 }

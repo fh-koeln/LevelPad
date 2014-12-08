@@ -10,12 +10,13 @@ angular.module('levelPad').controller('TaskDetailController', [
 		$scope.module = $routeParams.module;
 
 		$scope.update = function() {
-			if(!$scope.usedPercent){
+			if($scope.usedPercent === undefined){
 				$scope.usedPercent = 0;
 				Task.query({ module: $routeParams.module, subject: $routeParams.subject }, function(tasks) {
 					angular.forEach(tasks, function(task) {
 						$scope.usedPercent += task.weight;
 					});
+					console.log("Used:"+ $scope.usedPercent);
 					prepareTask();
 			}, function() {
 				alert('Could not load tasks.');
@@ -86,8 +87,11 @@ angular.module('levelPad').controller('TaskDetailController', [
 		$scope.showEditDialog = function() {
 			var dialog = new DialogService('/:module/:subject/tasks/:task/edit');
 
+			
 			dialog.scope.usedPercent = $scope.usedPercent - $scope.task.weight;
 
+			console.log("New Used"+dialog.scope.usedPercent+"="+$scope.usedPercent+"-"+$scope.task.weight);
+			
 			dialog.scope.submit = function() {
 				var self = this;
 				this._save().then(function() {
