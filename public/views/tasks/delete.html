@@ -1,0 +1,24 @@
+<form name="form" role="form" class="form-horizontal" data-ng-submit="delete(task);">
+	<header class="modal-header">
+		<button type="button" class="close" aria-hidden="true"
+				data-ng-show="cancel" data-ng-click="cancel();">&times;</button>
+		<h4 id="delete-title" class="delete-title">Learning Outcome wirklich löschen?</h4>
+	</header>
+	<div class="modal-body">
+		<p>
+			Möchten Sie den Learning Outcome {{ task.title }} wirklich löschen?
+		</p>
+		<p>
+			Bitte geben Sie zur Sicherheit den Titel ein: <code>{{ task.title }}</code>
+		</p>
+		<p>
+			<input type="text" data-ng-model="validationInput">
+		</p>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-default pull-left"
+				data-ng-show="cancel" data-ng-click="cancel();">Abbrechen</button>
+		<button type="submit" class="btn btn-danger pull-right"
+				data-ng-disabled="validationInput != task.title">Unwiderruflich Löschen</button>
+	</div>
+</form>

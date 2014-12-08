@@ -10,12 +10,13 @@ angular.module('levelPad').controller('TaskDetailController', [
 		$scope.module = $routeParams.module;
 
 		$scope.update = function() {
-			if(!$scope.usedPercent){
+			if($scope.usedPercent === undefined){
 				$scope.usedPercent = 0;
 				Task.query({ module: $routeParams.module, subject: $routeParams.subject }, function(tasks) {
 					angular.forEach(tasks, function(task) {
 						$scope.usedPercent += task.weight;
 					});
+					console.log("Used:"+ $scope.usedPercent);
 					prepareTask();
 			}, function() {
 				alert('Could not load tasks.');
@@ -80,13 +81,29 @@ angular.module('levelPad').controller('TaskDetailController', [
 		};
 
 		$scope._delete = function () {
-			return $scope.task.$delete({ module: $scope.subject.module.slug });
+			return $scope.task.$delete({ module: $routeParams.module, subject: $routeParams.subject, task: $routeParams.task });
+		};
+
+
+		$scope.showDeleteDialog = function() {
+			var dialog = new DialogService('/:module/:subject/tasks/:task/delete');
+			dialog.scope.delete = function () {
+				this._delete().then(function() {
+					dialog.submit();
+					$location.path('/'+$routeParams.module+'/'+$routeParams.subject+'/tasks');
+				}, function () {
+					alert('Fehler!');
+				});
+			};
+			dialog.open();
 		};
 
 		$scope.showEditDialog = function() {
 			var dialog = new DialogService('/:module/:subject/tasks/:task/edit');
 
 			dialog.scope.usedPercent = $scope.usedPercent - $scope.task.weight;
+
+			console.log("New Used"+dialog.scope.usedPercent+"="+$scope.usedPercent+"-"+$scope.task.weight);
 
 			dialog.scope.submit = function() {
 				var self = this;
@@ -104,6 +121,7 @@ angular.module('levelPad').controller('TaskDetailController', [
 			};
 			dialog.open();
 		};
+
 
 		//Pie Chart Magic
 		$scope.options = ChartOption;

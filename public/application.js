@@ -231,12 +231,6 @@ app.config(['$routeProvider', '$locationProvider', 'USER_ROLES', function($route
 			templateUrl: 'views/tasks/edit.html',
 			controller: 'TaskDetailController'
 		},
-		'/:module/:subject/tasks/import': {
-			templateUrl: 'views/tasks/import.html',
-			controller: 'TaskImportController'
-		},
-
-		// Subject-> Tasks -> Level
 		'/:module/:subject/tasks/:task': {
 			templateUrl: 'views/tasks/show.html',
 			controller: 'TaskDetailController'
@@ -245,6 +239,16 @@ app.config(['$routeProvider', '$locationProvider', 'USER_ROLES', function($route
 			templateUrl: 'views/tasks/edit.html',
 			controller: 'TaskDetailController'
 		},
+		'/:module/:subject/tasks/:task/delete': {
+			templateUrl: 'views/tasks/delete.html',
+			controller: 'TaskDetailController'
+		},
+		'/:module/:subject/tasks/import': {
+			templateUrl: 'views/tasks/import.html',
+			controller: 'TaskImportController'
+		},
+
+		// Subject-> Tasks -> Level
 		'/:module/:subject/tasks/:task/levels': {
 			templateUrl: 'views/levels/list.html',
 			controller: 'LevelListController'
@@ -261,6 +265,10 @@ app.config(['$routeProvider', '$locationProvider', 'USER_ROLES', function($route
 			templateUrl: 'views/levels/edit.html',
 			controller: 'LevelDetailController'
 		},
+		'/:module/:subject/tasks/:task/levels/:level/delete': {
+			templateUrl: 'views/levels/delete.html',
+			controller: 'LevelDetailController'
+		}
 	};
 
 
@@ -290,7 +298,6 @@ app.config(['$routeProvider', '$locationProvider', 'USER_ROLES', function($route
 
 		$routeProvider.when(location, params);
 	});
-
 
 	// Fallback
 	$routeProvider.otherwise({

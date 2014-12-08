@@ -157,6 +157,9 @@ exports.update = function(callback, subject, task, levelId, levelData) {
 			if (levelData.isMinimum !== undefined) {
 				level.isMinimum = levelData.isMinimum;
 			}
+			if (levelData.rank !== undefined) {
+				level.rank = levelData.rank;
+			}
 			next(null, level);
 		},
 		function(level, next) {
