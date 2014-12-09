@@ -199,10 +199,14 @@ db.connection.on('connected', function() {
 		{resources: 'modules/:module/subjects/:subject', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
 		{resources: 'modules/:module/subjects/:subject/tasks', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
 		{resources: 'modules/:module/subjects/:subject/tasks/:task', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
-		{resources: 'modules/:module/subjects/:subject/tasks/:task/teams', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
-		{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
-		{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team/feedbacks', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
-		{resources: 'modules/:module/subjects/:subject/tasks/:task/teams/:team/feedbacks/:feedback', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+		{resources: 'modules/:module/subjects/:subject/tasks/:task/levels', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+		{resources: 'modules/:module/subjects/:subject/tasks/:task/levels/:level', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+		{resources: 'modules/:module/subjects/:subject/member', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+		{resources: 'modules/:module/subjects/:subject/member/:member', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+		{resources: 'modules/:module/subjects/:subject/member/:member/evaluations', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+		{resources: 'modules/:module/subjects/:subject/member/:member/evaluations/:evaluation', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+		{resources: 'modules/:module/subjects/:subject/member/:member/comments', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+		{resources: 'modules/:module/subjects/:subject/member/:member/comments/:comment', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
 	 */
 
 	acl.allow([
@@ -229,6 +233,7 @@ db.connection.on('connected', function() {
 				{resources: 'users/me', permissions: ['GET']},
 				{resources: 'users/:currentUser', permissions: ['GET', 'PUT']},
 				{resources: 'users/:currentUser/subjects', permissions: ['GET']},
+				{resources: 'subjects', permissions: ['GET']},
 			]
 		},
 		{
@@ -236,8 +241,10 @@ db.connection.on('connected', function() {
 			allows: [
 				{resources: 'login', permissions: ['POST']},
 				{resources: 'logout', permissions: ['POST']},
-				{resources: 'users/me', permissions: ['GET', 'PUT']},
+				{resources: 'users/me', permissions: ['GET']},
+				{resources: 'users/:currentUser', permissions: ['GET', 'PUT']},
 				{resources: 'users/:currentUser/subjects', permissions: ['GET']},
+				{resources: 'subjects', permissions: ['GET']},
 			]
 		},
 		{
@@ -245,11 +252,13 @@ db.connection.on('connected', function() {
 			allows: [
 				{resources: 'login', permissions: ['POST']},
 				{resources: 'logout', permissions: ['POST']},
-				{resources: 'users/me', permissions: ['GET', 'PUT']},
+				{resources: 'users/me', permissions: ['GET']},
+				{resources: 'users/:currentUser', permissions: ['GET', 'PUT']},
 				{resources: 'users/:currentUser/subjects', permissions: ['GET']},
-				{resources: 'modules', permissions: ['GET']},
 				{resources: 'years', permissions: ['GET']},
 				{resources: 'semesters', permissions: ['GET']},
+				{resources: 'subjects', permissions: ['GET']},
+				{resources: 'modules', permissions: ['GET']},
 				{resources: 'modules/:module', permissions: ['GET']},
 			]
 		},
@@ -259,12 +268,13 @@ db.connection.on('connected', function() {
 				{resources: 'login', permissions: ['POST']},
 				{resources: 'logout', permissions: ['POST']},
 				{resources: 'users', permissions: ['GET', 'POST']},
-				{resources: 'users/me', permissions: ['GET', 'PUT']},
+				{resources: 'users/me', permissions: ['GET']},
 				{resources: 'users/:user', permissions: ['GET', 'PUT', 'DELETE']},
 				{resources: 'users/:user/subjects', permissions: ['GET']},
 				{resources: 'users/:currentUser/subjects', permissions: ['GET']},
 				{resources: 'years', permissions: ['GET']},
 				{resources: 'semesters', permissions: ['GET']},
+				{resources: 'subjects', permissions: ['GET']},
 				{resources: 'modules', permissions: ['GET', 'POST']},
 				{resources: 'modules/:module', permissions: ['GET', 'PUT', 'DELETE']},
 				{resources: 'modules/:module/subjects', permissions: ['GET', 'POST']},
