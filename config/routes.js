@@ -49,8 +49,7 @@ routes.get('/*', function(req, res) {
 			'username': username,
 			'role': role
 		}));
-
-		res.sendFile('index.html', { root: __dirname + '/../public' });
+		res.sendFile('_index.html', { root: __dirname + '/../public' });
 	}
 });
 
