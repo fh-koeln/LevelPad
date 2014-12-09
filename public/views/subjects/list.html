@@ -62,7 +62,7 @@
 
 <table class="table table-striped table-hover">
 	<tbody>
-	<tr data-ng-repeat="subject in subjects | filter:filterStatus:true | filter:searchText">
+	<tr data-ng-repeat="subject in subjects | orderBy:['-year','-semester'] | filter:filterStatus:true | filter:searchText">
 		<th class="col-xs-10 col-md-10 subject-item-title">
 			<a data-ng-href="{{ subject.module.slug }}/{{ subject.slug }}/members">
 				<span class="module-name">{{ subject.module.name }}</span><br/>

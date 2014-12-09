@@ -6,19 +6,11 @@ angular.module('levelPad').controller('SubjectListController', [
 
 	'use strict';
 
+	$scope.subjects = [];
+
 	$scope.update = function () {
-		$scope.subjects = [];
-		// Get all subjects for all modules
-		Module.query(function(modules) {
-			angular.forEach(modules, function(module) {
-				Subject.query({ module: module.slug}, function(subjects) {
-					angular.forEach(subjects, function(subject) {
-						$scope.subjects.push(subject);
-					});
-				});
-			});
-		}, function() {
-			alert('Could not load subjects.');
+		$http.get('/api/subjects').success(function(subjects) {
+			$scope.subjects = subjects;
 		});
 	};
 	$scope.update();
