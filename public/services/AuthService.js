@@ -1,4 +1,4 @@
-angular.module('levelPad').factory('AuthService', function ($rootScope, $q, $http, $cookieStore, AUTH_EVENTS, USER_ROLES) {
+angular.module('levelPad').factory('AuthService', function ($rootScope, $q, $http, $cookieStore, AUTH_EVENTS, USER_ROLES, UserMe) {
 	var authService = {},
 		currentUser = $cookieStore.get('user') || { username: '', role: USER_ROLES.public };
 
@@ -31,14 +31,13 @@ angular.module('levelPad').factory('AuthService', function ($rootScope, $q, $htt
 	authService.refresh = function() {
 		var deferred = $q.defer();
 
-		$http({
-			method: 'GET',
-			url: '/api/users/me'
-		}).success(function(user) {
+
+		UserMe.get().$promise.then(
+		function(user) {
 			changeUser(user);
 			$rootScope.$broadcast(AUTH_EVENTS.loginRefreshed);
 			deferred.resolve(user);
-		}).error(function(res) {
+		}, function(res) {
 			$rootScope.$broadcast(AUTH_EVENTS.loginFailed);
 			deferred.reject(res);
 		});

@@ -1,7 +1,7 @@
 
 angular.module('levelPad').controller('DashboardController', [
-	'$scope', '$rootScope', '$http', 'AuthService',
-	function ($scope, $rootScope, $http, AuthService) {
+	'$scope', '$rootScope', '$http', 'AuthService', 'UserSubject',
+	function ($scope, $rootScope, $http, AuthService, UserSubject) {
 		'use strict';
 
 		$scope.user = AuthService.user;
@@ -17,8 +17,7 @@ angular.module('levelPad').controller('DashboardController', [
 				return;
 			}
 
-			// Get all subjects for the current module
-			$http.get('/api/users/' + username + '/subjects', config).success(function(subjects) {
+			UserSubject.query({ user: username }).$promise.then(function(subjects) {
 				$scope.subjects = subjects;
 			});
 		};

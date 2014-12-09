@@ -1,7 +1,8 @@
 
 // From http://kirkbushell.me/angular-js-using-ng-resource-in-a-more-restful-manner/
-angular.module('levelPad').factory('RestfulResource', ['$resource', function($resource) {
-	return function(url, params, methods) {
+// http://bites.goodeggs.com/open_source/angular-cached-resource/
+angular.module('levelPad').factory('RestfulResource', ['$cachedResource', function($cachedResource) {
+	return function(key, url, params, methods) {
 		var defaults = {
 			create: { method: 'post' },
 			update: { method: 'put' }
@@ -9,7 +10,7 @@ angular.module('levelPad').factory('RestfulResource', ['$resource', function($re
 
 		methods = angular.extend(defaults, methods);
 
-		var resource = $resource(url, params, methods);
+		var resource = $cachedResource(key, url, params, methods);
 		resource.prototype.$save = function(successCallback, errorCallback) {
 			if (!this._id) {
 				return this.$create(successCallback, errorCallback);
@@ -25,10 +26,15 @@ angular.module('levelPad').factory('RestfulResource', ['$resource', function($re
  * Provides a User REST API.
  */
 angular.module('levelPad').service('User', ['RestfulResource', function(RestfulResource) {
-	return RestfulResource('/api/users/:username', {
+	return RestfulResource('users', '/api/users/:username', {
 		username: '@username'
-	}, {
-		save: { method: 'PUT' }
+	});
+}]);
+
+
+angular.module('levelPad').service('UserMe', ['RestfulResource', function(RestfulResource) {
+	return RestfulResource('users', '/api/users/me', {
+		username: 'me'
 	});
 }]);
 
@@ -36,7 +42,7 @@ angular.module('levelPad').service('User', ['RestfulResource', function(RestfulR
  * Provides a Module REST API.
  */
 angular.module('levelPad').service('Module', ['RestfulResource', function(RestfulResource) {
-	return RestfulResource('/api/modules/:module', {
+	return RestfulResource('modules','/api/modules/:module', {
 		module: '@slug'
 	});
 }]);
@@ -45,9 +51,18 @@ angular.module('levelPad').service('Module', ['RestfulResource', function(Restfu
  * Provides a Module -> Subject REST API.
  */
 angular.module('levelPad').service('Subject', ['RestfulResource', function(RestfulResource) {
-	return RestfulResource('/api/modules/:module/subjects/:subject', {
+	return RestfulResource('subjects','/api/modules/:module/subjects/:subject', {
 		module: '@module.slug',
 		subject: '@slug'
+	});
+}]);
+
+/**
+ * Provides User Subject REST API.
+ */
+angular.module('levelPad').service('UserSubject', ['RestfulResource', function(RestfulResource) {
+	return RestfulResource('userSubjects', '/api/users/:user/subjects', {
+		user: '@_id',
 	});
 }]);
 
@@ -55,7 +70,7 @@ angular.module('levelPad').service('Subject', ['RestfulResource', function(Restf
  * Provides a Module -> Subject -> Task REST API.
  */
 angular.module('levelPad').service('Task', ['RestfulResource', function(RestfulResource) {
-	return RestfulResource('/api/modules/:module/subjects/:subject/tasks/:task', {
+	return RestfulResource('tasks', '/api/modules/:module/subjects/:subject/tasks/:task', {
 		module: '@subject.module.slug',
 		subject: '@subject.slug',
 		task: '@slug'
@@ -66,7 +81,7 @@ angular.module('levelPad').service('Task', ['RestfulResource', function(RestfulR
  * Provides a Module -> Subject -> Task -> Level REST API.
  */
 angular.module('levelPad').service('Level', ['RestfulResource', function(RestfulResource) {
-	return RestfulResource('/api/modules/:module/subjects/:subject/tasks/:task/levels/:level', {
+	return RestfulResource('levels','/api/modules/:module/subjects/:subject/tasks/:task/levels/:level', {
 		module: '@subject.module.slug',
 		subject: '@subject.slug',
 		task: '@slug',
@@ -78,10 +93,10 @@ angular.module('levelPad').service('Level', ['RestfulResource', function(Restful
  * Provides a Module -> Subject -> Member REST API.
  */
 angular.module('levelPad').service('Member', ['RestfulResource', function(RestfulResource) {
-	return RestfulResource('/api/modules/:module/subjects/:subject/members/:member', {
+	return RestfulResource('members', '/api/modules/:module/subjects/:subject/members/:member', {
 		module: '@subject.module.slug',
 		subject: '@subject.slug',
-		member: '@id'
+		member: '@_id'
 	});
 }]);
 

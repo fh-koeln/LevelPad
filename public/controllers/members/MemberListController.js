@@ -1,16 +1,14 @@
 /* global angular, alert */
 
 angular.module('levelPad').controller('MemberListController', [
-	'$scope', '$routeParams', '$location', '$log', 'Module', 'Subject', 'Member', 'DialogService', 'CurrentModule', 'CurrentSubject', 'ChartOption',
-	function ($scope, $routeParams, $location, $log, Module, Subject, Member, DialogService, CurrentModule, CurrentSubject, ChartOption) {
+	'$scope', '$routeParams', '$location', '$log', 'Module', 'Subject', 'Member', 'DialogService', 'ChartOption',
+	function ($scope, $routeParams, $location, $log, Module, Subject, Member, DialogService, ChartOption) {
 
 		'use strict';
 
-		$scope.module = CurrentModule;
-		$scope.subject = CurrentSubject;
 
-		console.log('Current module', CurrentModule);
-		console.log('Current subject', CurrentSubject);
+
+
 
 		$scope.update = function() {
 			// Get all member for the current module and subject.

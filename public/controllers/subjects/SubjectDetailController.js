@@ -48,7 +48,7 @@ angular.module('levelPad').controller('SubjectDetailController', [
 			return dates;
 		}
 		$scope.expireDates = getExpireDates();
-
+		$scope.subject = {};
 		function prepareSubject() {
 			if ($scope.subject.registrationPassword === undefined) {
 				$scope.subject.registrationPassword = generatePassword();
@@ -90,10 +90,11 @@ angular.module('levelPad').controller('SubjectDetailController', [
 
 		$scope.update = function() {
 			if ($routeParams.module && $routeParams.subject) {
-				$scope.subject = Subject.get({
+				Subject.get({
 					module: $routeParams.module,
 					subject: $routeParams.subject
-				}, function() {
+				}).$promise.then(function(subject) {
+					$scope.subject = subject;
 					prepareSubject();
 				});
 			} else {
