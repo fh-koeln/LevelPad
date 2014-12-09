@@ -1,12 +1,12 @@
-angular.module('levelPad').controller('NavigationController', ['$scope', '$rootScope', '$route', '$location', '$log', 'AuthService', 'AUTH_EVENTS', 'Session', function ($scope, $rootScope, $route, $location, $log, AuthService, AUTH_EVENTS, Session) {
+angular.module('levelPad').controller('NavigationController', ['$scope', '$rootScope', '$route', '$location', '$log', 'AuthService', 'AUTH_EVENTS', function ($scope, $rootScope, $route, $location, $log, AuthService, AUTH_EVENTS) {
 	'use strict';
 
 	$scope.$location = $location;
-	$scope.user = Session.user;
-	$scope.loggedIn = false;
+	$scope.user = AuthService.user;
+	$scope.loggedIn = AuthService.isAuthenticated();
 	$rootScope.$on(AUTH_EVENTS.loginRefreshed, function() {
-		$scope.user = Session.user;
-		$scope.loggedIn = true;
+		$scope.user = AuthService.user;
+		$scope.loggedIn = AuthService.isAuthenticated();
 	});
 
 	$rootScope.$on(AUTH_EVENTS.logoutSuccess, function() {

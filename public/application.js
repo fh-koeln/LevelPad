@@ -14,35 +14,27 @@ app.config(['$logProvider', function($logProvider) {
 	$logProvider.debugEnabled(true);
 }]);
 
-app.factory('httpErrorInterceptor', ['$q', '$location', function($q, $location) {
-
-	return {
-		'responseError': function(response) {
-			console.error('Receive status code ' + response.status + ' for ' + response.config.url);
-
-			if (response.status === 401) {
-				console.error('Authentication error in server response detected!');
-			} else if (response.status === 403) {
-				console.error('Access error in server response detected!');
-//				$location.path('/403');
-			} else if (response.status === 404) {
-				console.error('Not found error in server response detected!');
-//				$location.path('/404');
-			} else if (response.status === 500) {
-				console.error('Server error in server response detected!');
-//				$location.path('/500');
-			} else if (response.status === 503) {
-				console.error('Server is not available');
-//				$location.path('/503');
-			}
-
-			return $q.reject(response);
-		}
-	};
-}]);
-
 app.config(['$httpProvider', function($httpProvider) {
-	$httpProvider.interceptors.push('httpErrorInterceptor');
+	$httpProvider.interceptors.push( ['$q', function($q) {
+
+		return {
+			'responseError': function(response) {
+				if (response.status === 401) {
+					console.error('Authentication error in server response detected!');
+				} else if (response.status === 403) {
+					console.error('Access error in server response detected!');
+				} else if (response.status === 404) {
+					console.error('Not found error in server response detected!');
+				} else if (response.status === 500) {
+					console.error('Server error in server response detected!');
+				} else if (response.status === 503) {
+					console.error('Server is not available');
+				}
+
+				return $q.reject(response);
+			}
+		};
+	}]);
 }]);
 
 app.config(['$routeProvider', '$locationProvider', 'USER_ROLES', function($routeProvider, $locationProvider, USER_ROLES) {
@@ -52,13 +44,11 @@ app.config(['$routeProvider', '$locationProvider', 'USER_ROLES', function($route
 	defaultResolvers.userAuthenticated = ['$q', 'AuthService', function($q, AuthService) {
 		var deferred = $q.defer();
 
-		var reject = function() {
+		if (AuthService.isAuthenticated()) {
+			deferred.resolve();
+		} else {
 			deferred.reject('login_required');
-		};
-
-		AuthService.refresh().then(function(result) {
-			deferred.resolve(result);
-		}, reject);
+		}
 
 		return deferred.promise;
 	}];
@@ -133,39 +123,48 @@ app.config(['$routeProvider', '$locationProvider', 'USER_ROLES', function($route
 		},
 		'/modules/new': {
 			templateUrl: 'views/modules/edit.html',
-			controller: 'ModuleDetailController'
+			controller: 'ModuleDetailController',
+			authorizedRoles: [USER_ROLES.administrator]
 		},
 		'/modules/:module': {
 			templateUrl: 'views/modules/show.html',
-			controller: 'ModuleDetailController'
+			controller: 'ModuleDetailController',
+			authorizedRoles: [USER_ROLES.administrator]
 		},
 		'/modules/:module/edit': {
 			templateUrl: 'views/modules/edit.html',
-			controller: 'ModuleDetailController'
+			controller: 'ModuleDetailController',
+			authorizedRoles: [USER_ROLES.administrator]
 		},
 		'/modules/:module/delete': {
 			templateUrl: 'views/modules/delete.html',
-			controller: 'ModuleDetailController'
+			controller: 'ModuleDetailController',
+			authorizedRoles: [USER_ROLES.administrator]
 		},
 		'/users': {
 			templateUrl: 'views/users/list.html',
-			controller: 'UserListController'
+			controller: 'UserListController',
+			authorizedRoles: [USER_ROLES.administrator]
 		},
 		'/users/new': {
 			templateUrl: 'views/users/edit.html',
-			controller: 'UserDetailController'
+			controller: 'UserDetailController',
+			authorizedRoles: [USER_ROLES.administrator]
 		},
 		'/users/:username': {
 			templateUrl: 'views/users/show.html',
-			controller: 'UserDetailController'
+			controller: 'UserDetailController',
+			authorizedRoles: [USER_ROLES.administrator]
 		},
 		'/users/:username/edit': {
 			templateUrl: 'views/users/edit.html',
-			controller: 'UserDetailController'
+			controller: 'UserDetailController',
+			authorizedRoles: [USER_ROLES.administrator]
 		},
 		'/users/:username/delete': {
 			templateUrl: 'views/users/delete.html',
-			controller: 'UserDetailController'
+			controller: 'UserDetailController',
+			authorizedRoles: [USER_ROLES.administrator]
 		},
 
 		// Subjects
@@ -271,7 +270,6 @@ app.config(['$routeProvider', '$locationProvider', 'USER_ROLES', function($route
 		}
 	};
 
-
 	angular.forEach(routes, function(params, location) {
 		params.location = location;
 
@@ -282,15 +280,17 @@ app.config(['$routeProvider', '$locationProvider', 'USER_ROLES', function($route
 		}
 
 		// Add role based resolver
-		if (params.role) {
-			resolve.role = ['$q', 'AuthService', function($q, AuthService) {
+		if (params.authorizedRoles) {
+			resolve.authorizedRoles = ['$q', 'AuthService', function($q, AuthService) {
 				var deferred = $q.defer();
 
-				if (AuthService.isAuthorized(params.role)) {
+				if (AuthService.isAuthorized(params.authorizedRoles)) {
 					deferred.resolve();
 				} else {
 					deferred.reject('missing_role');
 				}
+
+				return deferred.promise;
 			}];
 		}
 
@@ -306,33 +306,3 @@ app.config(['$routeProvider', '$locationProvider', 'USER_ROLES', function($route
 
 	$locationProvider.html5Mode(true);
 }]);
-
-/*app.run(function($rootScope, AuthService, AUTH_EVENTS, Session, $location, $injector) {
-	console.log($rootScope);
-
-
-	$rootScope.$on('$routeChangeStart', function (event, next) {
-		var $route = $injector.get('$route');
-		if ($route.routes) {
-			var currentPath = next.$$route.originalPath,
-				currentRoute = null;
-
-			if ($route.routes[currentRoute]) {
-				currentRoute = $route.routes[currentPath];
-			}
-
-			if (currentRoute.authorizedRoles) {
-				if (!AuthService.isAuthorized(currentRoute.authorizedRoles)) {
-					event.preventDefault();
-					if (AuthService.isAuthenticated()) {
-						// user is not allowed
-						$rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
-					} else {
-						// user is not logged in
-						$rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
-					}
-				}
-			}
-		}
-	});
-});*/

@@ -1,22 +1,12 @@
-/* global angular, alert */
 
 angular.module('levelPad').controller('DashboardController', [
-	'$scope', '$rootScope', '$http', 'AUTH_EVENTS', '$routeParams', '$location', '$log', 'DialogService', 'Module', 'Subject', 'Session',
-	function ($scope, $rootScope, $http, AUTH_EVENTS, $routeParams, $location, $log, DialogService, Module, Subject, Session) {
+	'$scope', '$rootScope', '$http', 'AuthService',
+	function ($scope, $rootScope, $http, AuthService) {
 		'use strict';
 
-		$scope.user = Session.user ? Session.user : null;
-		$rootScope.$on(AUTH_EVENTS.loginRefreshed, function() {
-			$scope.user = Session.user;
-			$scope.reload();
-		});
+		$scope.user = AuthService.user;
 
-		$rootScope.$on(AUTH_EVENTS.logoutSuccess, function() {
-			$scope.user = null;
-			$scope.reload();
-		});
-
-		$scope.reload = function () {
+		$scope.update = function () {
 			var username = $scope.user ? $scope.user.username : null;
 			var filter = {};
 			var config = {
@@ -33,9 +23,5 @@ angular.module('levelPad').controller('DashboardController', [
 			});
 		};
 
-		$scope.update = function() {
-			$scope.reload();
-		};
-
-		$scope.reload();
+		$scope.update();
 	}]);
