@@ -76,7 +76,7 @@ module.exports = function(app) {
 	}));
 
 	// Static resources
-	app.use(favicon( path.join(__dirname, '../public') + '/favicon.ico'));
+	app.use(favicon(path.join(__dirname, '../public', '/favicon.ico')));
 
 	// TODO remove this and later. It only adds the view name to all public/views files! :-)
 	app.use(function(req, res, next) {
