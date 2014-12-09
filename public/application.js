@@ -14,293 +14,295 @@ app.config(['$logProvider', function($logProvider) {
 	$logProvider.debugEnabled(true);
 }]);
 
-app.factory('httpErrorInterceptor', ['$q', '$location', function($q, $location) {
+app.config(['$httpProvider', function($httpProvider) {
+	$httpProvider.interceptors.push( ['$q', function($q) {
 
-	return {
-		'responseError': function(response) {
-			console.error('Receive status code ' + response.status + ' for ' + response.config.url);
+		return {
+			'responseError': function(response) {
+				if (response.status === 401) {
+					console.error('Authentication error in server response detected!');
+				} else if (response.status === 403) {
+					console.error('Access error in server response detected!');
+				} else if (response.status === 404) {
+					console.error('Not found error in server response detected!');
+				} else if (response.status === 500) {
+					console.error('Server error in server response detected!');
+				} else if (response.status === 503) {
+					console.error('Server is not available');
+				}
 
-			if (response.status === 401) {
-				console.error('Authentication error in server response detected!');
-			} else if (response.status === 403) {
-				console.error('Access error in server response detected!');
-//				$location.path('/403');
-			} else if (response.status === 404) {
-				console.error('Not found error in server response detected!');
-//				$location.path('/404');
-			} else if (response.status === 500) {
-				console.error('Server error in server response detected!');
-//				$location.path('/500');
-			} else if (response.status === 503) {
-				console.error('Server is not available');
-//				$location.path('/503');
+				return $q.reject(response);
 			}
+		};
+	}]);
+}]);
 
-			return $q.reject(response);
+app.config(['$routeProvider', '$locationProvider', 'USER_ROLES', function($routeProvider, $locationProvider, USER_ROLES) {
+
+	var defaultResolvers = {};
+
+	defaultResolvers.userAuthenticated = ['$q', 'AuthService', function($q, AuthService) {
+		var deferred = $q.defer();
+
+		if (AuthService.isAuthenticated()) {
+			deferred.resolve();
+		} else {
+			deferred.reject('login_required');
+		}
+
+		return deferred.promise;
+	}];
+
+	var routes = {
+		// Errors
+		'/403': {
+			templateUrl: 'views/errors/403.html'
+		},
+		'/404': {
+			templateUrl: 'views/errors/404.html'
+		},
+		'/500': {
+			templateUrl: 'views/errors/500.html'
+		},
+		'/503': {
+			templateUrl: 'views/errors/503.html'
+		},
+
+		// Login / Signup / Logout
+		'/signup': {
+			templateUrl: 'views/auth/signup-page.html',
+			controller: 'SignupController',
+			public: true,
+			resolve: {
+				data : ['AuthService', '$location', function(AuthService, $location) {
+					if (!AuthService.isAuthenticated()) {
+						$location.path('/login');
+					}
+				}]
+			}
+		},
+		'/login': {
+			templateUrl: 'views/auth/login-page.html',
+			controller: 'LoginController',
+			public: true,
+			resolve: {
+				data : ['AuthService', '$location', function(AuthService, $location) {
+					if (AuthService.isAuthenticated()) {
+						$location.path('/');
+					}
+				}]
+			}
+		},
+		'/logout': {
+			templateUrl: 'views/auth/logout-page.html',
+			controller: 'LogoutController',
+			resolve: {
+				data : ['AuthService', '$location', function(AuthService, $location) {
+					if (!AuthService.isAuthenticated()) {
+						$location.path('/');
+					}
+				}]
+			}
+		},
+
+		// Misc
+		'/' : {
+			templateUrl: 'views/dashboard/dashboard.html',
+			controller: 'DashboardController'
+		},
+		'/account': {
+			templateUrl: 'views/account.html',
+			controller: 'AccountController',
+		},
+
+		// Administration -> Modules
+		'/modules': {
+			templateUrl: 'views/modules/list.html',
+			controller: 'ModuleListController',
+			authorizedRoles: [USER_ROLES.administrator]
+		},
+		'/modules/new': {
+			templateUrl: 'views/modules/edit.html',
+			controller: 'ModuleDetailController',
+			authorizedRoles: [USER_ROLES.administrator]
+		},
+		'/modules/:module': {
+			templateUrl: 'views/modules/show.html',
+			controller: 'ModuleDetailController',
+			authorizedRoles: [USER_ROLES.administrator]
+		},
+		'/modules/:module/edit': {
+			templateUrl: 'views/modules/edit.html',
+			controller: 'ModuleDetailController',
+			authorizedRoles: [USER_ROLES.administrator]
+		},
+		'/modules/:module/delete': {
+			templateUrl: 'views/modules/delete.html',
+			controller: 'ModuleDetailController',
+			authorizedRoles: [USER_ROLES.administrator]
+		},
+		'/users': {
+			templateUrl: 'views/users/list.html',
+			controller: 'UserListController',
+			authorizedRoles: [USER_ROLES.administrator]
+		},
+		'/users/new': {
+			templateUrl: 'views/users/edit.html',
+			controller: 'UserDetailController',
+			authorizedRoles: [USER_ROLES.administrator]
+		},
+		'/users/:username': {
+			templateUrl: 'views/users/show.html',
+			controller: 'UserDetailController',
+			authorizedRoles: [USER_ROLES.administrator]
+		},
+		'/users/:username/edit': {
+			templateUrl: 'views/users/edit.html',
+			controller: 'UserDetailController',
+			authorizedRoles: [USER_ROLES.administrator]
+		},
+		'/users/:username/delete': {
+			templateUrl: 'views/users/delete.html',
+			controller: 'UserDetailController',
+			authorizedRoles: [USER_ROLES.administrator]
+		},
+
+		// Subjects
+		'/subjects': {
+			templateUrl: 'views/subjects/list.html',
+			controller: 'SubjectListController'
+		},
+		'/subjects/new': {
+			templateUrl: 'views/subjects/edit.html',
+			controller: 'SubjectDetailController'
+		},
+		'/subjects/:subject': {
+			templateUrl: 'views/subjects/show.html',
+			controller: 'SubjectDetailController'
+		},
+		'/subjects/:subject/edit': {
+			templateUrl: 'views/subjects/edit.html',
+			controller: 'SubjectDetailController'
+		},
+		'/subjects/:subject/delete': {
+			templateUrl: 'views/subjects/delete.html',
+			controller: 'SubjectDetailController'
+		},
+
+		// MAGIC RULES!!!!!!!
+		'/:module': {
+			templateUrl: 'views/modules/show.html',
+			controller: 'ModuleDetailController'
+		},
+		'/:module/:subject': {
+			templateUrl: 'views/members/show.html',
+			controller: 'MemberDetailController'
+		},
+		'/:module/:subject/edit': {
+			templateUrl: 'views/subjects/edit.html',
+			controller: 'SubjectDetailController'
+		},
+
+		// Subject -> Members
+		'/:module/:subject/members': {
+			templateUrl: 'views/members/list.html',
+			controller: 'MemberListController'
+		},
+		'/:module/:subject/members/new': {
+			templateUrl: 'views/members/edit.html',
+			controller: 'MemberListController'
+		},
+		'/:module/:subject/members/:member': {
+			templateUrl: 'views/members/show.html',
+			controller: 'MemberDetailController'
+		},
+		'/:module/:subject/members/:member/evaluation': {
+			templateUrl: 'views/evaluations/show.html',
+			controller: 'EvaluationDetailController'
+		},
+
+		// Subject -> Tasks
+		'/:module/:subject/tasks': {
+			templateUrl: 'views/tasks/list.html',
+			controller: 'TaskListController'
+		},
+		'/:module/:subject/tasks/new': {
+			templateUrl: 'views/tasks/edit.html',
+			controller: 'TaskDetailController'
+		},
+		'/:module/:subject/tasks/:task': {
+			templateUrl: 'views/tasks/show.html',
+			controller: 'TaskDetailController'
+		},
+		'/:module/:subject/tasks/:task/edit': {
+			templateUrl: 'views/tasks/edit.html',
+			controller: 'TaskDetailController'
+		},
+		'/:module/:subject/tasks/:task/delete': {
+			templateUrl: 'views/tasks/delete.html',
+			controller: 'TaskDetailController'
+		},
+		'/:module/:subject/tasks/import': {
+			templateUrl: 'views/tasks/import.html',
+			controller: 'TaskImportController'
+		},
+
+		// Subject-> Tasks -> Level
+		'/:module/:subject/tasks/:task/levels': {
+			templateUrl: 'views/levels/list.html',
+			controller: 'LevelListController'
+		},
+		'/:module/:subject/tasks/:task/levels/new': {
+			templateUrl: 'views/levels/edit.html',
+			controller: 'LevelDetailController'
+		},
+		'/:module/:subject/tasks/:task/levels/:level': {
+			templateUrl: 'views/levels/show.html',
+			controller: 'LevelDetailController'
+		},
+		'/:module/:subject/tasks/:task/levels/:level/edit': {
+			templateUrl: 'views/levels/edit.html',
+			controller: 'LevelDetailController'
+		},
+		'/:module/:subject/tasks/:task/levels/:level/delete': {
+			templateUrl: 'views/levels/delete.html',
+			controller: 'LevelDetailController'
 		}
 	};
-}]);
 
-app.config(['$httpProvider', function($httpProvider) {
-	$httpProvider.interceptors.push('httpErrorInterceptor');
-}]);
+	angular.forEach(routes, function(params, location) {
+		params.location = location;
 
-// Restrict routes
-/*app.config(['$httpProvider', function ($httpProvider) {
-	var requestInterceptor = ['$q', '$rootScope', '$injector',
-		function ($q, $rootScope, $injector) {
-			var interceptorInstance = {
-				request: function (config) {
-					//console.log(config);
-					var $route = $injector.get('$route');
-					if ($route.current) {
-						var currentRoute = $route.current.$$route.originalPath;
-						if ($route.routes[currentRoute]) {
-							if ($route.routes[currentRoute].loginRequired) {
-								console.log($route.current);
-								return $q.reject('login_required');
-							}
-						}
-					}
-					return config || $q.when(config);
+		var resolve = angular.extend({}, defaultResolvers, params.resolve || {});
+
+		if (params.public) {
+			delete resolve.userAuthenticated;
+		}
+
+		// Add role based resolver
+		if (params.authorizedRoles) {
+			resolve.authorizedRoles = ['$q', 'AuthService', function($q, AuthService) {
+				var deferred = $q.defer();
+
+				if (AuthService.isAuthorized(params.authorizedRoles)) {
+					deferred.resolve();
+				} else {
+					deferred.reject('missing_role');
 				}
-			};
-			return interceptorInstance;
-		}];
 
-	$httpProvider.interceptors.push(requestInterceptor);
-}]);*/
+				return deferred.promise;
+			}];
+		}
 
-app.config(function($routeProvider, $locationProvider) {
-	// Errors
+		params.resolve = resolve;
 
-	$routeProvider.when('/403', {
-		templateUrl: 'views/errors/403.html'
-	});
-	$routeProvider.when('/404', {
-		templateUrl: 'views/errors/404.html'
-	});
-	$routeProvider.when('/500', {
-		templateUrl: 'views/errors/500.html'
-	});
-	$routeProvider.when('/503', {
-		templateUrl: 'views/errors/503.html'
-	});
-
-	// Login / Signup / Logout
-
-	$routeProvider.when('/signup', {
-		templateUrl: 'views/auth/signup-page.html',
-		controller: 'SignupController'
-	});
-	$routeProvider.when('/login', {
-		templateUrl: 'views/auth/login-page.html',
-		controller: 'LoginController'
-	});
-	$routeProvider.when('/logout', {
-		templateUrl: 'views/auth/logout-page.html',
-		controller: 'LogoutController'
-	});
-
-	// Basics
-
-	$routeProvider.when('/', {
-		templateUrl: 'views/dashboard/dashboard.html',
-		controller: 'DashboardController'
-	});
-	$routeProvider.when('/account', {
-		templateUrl: 'views/account.html',
-		controller: 'AccountController',
-		loginRequired: true
-	});
-
-	// Administration -> Modules
-
-	$routeProvider.when('/modules', {
-		templateUrl: 'views/modules/list.html',
-		controller: 'ModuleListController'
-	});
-	$routeProvider.when('/modules/new', {
-		templateUrl: 'views/modules/edit.html',
-		controller: 'ModuleDetailController'
-	});
-	$routeProvider.when('/modules/:module', {
-		templateUrl: 'views/modules/show.html',
-		controller: 'ModuleDetailController'
-	});
-	$routeProvider.when('/modules/:module/edit', {
-		templateUrl: 'views/modules/edit.html',
-		controller: 'ModuleDetailController'
-	});
-	$routeProvider.when('/modules/:module/delete', {
-		templateUrl: 'views/modules/delete.html',
-		controller: 'ModuleDetailController'
-	});
-
-	// Administration -> Users
-
-	$routeProvider.when('/users', {
-		templateUrl: 'views/users/list.html',
-		controller: 'UserListController'
-	});
-	$routeProvider.when('/users/new', {
-		templateUrl: 'views/users/edit.html',
-		controller: 'UserDetailController'
-	});
-	$routeProvider.when('/users/:username', {
-		templateUrl: 'views/users/show.html',
-		controller: 'UserDetailController'
-	});
-	$routeProvider.when('/users/:username/edit', {
-		templateUrl: 'views/users/edit.html',
-		controller: 'UserDetailController'
-	});
-	$routeProvider.when('/users/:username/delete', {
-		templateUrl: 'views/users/delete.html',
-		controller: 'UserDetailController'
-	});
-
-	// Subjects
-
-	$routeProvider.when('/subjects', {
-		templateUrl: 'views/subjects/list.html',
-		controller: 'SubjectListController'
-	});
-	$routeProvider.when('/subjects/new', {
-		templateUrl: 'views/subjects/edit.html',
-		controller: 'SubjectDetailController'
-	});
-	$routeProvider.when('/subjects/:subject', {
-		templateUrl: 'views/subjects/show.html',
-		controller: 'SubjectDetailController'
-	});
-	$routeProvider.when('/subjects/:subject/edit', {
-		templateUrl: 'views/subjects/edit.html',
-		controller: 'SubjectDetailController'
-	});
-	$routeProvider.when('/subjects/:subject/delete', {
-		templateUrl: 'views/subjects/delete.html',
-		controller: 'SubjectDetailController'
-	});
-
-	// MAGIC RULES!!!!!!!
-
-	$routeProvider.when('/:module', {
-		templateUrl: 'views/modules/show.html',
-		controller: 'ModuleDetailController'
-	});
-	$routeProvider.when('/:module/:subject', {
-		templateUrl: 'views/members/show.html',
-		controller: 'MemberDetailController'
-	});
-	$routeProvider.when('/:module/:subject/edit', {
-		templateUrl: 'views/subjects/edit.html',
-		controller: 'SubjectDetailController'
-	});
-
-	// Subject -> Members
-
-	$routeProvider.when('/:module/:subject/members', {
-		templateUrl: 'views/members/list.html',
-		controller: 'MemberListController'
-	});
-	$routeProvider.when('/:module/:subject/members/new', {
-		templateUrl: 'views/members/edit.html',
-		controller: 'MemberListController'
-	});
-	$routeProvider.when('/:module/:subject/members/:member', {
-		templateUrl: 'views/members/show.html',
-		controller: 'MemberDetailController'
-	});
-	$routeProvider.when('/:module/:subject/members/:member/evaluation', {
-		templateUrl: 'views/evaluations/show.html',
-		controller: 'EvaluationDetailController'
-	});
-
-	// Subject -> Tasks
-
-	$routeProvider.when('/:module/:subject/tasks', {
-		templateUrl: 'views/tasks/list.html',
-		controller: 'TaskListController'
-	});
-	$routeProvider.when('/:module/:subject/tasks/new', {
-		templateUrl: 'views/tasks/edit.html',
-		controller: 'TaskDetailController'
-	});
-	$routeProvider.when('/:module/:subject/tasks/import', {
-		templateUrl: 'views/tasks/import.html',
-		controller: 'TaskImportController'
-	});
-	$routeProvider.when('/:module/:subject/tasks/:task', {
-		templateUrl: 'views/tasks/show.html',
-		controller: 'TaskDetailController'
-	});
-	$routeProvider.when('/:module/:subject/tasks/:task/edit', {
-		templateUrl: 'views/tasks/edit.html',
-		controller: 'TaskDetailController'
-	});
-	$routeProvider.when('/:module/:subject/tasks/:task/delete', {
-		templateUrl: 'views/tasks/delete.html',
-		controller: 'TaskDetailController'
-	});
-
-	// Tasks -> Level
-
-	$routeProvider.when('/:module/:subject/tasks/:task/levels', {
-		templateUrl: 'views/levels/list.html',
-		controller: 'LevelListController'
-	});
-	$routeProvider.when('/:module/:subject/tasks/:task/levels/new', {
-		templateUrl: 'views/levels/edit.html',
-		controller: 'LevelDetailController'
-	});
-	$routeProvider.when('/:module/:subject/tasks/:task/levels/:level', {
-		templateUrl: 'views/levels/show.html',
-		controller: 'LevelDetailController'
-	});
-	$routeProvider.when('/:module/:subject/tasks/:task/levels/:level/edit', {
-		templateUrl: 'views/levels/edit.html',
-		controller: 'LevelDetailController'
-	});
-	$routeProvider.when('/:module/:subject/tasks/:task/levels/:level/delete', {
-		templateUrl: 'views/levels/delete.html',
-		controller: 'LevelDetailController'
+		$routeProvider.when(location, params);
 	});
 
 	// Fallback
-
 	$routeProvider.otherwise({
 		templateUrl: 'views/errors/404.html'
 	});
 
 	$locationProvider.html5Mode(true);
-});
-
-app.run(function($rootScope, AuthService, AUTH_EVENTS, Session, $location) {
-
-	AuthService.refresh().then(function() {
-		$rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-	}, function() {
-		$rootScope.$broadcast(AUTH_EVENTS.loginFailed);
-	});
-
-	$rootScope.$on('$locationChangeStart', function(event) {
-		if ($location.path() === '/login' || $location.path() === '/logout' || $location.path() === '/signup') {
-			return;
-		}
-
-		AuthService.refresh().then(function(res) {
-			// Authentifizierung war erfolgreich
-			Session.create(Date.now(), res.data);
-			$rootScope.$broadcast(AUTH_EVENTS.loginRefreshed);
-		}, function() {
-			// Authentifizierung ist fehlgeschlagen, User abmelden
-			event.preventDefault();
-			AuthService.logout().then(function() {
-				$rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
-			}, function() {
-				$rootScope.$broadcast(AUTH_EVENTS.logoutFailed);
-			});
-		});
-	});
-});
+}]);

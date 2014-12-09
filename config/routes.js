@@ -39,7 +39,17 @@ routes.get('/*', function(req, res) {
 	if (req.path.indexOf('/views/') === 0) {
 		res.send(200, 'Illegal path: ' + req.path);
 	} else {
-		res.sendFile('index.html', { root: __dirname + '/../public' });
+		var role = 'public',
+			username = '';
+		if (req.user) {
+			role = req.user.role;
+			username = req.user.username;
+		}
+		res.cookie('user', JSON.stringify({
+			'username': username,
+			'role': role
+		}));
+		res.sendFile('_index.html', { root: __dirname + '/../public' });
 	}
 });
 

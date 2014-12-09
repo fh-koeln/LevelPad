@@ -1,16 +1,16 @@
 <!-- ⟨ ⟩ ❮ ❯ -->
 <nav class="clearfix">
 	<a class="hidden-xs" href="/"><h1>LevelPad </h1></a>
-    <a class="hidden-md hidden-lg hidden-sm" href="/"><h1>LP</h1></a>
+	<a class="hidden-md hidden-lg hidden-sm" href="/"><h1>LP</h1></a>
 
-    <h2 class="subtitle">Veranstaltungen</h2>
+	<h2 class="subtitle">Veranstaltungen</h2>
 
 	<ul class="menu-bar">
 		<li data-ng-hide="loggedIn" data-ng-class="{ active: $location.path() == '/login' }">
 			<a class="hidden-xs" href="/login" data-ng-click="login(); $event.preventDefault();">Login</a>
-            <a class="hidden-md hidden-lg hidden-sm" href="/login" data-ng-click="login(); $event.preventDefault();">
-                <span class="glyphicon glyphicon-align-justify"></span>
-            </a>
+			<a class="hidden-md hidden-lg hidden-sm" href="/login" data-ng-click="login(); $event.preventDefault();">
+				<span class="glyphicon glyphicon-align-justify"></span>
+			</a>
 		</li>
 		<li data-ng-show="loggedIn">
 			<div class="dropdown">
@@ -19,14 +19,14 @@
 					<small data-ng-bind="'(' + user.role + ')'"></small>
 					<b class="caret"></b>
 				</a>
-                <a class="hidden-sm hidden-md hidden-lg" data-toggle="dropdown">
-                    <span class="glyphicon glyphicon-align-justify"></span>
-                </a>
+				<a class="hidden-sm hidden-md hidden-lg" data-toggle="dropdown">
+					<span class="glyphicon glyphicon-align-justify"></span>
+				</a>
 				<ul class="dropdown-menu pull-right" role="menu">
 					<li ng-show="user.role!=='guest'" data-ng-class="{ active: $location.path() == '/account' }"><a data-ng-href="/account">Account</a></li>
 					<li><a href="/logout" data-ng-click="logout(); $event.preventDefault();">Logout</a></li>
-                    <li ng-show="user.role==='administrator'" class="divider"></li>
-                    <li ng-show="user.role==='administrator'" data-ng-class="{ active: $location.path() == '/modules' }"><a href="/modules">Administration</a></li>
+					<li ng-show="user.role==='administrator'" class="divider"></li>
+					<li ng-show="user.role==='administrator'" data-ng-class="{ active: $location.path() == '/modules' }"><a href="/modules">Administration</a></li>
 				</ul>
 			</div>
 		</li>

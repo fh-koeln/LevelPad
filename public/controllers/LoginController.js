@@ -1,4 +1,4 @@
-angular.module('levelPad').controller('LoginController', function($scope, $rootScope, $location, AUTH_EVENTS, AuthService, AlertService, Session, USER_ROLES) {
+angular.module('levelPad').controller('LoginController', function($scope, $rootScope, $location, AUTH_EVENTS, AuthService, AlertService, USER_ROLES) {
 	'use strict';
 
 	$scope.credentials = {
@@ -8,19 +8,13 @@ angular.module('levelPad').controller('LoginController', function($scope, $rootS
 
 	$scope.login = function($event) {
 		$($event.target).find('button[type=submit]').button('loading');
-		AuthService.login($scope.credentials).then(function(res) {
-			Session.create(Date.now(), res.data);
-			$rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-			$rootScope.$broadcast(AUTH_EVENTS.loginRefreshed);
-		}, function() {
-			$rootScope.$broadcast(AUTH_EVENTS.loginFailed);
-		}).finally(function() {
+		AuthService.login($scope.credentials).finally(function() {
 			$($event.target).find('button[type=submit]').button('reset');
 		});
 	};
 
 	$rootScope.$on(AUTH_EVENTS.loginSuccess, function() {
-		var user = Session.user;
+		var user = AuthService.user;
 		if (user.role !== USER_ROLES.guest) {
 			$location.path('/');
 		} else {
