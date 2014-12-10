@@ -10,17 +10,9 @@ angular.module('levelPad').controller('LevelListController', [
 	$scope.module = $routeParams.module;
 	$scope.task = $routeParams.task;
 
-	function prepareLevel(level) {
-		level.descriptionItems = level.description.split('*');
-		return level;
-	}
-
 	$scope.update = function () {
-		$scope.levels = [];
-		Level.query({ module: $routeParams.module, subject: $routeParams.subject, task: $routeParams.task }, function(tasks) {
-			angular.forEach(tasks, function(level) {
-				$scope.levels.push(prepareLevel(level));
-			});
+		Level.query({ module: $routeParams.module, subject: $routeParams.subject, task: $routeParams.task }, function(levels) {
+			$scope.levels = levels;
 		}, function() {
 			alert('Could not load levels.');
 		});

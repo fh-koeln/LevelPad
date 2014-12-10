@@ -7,7 +7,8 @@ var app = angular.module('levelPad', [
 	'ngRoute',
 	'ui.bootstrap',
 	'ui',
-	'tc.chartjs'
+	'tc.chartjs',
+	'btford.markdown'
 ]);
 
 app.config(['$logProvider', function($logProvider) {
