@@ -16,7 +16,7 @@ exports.list = function(callback, filter) {
 
 			filter = filter || {};
 
-			Subject.find(filter).populate('module').exec(next);
+			Subject.find(filter).select('-registrationPassword -tasks').populate('module').exec(next);
 		}
 	], callback);
 
