@@ -612,25 +612,24 @@ table > tbody > tr > .students-table-element{
 	/ width and height can be anything, as long as they're equal /
 }
 
-
-.negative-filled{
-	background-color: #E886B7;
-}
-
-.negative-empty{
+.negative{
 	background-color: transparent;
 	border: 2px solid;
 	border-color: #E886B7;
 }
 
-.positive-filled{
-	background-color: #72CE1F;
+.negative.filled{
+	background-color: #E886B7;
 }
 
-.positive-empty{
+.positive{
 	background-color: transparent;
 	border: 2px solid;
 	border-color: #72CE1F;
+}
+
+.positive.filled{
+	background-color: #72CE1F;
 }
 
 .circle-text{
