@@ -23,10 +23,10 @@
 					<span class="glyphicon glyphicon-align-justify"></span>
 				</a>
 				<ul class="dropdown-menu pull-right" role="menu">
-					<li ng-show="user.role!=='guest'" data-ng-class="{ active: $location.path() == '/account' }"><a data-ng-href="/account">Account</a></li>
+					<li data-access-roles="[userRoles.administrator, userRoles.lecturer, userRoles.assistant, userRoles.student]" data-active-nav><a data-ng-href="/account">Account</a></li>
 					<li><a href="/logout" data-ng-click="logout(); $event.preventDefault();">Logout</a></li>
-					<li data-access-roles="'administrator'" class="divider"></li>
-					<li data-access-roles="'administrator'" data-ng-class="{ active: $location.path() == '/modules' }"><a href="/modules">Administration</a></li>
+					<li data-access-roles="userRoles.administrator" class="divider"></li>
+					<li data-access-roles="userRoles.administrator" data-active-nav><a href="/modules">Administration</a></li>
 				</ul>
 			</div>
 		</li>
