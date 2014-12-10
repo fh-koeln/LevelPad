@@ -2,6 +2,8 @@
 angular.module('levelPad').controller('ApplicationController', ['$rootScope', '$scope', '$location', 'USER_ROLES', 'AUTH_EVENTS', 'AuthService', function($rootScope, $scope, $location, USER_ROLES, AUTH_EVENTS, AuthService) {
 
 
+	$scope.location = $location;
+
 	AuthService.refresh();
 
 	$rootScope.$on('$routeChangeError', function(event, current, previous, rejection) {

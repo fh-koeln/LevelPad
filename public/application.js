@@ -273,6 +273,8 @@ app.config(['$routeProvider', '$locationProvider', 'USER_ROLES', function($route
 
 	angular.forEach(routes, function(params, location) {
 		params.location = location;
+		params.caseInsensitiveMatch = true;
+		params.reloadOnSearch = false;
 
 		var resolve = angular.extend({}, defaultResolvers, params.resolve || {});
 
