@@ -216,7 +216,7 @@ app.config(['$routeProvider', '$locationProvider', 'USER_ROLES', function($route
 			templateUrl: 'views/members/show.html',
 			controller: 'MemberDetailController'
 		},
-		'/:module/:subject/members/:member/evaluation': {
+		'/:module/:subject/members/:member/:task': {
 			templateUrl: 'views/evaluations/show.html',
 			controller: 'EvaluationDetailController'
 		},

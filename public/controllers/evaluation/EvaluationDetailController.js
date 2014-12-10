@@ -6,9 +6,11 @@ angular.module('levelPad').controller('EvaluationDetailController', [
 		
 		'use strict';
 		
-		$scope.module = CurrentModule;
-		$scope.subject = CurrentSubject;
+		$scope.subject = $routeParams.subject;
+		$scope.module = $routeParams.module;
 		$scope.showComments = 0;
+		
+		
 		
 		$scope.member = [
 			{
@@ -17,9 +19,17 @@ angular.module('levelPad').controller('EvaluationDetailController', [
 		];
 		
 		$scope.update = function () {
+			if ($routeParams.task) {
+				$scope.task = Task.get({
+					module: $routeParams.module,
+					subject: $routeParams.subject,
+					task: $routeParams.task
+				})}
 
 		};
 		
 		$scope.update();
+		
+		console.log($routeParams.task);
 	
 	}]);
