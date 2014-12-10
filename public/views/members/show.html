@@ -68,17 +68,19 @@
     <tbody>
 		<tr data-ng-repeat="task in subject.tasks">
             <th class="col-xs-10 col-sm-10 col-md-10 table-student">
-                <div class="col-sm-6 col-md-6 table-student-align">{{ task.title }}
-                    <span class="hidden-md hidden-lg hidden-sm gewichtung-font"> ({{ task.weight }}%)</span>
-                </div>
-                <div class="col-sm-6 col-md-6 table-circle-align">
-                    <div class="small-circle negative-filled"> </div>
-                    <div class="small-circle positive-filled"> </div>
-                    <div class="small-circle positive-filled"> </div>
-                    <div class="small-circle positive-empty"> </div>
-                    <br/>
-                    akzeptable Lösung
-                </div>
+				<a class="level-link" data-ng-href="{{ subject.module.slug }}/{{ subject.slug }}/members/{{member._id}}/{{ task.slug }}">
+					<div class="col-sm-6 col-md-6 table-student-align">{{ task.title }}
+						<span class="hidden-md hidden-lg hidden-sm gewichtung-font"> ({{ task.weight }}%)</span>
+					</div>
+					<div class="col-sm-6 col-md-6 table-circle-align">
+						<div class="small-circle negative-filled"> </div>
+						<div class="small-circle positive-filled"> </div>
+						<div class="small-circle positive-filled"> </div>
+						<div class="small-circle positive-empty"> </div>
+						<br/>
+						akzeptable Lösung
+					</div>
+				</a>
             </th>
             <td class="col-sm-2 col-md-2 hidden-xs circle-table text-center">
                 <div class="medium-circle text-center">

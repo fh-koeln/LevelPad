@@ -250,6 +250,10 @@ a.levels-edit-icon{
     text-decoration: none;
 }
 
+.level-link{
+	width: 100%;
+}
+
 .form-control::-moz-placeholder {
     color: #c0c0c0;
 }

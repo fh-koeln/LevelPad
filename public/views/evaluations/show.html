@@ -5,11 +5,30 @@
 				data-ng-show="cancel" data-ng-click="cancel();">&times;</button>
 		<div id="edit-title" class="modal-title">
 			<span class="head-font-bold">Bewertung </span>
-			<span class="head-font-normal">- Angebot und Anschreiben erstellen</span>
+			<span class="head-font-normal">- {{task.title}}</span>
 		</div>
 	</header>
+	
+	Active ist: {{evaluation.level}} !
+	
 	<div class="modal-body">
-		<div class="col-sm-8" data-ng-init="checked='third'">
+		<div class="col-sm-8" data-ng-repeat="level in task.levels | orderBy:'rank'" class="item">
+			<div class="task-box" data-ng-class="evaluation.level==level._id ? (level.isMinimum == true ? 'positive-task' : 'negative-task'): '' ">
+				<span data-ng-class="level.isMinimum == true ? 'task-color' : 'task-bad-color'">{{level.title}}</span>
+				<label class=" right-radio">
+					<input type="radio" name="rating" value="{{level._id}}" data-ng-model="evaluation.level" data-ng-click="save();">
+				</label>
+				<div>
+					<ul class="level-list">
+						<div btf-markdown="level.description"></div>
+					</ul>	
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!--<div class="modal-body">
+		<div class="col-sm-8">
 			<div class="task-box" data-ng-class="{'positive-task': checked=='first'}">
 				<span class="task-color">Beste Lösung</span>
 				<label class=" right-radio">
@@ -86,6 +105,8 @@
 				</div>
 			</div>
 		</div>
+
+-->
 		<div class="col-sm-4">
 			<label>
                 <input type="checkbox" ng-model="showComments" value="1"> <span class="head-font-normal">Kommentare einblenden</span>
