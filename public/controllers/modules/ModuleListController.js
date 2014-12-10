@@ -4,8 +4,9 @@ angular.module('levelPad').controller('ModuleListController', ['$scope', '$route
 	'use strict';
 
 	$scope.update = function() {
-		$scope.modules = Module.query(function() {
-
+		$scope.modules = [];
+		Module.query(function(modules) {
+			$scope.modules = modules;
 		}, function() {
 			alert('Could not load modules.');
 		});
@@ -14,7 +15,6 @@ angular.module('levelPad').controller('ModuleListController', ['$scope', '$route
 
 	$scope.showCreateDialog = function() {
 		var dialog = new DialogService('/modules/new');
-		dialog.scope.module = new Module();
 		dialog.scope.submit = function() {
 			dialog.scope.module.$save(function() {
 				dialog.submit();
@@ -28,32 +28,18 @@ angular.module('levelPad').controller('ModuleListController', ['$scope', '$route
 
 	$scope.showEditDialog = function(module) {
 		var dialog = new DialogService('/modules/:module/edit');
-		dialog.scope.module = angular.copy(module);
+		dialog.scope.moduleSlug = module.slug;
 		dialog.scope.submit = function() {
-			dialog.scope.module.$save(function() {
-				dialog.submit();
+			this._save().then(function() {
 				$scope.update();
+				dialog.submit();
 			}, function() {
 				alert('Fehler!');
 			});
 		};
-		dialog.scope.showDeleteDialog = function() {
+		dialog.scope.showConfirmDeleteDialog = function() {
 			dialog.cancel();
-			$scope.showDeleteDialog(module);
-		};
-		dialog.open();
-	};
-
-	$scope.showDeleteDialog = function(module) {
-		var dialog = new DialogService('/modules/:module/delete');
-		dialog.scope.module = angular.copy(module);
-		dialog.scope.delete = function() {
-			dialog.scope.module.$delete(function() {
-				dialog.submit();
-				$scope.update();
-			}, function() {
-				alert('Fehler!');
-			});
+			this.showDeleteDialog(module);
 		};
 		dialog.open();
 	};

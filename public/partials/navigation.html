@@ -25,8 +25,8 @@
 				<ul class="dropdown-menu pull-right" role="menu">
 					<li ng-show="user.role!=='guest'" data-ng-class="{ active: $location.path() == '/account' }"><a data-ng-href="/account">Account</a></li>
 					<li><a href="/logout" data-ng-click="logout(); $event.preventDefault();">Logout</a></li>
-					<li ng-show="user.role==='administrator'" class="divider"></li>
-					<li ng-show="user.role==='administrator'" data-ng-class="{ active: $location.path() == '/modules' }"><a href="/modules">Administration</a></li>
+					<li data-access-roles="'administrator'" class="divider"></li>
+					<li data-access-roles="'administrator'" data-ng-class="{ active: $location.path() == '/modules' }"><a href="/modules">Administration</a></li>
 				</ul>
 			</div>
 		</li>
