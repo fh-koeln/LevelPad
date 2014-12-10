@@ -33,15 +33,15 @@
         </div>
         <div class="col-xs-4 col-sm-4 col-md-3 rating-box-medium text-center">
             <div class="medium-circle">
-				<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
-				<span class="circle-text">2,0</span>
+				<canvas tc-chartjs-pie chart-options="options" chart-data="member.relGrade"></canvas>
+				<span class="circle-text">{{relGrade}}</span>
 			</div>
             <div>relative Note</div>
         </div>
         <div class="col-xs-4 col-sm-4 col-md-3 rating-box-medium text-center">
             <div class="medium-circle">
 				<canvas tc-chartjs-pie chart-options="options" chart-data="member._artefacts"></canvas>
-				<span class="circle-text">{{ member.evaluation.length || 0 }}</span>
+				<span class="circle-text">{{ member.evaluations.length || 0 }}</span>
 			</div>
             <div>Artefakte ({{ subject.tasks.length }})</div>
         </div>
@@ -72,13 +72,10 @@
 					<div class="col-sm-6 col-md-6 table-student-align">{{ task.title }}
 						<span class="hidden-md hidden-lg hidden-sm gewichtung-font"> ({{ task.weight }}%)</span>
 					</div>
-					<div class="col-sm-6 col-md-6 table-circle-align">
-						<div class="small-circle negative-filled"> </div>
-						<div class="small-circle positive-filled"> </div>
-						<div class="small-circle positive-filled"> </div>
-						<div class="small-circle positive-empty"> </div>
+					<div class="col-sm-6 col-md-6 table-circle-align" >
+						<div class="small-circle" data-ng-repeat="level in task.levels | orderBy:'rank':true" data-ng-class="{ 'positive' : level.isMinimum, 'negative' : !level.isMinimum , 'filled' : task.level.rank<=level.rank} " > </div>
 						<br/>
-						akzeptable Lösung
+						{{task.level.title || 'noch nicht bewertet'}}
 					</div>
 				</a>
             </th>
