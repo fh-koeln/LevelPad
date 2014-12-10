@@ -14,7 +14,7 @@
 -->
 <ul class="nav nav-tabs hidden-xs">
 	<li data-ng-class="{ 'active': $location.path() == '/' + subject.module.slug + '/' + subject.slug + '/members' }">
-		<a href="{{ subject.module.slug }}/{{ subject.slug }}/members">Teilnehmer (120)</a><!--Teilnehmerzahl dynamisch-->
+		<a href="{{ subject.module.slug }}/{{ subject.slug }}/members">Teilnehmer ({{ subject.members.length || 0 }})</a><!--Teilnehmerzahl dynamisch-->
 	</li>
 	<li data-ng-class="{ 'active': $location.path() == '/' + subject.module.slug + '/' + subject.slug + '/tasks' }">
 		<a href="{{ subject.module.slug }}/{{ subject.slug }}/tasks">Learning Outcomes</a>

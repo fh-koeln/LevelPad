@@ -40,10 +40,10 @@
         </div>
         <div class="col-xs-4 col-sm-4 col-md-3 rating-box-medium text-center">
             <div class="medium-circle">
-				<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
-				<span class="circle-text">2</span>
+				<canvas tc-chartjs-pie chart-options="options" chart-data="member._artefacts"></canvas>
+				<span class="circle-text">{{ member.evaluation.length || 0 }}</span>
 			</div>
-            <div>Artefakte (5)</div>
+            <div>Artefakte ({{ subject.tasks.length }})</div>
         </div>
     </div>
 </div>
@@ -66,10 +66,10 @@
 
     </thead>
     <tbody>
-        <tr>
+		<tr data-ng-repeat="task in subject.tasks">
             <th class="col-xs-10 col-sm-10 col-md-10 table-student">
-                <div class="col-sm-6 col-md-6 table-student-align">Angebot und Anschreiben erstellen
-                    <span class="hidden-md hidden-lg hidden-sm gewichtung-font"> (30%)</span>
+                <div class="col-sm-6 col-md-6 table-student-align">{{ task.title }}
+                    <span class="hidden-md hidden-lg hidden-sm gewichtung-font"> ({{ task.weight }}%)</span>
                 </div>
                 <div class="col-sm-6 col-md-6 table-circle-align">
                     <div class="small-circle negative-filled"> </div>
@@ -82,33 +82,8 @@
             </th>
             <td class="col-sm-2 col-md-2 hidden-xs circle-table text-center">
                 <div class="medium-circle text-center">
-					<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
-					<span class="circle-text">30%</span>
-				</div>
-            </td>
-            <td class="col-xs-2 hidden-md hidden-lg hidden-sm text-right arrow-right"> ⟩ </td>
-        </tr>
-        <tr>
-            <th class="col-xs-10 col-sm-10 col-md-10 table-student">
-                <div class="col-sm-6 col-md-6 table-student-align">Styleguide
-                    <span class="hidden-md hidden-lg hidden-sm gewichtung-font"> (70%)</span>
-                </div>
-                <div class="col-sm-6 col-md-6 table-circle-align">
-                    <div class="small-circle negative-empty"> </div>
-                    <div class="small-circle negative-empty"> </div>
-                    <div class="small-circle positive-empty"> </div>
-                    <div class="small-circle positive-empty"> </div>
-                    <div class="small-circle positive-empty"> </div>
-                    <div class="small-circle positive-empty"> </div>
-                    <div class="small-circle positive-empty"> </div>
-                    <br/>
-                    gute Lösung
-                </div>
-            </th>
-            <td class="col-sm-2 col-md-2 hidden-xs circle-table text-center">
-                <div class="medium-circle ">
-					<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
-					<span class="circle-text">70%</span>
+					<canvas tc-chartjs-pie chart-options="options" chart-data="task._taskWeight"></canvas>
+					<span class="circle-text">{{ task.weight }}%</span>
 				</div>
             </td>
             <td class="col-xs-2 hidden-md hidden-lg hidden-sm text-right arrow-right"> ⟩ </td>

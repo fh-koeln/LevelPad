@@ -186,6 +186,11 @@ a.levels-edit-icon{
     vertical-align: middle;
 }
 
+.level-interaction-link{
+	color: #77aabb;
+    vertical-align: middle;
+}
+
 .interaction-link > a {
 	color: #77aabb;
 }
@@ -546,6 +551,10 @@ label.right-radio{
 
 span.student-lastname{
     font-weight: 600;
+}
+
+span.student-forename{
+    font-weight: normal;
 }
 
 .small-font{
