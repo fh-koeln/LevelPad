@@ -81,7 +81,19 @@ angular.module('levelPad').service('Member', ['RestfulResource', function(Restfu
 	return RestfulResource('/api/modules/:module/subjects/:subject/members/:member', {
 		module: '@subject.module.slug',
 		subject: '@subject.slug',
-		member: '@id'
+		member: '@_id'
+	});
+}]);
+
+/**
+ * Provides a Module -> Subject -> Member -> Evaluation REST API.
+ */
+angular.module('levelPad').service('Evaluation', ['RestfulResource', function(RestfulResource) {
+	return RestfulResource('/api/modules/:module/subjects/:subject/members/:member/evaluations/:evaluation', {
+		module: '@subject.module.slug',
+		subject: '@subject.slug',
+		member: '@_id',
+		evaluation: '@_id'
 	});
 }]);
 
