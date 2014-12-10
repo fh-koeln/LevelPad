@@ -1,9 +1,9 @@
 <!--
 	Navbar für große Devices
 -->
-<ul class="nav nav-tabs hidden-xs " data-ng-init="filterStatus='active'"> <!--Filterstatus muss geaendert werden fuer Aktiv und inaktive-->
-	<li class="" data-ng-class="{ 'active': filterStatus=='active' }"><a data-ng-click="filterStatus='active' ">Deine Aktive Veranstaltungen</a></li>
-	<li class="" data-ng-class="{ 'active': filterStatus=='inactive' }"><a data-ng-click="filterStatus='inactive'">Deine Inaktive Veranstaltungen</a></li>
+<ul class="nav nav-tabs hidden-xs " data-ng-init="filterStatus = location.search()['status'] || 'active'">
+	<li data-active-nav><a data-ng-click="filterStatus='active';" href="/">Deine aktiven Veranstaltungen</a></li>
+	<li data-active-nav><a data-ng-click="filterStatus='inactive';" href="/?status=inactive">Deine inaktiven Veranstaltungen</a></li>
 	<li><a href="/subjects">Alle Veranstaltungen anzeigen</a></li>
 </ul>
 

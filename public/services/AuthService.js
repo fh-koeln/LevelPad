@@ -105,6 +105,7 @@ angular.module('levelPad').factory('AuthService', function ($rootScope, $q, $htt
 	};
 
 	authService.user = currentUser;
+	authService.userRoles = USER_ROLES;
 
 	return authService;
 });

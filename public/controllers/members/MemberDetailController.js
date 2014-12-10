@@ -7,10 +7,19 @@ angular.module('levelPad').controller('MemberDetailController', [
 		'use strict';
 		$scope.module = CurrentModule;
 		$scope.subject = CurrentSubject;
+		
 		var relGrade = 0;
 		var weightSum = 0;
 		
 		
+		function objectFindByKey(array, key, value) {
+			for (var i = 0; i < array.length; i++) {
+				if (array[i][key] === value) {
+					return array[i];
+				}
+			}
+			return null;
+		}
 
 		$scope.go = function(path) {
 			$location.path(path);
@@ -78,18 +87,34 @@ angular.module('levelPad').controller('MemberDetailController', [
 			}
 		);
 		
-		//function relativeGrade(){
-		//	angular.forEach($scope.subject.tasks, function(task) {
-		//		weightSum += task.weight;
-		//	}
+		function relativeGrade(){
+			angular.forEach($scope.subject.tasks, function(task) {
+				var countMin = 0;
+				var evaluation = objectFindByKey($scope.member.evaluations, 'task', task._id);
+				
+				if (evaluation){
+					weightSum += task.weight;
+					var level = objectFindByKey(task.levels, '_id', evaluation.level);
+					angular.forEach(task.levels, function(level) {
+						if(level.isMinimum == true){
+							countMin +=1;
+						}
+					});
+					if(level){
+						task.level = level;
+					}
+					relGrade+= (3/(countMin-1) * (task.level.rank -1) +1) * task.weight;
+				}
+				
+			});
+			relGrade = relGrade / weightSum;
+			console.log(relGrade);
 			
-		//	return relGrade
-		//};
+			return relGrade
+		};
 		
 		function prepareMember() {
-			console.log($scope.member);
-			console.log($scope.subject);
-			
+			$scope.relGrade = Math.round( relativeGrade() * 100) / 100;
 			
 			$scope.member._artefacts = [
 				{
@@ -108,13 +133,13 @@ angular.module('levelPad').controller('MemberDetailController', [
 			$scope.member.relGrade = [
 				{
 					title:'Note',
-					value: 2,
+					value: 1/$scope.relGrade,
 					color: '#77cc00',
 					highlight: '#88dd11'
 				},
 				{
 					title:'Rest',
-					value: 5 - 2,
+					value: 1 - 1/$scope.relGrade,
 					color:'lightgray',
 					highlight: 'lightgray'
 				}
@@ -122,19 +147,28 @@ angular.module('levelPad').controller('MemberDetailController', [
 			
 			angular.forEach($scope.subject.tasks, function(task) {
 				task._taskWeight = [
-				{
-					title:'Task',
-					value: task.weight,
-					color: '#77cc00',
-					highlight: '#88dd11'
-				},
-				{
-					title:'Rest',
-					value: 100- task.weight,
-					color:'lightgray',
-					highlight: 'lightgray'
+					{
+						title:'Task',
+						value: task.weight,
+						color: '#77cc00',
+						highlight: '#88dd11'
+					},
+					{
+						title:'Rest',
+						value: 100- task.weight,
+						color:'lightgray',
+						highlight: 'lightgray'
+					}
+				];
+				
+				var evaluation = objectFindByKey($scope.member.evaluations, 'task', task._id);
+				if (evaluation){
+					var level = objectFindByKey(task.levels, '_id', evaluation.level);
+					if(level){
+						task.level = level;
+					}
 				}
-			];
+				
 			});
 		}
 

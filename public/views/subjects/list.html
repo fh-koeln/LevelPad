@@ -1,9 +1,9 @@
 <!--
 	Navbar für große Devices
 -->
-<ul class="nav nav-tabs hidden-xs " data-ng-init="filterStatus='active'"> <!--Filterstatus muss geaendert werden fuer Aktiv und inaktive-->
-	<li class="" data-ng-class="{ 'active': filterStatus=='active' }"><a data-ng-click="filterStatus='active' ">Alle aktiven Veranstaltungen</a></li>
-	<li class="" data-ng-class="{ 'active': filterStatus=='inactive' }"><a data-ng-click="filterStatus='inactive'">Alle inaktiven Veranstaltungen</a></li>
+<ul class="nav nav-tabs hidden-xs " data-ng-init="filterStatus = location.search()['status'] || 'active'">
+	<li data-active-nav><a data-ng-click="filterStatus='active';" href="/subjects">Alle aktiven Veranstaltungen</a></li>
+	<li data-active-nav><a data-ng-click="filterStatus='inactive';" href="/subjects?status=inactive">Alle inaktiven Veranstaltungen</a></li>
 </ul>
 
 <!--
@@ -20,7 +20,7 @@
 				<input type="text" placeholder="Veranstaltung, Jahr, ..." data-ng-model="searchText" autocomplete="off" class="form-control search-input" />
 			</div>
 		</div>
-		<div class="col-md-5 interaction-link">
+		<div data-access-roles="[userRoles.administrator, userRoles.lecturer]" class="col-md-5 interaction-link">
 			<a data-ng-href="/subjects/new" data-ng-click="showCreateDialog(); $event.preventDefault();">+ neue Veranstaltung anlegen</a>
 		</div>
 	</div>
@@ -35,11 +35,11 @@
 		<div class="dropdown col-xs-10 dropdown-box">
 			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Aktive Veranstaltungen <span class="caret btn-dropdown"></span></a>
 			<ul class="dropdown-menu" role="menu"> <!-- TODO: Change the Dropdown Text-->
-				<li class="" data-ng-class="{ 'active': filterStatus=='active' }">
-					<a data-ng-click="filterStatus='active'">Aktive Veranstaltungen</a>
+				<li data-active-nav>
+					<a data-ng-click="filterStatus='active'" href="/subjects">Aktive Veranstaltungen</a>
 				</li>
-				<li class=""  data-ng-class="{ 'active': filterStatus=='inactive' }">
-					<a data-ng-click="filterStatus='inactive'">Inaktive Veranstaltungen</a>
+				<li data-active-nav>
+					<a data-ng-click="filterStatus='inactive'" href="/subjects?status=inactive">Inaktive Veranstaltungen</a>
 				</li>
 			</ul>
 		</div>

@@ -1,50 +1,46 @@
 /* global alert */
 
 angular.module('levelPad').controller('ModuleDetailController', [
-	'$scope', '$routeParams', '$log', 'DialogService', 'Module', 'Subject', 'CurrentModule',
-	function ($scope, $routeParams, $log, DialogService, Module, Subject, CurrentModule) {
+	'$scope', '$routeParams', '$log', 'DialogService', 'Module', '$route',
+	function ($scope, $routeParams, $log, DialogService, Module, $route) {
 
 	'use strict';
 
-	$scope.module = $scope.module || CurrentModule || new Module();
 
-	// Notice: The following scope variables will be prefilled when
-	// this detail controller is opened within another controller
-	// in a modal dialog! So we must not override these callbacks here!
+	$scope.update = function() {
+		var moduleSlug = $routeParams.module || $scope.moduleSlug;
+		if (moduleSlug) {
+			$scope.module = Module.get({
+				module: moduleSlug,
+			}, function() {
+			});
+		} else {
+			$scope.module = new Module();
+		}
+	};
 
-	if (!$scope.submit) {
-		$scope.submit = function () {
-			$scope.module.$save(function () {
-				$scope.update();
+	$scope.update();
+
+	$scope._save = function() {
+		return $scope.module.$save();
+	};
+
+	$scope._delete = function() {
+		return $scope.module.$delete();
+	};
+
+	$scope.showDeleteDialog = function(module) {
+		var dialog = new DialogService('/modules/:module/delete');
+		console.log(module);
+		dialog.scope.moduleSlug = module.slug;
+		dialog.scope.delete = function () {
+			this._delete().then(function() {
+				dialog.submit();
+				$route.reload();
 			}, function () {
-				alert('Error!');
+				alert('Fehler!');
 			});
 		};
-	}
-
-	if (!$scope.delete) {
-		$scope.delete = function () {
-			$scope.module.$delete(function () {
-				$scope.update();
-			}, function () {
-				alert('Error!');
-			});
-		};
-	}
-
-	if (!$scope.showDeleteDialog) {
-		$scope.showDeleteDialog = function (module) {
-			var dialog = new DialogService('/modules/:module/delete');
-			dialog.scope.module = angular.copy(module);
-			dialog.scope.delete = function () {
-				dialog.scope.module.$delete(function () {
-					dialog.submit();
-				}, function () {
-					alert('Fehler!');
-				});
-			};
-			dialog.open();
-		};
-	}
-
+		dialog.open();
+	};
 }]);
