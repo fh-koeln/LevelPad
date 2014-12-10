@@ -27,9 +27,7 @@
 				</span>
 				<div class="task-text">
 					<ul class="level-list" collapse="!isOpen1">
-						<li data-ng-repeat="descriptionItem in level.descriptionItems track by $index">
-							{{descriptionItem}}
-						</li>
+						<div btf-markdown="level.description"></div>
 					</ul>
 				</div>
 			</td>
