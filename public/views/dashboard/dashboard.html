@@ -60,7 +60,7 @@
 
 <table class="table table-striped table-hover">
 	<tbody>
-	<tr data-ng-repeat="subject in subjects | filter:filterStatus:true | filter:searchText">
+	<tr data-ng-repeat="subject in subjects | orderBy:['-subject.year','-subject.semester'] | filter:filterStatus:true | filter:searchText">
 		<th class="col-xs-10 col-md-10 subject-item-title">
 			<a ng-if="subject.role==='creator'||subject.role==='assistant'" data-ng-href="{{ subject.subject.module.slug }}/{{ subject.subject.slug }}/members" style="display: inline;"><span class="module-name">{{ subject.subject.module.name }}</span><br/></a>
 			<a ng-if="subject.role==='member'" data-ng-href="{{ subject.subject.module.slug }}/{{ subject.subject.slug }}" style="display: inline;"><span class="module-name">{{ subject.subject.module.name }}</span><br/></a>

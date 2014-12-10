@@ -56,7 +56,6 @@ angular.module('levelPad').service('AlertService', ['$rootScope', '$log', functi
 
 	$rootScope.$on('$routeChangeError', function() {
 		$scope.clear();
-		$scope.showError('Could not load new route!');
 	});
 
 	return $scope;

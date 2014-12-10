@@ -5,6 +5,7 @@ var express = require('express'),
 	helmet = require('helmet'),
 	bodyParser = require('body-parser'),
 	session = require('express-session'),
+	favicon = require('serve-favicon'),
 	MongoStore = require('connect-mongo')(session);
 
 /**
@@ -75,7 +76,7 @@ module.exports = function(app) {
 	}));
 
 	// Static resources
-	//app.use(express.favicon(path.join(__dirname, '../public', 'favicon.ico')));
+	app.use(favicon(path.join(__dirname, '../public', '/favicon.ico')));
 
 	// TODO remove this and later. It only adds the view name to all public/views files! :-)
 	app.use(function(req, res, next) {
