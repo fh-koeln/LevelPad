@@ -26,14 +26,14 @@
     <div class="col-xs-12 col-sm-7 rating-box">
         <div class="col-xs-4 col-sm-4 col-md-6 rating-box-large text-center">
             <div class="large-circle">
-				<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
-				<span class="large-circle-text">4,0</span>
+				<canvas tc-chartjs-pie chart-options="options" chart-data="absGrade<=4 ? member._absGrade : member._noneAbsGrade"></canvas>
+				<span class="large-circle-text">{{absGrade}}</span>
 			</div>
             <div>absolute Note</div>
         </div>
         <div class="col-xs-4 col-sm-4 col-md-3 rating-box-medium text-center">
             <div class="medium-circle">
-				<canvas tc-chartjs-pie chart-options="options" chart-data="member.relGrade"></canvas>
+				<canvas tc-chartjs-pie chart-options="options" chart-data="relGrade<=4 ? member._relGrade : member._noneRelGrade"></canvas>
 				<span class="circle-text">{{relGrade}}</span>
 			</div>
             <div>relative Note</div>

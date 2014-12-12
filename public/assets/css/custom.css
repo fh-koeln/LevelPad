@@ -383,6 +383,10 @@ fieldset > .radio-items{
 	background: #E0F4C6;
 }
 
+.neutral-task{
+	background: lightgray;
+}
+
 .negative-task{
 	background: #F3C7DD;
 }
@@ -394,6 +398,10 @@ fieldset > .radio-items{
 
 .task-color{
 	color: #72CE1F;
+}
+
+.task-neutral-color{
+	color: gray; 
 }
 
 .task-bad-color{
