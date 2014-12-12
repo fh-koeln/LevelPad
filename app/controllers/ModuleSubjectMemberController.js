@@ -99,7 +99,7 @@ exports.create = function(callback, subject, memberData) {
 						if (!memberData.registrationPassword) {
 							return next(new errors.ArgumentNullError('registrationPassword'));
 					} else if (memberData.registrationPassword !== subject.registrationPassword) {
-							return next(new errors.ValidationError('Das eingegebene Passwort ist falsch.'));
+							return next(new errors.AuthenticationRequiredError('Das eingegebene Passwort ist falsch.'));
 					}
 				}
 

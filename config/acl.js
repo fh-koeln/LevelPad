@@ -234,6 +234,7 @@ db.connection.on('connected', function() {
 				{resources: 'users/:currentUser', permissions: ['GET', 'PUT']},
 				{resources: 'users/:currentUser/subjects', permissions: ['GET']},
 				{resources: 'subjects', permissions: ['GET']},
+				{resources: 'modules/:module/subjects/:subject/members', permissions: ['POST']},
 			]
 		},
 		{

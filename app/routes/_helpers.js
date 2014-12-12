@@ -11,6 +11,8 @@ module.exports = {
 
 				if (err.name === 'ValidationError' || err.name === 'AlreadyInUseError' || err.name === 'ArgumentNullError' || err.name === 'TypeError') {
 					res.status(400).json(err);
+				} else if (err.name === 'AuthenticationRequiredError') {
+					res.status(403).json(err);
 				} else if (err.name === 'NotFoundError') {
 					res.status(404).json(err);
 				} else {

@@ -229,39 +229,6 @@ describe('ModuleSubjectController', function() {
 			], done);
 		});
 
-		it('should fail to create a subject (WBA 2 2015 Sommersemester) with wrong password', function(done) {
-			var subjectData = {
-				registrationPassword: 'wrongpassword'
-			};
-			async.waterfall([
-				function(next) {
-					Module.findOne({ slug: subjects.wba2Sose15.module.slug }, next);
-				},
-				function(module, next) {
-					ModuleSubjectController.create(function(err, subject) {
-						assert.isNotNull(err, 'Error should not be null');
-						assert.isNotNull(subject, 'Subject should not be null');
-
-						expect(subject).property('slug', subjects.wba2Sose15.slug);
-						expect(subject).property('module');
-
-						expect(subject).property('year', subjects.wba2Sose15.year);
-						expect(subject).property('semester', subjects.wba2Sose15.semester);
-						expect(subject).property('status', subjects.wba2Sose15.status);
-
-						expect(subject).property('registrationActive', subjects.wba2Sose15.registrationActive);
-						expect(err).property('registrationPassword', 'ValidationError');
-
-						var module = subject.module;
-						expect(module).property('shortName', 'WBA 2');
-						expect(module).property('name', 'Web-basierte Anwendungen 2');
-
-						next();
-					}, module, subjects.wba2Sose15.slug, subjectData);
-				}
-			], done);
-		});
-
 		it('should fail if subject has missing attributes', function(done) {
 			var subjectData = {
 			};

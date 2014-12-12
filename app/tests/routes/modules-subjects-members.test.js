@@ -43,6 +43,138 @@ describe('Modules Subjects Members API', function() {
 			});
 	});
 
+	it('should return 200 when a student tries to read a subject with correct password', function(done) {
+		async.waterfall([
+			function(next){
+				agents.admin1
+					.get('/api/modules/' + subjects.wba2Sose15.module.slug + '/subjects/' + subjects.wba2Sose15.slug + '/members')
+					.set('Accept', 'application/json')
+					.end(function(err, res) {
+						should.not.exist(err);
+						res.should.have.status(200);
+						res.should.be.json;
+
+						should.exist(res.body);
+
+						next(err);
+					});
+			},
+			function(next) {
+				User.findOne({ username: users.student2.username }, next);
+			},
+			function(user, next){
+				agents.student2
+					.post('/api/modules/' + subjects.wba2Sose15.module.slug + '/subjects/' + subjects.wba2Sose15.slug + '/members')
+					.send({
+						id: user._id,
+						role: 'member',
+						registrationPassword: 'testpassword'
+					})
+					.set('Accept', 'application/json')
+					.end(function(err, res) {
+						should.not.exist(err);
+						res.should.have.status(200);
+						res.should.be.json;
+
+						should.exist(res.body);
+
+						res.body.should.have.property('slug').and.be.equal(subjects.wba2Sose15.slug);
+						res.body.should.have.property('semester').and.be.equal(subjects.wba2Sose15.semester);
+						res.body.should.have.property('year').and.be.equal(subjects.wba2Sose15.year);
+
+						next(err);
+					});
+			}
+		], done);
+	});
+
+	it('should return 403 when a student tries to read a subject with wrong password', function(done) {
+		async.waterfall([
+			function(next){
+				agents.admin1
+					.get('/api/modules/' + subjects.wba2Sose15.module.slug + '/subjects/' + subjects.wba2Sose15.slug + '/members')
+					.set('Accept', 'application/json')
+					.end(function(err, res) {
+						should.not.exist(err);
+						res.should.have.status(200);
+						res.should.be.json;
+
+						should.exist(res.body);
+
+						next(err);
+					});
+			},
+			function(next) {
+				User.findOne({ username: users.student2.username }, next);
+			},
+			function(user, next){
+				agents.student2
+					.post('/api/modules/' + subjects.wba2Sose15.module.slug + '/subjects/' + subjects.wba2Sose15.slug + '/members')
+					.send({
+						id: user._id,
+						role: 'member',
+						registrationPassword: 'wrongpassword'
+					})
+					.set('Accept', 'application/json')
+					.end(function(err, res) {
+						should.not.exist(err);
+						res.should.have.status(403);
+						res.should.be.json;
+
+						should.exist(res.body);
+
+						res.body.should.have.property('name')
+							.and.be.equal('AuthenticationRequiredError');
+
+						next(err);
+					});
+			}
+		], done);
+	});
+
+	it('should return 400 when a student tries to read a password protected subject without password', function(done) {
+		async.waterfall([
+			function(next){
+				agents.admin1
+					.get('/api/modules/' + subjects.wba2Sose15.module.slug + '/subjects/' + subjects.wba2Sose15.slug + '/members')
+					.set('Accept', 'application/json')
+					.end(function(err, res) {
+						should.not.exist(err);
+						res.should.have.status(200);
+						res.should.be.json;
+
+						should.exist(res.body);
+
+						next(err);
+					});
+			},
+			function(next) {
+				User.findOne({ username: users.student2.username }, next);
+			},
+			function(user, next){
+				agents.student2
+					.post('/api/modules/' + subjects.wba2Sose15.module.slug + '/subjects/' + subjects.wba2Sose15.slug + '/members')
+					.send({
+						id: user._id,
+						role: 'member'
+					})
+					.set('Accept', 'application/json')
+					.end(function(err, res) {
+						should.not.exist(err);
+						res.should.have.status(400);
+						res.should.be.json;
+
+						should.exist(res.body);
+
+						res.body.should.have.property('name')
+							.and.be.equal('ArgumentNullError');
+
+						next(err);
+					});
+			}
+		], done);
+	});
+
 	it('should return 200 when an admin reads members of a module subject', function(done) {
 		agents.admin1
 			.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug + '/members/')
