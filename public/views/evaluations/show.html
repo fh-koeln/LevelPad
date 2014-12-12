@@ -24,10 +24,10 @@
 					</ul>	
 				</div>
 			</div>
-			<div class="task-box neutral-task">
+			<div class="task-box" data-ng-class="{ 'neutral-task' : evaluation.level==false }">
 				<span class="task-neutral-color">Keine Bewertung</span>
 				<label class="right-radio">
-					<input type="radio" name="rating">
+					<input type="radio" name="rating" value="{{level._id}}" data-ng-model="evaluation.level">
 				</label>
 				<div>
 				</div>
