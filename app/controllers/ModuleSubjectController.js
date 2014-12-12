@@ -138,7 +138,8 @@ exports.create = function(callback, module, subjectData) {
 		function(subject, numberAffected, next) {
 			moduleSubjectMemberController.create(next, subject, {
 				id: subjectData.creator,
-				role: 'creator'
+				role: 'creator',
+				registrationPassword: subjectData.registrationPassword
 			});
 		},
 		function(subject, numberAffected, next) {

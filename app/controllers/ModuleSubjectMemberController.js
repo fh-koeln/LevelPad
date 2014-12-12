@@ -95,6 +95,17 @@ exports.create = function(callback, subject, memberData) {
 				next(null, subject);
 			},
 			function(subject, next) {
+				if (subject.registrationPassword) {
+						if (!memberData.registrationPassword) {
+							return next(new errors.ArgumentNullError('registrationPassword'));
+					} else if (memberData.registrationPassword !== subject.registrationPassword) {
+							return next(new errors.ValidationError('Das eingegebene Passwort ist falsch.'));
+					}
+				}
+
+				next(null, subject);
+			},
+			function(subject, next) {
 				if (!memberData.id) {
 					return next(new errors.ArgumentNullError('id'));
 				}

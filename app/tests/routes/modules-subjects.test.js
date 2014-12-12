@@ -86,7 +86,7 @@ describe('Modules Subjects API', function() {
 
 				var apiSubjects = res.body;
 
-				apiSubjects.should.have.a.lengthOf(1);
+				apiSubjects.should.have.a.lengthOf(2);
 
 				done(err);
 			});

@@ -94,6 +94,23 @@ module.exports.initializeTestData = function(callback) {
 			});
 		},
 		function(next) {
+			Module.findOne({ slug: subjects.wba2Sose15.module.slug }, function(err, module) {
+				if (err) {
+					return next(err);
+				}
+				var subject = {
+					slug: subjects.wba2Sose15.slug,
+					module: module,
+					year: subjects.wba2Sose15.year,
+					semester: subjects.wba2Sose15.semester,
+					status: subjects.wba2Sose15.status,
+					registrationActive: subjects.wba2Sose15.registrationActive,
+					registrationPassword: subjects.wba2Sose15.registrationPassword
+				};
+				new Subject(subject).save(next);
+			});
+		},
+		function(next) {
 			Module.findOne({ slug: subjects.wba2Sose14.module.slug }, function(err, module) {
 				if (err) {
 					return next(err);

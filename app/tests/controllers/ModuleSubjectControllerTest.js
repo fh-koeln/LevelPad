@@ -64,7 +64,7 @@ describe('ModuleSubjectController', function() {
 
 				expect(subject).property('slug', subjects.wba1Wise1415.slug);
 				expect(subject).property('module');
-				expect(subject).property('semester',subjects.wba1Wise1415.semester);
+				expect(subject).property('semester', subjects.wba1Wise1415.semester);
 				expect(subject).property('year', subjects.wba1Wise1415.year);
 				expect(subject).property('status', subjects.wba1Wise1415.status);
 
@@ -165,6 +165,99 @@ describe('ModuleSubjectController', function() {
 
 						next(err, subject);
 					}, 'wba1', 'wise1314');
+				}
+			], done);
+		});
+
+		it('should save a new subject (WBA 1 2016 Sommersemester) with password', function(done) {
+			var subjectData = {
+				year: 2016,
+				semester: 'Sommersemester',
+				status: 'active',
+				registrationActive: true,
+				registrationPassword: 'testpassword'
+			};
+			async.series([
+				function(next) {
+					User.findOne({ username: users.lecturer1.username }, function(err, user) {
+						if (err) {
+							return next(err);
+						}
+
+						subjectData.creator = user._id;
+						next();
+					});
+				},
+				function(next) {
+					ModuleSubjectController.create(function (err, subject) {
+						assert.isNull(err, 'Error should be null');
+						assert.isNotNull(subject, 'Subject should be not null');
+
+						expect(subject).property('slug', 'sose16');
+						expect(subject).property('module');
+						expect(subject).property('semester', 'Sommersemester');
+						expect(subject).property('status', 'active');
+						expect(subject).property('registrationActive', true);
+						expect(subject).property('registrationPassword', 'testpassword');
+
+						var module = subject.module;
+						expect(module).property('shortName', 'WBA 1');
+						expect(module).property('name', 'Web-basierte Anwendungen 1');
+
+						next(err, subject);
+					}, 'wba1', subjectData);
+				},
+				function(next) {
+					ModuleSubjectController.read(function(err, subject) {
+						assert.isNull(err, 'Error should be null');
+						assert.isNotNull(subject, 'Subject should be not null');
+
+						expect(subject).property('slug', 'sose16');
+						expect(subject).property('module');
+						expect(subject).property('semester', 'Sommersemester');
+						expect(subject).property('status', 'active');
+						expect(subject).property('registrationActive', true);
+						expect(subject).property('registrationPassword', 'testpassword');
+
+						var module = subject.module;
+						expect(module).property('shortName', 'WBA 1');
+						expect(module).property('name', 'Web-basierte Anwendungen 1');
+
+						next(err, subject);
+					}, 'wba1', 'sose16');
+				}
+			], done);
+		});
+
+		it('should fail to create a subject (WBA 2 2015 Sommersemester) with wrong password', function(done) {
+			var subjectData = {
+				registrationPassword: 'wrongpassword'
+			};
+			async.waterfall([
+				function(next) {
+					Module.findOne({ slug: subjects.wba2Sose15.module.slug }, next);
+				},
+				function(module, next) {
+					ModuleSubjectController.create(function(err, subject) {
+						assert.isNotNull(err, 'Error should not be null');
+						assert.isNotNull(subject, 'Subject should not be null');
+
+						expect(subject).property('slug', subjects.wba2Sose15.slug);
+						expect(subject).property('module');
+
+						expect(subject).property('year', subjects.wba2Sose15.year);
+						expect(subject).property('semester', subjects.wba2Sose15.semester);
+						expect(subject).property('status', subjects.wba2Sose15.status);
+
+						expect(subject).property('registrationActive', subjects.wba2Sose15.registrationActive);
+						expect(err).property('registrationPassword', 'ValidationError');
+
+						var module = subject.module;
+						expect(module).property('shortName', 'WBA 2');
+						expect(module).property('name', 'Web-basierte Anwendungen 2');
+
+						next();
+					}, module, subjects.wba2Sose15.slug, subjectData);
 				}
 			], done);
 		});

@@ -147,4 +147,14 @@ subjects.wba2Sose13 = {
 	status: 'inactive'
 };
 
+subjects.wba2Sose15 = {
+	slug: 'sose15',
+	semester: 'Sommersemester',
+	year: 2015,
+	module: modules.wba2,
+	status: 'active',
+	registrationActive: true,
+	registrationPassword: 'testpassword'
+};
+
 module.exports = subjects;
