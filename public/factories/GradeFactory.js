@@ -41,7 +41,11 @@ angular.module('levelPad').factory('Grade', [function() {
 				absGrade+= 5 * task.weight;
 			}
 		});
-		absGrade = absGrade / weightSum;
+		if(weightSum!=0){
+			absGrade = absGrade / weightSum;
+		}else{
+			absGrade = 5;	
+		}
 		return absGrade
 	};
 

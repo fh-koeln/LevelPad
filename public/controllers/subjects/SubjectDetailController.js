@@ -1,8 +1,8 @@
 /* global alert */
 
 angular.module('levelPad').controller('SubjectDetailController', [
-	'$scope', '$routeParams', '$location', '$http', '$log', 'DialogService', 'Module', 'Subject', 'CurrentModule', 'CurrentSubject', 'ChartOption',
-	function ($scope, $routeParams, $location, $http, $log, DialogService, Module, Subject, CurrentModule, CurrentSubject, ChartOption) {
+	'$scope', '$routeParams', '$location', '$http', '$log', 'DialogService', 'Module', 'Subject', 'CurrentModule', 'CurrentSubject', 'ChartOption', 'AlertService',
+	function ($scope, $routeParams, $location, $http, $log, DialogService, Module, Subject, CurrentModule, CurrentSubject, ChartOption, AlertService) {
 
 		'use strict';
 
@@ -181,7 +181,7 @@ angular.module('levelPad').controller('SubjectDetailController', [
 					prepareSubject();
 					dialog.submit();
 				}, function() {
-					alert('Fehler!');
+					AlertService.showError('Fehler!',-1);
 				});
 			};
 			dialog.scope.showConfirmDeleteDialog = function() {
