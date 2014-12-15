@@ -1,9 +1,11 @@
+<h1 class="container">Alle Veranstaltungen</h1>
+
 <!--
 	Navbar für große Devices
 -->
 <ul class="nav nav-tabs hidden-xs " data-ng-init="filterStatus = location.search()['status'] || 'active'">
-	<li data-active-nav><a data-ng-click="filterStatus='active';" href="/subjects">Alle aktiven Veranstaltungen</a></li>
-	<li data-active-nav><a data-ng-click="filterStatus='inactive';" href="/subjects?status=inactive">Alle inaktiven Veranstaltungen</a></li>
+	<li data-active-nav><a data-ng-click="filterStatus='active';" href="/subjects">Aktiven Veranstaltungen</a></li>
+	<li data-active-nav><a data-ng-click="filterStatus='inactive';" href="/subjects?status=inactive">Inaktiven Veranstaltungen</a></li>
 </ul>
 
 <!--
@@ -60,13 +62,16 @@
 	</div>
 </div>
 
-<table class="table table-striped table-hover">
-	<tbody>
-	<tr data-ng-repeat="subject in subjects | orderBy:['-year','-semester'] | filter:filterStatus:true | filter:searchText">
+<table class="table table-striped table-hover" data-ng-repeat="section in sections | filter:filterStatus:true | filter:searchText | orderBy:['-year','-semester']">
+	<tr>
+		<th colspan="3">
+			{{ section.semester }} {{ section.year }}
+		</th>
+	</tr>
+	<tr data-ng-repeat="subject in section.subjects | filter:filterStatus:true | filter:searchText | orderBy:'name'">
 		<th class="col-xs-10 col-md-10 subject-item-title">
 			<a data-ng-href="{{ subject.module.slug }}/{{ subject.slug }}/members">
 				<span class="module-name">{{ subject.module.name }}</span><br/>
-				<span class="module-time">{{ subject.semester }} {{ subject.year }}</span>
 			</a>
 		</th>
 		<td class="col-md-2 hidden-xs text-right">{{ subject.members.length || 0 }} Teilnehmer</td>
