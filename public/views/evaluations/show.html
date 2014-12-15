@@ -1,4 +1,4 @@
-<div data-ng-controller="MemberDetailController" data-ng-include="'partials/member-detail-header.html'"></div>
+<div data-ng-include="'partials/member-detail-header.html'"></div>
 <form name="form" role="form" class="form-horizontal" data-ng-submit="submit();">
 	<nav>
 		<header class="modal-header">
@@ -14,7 +14,7 @@
 		</header>
 	</nav>
 	
-	<div class="modal-body" data-ng-controller="MemberDetailController">
+	<div class="modal-body" >
 		<div class="form-group">
 			<div class="col-sm-8">
 				<div class="task-box"  data-ng-repeat="level in task.levels | orderBy:'rank'" class="item" data-ng-class="evaluation.level==level._id ? (level.isMinimum == true ? 'positive-task' : 'negative-task'): '' ">
