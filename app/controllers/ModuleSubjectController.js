@@ -2,6 +2,7 @@
 
 var Subject = require('../models/Subject'),
 	Module = require('../models/Module'),
+	Member = require('../models/Member'),
 	async = require('async'),
 	errors = require('common-errors'),
 	moduleSubjectMemberController = require('./ModuleSubjectMemberController');
@@ -13,7 +14,7 @@ var Subject = require('../models/Subject'),
  * @param module
  * @param filter
  */
-exports.list = function(callback, module, filter) {
+exports.list = function(callback, user, module, filter) {
 	async.waterfall([
 		function(next) {
 			if (typeof module === 'string') {
@@ -31,7 +32,7 @@ exports.list = function(callback, module, filter) {
 
 			filter.module = module._id;
 
-			Subject.find(filter).populate('module').exec(next);
+			Subject.find(filter).select('-registrationPassword').populate('module').exec(next);
 		}
 	], callback);
 
@@ -45,7 +46,7 @@ exports.list = function(callback, module, filter) {
  * @param year
  * @param semester
  */
-exports.read = function(callback, module, slug) {
+exports.read = function(callback, user, module, slug) {
 	async.waterfall([
 		function(next) {
 			if (typeof module === 'string') {
@@ -63,7 +64,19 @@ exports.read = function(callback, module, slug) {
 				if (!err && !subject) {
 					return next(new errors.NotFoundError('Subject'));
 				}
-				next(err, subject);
+
+				if (user.role !== 'administrator') {
+					Member.findOne({ user: user._id, subject: subject._id }, function(err, member){
+						if (member && member.role === 'creator') {
+							return next(err, subject);
+						} else {
+							delete subject.registrationPassword;
+							return next(err, subject);
+						}
+					});
+				} else {
+					next(err, subject);
+				}
 			});
 		}
 	], callback);
@@ -78,7 +91,7 @@ exports.read = function(callback, module, slug) {
  * @param semester
  * @param subjectdata
  */
-exports.create = function(callback, module, subjectData) {
+exports.create = function(callback, user, module, subjectData) {
 
 	async.waterfall([
 		function(next) {
@@ -158,14 +171,14 @@ exports.create = function(callback, module, subjectData) {
  * @param semester
  * @param subjectData
  */
-exports.update = function(callback, module, slug, subjectData) {
+exports.update = function(callback, user, module, slug, subjectData) {
 	// TODO: Verify that the ID and the slug is not changed!?
 //	subjectData.slug = subjectSlug;
 
 	// TODO: could we remove the find here and change the check based on the numberAffected callback argument?
 	async.waterfall([
 		function(next) {
-			exports.read(next, module, slug);
+			exports.read(next, user, module, slug);
 		},
 		function(subject, next) {
 			if (subjectData.status !== undefined) {
@@ -193,7 +206,7 @@ exports.update = function(callback, module, slug, subjectData) {
  * @param year
  * @param semester
  */
-exports.delete = function(callback, module, slug) {
+exports.delete = function(callback, user, module, slug) {
 
 	// TODO add force parameter and remove module with subjects only if this parameter is true.
 
@@ -203,7 +216,7 @@ exports.delete = function(callback, module, slug) {
 
 	async.waterfall([
 		function(next) {
-			exports.read(next, module, slug);
+			exports.read(next, user, module, slug);
 		},
 		function(subject, next) {
 			subject.remove(next);

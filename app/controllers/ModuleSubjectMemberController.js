@@ -1,10 +1,10 @@
 'use strict';
 
-var Subject = require('../models/Subject'),
-	Member = require('../models/Member'),
+var Member = require('../models/Member'),
 	User = require('../models/User'),
 	async = require('async'),
-	errors = require('common-errors');
+	errors = require('common-errors'),
+	acl = require('../../config/acl').acl;
 
 /**
  * List all members by subject and apply an optional filter.
@@ -135,8 +135,18 @@ exports.create = function(callback, subject, memberData) {
 
 			},
 			function(member, subject, next) {
+				User.findById({_id: member.user}, function(err, user) {
+					if (err) {
+						return next(err);
+					}
 
-				next(null, member);
+					if (user.role === 'student') {
+						var resource = 'modules/' + subject.module.slug + '/subjects/' + subject.slug;
+						acl.allow(user.username, resource, ['GET']);
+					}
+
+					next(null, member);
+				});
 			}
 		], callback);
 };
