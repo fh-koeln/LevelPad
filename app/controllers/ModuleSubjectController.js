@@ -14,7 +14,7 @@ var Subject = require('../models/Subject'),
  * @param module
  * @param filter
  */
-exports.list = function(callback, module, filter) {
+exports.list = function(callback, user, module, filter) {
 	async.waterfall([
 		function(next) {
 			if (typeof module === 'string') {
@@ -91,7 +91,7 @@ exports.read = function(callback, user, module, slug) {
  * @param semester
  * @param subjectdata
  */
-exports.create = function(callback, module, subjectData) {
+exports.create = function(callback, user, module, subjectData) {
 
 	async.waterfall([
 		function(next) {
@@ -171,14 +171,14 @@ exports.create = function(callback, module, subjectData) {
  * @param semester
  * @param subjectData
  */
-exports.update = function(callback, module, slug, subjectData) {
+exports.update = function(callback, user, module, slug, subjectData) {
 	// TODO: Verify that the ID and the slug is not changed!?
 //	subjectData.slug = subjectSlug;
 
 	// TODO: could we remove the find here and change the check based on the numberAffected callback argument?
 	async.waterfall([
 		function(next) {
-			exports.read(next, module, slug);
+			exports.read(next, user, module, slug);
 		},
 		function(subject, next) {
 			if (subjectData.status !== undefined) {
@@ -206,7 +206,7 @@ exports.update = function(callback, module, slug, subjectData) {
  * @param year
  * @param semester
  */
-exports.delete = function(callback, module, slug) {
+exports.delete = function(callback, user, module, slug) {
 
 	// TODO add force parameter and remove module with subjects only if this parameter is true.
 
@@ -216,7 +216,7 @@ exports.delete = function(callback, module, slug) {
 
 	async.waterfall([
 		function(next) {
-			exports.read(next, module, slug);
+			exports.read(next, user, module, slug);
 		},
 		function(subject, next) {
 			subject.remove(next);
