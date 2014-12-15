@@ -1,7 +1,7 @@
 
 angular.module('levelPad').controller('DashboardController', [
-	'$scope', '$rootScope', '$http', 'AuthService',
-	function ($scope, $rootScope, $http, AuthService) {
+	'$scope', '$rootScope', '$http', 'AuthService', 'DialogService', 'AlertService',
+	function ($scope, $rootScope, $http, AuthService, DialogService, AlertService) {
 		'use strict';
 
 		$scope.user = AuthService.user;
@@ -24,4 +24,18 @@ angular.module('levelPad').controller('DashboardController', [
 		};
 
 		$scope.update();
+
+		$scope.showCreateDialog = function() {
+			var dialog = new DialogService('/subjects/new');
+			dialog.scope.submit = function() {
+				this._save().then(function() {
+					$scope.update();
+					dialog.submit();
+				}, function() {
+					AlertService.showError('Fehler!',-1);
+				});
+			};
+			dialog.open();
+		};
+
 	}]);
