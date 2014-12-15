@@ -1,10 +1,11 @@
+<h1 class="container">Dashboard</h1>
+
 <!--
 	Navbar für große Devices
 -->
 <ul class="nav nav-tabs hidden-xs " data-ng-init="filterStatus = location.search()['status'] || 'active'">
-	<li data-active-nav><a data-ng-click="filterStatus='active';" href="/">Deine aktiven Veranstaltungen</a></li>
-	<li data-active-nav><a data-ng-click="filterStatus='inactive';" href="/?status=inactive">Deine inaktiven Veranstaltungen</a></li>
-	<li><a href="/subjects">Alle Veranstaltungen anzeigen</a></li>
+	<li data-active-nav><a data-ng-click="filterStatus='active';" href="/">Aktiven Veranstaltungen</a></li>
+	<li data-active-nav><a data-ng-click="filterStatus='inactive';" href="/?status=inactive">Inaktiven Veranstaltungen</a></li>
 </ul>
 
 <!--
@@ -71,3 +72,7 @@
 	</tr>
 	</tbody>
 </table>
+
+<p>
+	<a href="/subjects" class="btn btn-default">Alle Veranstaltungen anzeigen</a>
+</p>

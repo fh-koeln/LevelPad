@@ -29,7 +29,7 @@ subjects.get('/', {
 	description: 'List all subjects and apply optional filter.',
 	tags: [ 'Subject' ],
 }, function (req, res) {
-	ModuleSubjectController.list(_helpers.sendResult(res), req.module);
+	ModuleSubjectController.list(_helpers.sendResult(res), req.user, req.module);
 });
 
 /**
@@ -41,7 +41,7 @@ subjects.post('/', {
 	tags: [ 'Subject' ],
 }, function (req, res) {
 	req.body.creator = req.user._id;
-	ModuleSubjectController.create(_helpers.sendResult(res), req.module, req.body);
+	ModuleSubjectController.create(_helpers.sendResult(res), req.user, req.module, req.body);
 });
 
 /**
@@ -63,7 +63,7 @@ subjects.put('/:subjectSlug', {
 	description: 'Update an existing subject.',
 	tags: [ 'Subject' ],
 }, function (req, res) {
-	ModuleSubjectController.update(_helpers.sendResult(res), req.module, req.params.subjectSlug, req.body);
+	ModuleSubjectController.update(_helpers.sendResult(res), req.user, req.module, req.params.subjectSlug, req.body);
 });
 
 /**
@@ -74,7 +74,7 @@ subjects.delete('/:subjectSlug', {
 	description: 'Delete an existing subject.',
 	tags: [ 'Subject' ],
 }, function (req, res) {
-	ModuleSubjectController.delete(_helpers.sendResult(res), req.module, req.params.subjectSlug);
+	ModuleSubjectController.delete(_helpers.sendResult(res), req.user, req.module, req.params.subjectSlug);
 });
 
 /**

@@ -23,6 +23,9 @@
 					<span class="glyphicon glyphicon-align-justify"></span>
 				</a>
 				<ul class="dropdown-menu pull-right" role="menu">
+					<li><a href="/">Dashboard</a></li>
+					<li><a href="/subjects">Alle Veranstaltungen</a></li>
+					<li data-access-roles="userRoles.administrator" class="divider"></li>
 					<li data-access-roles="[userRoles.administrator, userRoles.lecturer, userRoles.assistant, userRoles.student]" data-active-nav><a data-ng-href="/account">Account</a></li>
 					<li><a href="/logout" data-ng-click="logout(); $event.preventDefault();">Logout</a></li>
 					<li data-access-roles="userRoles.administrator" class="divider"></li>
