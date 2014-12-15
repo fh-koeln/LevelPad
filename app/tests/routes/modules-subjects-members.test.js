@@ -78,9 +78,9 @@ describe('Modules Subjects Members API', function() {
 
 						should.exist(res.body);
 
-						res.body.should.have.property('slug').and.be.equal(subjects.wba2Sose15.slug);
-						res.body.should.have.property('semester').and.be.equal(subjects.wba2Sose15.semester);
-						res.body.should.have.property('year').and.be.equal(subjects.wba2Sose15.year);
+						res.body.should.have.property('subject');
+						res.body.should.have.property('user');
+						res.body.should.have.property('role');
 
 						next(err);
 					});
