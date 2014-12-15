@@ -141,8 +141,12 @@ exports.create = function(callback, subject, memberData) {
 					}
 
 					if (user.role === 'student') {
-						var resource = 'modules/' + subject.module.slug + '/subjects/' + subject.slug;
-						acl.allow(user.username, resource, ['GET']);
+						var resources = [
+							'modules/' + subject.module.slug + '/subjects/' + subject.slug,
+							'modules/' + subject.module.slug + '/subjects/' + subject.slug + 'tasks',
+							'modules/' + subject.module.slug + '/subjects/' + subject.slug + 'tasks/:task',
+						];
+						acl.allow(user.username, resources, ['GET']);
 					}
 
 					next(null, member);
