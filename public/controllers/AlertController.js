@@ -49,6 +49,7 @@ angular.module('levelPad').controller('AlertController', ['$scope', 'AlertServic
 	};
 
 	$scope.hide = function(index) {
+		console.log(index);
 		$scope.alerts.splice(index, 1);
 		//$scope.$apply();
 	};

@@ -64,7 +64,6 @@ angular.module('levelPad').controller('EvaluationDetailController', [
 		
 		$scope.updateGrades = function(scopeEvaluation){
 			var evaluation = objectFindByKey($scope.member.evaluations, 'task', scopeEvaluation.task);
-			console.log(scopeEvaluation);
 			if(!evaluation && scopeEvaluation.level != 0){
 				$scope.member.evaluations.push(scopeEvaluation);
 			}else{
@@ -72,7 +71,6 @@ angular.module('levelPad').controller('EvaluationDetailController', [
 					return e.task != evaluation.task;
 				});
 				if(scopeEvaluation.level!=0){
-					console.log("try to remove");
 					$scope.member.evaluations.push(scopeEvaluation);
 				}
 			}
@@ -80,7 +78,6 @@ angular.module('levelPad').controller('EvaluationDetailController', [
 		};
 		
 		$scope._save = function() {
-			console.log($scope.evaluation.level);
 			if($scope.evaluation.level != 0){
 				return $scope.evaluation.$save({
 					module: $routeParams.module,
