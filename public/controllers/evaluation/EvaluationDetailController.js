@@ -67,15 +67,11 @@ angular.module('levelPad').controller('EvaluationDetailController', [
 			if(!evaluation){
 				$scope.member.evaluations.push(scopeEvaluation);
 			}else{
-				$scope.member.evaluations = $scope.member.evaluations.filter(function(e){
-					
-				console.log(evaluation.task);
-				console.log(e.task);
+					$scope.member.evaluations = $scope.member.evaluations.filter(function(e){
 					return e.task != evaluation.task;
 				});
 				$scope.member.evaluations.push(scopeEvaluation);
 			}
-			console.log($scope.member.evaluations);
 			Grade.prepareMember($scope);
 		};
 		

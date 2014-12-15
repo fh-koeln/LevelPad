@@ -83,8 +83,6 @@ angular.module('levelPad').factory('Grade', [function() {
 		 prepareMember: function prepareMember($scope) {
 			$scope.relGrade = Math.round( relativeGrade($scope) * 100) / 100;
 			$scope.absGrade = Math.round( absoluteGrade($scope) * 10) / 10;
-			console.log($scope.relGrade);
-			console.log($scope.absGrade);
 
 			$scope.member._artefacts = [
 				{

@@ -21,10 +21,6 @@ angular.module('levelPad').controller('MemberDetailController', [
 		};
 
 		$scope.update();
-		
-		console.log('member:', $scope.member);
-		console.log('Current module', CurrentModule);
-		console.log('Current subject', CurrentSubject);
 
 		//Pie Chart Magic
 		$scope.options = ChartOption;
