@@ -1046,3 +1046,7 @@ input[type=range]::-ms-fill-upper {
     }
 
 }
+
+.dropdown-menu li {
+	cursor: pointer;
+}
