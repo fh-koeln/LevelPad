@@ -35,8 +35,9 @@
 <div class="container hidden-md hidden-lg hidden-sm nav-dropdown ">
 	<div class="row" >
 		<div class="dropdown col-xs-10 dropdown-box">
-			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Aktive Veranstaltungen <span class="caret btn-dropdown"></span></a>
-			<ul class="dropdown-menu" role="menu"> <!-- TODO: Change the Dropdown Text-->
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-ng-show="filterStatus=='active'">Aktive Veranstaltungen <span class="caret btn-dropdown"></span></a>
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-ng-show="filterStatus=='inactive'">Inaktive Veranstaltungen <span class="caret btn-dropdown"></span></a>
+			<ul class="dropdown-menu" role="menu">
 				<li data-active-nav>
 					<a data-ng-click="filterStatus='active'" href="/subjects">Aktive Veranstaltungen</a>
 				</li>
@@ -45,7 +46,7 @@
 				</li>
 			</ul>
 		</div>
-		<div class="col-xs-2">
+		<div class="col-xs-2" data-access-roles="[userRoles.administrator, userRoles.lecturer]">
 			<a class=" btn btn-glyphicon navbar-btn interaction-link" data-ng-href="/subjects/new" data-ng-click="showCreateDialog(); $event.preventDefault();">
 			  <span class="glyphicon glyphicon-plus"></span>
 			</a>
