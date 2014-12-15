@@ -18,7 +18,7 @@ subjects.param('subjectSlug', function (req, res, next, subjectSlug) {
 
 		req.subject = subject;
 		next(err);
-	}, req.module, subjectSlug);
+	}, req.user, req.module, subjectSlug);
 });
 
 /**
@@ -52,7 +52,7 @@ subjects.get('/:subjectSlug', {
 	description: 'Get information about a subject.',
 	tags: [ 'Subject' ],
 }, function (req, res) {
-	ModuleSubjectController.read(_helpers.sendResult(res), req.module, req.params.subjectSlug);
+	ModuleSubjectController.read(_helpers.sendResult(res), req.user, req.module, req.params.subjectSlug);
 });
 
 /**
