@@ -294,7 +294,7 @@ a.levels-edit-icon{
     .search-bar {
 	    padding: 15px;
     }
-	
+
 	.is-search-bar-mobile {
 		padding: 15px 0;
 	}
@@ -401,7 +401,7 @@ fieldset > .radio-items{
 }
 
 .task-neutral-color{
-	color: gray; 
+	color: gray;
 }
 
 .task-bad-color{
@@ -410,12 +410,17 @@ fieldset > .radio-items{
 
 .task-text{
 	background: white;
-	margin-right: -42px;
-	margin-left: -8px;
-	padding-left: 8px;
-	margin-bottom: -8px;
+	margin: 8px -40px -8px -8px;
 	z-index: 1;
 	position: relative;
+}
+
+.task-text *:last-child {
+	margin-bottom: 0;
+}
+
+.task-text>div {
+	padding: 8px 8px 8px 16px;
 }
 
 .bubble {
@@ -584,7 +589,7 @@ span.student-forename{
 }
 
 .nav-dropdown{
-    border-bottom: 1px solid lightgray;   
+    border-bottom: 1px solid lightgray;
 }
 
 table.borderless-table {
@@ -613,7 +618,7 @@ table > tbody > tr > .students-table-element{
 .small-circle {
 	border-radius: 50%;
 	width: 25px;
-	height: 25px; 
+	height: 25px;
     background-color: lightgray;
     display: inline-block;
     margin: 2px;
@@ -689,7 +694,7 @@ table > tbody > tr > .students-table-element{
 
 .rating-box{
     display: inline-block;
-    height: 90px; 
+    height: 90px;
     margin-bottom: 20px;
     vertical-align: middle;
     padding: 0;
@@ -700,12 +705,12 @@ table > tbody > tr > .students-table-element{
 }
 
 .rating-box-large{
-    padding: 0;   
+    padding: 0;
 }
 
 .rating-box-medium{
     margin-top: 21px;
-    padding: 0; 
+    padding: 0;
 }
 
 .positive{
@@ -778,7 +783,7 @@ table > tbody > tr > .students-table-element{
 }
 
 .gewichtung-font{
-    color: lightgray;   
+    color: lightgray;
 }
 
 .item, .placeholder {
@@ -887,7 +892,7 @@ input[type=range]::-ms-fill-upper {
 }
 
 @media (max-width: 991px) {
-    
+
     .rating-box-large{
         text-align: center;
         margin-top: 0;
@@ -898,11 +903,11 @@ input[type=range]::-ms-fill-upper {
         margin-top: 0;
         padding-left: 15px;
     }
-	
+
 	.large-circle-text{
 		top: 21px;
 	}
-    
+
     .large-circle {
 		height: 60px;
 		vertical-align: middle;
@@ -914,12 +919,12 @@ input[type=range]::-ms-fill-upper {
 		max-height: 100% !important;
 		width: auto !important;
 	}
-    
+
     .rating-box{
         margin-top: 5px;
         margin-bottom: 0;
     }
-    
+
 }
 
 @media (max-width: 767px) {
@@ -929,17 +934,17 @@ input[type=range]::-ms-fill-upper {
 		height: 40px;
         padding-left: 15px;
 	}
-    
+
     .subtitle{
         width: 76%;
-        text-align: center;   
+        text-align: center;
         padding: 0;
     }
-    
+
     .menu-bar{
         width: 12%;
     }
-    
+
     .subject-password-generator{
         margin-left: 0px;
         display: block;
@@ -962,28 +967,28 @@ input[type=range]::-ms-fill-upper {
     .dropdown-toggle {
         padding: 10px 0px;
     }
-    
-    
+
+
     .rating-box-text{
         display: block;
     }
-    
+
     .table-student-align{
         padding-top: 0;
         padding-bottom: 20px;
         padding-left: 0;
     }
-    
+
     .table-circle-align{
-        padding-left: 0;   
+        padding-left: 0;
     }
-    
+
     .arrow-right-small{
-        font-size: 20;   
+        font-size: 20;
     }
-    
+
     table > tbody > tr > .students-table-element{
         height: 50px;
     }
-    
+
 }
