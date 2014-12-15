@@ -27,6 +27,11 @@ exports.list = function(callback, user) {
 			}
 
 			Member.find({ user: user._id }).select('-user').populate('subject').exec(function(err, memberWithSubject) {
+				if (memberWithSubject) {
+					return next(null, []);
+				}
+				delete memberWithSubject.subject.registrationPassword;
+				delete memberWithSubject.subject.tasks;
 				Module.populate(memberWithSubject, {
 					path: 'subject.module',
 				}, function(err, memberWithSubjectAndModule) {

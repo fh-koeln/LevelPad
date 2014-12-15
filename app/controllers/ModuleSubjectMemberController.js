@@ -128,15 +128,9 @@ exports.create = function(callback, subject, memberData) {
 						return next(err);
 					}
 					subject.members.push(member._id);
-					subject.save(function(err, subject) {
-						next(null, member, subject);
-					});
+					subject.save(next);
 				});
 
-			},
-			function(member, subject, next) {
-
-				next(null, member);
 			}
 		], callback);
 };
