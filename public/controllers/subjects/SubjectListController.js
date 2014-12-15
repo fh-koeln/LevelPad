@@ -28,4 +28,18 @@ angular.module('levelPad').controller('SubjectListController', [
 		dialog.open();
 	};
 
+	$scope.showJoinDialog = function(subject) {
+		var dialog = new DialogService('/:module/:subject/join');
+		dialog.scope.subject = subject;
+		dialog.scope.submit = function() {
+			this._save().then(function() {
+				$scope.update();
+				dialog.submit();
+			}, function() {
+				alert('Fehler!');
+			});
+		};
+		dialog.open();
+	};
+
 }]);

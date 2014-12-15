@@ -142,9 +142,8 @@ exports.create = function(callback, module, subjectData) {
 				registrationPassword: subjectData.registrationPassword
 			});
 		},
-		function(subject, numberAffected, next) {
-			// populate module
-			Subject.findOne({ _id: subject._id }).populate('module').exec(next);
+		function(member, next) {
+			Subject.findOne({ _id: member.subject }).populate('module').exec(next);
 		}
 	], callback);
 };

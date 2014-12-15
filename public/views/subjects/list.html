@@ -64,7 +64,7 @@
 	<tbody>
 	<tr data-ng-repeat="subject in subjects | orderBy:['-year','-semester'] | filter:filterStatus:true | filter:searchText">
 		<th class="col-xs-10 col-md-10 subject-item-title">
-			<a data-ng-href="{{ subject.module.slug }}/{{ subject.slug }}/members">
+			<a data-ng-href="{{ subject.module.slug }}/{{ subject.slug }}/join" data-ng-click="showJoinDialog(subject); $event.preventDefault();">
 				<span class="module-name">{{ subject.module.name }}</span><br/>
 				<span class="module-time">{{ subject.semester }} {{ subject.year }}</span>
 			</a>
