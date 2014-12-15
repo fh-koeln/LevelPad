@@ -41,7 +41,11 @@ angular.module('levelPad').factory('Grade', [function() {
 				absGrade+= 5 * task.weight;
 			}
 		});
-		absGrade = absGrade / weightSum;
+		if(weightSum!=0){
+			absGrade = absGrade / weightSum;
+		}else{
+			absGrade = 5;	
+		}
 		return absGrade
 	};
 
@@ -83,21 +87,37 @@ angular.module('levelPad').factory('Grade', [function() {
 		 prepareMember: function prepareMember($scope) {
 			$scope.relGrade = Math.round( relativeGrade($scope) * 100) / 100;
 			$scope.absGrade = Math.round( absoluteGrade($scope) * 10) / 10;
-
-			$scope.member._artefacts = [
-				{
-					title:'Artefakte',
-					value: $scope.member.evaluations.length,
-					color: '#77cc00',
-					highlight: '#88dd11'
-				},
-				{
-					title:'Rest',
-					value: $scope.subject.tasks.length - $scope.member.evaluations.length,
-					color:'lightgray',
-					highlight: 'lightgray'
-				}
-			];
+			if($scope.subject.tasks.length==0){
+				$scope.member._artefacts = [
+					{
+						title:'Artefakte',
+						value: 0,
+						color: '#77cc00',
+						highlight: '#88dd11'
+					},
+					{
+						title:'Rest',
+						value: 1,
+						color:'lightgray',
+						highlight: 'lightgray'
+					}
+				];	
+			}else{
+				$scope.member._artefacts = [
+					{
+						title:'Artefakte',
+						value: $scope.member.evaluations.length,
+						color: '#77cc00',
+						highlight: '#88dd11'
+					},
+					{
+						title:'Rest',
+						value: $scope.subject.tasks.length - $scope.member.evaluations.length,
+						color:'lightgray',
+						highlight: 'lightgray'
+					}
+				];
+			}
 			$scope.member._absGrade = [
 				{
 					title:'Note',

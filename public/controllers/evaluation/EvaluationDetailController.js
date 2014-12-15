@@ -50,8 +50,8 @@ angular.module('levelPad').controller('EvaluationDetailController', [
 									$scope.evaluation = evaluation;
 
 								}else{
-									$scope.evaluation = new Evaluation();
 									$scope.evaluation.task = $scope.task._id;
+									$scope.evaluation.level = "0";
 								};	
 							})
 						};
@@ -64,24 +64,38 @@ angular.module('levelPad').controller('EvaluationDetailController', [
 		
 		$scope.updateGrades = function(scopeEvaluation){
 			var evaluation = objectFindByKey($scope.member.evaluations, 'task', scopeEvaluation.task);
-			if(!evaluation){
+			if(!evaluation && scopeEvaluation.level != 0){
 				$scope.member.evaluations.push(scopeEvaluation);
 			}else{
-					$scope.member.evaluations = $scope.member.evaluations.filter(function(e){
+				$scope.member.evaluations = $scope.member.evaluations.filter(function(e){
 					return e.task != evaluation.task;
 				});
-				$scope.member.evaluations.push(scopeEvaluation);
+				if(scopeEvaluation.level!=0){
+					$scope.member.evaluations.push(scopeEvaluation);
+				}
 			}
 			Grade.prepareMember($scope);
 		};
 		
 		$scope._save = function() {
-			$scope.evaluation.task = $scope.task._id;
-			return $scope.evaluation.$save({
-				module: $routeParams.module,
-				subject: $routeParams.subject,
-				member: $routeParams.member,
-			});
+			if($scope.evaluation.level != 0){
+				return $scope.evaluation.$save({
+					module: $routeParams.module,
+					subject: $routeParams.subject,
+					member: $routeParams.member,
+				});
+			}else if($scope.evaluation._id){
+				return $scope.evaluation.$delete({
+					module: $routeParams.module,
+					subject: $routeParams.subject,
+					member: $routeParams.member,
+					evaluation: $scope.evaluation._id
+				}, function(){
+					$scope.evaluation.level = "0";	
+				});
+			}else{
+				
+			}
 		};
 		
 		$scope.save = $scope._save;
