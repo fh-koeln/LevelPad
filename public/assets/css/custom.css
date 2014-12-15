@@ -393,7 +393,6 @@ fieldset > .radio-items{
 
 .task-box{
 	padding: 3px 10px 20px 3px;
-	margin: 0px -5px 0px -25px;
 }
 
 .task-color{
@@ -708,11 +707,11 @@ table > tbody > tr > .students-table-element{
     padding: 0; 
 }
 
-.positive{
+.positive-text{
 	color: #72CE1F;
 }
 
-.negative{
+.negative-text{
 	color: #EE497A;
 }
 
@@ -721,7 +720,7 @@ table > tbody > tr > .students-table-element{
 	padding-left: 30px;
 }
 
-.neutral{
+.neutral-text{
 	color: lightgray;
 }
 
