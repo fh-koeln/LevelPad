@@ -8,7 +8,6 @@ angular.module('levelPad').controller('EvaluationDetailController', [
 		
 		$scope.subject = $routeParams.subject;
 		$scope.module = $routeParams.module;
-		$scope.task = $routeParams.task;
 		$scope.evaluation = new Evaluation();
 		$scope.showComments = 0;
 		
@@ -22,11 +21,12 @@ angular.module('levelPad').controller('EvaluationDetailController', [
 		}
 		
 		$scope.update = function () {
-			if ($routeParams.task) {
+			var taskId = $routeParams.task || $scope.taskId;
+			if (taskId) {
 				$scope.task = Task.get({
 					module: $routeParams.module,
 					subject: $routeParams.subject,
-					task: $routeParams.task
+					task: taskId
 				}, function(){
 						if ($routeParams.member) {
 							$scope.evaluations = Evaluation.query({

@@ -40,6 +40,20 @@ angular.module('levelPad').controller('MemberDetailController', [
 
 		$scope.update();
 		
+		$scope.updateGrades = function(scopeEvaluation){
+			var evaluation = objectFindByKey($scope.member.evaluations, 'task', scopeEvaluation.task);
+			if(!evaluation){
+				$scope.member.evaluations.push(scopeEvaluation);
+			}else{
+				$scope.member.evaluations = $scope.member.evaluations.filter(function(e){
+					return e.task == evaluation.task;
+				});
+				$scope.member.evaluations.push(scopeEvaluation);
+			}
+			console.log($scope.member.evaluations);
+		};
+		
+		
 		console.log('member:', $scope.member);
 		console.log('Current module', CurrentModule);
 		console.log('Current subject', CurrentSubject);
@@ -146,7 +160,12 @@ angular.module('levelPad').controller('MemberDetailController', [
 					}
 				}
 			});
-			relGrade = relGrade / weightSum;
+			
+			if (weightSum!=0){
+				relGrade = relGrade / weightSum;
+			}else{
+				relGrade=5;	
+			}
 			return relGrade
 		};
 		
