@@ -26,7 +26,7 @@ describe('ModuleSubjectController', function() {
 				assert.isNotNull(moduleSubjects, 'Subjects should be not null');
 				assert.lengthOf(moduleSubjects, 1, 'Subjects array has length of 1');
 				done(err);
-			}, subjects.wba1Wise1415.module.slug);
+			}, users.admin1, subjects.wba1Wise1415.module.slug);
 		});
 
 		it('should find all subjects for module (wba1) via module', function(done) {
@@ -42,7 +42,7 @@ describe('ModuleSubjectController', function() {
 						assert.isNotNull(moduleSubjects, 'Subjects should be not null');
 						assert.lengthOf(moduleSubjects, 1, 'Subjects array has length of 1');
 						next(err);
-					}, module);
+					}, users.admin1, module);
 				}
 			], done);
 		});
@@ -52,7 +52,7 @@ describe('ModuleSubjectController', function() {
 				assert.isNotNull(err, 'Error should be not null');
 				assert.isUndefined(subject, 'Subject should be null or undefined');
 				done();
-			}, {} );
+			}, users.admin1, {});
 		});
 	});
 
@@ -73,7 +73,7 @@ describe('ModuleSubjectController', function() {
 				expect(module).property('name', subjects.wba1Wise1415.module.name);
 
 				done();
-			}, subjects.wba1Wise1415.module.slug, subjects.wba1Wise1415.slug);
+			}, users.admin1, subjects.wba1Wise1415.module.slug, subjects.wba1Wise1415.slug);
 		});
 
 		it('should return a known subject (WBA 2 2014 Sommersemester) via module', function(done) {
@@ -100,7 +100,7 @@ describe('ModuleSubjectController', function() {
 						expect(module).property('name', subjects.wba2Sose14.module.name);
 
 						next();
-					}, module, subjects.wba2Sose14.slug);
+					}, users.admin1, module, subjects.wba2Sose14.slug);
 				}
 			], done);
 		});
@@ -147,7 +147,7 @@ describe('ModuleSubjectController', function() {
 						expect(module).property('name', 'Web-basierte Anwendungen 1');
 
 						next(err, subject);
-					}, 'wba1', subjectData);
+					}, users.admin1, 'wba1', subjectData);
 				},
 				function(next) {
 					ModuleSubjectController.read(function(err, subject) {
@@ -164,7 +164,7 @@ describe('ModuleSubjectController', function() {
 						expect(module).property('name', 'Web-basierte Anwendungen 1');
 
 						next(err, subject);
-					}, 'wba1', 'wise1314');
+					}, users.admin1, 'wba1', 'wise1314');
 				}
 			], done);
 		});
@@ -205,7 +205,7 @@ describe('ModuleSubjectController', function() {
 						expect(module).property('name', 'Web-basierte Anwendungen 1');
 
 						next(err, subject);
-					}, 'wba1', subjectData);
+					}, users.admin1, 'wba1', subjectData);
 				},
 				function(next) {
 					ModuleSubjectController.read(function(err, subject) {
@@ -224,7 +224,7 @@ describe('ModuleSubjectController', function() {
 						expect(module).property('name', 'Web-basierte Anwendungen 1');
 
 						next(err, subject);
-					}, 'wba1', 'sose16');
+					}, users.admin1, 'wba1', 'sose16');
 				}
 			], done);
 		});
@@ -239,13 +239,13 @@ describe('ModuleSubjectController', function() {
 				expect(err).property('name', 'ArgumentNullError');
 
 				done();
-			}, 'wba1', subjectData);
+			}, users.admin1, 'wba1', subjectData);
 		});
 
 		it('should fail if subject has missing creator attribute', function(done) {
 			var subjectData = {
 				year: 2014,
-				semester: 'Wintersemester',
+				semester: 'Wintersemester'
 			};
 			ModuleSubjectController.create(function(err, subject) {
 				assert.isNotNull(err, 'Error should be not null');
@@ -254,7 +254,7 @@ describe('ModuleSubjectController', function() {
 				expect(err).property('name', 'ArgumentNullError');
 
 				done();
-			}, 'wba1', subjectData);
+			}, users.admin1, 'wba1', subjectData);
 		});
 
 		it('should fail for an broken module object', function(done) {
@@ -270,7 +270,7 @@ describe('ModuleSubjectController', function() {
 				expect(err).property('name', 'NotFoundError');
 
 				done();
-			}, {}, subjectData);
+			}, users.admin1, {}, subjectData);
 		});
 
 		it('should fail for an already existing subject (WBA 1 2014 Wintersemester)', function(done) {
@@ -286,7 +286,7 @@ describe('ModuleSubjectController', function() {
 				expect(err).property('name', 'AlreadyInUseError');
 
 				done();
-			}, 'wba1', subjectData);
+			}, users.admin1, 'wba1', subjectData);
 		});
 	});
 
@@ -301,14 +301,14 @@ describe('ModuleSubjectController', function() {
 						assert.isNotNull(subject, 'Subject should not be null');
 
 						next(err);
-					}, 'wba1', 'wise1415');
+					}, users.admin1, 'wba1', 'wise1415');
 				},
 				function(next) {
 					ModuleSubjectController.update(function(err, subject) {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(subject, 'Subject should be not null');
 						next(err);
-					}, 'wba1', 'wise1415', newSubjectData);
+					}, users.admin1, 'wba1', 'wise1415', newSubjectData);
 				}
 			], done);
 		});
@@ -324,7 +324,7 @@ describe('ModuleSubjectController', function() {
 						assert.isNotNull(subject, 'Subject should not be null');
 
 						next(err);
-					}, 'wba1', 'wise1415');
+					}, users.admin1, 'wba1', 'wise1415');
 				},
 				function(next) {
 					ModuleSubjectController.update(function(err, subject) {
@@ -341,7 +341,7 @@ describe('ModuleSubjectController', function() {
 						expect(module).property('name', subjects.wba1Wise1415.module.name);
 
 						next(err);
-					}, 'wba1', 'wise1415', newSubjectData);
+					}, users.admin1, 'wba1', 'wise1415', newSubjectData);
 				}
 			], done);
 		});
@@ -357,7 +357,7 @@ describe('ModuleSubjectController', function() {
 						assert.isNotNull(subject, 'Subject should not be null');
 
 						next(err);
-					}, 'wba1', 'wise1415');
+					}, users.admin1, 'wba1', 'wise1415');
 				},
 				function(next) {
 					ModuleSubjectController.update(function(err, subject) {
@@ -374,7 +374,7 @@ describe('ModuleSubjectController', function() {
 						expect(module).property('name', 'Web-basierte Anwendungen 1');
 
 						next(err);
-					}, 'wba1', 'wise1415', newSubjectData);
+					}, users.admin1, 'wba1', 'wise1415', newSubjectData);
 				}
 			], done);
 		});
@@ -386,7 +386,7 @@ describe('ModuleSubjectController', function() {
 				assert.isNotNull(err, 'Error should be not null');
 				assert.isUndefined(subject, 'Subject should be null or undefined');
 				done();
-			}, 'unknownmodule', newSubjectData);
+			}, users.admin1, 'unknownmodule', newSubjectData);
 		});
 	});
 
@@ -396,7 +396,7 @@ describe('ModuleSubjectController', function() {
 				assert.isNull(err, 'Error should be null');
 				assert.isNotNull(subject, 'Subject should be not null');
 				done(err);
-			}, 'wba1', 'wise1415');
+			}, users.admin1, 'wba1', 'wise1415');
 		});
 
 		it('should fail for an unknown subject (unknownmodule)', function(done) {
@@ -407,7 +407,7 @@ describe('ModuleSubjectController', function() {
 				expect(err).property('name', 'NotFoundError');
 
 				done();
-			}, 'unknownmodule', 'wise1415');
+			}, users.admin1, 'unknownmodule', 'wise1415');
 		});
 
 		it('should fail for an unknown subject', function(done) {
@@ -418,7 +418,7 @@ describe('ModuleSubjectController', function() {
 				expect(err).property('name', 'NotFoundError');
 
 				done();
-			}, 'wba1', 'wise1516');
+			}, users.admin1, 'wba1', 'wise1516');
 		});
 	});
 
