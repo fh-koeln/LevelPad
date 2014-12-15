@@ -203,6 +203,10 @@ app.config(['$routeProvider', '$locationProvider', 'USER_ROLES', function($route
 			templateUrl: 'views/subjects/edit.html',
 			controller: 'SubjectDetailController'
 		},
+		'/:module/:subject/join': {
+			templateUrl: 'views/subjects/join.html',
+			controller: 'SubjectJoinController'
+		},
 
 		// Subject -> Members
 		'/:module/:subject/members': {

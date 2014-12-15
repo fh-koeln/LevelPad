@@ -70,7 +70,7 @@
 	</tr>
 	<tr data-ng-repeat="subject in section.subjects | filter:filterStatus:true | filter:searchText | orderBy:'name'">
 		<th class="col-xs-10 col-md-10 subject-item-title">
-			<a data-ng-href="{{ subject.module.slug }}/{{ subject.slug }}/members">
+			<a data-ng-href="{{ subject.module.slug }}/{{ subject.slug }}/join" data-ng-click="showJoinDialog(subject); $event.preventDefault();">
 				<span class="module-name">{{ subject.module.name }}</span><br/>
 			</a>
 		</th>

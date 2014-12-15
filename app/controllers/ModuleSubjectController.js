@@ -2,6 +2,7 @@
 
 var Subject = require('../models/Subject'),
 	Module = require('../models/Module'),
+	Member = require('../models/Member'),
 	async = require('async'),
 	errors = require('common-errors'),
 	moduleSubjectMemberController = require('./ModuleSubjectMemberController');
@@ -31,7 +32,7 @@ exports.list = function(callback, module, filter) {
 
 			filter.module = module._id;
 
-			Subject.find(filter).populate('module').exec(next);
+			Subject.find(filter).select('-registrationPassword').populate('module').exec(next);
 		}
 	], callback);
 
@@ -45,7 +46,7 @@ exports.list = function(callback, module, filter) {
  * @param year
  * @param semester
  */
-exports.read = function(callback, module, slug) {
+exports.read = function(callback, user, module, slug) {
 	async.waterfall([
 		function(next) {
 			if (typeof module === 'string') {
@@ -63,7 +64,19 @@ exports.read = function(callback, module, slug) {
 				if (!err && !subject) {
 					return next(new errors.NotFoundError('Subject'));
 				}
-				next(err, subject);
+
+				if (user.role !== 'administrator') {
+					Member.findOne({ user: user._id, subject: subject._id }, function(err, member){
+						if (member && member.role === 'creator') {
+							return next(err, subject);
+						} else {
+							delete subject.registrationPassword;
+							return next(err, subject);
+						}
+					});
+				} else {
+					next(err, subject);
+				}
 			});
 		}
 	], callback);
@@ -142,9 +155,8 @@ exports.create = function(callback, module, subjectData) {
 				registrationPassword: subjectData.registrationPassword
 			});
 		},
-		function(subject, numberAffected, next) {
-			// populate module
-			Subject.findOne({ _id: subject._id }).populate('module').exec(next);
+		function(member, next) {
+			Subject.findOne({ _id: member.subject }).populate('module').exec(next);
 		}
 	], callback);
 };

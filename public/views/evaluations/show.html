@@ -1,116 +1,120 @@
-
+<div data-ng-include="'partials/member-detail-header.html'"></div>
 <form name="form" role="form" class="form-horizontal" data-ng-submit="submit();">
-	<header class="modal-header">
-		<button type="button" class="close"
-				data-ng-show="cancel" data-ng-click="cancel();">&times;</button>
-		<div id="edit-title" class="modal-title">
-			<span class="head-font-bold">Bewertung </span>
-			<span class="head-font-normal">- {{task.title}}</span>
-			<button type="button" class="" aria-label="Left Align" data-ng-click="save();">
-			  <span class="glyphicon glyphicon-save" aria-hidden="true"> speichern</span>
-			</button>
-		</div>
-	</header>
-	<div class="modal-body">
-		<div class="col-sm-8">
-			<div class="task-box"  data-ng-repeat="level in task.levels | orderBy:'rank'" class="item" data-ng-class="evaluation.level==level._id ? (level.isMinimum == true ? 'positive-task' : 'negative-task'): '' ">
-				<span data-ng-class="level.isMinimum == true ? 'task-color' : 'task-bad-color'">{{level.title}}</span>
-				<label class=" right-radio">
-					<input type="radio" name="rating" value="{{level._id}}" data-ng-model="evaluation.level">
-				</label>
-				<div>
-					<ul class="level-list">
-						<div btf-markdown="level.description"></div>
-					</ul>	
+	<nav>
+		<header class="modal-header">
+			<button type="button" class="close"
+					data-ng-show="cancel" data-ng-click="cancel();">&times;</button>
+			<h4 id="edit-title" class="modal-title">
+				<span class="head-font-bold">Bewertung </span>
+				<span class="head-font-normal">- {{task.title}}</span>
+				<button type="button" class="" aria-label="Left Align" data-ng-click="save();">
+				  <span class="glyphicon glyphicon-save" aria-hidden="true"> speichern</span>
+				</button>
+			</h4>
+		</header>
+	</nav>
+	
+	<div class="modal-body" >
+		<div class="form-group">
+			<div class="col-sm-8">
+				<div class="task-box"  data-ng-repeat="level in task.levels | orderBy:'rank'" class="item" data-ng-class="evaluation.level==level._id ? (level.isMinimum == true ? 'positive-task' : 'negative-task'): '' ">
+					<span data-ng-class="level.isMinimum == true ? 'task-color' : 'task-bad-color'">{{level.title}}</span>
+					<label class=" right-radio">
+						<input type="radio" name="rating" value="{{level._id}}" data-ng-model="evaluation.level" data-ng-click="updateGrades(evaluation);">
+					</label>
+					<div>
+						<ul class="level-list">
+							<div btf-markdown="level.description"></div>
+						</ul>	
+					</div>
+				</div>
+				<div class="task-box" data-ng-class="{ 'neutral-task' : evaluation.level==false }">
+					<span class="task-neutral-color">Keine Bewertung</span>
+					<label class="right-radio">
+						<input type="radio" name="rating" value="{{level._id}}" data-ng-model="evaluation.level">
+					</label>
+					<div>
+					</div>
 				</div>
 			</div>
-			<div class="task-box" data-ng-class="{ 'neutral-task' : evaluation.level==false }">
-				<span class="task-neutral-color">Keine Bewertung</span>
-				<label class="right-radio">
-					<input type="radio" name="rating" value="{{level._id}}" data-ng-model="evaluation.level">
+			<div class="col-sm-4">
+				<label>
+					<input type="checkbox" ng-model="showComments" value="1"> <span class="head-font-normal">Kommentare einblenden</span>
 				</label>
-				<div>
-				</div>
-			</div>
-		</div>
-		<div class="col-sm-4">
-			<label>
-                <input type="checkbox" ng-model="showComments" value="1"> <span class="head-font-normal">Kommentare einblenden</span>
-            </label>
-			<div data-ng-show="showComments == 1" data-ng-init="comments='add'">
-				<a class="interaction-link" data-ng-click="comments='new'" data-ng-class="{'hidden': comments=='new'}" >+ Kommentar hinzufügen</a>
-				<div class="new-comment" data-ng-class="{'hidden': comments=='add'}" >
-					<div class="bubble">
-						<div class="comment-text">
-							<textarea class="comment-textarea" placeholder="Kommentar eingeben..."></textarea>
-						</div>
-						<div class="comment-tools">
-							<table class="table-tools">
-								<tbody>
+				<div data-ng-show="showComments == 1" data-ng-init="comments='add'">
+					<a class="interaction-link" data-ng-click="comments='new'" data-ng-class="{'hidden': comments=='new'}" >+ Kommentar hinzufügen</a>
+					<div class="new-comment" data-ng-class="{'hidden': comments=='add'}" >
+						<div class="bubble">
+							<div class="comment-text">
+								<textarea class="comment-textarea" placeholder="Kommentar eingeben..."></textarea>
+							</div>
+							<div class="comment-tools">
+								<table class="table-tools">
+									<tbody>
+										<tr>
+										<td class="comment-tool-column">
+											<a class="interaction-link">
+												<span class="glyphicon glyphicon-ok"></span> 
+												<span class="hidden-sm">speichern</span>
+												<span class="hidden-lg hidden-md hidden-xs">speich.</span>
+											</a>
+										</td>
+										<td class="comment-tool-column">
+											<a class="interaction-link" data-ng-click="comments='add'">
+												<span class="glyphicon glyphicon-remove"></span> 
+												<span class="hidden-sm">abbrechen</span>
+												<span class="hidden-lg hidden-md hidden-xs">abbr.</span>
+											</a>
+										</td>
+									</tr>
 									<tr>
-									<td class="comment-tool-column">
-										<a class="interaction-link">
-											<span class="glyphicon glyphicon-ok"></span> 
-											<span class="hidden-sm">speichern</span>
-											<span class="hidden-lg hidden-md hidden-xs">speich.</span>
-										</a>
-									</td>
-									<td class="comment-tool-column">
-										<a class="interaction-link" data-ng-click="comments='add'">
-											<span class="glyphicon glyphicon-remove"></span> 
-											<span class="hidden-sm">abbrechen</span>
-											<span class="hidden-lg hidden-md hidden-xs">abbr.</span>
-										</a>
-									</td>
-								</tr>
-								<tr>
-									<td class="comment-tool-column">
-										<a class="interaction-link">
-											<span class="glyphicon glyphicon-trash"></span> 
-											<span class="hidden-sm">löschen</span>
-											<span class="hidden-lg hidden-md hidden-xs">lösch.</span>
-										</a>
-									</td>
-									<td class="comment-tool-column">
-										<span class="table-comment-interaction">
-											<input type="checkbox" name="private"> 
-											<span class="">intern</span>
-										</span>
-									</td>
-								</tr>
-								</tbody>
-							</table>
+										<td class="comment-tool-column">
+											<a class="interaction-link">
+												<span class="glyphicon glyphicon-trash"></span> 
+												<span class="hidden-sm">löschen</span>
+												<span class="hidden-lg hidden-md hidden-xs">lösch.</span>
+											</a>
+										</td>
+										<td class="comment-tool-column">
+											<span class="table-comment-interaction">
+												<input type="checkbox" name="private"> 
+												<span class="">intern</span>
+											</span>
+										</td>
+									</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="comments">
+						<div class="bubble-comment">
+							Die Lösung ist ganz in Ordnung. Allerdings fehlen noch ein paar Dinge bis zur “Besten Lösung”.
+						</div>
+						<div class="comment-author">
+							Johannis <span class="head-font-bold">Bär</span> - 
+							<span class="comment-inline">
+								24.11.2014 - 19 Uhr 
+								<span class="glyphicon glyphicon-pencil comment-edit"></span>
+							</span>
+						</div>
+					</div>
+					<div class="comments">
+						<div class="bubble-comment">
+							Nice!
+						</div>
+						<div class="comment-author">
+							<span class="glyphicon glyphicon-lock comment-locked"></span>
+							Dushanthan <span class="head-font-bold">Thetsanamorthy</span> - 
+							<span class="comment-inline">
+								24.12.2014 - 20 Uhr 
+								<span class="glyphicon glyphicon-pencil comment-edit"></span>
+							</span>
 						</div>
 					</div>
 				</div>
-				<div class="comments">
-					<div class="bubble-comment">
-						Die Lösung ist ganz in Ordnung. Allerdings fehlen noch ein paar Dinge bis zur “Besten Lösung”.
-					</div>
-					<div class="comment-author">
-						Johannis <span class="head-font-bold">Bär</span> - 
-						<span class="comment-inline">
-							24.11.2014 - 19 Uhr 
-							<span class="glyphicon glyphicon-pencil comment-edit"></span>
-						</span>
-					</div>
-				</div>
-				<div class="comments">
-					<div class="bubble-comment">
-						Nice!
-					</div>
-					<div class="comment-author">
-						<span class="glyphicon glyphicon-lock comment-locked"></span>
-						Dushanthan <span class="head-font-bold">Thetsanamorthy</span> - 
-						<span class="comment-inline">
-							24.12.2014 - 20 Uhr 
-							<span class="glyphicon glyphicon-pencil comment-edit"></span>
-						</span>
-					</div>
-				</div>
+
 			</div>
-			
 		</div>
 	</div>
-
 </form>

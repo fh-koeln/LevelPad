@@ -35,6 +35,12 @@ nav > ul > li {
 	font-size: 14pt;
 	line-height: 40px;
 }
+
+ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
 /*@media (min-width: 768px) {
 	nav > ul.navi > li:before {
 		content: '\e080';
@@ -400,7 +406,6 @@ fieldset > .radio-items{
 
 .task-box{
 	padding: 3px 10px 20px 3px;
-	margin: 0px -5px 0px -25px;
 }
 
 .task-color{
@@ -720,11 +725,11 @@ table > tbody > tr > .students-table-element{
     padding: 0;
 }
 
-.positive{
+.positive-text{
 	color: #72CE1F;
 }
 
-.negative{
+.negative-text{
 	color: #EE497A;
 }
 
@@ -733,7 +738,7 @@ table > tbody > tr > .students-table-element{
 	padding-left: 30px;
 }
 
-.neutral{
+.neutral-text{
 	color: lightgray;
 }
 
@@ -771,7 +776,7 @@ table > tbody > tr > .students-table-element{
 }
 
 .level-list li:before {
-	content: '\e013';
+	content: '✓';
 	position: absolute;
 	left: 0;
 	top: 2px;
