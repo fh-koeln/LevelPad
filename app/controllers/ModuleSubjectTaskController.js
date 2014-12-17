@@ -22,9 +22,10 @@ function objectFindByKey(array, key, value) {
  * List all tasks by subject and apply an optional filter.
  *
  * @param callback
+ * @param authUser
  * @param subject
  */
-exports.list = function(callback, subject) {
+exports.list = function(callback, authUser, subject) {
 	async.waterfall([
 		function(next) {
 			if (!subject || !subject._id) {
@@ -43,10 +44,11 @@ exports.list = function(callback, subject) {
  * Find task by subject and task id.
  *
  * @param callback
+ * @param authUser
  * @param subject
  * @param taskId
  */
-exports.read = function(callback, subject, taskId) {
+exports.read = function(callback, authUser, subject, taskId) {
 	async.waterfall([
 		function(next) {
 			if (!subject || !subject._id) {
@@ -76,10 +78,11 @@ exports.read = function(callback, subject, taskId) {
  * Create a new task based on the given taskData.
  *
  * @param callback
+ * @param authUser
  * @param subject
  * @param taskData
  */
-exports.create = function(callback, subject, taskData) {
+exports.create = function(callback, authUser, subject, taskData) {
 		async.waterfall([
 			function(next) {
 				if (!subject || !subject._id) {
@@ -124,11 +127,12 @@ exports.create = function(callback, subject, taskData) {
  * Update the task with given taskData.
  *
  * @param callback
+ * @param authUser
  * @param subject
  * @param taskId
  * @param taskData
  */
-exports.update = function(callback, subject, taskId, taskData) {
+exports.update = function(callback, authUser, subject, taskId, taskData) {
 	async.waterfall([
 		function(next) {
 			if (!subject || !subject._id) {
@@ -178,10 +182,11 @@ exports.update = function(callback, subject, taskId, taskData) {
  * Remove a task by subject and task id.
  *
  * @param callback
+ * @param authUser
  * @param subject
  * @param taskId
  */
-exports.delete = function(callback, subject, taskId) {
+exports.delete = function(callback, authUser, subject, taskId) {
 	async.waterfall([
 		function(next) {
 			if (!subject || !subject._id) {

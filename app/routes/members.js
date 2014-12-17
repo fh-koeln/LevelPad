@@ -8,17 +8,17 @@ var express = require('express'),
 	swag = require('bo-swag'),
 	members = swag.router(express.Router()),
 	ModuleSubjectMemberController = require('../controllers/ModuleSubjectMemberController'),
-	helpers = require('./_helpers');
+	_helpers = require('./_helpers');
 
 members.param('memberId', function (req, res, next, memberId) {
 	ModuleSubjectMemberController.read(function(err, member) {
 		if (err) {
-			return helpers.sendResult(res)(err);
+			return _helpers.sendResult(res)(err);
 		}
 
 		req.member = member;
 		next(err);
-	}, req.subject, memberId);
+	}, req.user, req.subject, memberId);
 });
 
 /**
@@ -27,7 +27,7 @@ members.param('memberId', function (req, res, next, memberId) {
 members.get('/', {
 	tags: [ 'Member' ]
 }, function(req, res) {
-	ModuleSubjectMemberController.list(helpers.sendResult(res), req.subject, req.query);
+	ModuleSubjectMemberController.list(_helpers.sendResult(res), req.user, req.subject, req.query);
 });
 
 /**
@@ -36,7 +36,7 @@ members.get('/', {
 members.get('/:memberId', {
 	tags: [ 'Member' ]
 }, function(req, res) {
-	ModuleSubjectMemberController.read(helpers.sendResult(res), req.subject, req.params.memberId);
+	ModuleSubjectMemberController.read(_helpers.sendResult(res), req.user, req.subject, req.params.memberId);
 });
 
 /**
@@ -45,7 +45,7 @@ members.get('/:memberId', {
 members.put('/:memberId', {
 	tags: [ 'Member' ]
 }, function(req, res) {
-	ModuleSubjectMemberController.update(helpers.sendResult(res), req.subject, req.params.memberId, req.body);
+	ModuleSubjectMemberController.update(_helpers.sendResult(res), req.user, req.subject, req.params.memberId, req.body);
 });
 
 /**
@@ -54,7 +54,7 @@ members.put('/:memberId', {
 members.post('/', {
 	tags: [ 'Member' ]
 }, function(req, res) {
-	ModuleSubjectMemberController.create(helpers.sendResult(res), req.subject, req.body);
+	ModuleSubjectMemberController.create(_helpers.sendResult(res), req.user, req.subject, req.body);
 });
 
 /**
@@ -63,7 +63,7 @@ members.post('/', {
 members.delete('/:memberId', {
 	tags: [ 'Member' ]
 }, function(req, res) {
-	ModuleSubjectMemberController.delete(helpers.sendResult(res), req.subject, req.params.memberId);
+	ModuleSubjectMemberController.delete(_helpers.sendResult(res), req.user, req.subject, req.params.memberId);
 });
 
 /**

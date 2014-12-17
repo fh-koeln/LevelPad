@@ -8,9 +8,10 @@ var Level = require('../models/Level'),
  * List all levels by subject and apply an optional filter.
  *
  * @param callback
+ * @param authUser
  * @param subject
  */
-exports.list = function(callback, subject, task) {
+exports.list = function(callback, authUser, subject, task) {
 	async.waterfall([
 		function(next) {
 			if (!subject || !subject._id) {
@@ -30,10 +31,11 @@ exports.list = function(callback, subject, task) {
  * Find level by subject and level id.
  *
  * @param callback
+ * @param authUser
  * @param subject
  * @param levelId
  */
-exports.read = function(callback, subject, task, levelId) {
+exports.read = function(callback, authUser, subject, task, levelId) {
 	async.waterfall([
 		function(next) {
 			if (!subject || !subject._id) {
@@ -62,10 +64,11 @@ exports.read = function(callback, subject, task, levelId) {
  * Create a new level based on the given levelData.
  *
  * @param callback
+ * @param authUser
  * @param subject
  * @param levelData
  */
-exports.create = function(callback, subject, task, levelData) {
+exports.create = function(callback, authUser, subject, task, levelData) {
 		async.waterfall([
 			function(next) {
 				if (!subject || !subject._id) {
@@ -122,11 +125,12 @@ exports.create = function(callback, subject, task, levelData) {
  * Update the level with given levelData.
  *
  * @param callback
+ * @param authUser
  * @param subject
  * @param levelId
  * @param levelData
  */
-exports.update = function(callback, subject, task, levelId, levelData) {
+exports.update = function(callback, authUser, subject, task, levelId, levelData) {
 	async.waterfall([
 		function(next) {
 			if (!subject || !subject._id) {
@@ -174,10 +178,11 @@ exports.update = function(callback, subject, task, levelId, levelData) {
  * Remove a level by subject and level id.
  *
  * @param callback
+ * @param authUser
  * @param subject
  * @param levelId
  */
-exports.delete = function(callback, subject, task, levelId) {
+exports.delete = function(callback, authUser, subject, task, levelId) {
 	async.waterfall([
 		function(next) {
 			if (!subject || !subject._id) {

@@ -8,9 +8,10 @@ var Evaluation = require('../models/Evaluation'),
  * List all evaluations by member and apply an optional filter.
  *
  * @param callback
+ * @param authUser
  * @param member
  */
-exports.list = function(callback, member) {
+exports.list = function(callback, authUser, member) {
 	async.waterfall([
 		function(next) {
 			if (!member || !member._id) {
@@ -29,10 +30,11 @@ exports.list = function(callback, member) {
  * Find evaluation by member and evaluation id.
  *
  * @param callback
+ * @param authUser
  * @param member
  * @param evaluationId
  */
-exports.read = function(callback, member, evaluationId) {
+exports.read = function(callback, authUser, member, evaluationId) {
 	async.waterfall([
 		function(next) {
 			if (!member || !member._id) {
@@ -57,10 +59,11 @@ exports.read = function(callback, member, evaluationId) {
  * Create a new evaluation based on the given evaluationData.
  *
  * @param callback
+ * @param authUser
  * @param member
  * @param evaluationData
  */
-exports.create = function(callback, member, evaluationData) {
+exports.create = function(callback, authUser, member, evaluationData) {
 	async.waterfall([
 		function(next) {
 			if (!member || !member._id) {
@@ -104,13 +107,14 @@ exports.create = function(callback, member, evaluationData) {
  * Update an evaluation with given evaluationData.
  *
  * @param callback
+ * @param authUser
  * @param member
  * @param evaluationData
  */
-exports.update = function(callback, member, evaluationId, evaluationData) {
+exports.update = function(callback, authUser, member, evaluationId, evaluationData) {
 	async.waterfall([
 		function(next) {
-			exports.read(next, member, evaluationId);
+			exports.read(next, authUser, member, evaluationId);
 		},
 		function(evaluation, next) {
 			if (evaluationData.createdBy !== undefined) {
@@ -136,13 +140,14 @@ exports.update = function(callback, member, evaluationId, evaluationData) {
  * Remove an evaluation by member and evaluation id.
  *
  * @param callback
+ * @param authUser
  * @param member
  * @param evaluationId
  */
-exports.delete = function(callback, member, evaluationId) {
+exports.delete = function(callback, authUser, member, evaluationId) {
 	async.waterfall([
 		function(next) {
-			exports.read(next, member, evaluationId);
+			exports.read(next, authUser, member, evaluationId);
 		},
 		function(evaluation, next) {
 			evaluation.remove();

@@ -5,6 +5,7 @@ var YearController = require('../../controllers/YearController'),
 	expect = require('chai').expect,
 	db = require('../db'),
 	async = require('async'),
+	users = require('../users'),
 	Subject = require('../../models/Subject');
 
 
@@ -40,7 +41,7 @@ describe('YearController', function() {
 						expect(years[1]).property('year', firstYear + 1);
 
 						next(err);
-					});
+					}, users.admin1);
 				}
 			], done);
 		});

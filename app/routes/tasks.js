@@ -8,17 +8,17 @@ var express = require('express'),
 	swag = require('bo-swag'),
 	tasks = swag.router(express.Router()),
 	ModuleSubjectTaskController = require('../controllers/ModuleSubjectTaskController'),
-	helpers = require('./_helpers');
+	_helpers = require('./_helpers');
 
 tasks.param('taskId', function (req, res, next, taskId) {
 	ModuleSubjectTaskController.read(function(err, task) {
 		if (err) {
-			return helpers.sendResult(res)(err);
+			return _helpers.sendResult(res)(err);
 		}
 
 		req.task = task;
 		next(err);
-	}, req.subject, taskId);
+	}, req.user, req.subject, taskId);
 });
 
 /**
@@ -29,7 +29,7 @@ tasks.get('/', {
 	description: 'List all tasks and apply optional filter.',
 	tags: [ 'Task' ],
 }, function(req, res) {
-	ModuleSubjectTaskController.list(helpers.sendResult(res), req.subject);
+	ModuleSubjectTaskController.list(_helpers.sendResult(res), req.user, req.subject);
 });
 
 /**
@@ -40,7 +40,7 @@ tasks.get('/:taskId', {
 	description: 'Get information about a task.',
 	tags: [ 'Task' ],
 }, function(req, res) {
-	ModuleSubjectTaskController.read(helpers.sendResult(res), req.subject, req.params.taskId);
+	ModuleSubjectTaskController.read(_helpers.sendResult(res), req.user, req.subject, req.params.taskId);
 });
 
 /**
@@ -51,7 +51,7 @@ tasks.put('/:taskId', {
 	description: 'Update an existing task.',
 	tags: [ 'Task' ],
 }, function(req, res) {
-	ModuleSubjectTaskController.update(helpers.sendResult(res), req.subject, req.params.taskId, req.body);
+	ModuleSubjectTaskController.update(_helpers.sendResult(res), req.user, req.subject, req.params.taskId, req.body);
 });
 
 /**
@@ -62,7 +62,7 @@ tasks.post('/', {
 	description: 'Create a new task.',
 	tags: [ 'Task' ],
 }, function(req, res) {
-	ModuleSubjectTaskController.create(helpers.sendResult(res), req.subject, req.body);
+	ModuleSubjectTaskController.create(_helpers.sendResult(res), req.user, req.subject, req.body);
 });
 
 /**
@@ -73,7 +73,7 @@ tasks.delete('/:taskId', {
 	description: 'Delete an existing task.',
 	tags: [ 'Task' ],
 }, function(req, res) {
-	ModuleSubjectTaskController.delete(helpers.sendResult(res), req.subject, req.params.taskId);
+	ModuleSubjectTaskController.delete(_helpers.sendResult(res), req.user, req.subject, req.params.taskId);
 });
 
 /**

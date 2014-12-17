@@ -5,6 +5,7 @@ var ModuleController = require('../../controllers/ModuleController'),
 	assert = require('chai').assert,
 	expect = require('chai').expect,
 //	sinon = require('sinon'),
+	users = require('../users'),
 	db = require('../db'),
 	async = require('async');
 
@@ -24,7 +25,7 @@ describe('ModuleController', function() {
 				assert.isNotNull(modules, 'Modules should be not null');
 				assert.lengthOf(modules, 3, 'Modules array has length of 2');
 				done();
-			});
+			}, users.admin1);
 		});
 	});
 
@@ -39,7 +40,7 @@ describe('ModuleController', function() {
 				expect(module).property('name', 'Web-basierte Anwendungen 1');
 
 				done();
-			}, 'wba1');
+			}, users.admin1, 'wba1');
 		});
 
 		it('should fail for an unknown module (unknownmodule)', function(done) {
@@ -47,7 +48,7 @@ describe('ModuleController', function() {
 				assert.isNotNull(err, 'Error should be not null');
 				assert.isNull(module, 'Module should be null');
 				done();
-			}, 'unknownmodule');
+			}, users.admin1, 'unknownmodule');
 		});
 	});
 
@@ -75,7 +76,7 @@ describe('ModuleController', function() {
 						expect(module).property('name', 'Grundlagen der visuellen Kommunikation');
 
 						next(err);
-					}, moduledata);
+					}, users.admin1, moduledata);
 				},
 				function(next) {
 					Module.findOne({ slug: 'gdvk' }, function(err, module) {
@@ -106,7 +107,7 @@ describe('ModuleController', function() {
 				expect(err.errors).property('name');
 
 				done();
-			}, moduledata);
+			}, users.admin1, moduledata);
 		});
 
 		it('should fail for an already existing module (wba1)', function(done) {
@@ -125,7 +126,7 @@ describe('ModuleController', function() {
 				assert.include(err.err, 'duplicate key error');
 
 				done();
-			}, moduledata);
+			}, users.admin1, moduledata);
 		});
 	});
 
@@ -145,7 +146,7 @@ describe('ModuleController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(module, 'Module should be not null');
 						next(err);
-					}, 'wba1', newmoduledata);
+					}, users.admin1, 'wba1', newmoduledata);
 				},
 				function(next) {
 					Module.findOne({ slug: 'wba1' }, function(err, module) {
@@ -185,7 +186,7 @@ describe('ModuleController', function() {
 						expect(module).property('name', 'New name');
 
 						next(err);
-					}, 'wba1', newmoduledata);
+					}, users.admin1, 'wba1', newmoduledata);
 				},
 				function(next) {
 					Module.findOne({ slug: 'wba1' }, function(err, module) {
@@ -229,7 +230,7 @@ describe('ModuleController', function() {
 						expect(module).property('name', 'Web-basierte Anwendungen 1');
 
 						next(err);
-					}, 'wba1', newmoduledata);
+					}, users.admin1, 'wba1', newmoduledata);
 				},
 				function(next) {
 					Module.findOne({ slug: 'wba1' }, function(err, module) {
@@ -252,7 +253,7 @@ describe('ModuleController', function() {
 				assert.isNotNull(err, 'Error should be not null');
 				assert.isNull(module, 'Module should be null');
 				done();
-			}, 'unknownmodule', moduledata);
+			}, users.admin1, 'unknownmodule', moduledata);
 		});
 	});
 
@@ -262,7 +263,7 @@ describe('ModuleController', function() {
 				assert.isNull(err, 'Error should be null');
 				assert.isNotNull(module, 'Module should be not null');
 				done();
-			}, 'wba1');
+			}, users.admin1, 'wba1');
 		});
 
 		it('should fail for an unknown module (unknownmodule)', function(done) {
@@ -270,7 +271,7 @@ describe('ModuleController', function() {
 				assert.isNotNull(err, 'Error should be not null');
 				assert.isNull(module, 'Module should be null');
 				done();
-			}, 'unknownmodule');
+			}, users.admin1, 'unknownmodule');
 		});
 	});
 

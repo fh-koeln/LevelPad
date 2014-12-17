@@ -75,7 +75,7 @@ users.get('/', {
 		}
 	}
 }, function (req, res) {
-	UserController.list(_helpers.sendResult(res));
+	UserController.list(_helpers.sendResult(res), req.user);
 });
 
 
@@ -116,7 +116,7 @@ users.get('/:username', {
 	description: 'Get information about a user.',
 	tags: [ 'User' ],
 }, function(req, res) {
-	UserController.read(_helpers.sendResult(res), req.params.username);
+	UserController.read(_helpers.sendResult(res), req.user, req.params.username);
 });
 
 /**
@@ -127,7 +127,7 @@ users.post('/', {
 	description: 'Create a new user.',
 	tags: [ 'User' ],
 }, function(req, res) {
-	UserController.create(_helpers.sendResult(res), req.body);
+	UserController.create(_helpers.sendResult(res), req.user, req.body);
 });
 
 /**
@@ -139,7 +139,7 @@ users.put('/:username', {
 	description: 'Update an existing user.',
 	tags: [ 'User' ],
 }, function(req, res) {
-	UserController.update(_helpers.sendResult(res), req.params.username, req.body);
+	UserController.update(_helpers.sendResult(res), req.user, req.params.username, req.body);
 });
 
 /**
@@ -150,7 +150,7 @@ users.delete('/:username', {
 	description: 'Delete an existing user.',
 	tags: [ 'User' ],
 }, function(req, res) {
-	UserController.delete(_helpers.sendResult(res), req.params.username);
+	UserController.delete(_helpers.sendResult(res), req.user, req.params.username);
 });
 
 /**
@@ -161,7 +161,7 @@ users.get('/:username/subjects', {
 	description: 'Returns a list of subjects for an existing user.',
 	tags: [ 'User' ],
 }, function (req, res) {
-	UserSubjectController.list(_helpers.sendResult(res), req.params.username);
+	UserSubjectController.list(_helpers.sendResult(res), req.user, req.params.username);
 });
 
 module.exports = users;

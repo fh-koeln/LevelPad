@@ -15,7 +15,7 @@ years.get('/', {
 	description: 'Get some year',
 	tags: [ 'Misc' ],
 }, function (req, res) {
-	YearController.list(_helpers.sendResult(res));
+	YearController.list(_helpers.sendResult(res), req.user);
 });
 
 module.exports = years;

@@ -34,7 +34,7 @@ describe('UserSubjectController', function() {
 					.and.be.equal(subjects.wba1Wise1415.module.name);
 
 				done();
-			}, users.student1.username);
+			}, users.admin1, users.student1.username);
 		});
 
 		it('should find all subjects for an subject creator', function(done) {
@@ -54,7 +54,7 @@ describe('UserSubjectController', function() {
 					.and.be.equal(subjects.wba1Wise1415.module.name);
 
 				done();
-			}, users.lecturer1.username);
+			}, users.admin1, users.lecturer1.username);
 		});
 
 		it('should return an error for an invalid user object', function(done) {
@@ -63,7 +63,7 @@ describe('UserSubjectController', function() {
 				should.not.exist(apiSubjects);
 
 				done();
-			}, {});
+			}, users.admin1, {});
 		});
 	});
 

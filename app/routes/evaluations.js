@@ -8,7 +8,7 @@ var express = require('express'),
 	swag = require('bo-swag'),
 	evaluations = swag.router(express.Router()),
 	ModuleSubjectMemberEvaluationController = require('../controllers/ModuleSubjectMemberEvaluationController'),
-	helpers = require('./_helpers');
+	_helpers = require('./_helpers');
 
 /**
  * Get all evaluations for the current member.
@@ -16,7 +16,7 @@ var express = require('express'),
 evaluations.get('/', {
 	tags: [ 'Evaluation' ]
 }, function(req, res) {
-	ModuleSubjectMemberEvaluationController.list(helpers.sendResult(res), req.member);
+	ModuleSubjectMemberEvaluationController.list(_helpers.sendResult(res), req.user, req.member);
 });
 
 /**
@@ -25,7 +25,7 @@ evaluations.get('/', {
 evaluations.get('/:evaluationId', {
 	tags: [ 'Evaluation' ]
 }, function(req, res) {
-	ModuleSubjectMemberEvaluationController.read(helpers.sendResult(res), req.member, req.params.evaluationId);
+	ModuleSubjectMemberEvaluationController.read(_helpers.sendResult(res), req.user, req.member, req.params.evaluationId);
 });
 
 /**
@@ -34,7 +34,7 @@ evaluations.get('/:evaluationId', {
 evaluations.put('/:evaluationId', {
 	tags: [ 'Evaluation' ]
 }, function(req, res) {
-	ModuleSubjectMemberEvaluationController.update(helpers.sendResult(res), req.member, req.params.evaluationId, req.body);
+	ModuleSubjectMemberEvaluationController.update(_helpers.sendResult(res), req.user, req.member, req.params.evaluationId, req.body);
 });
 
 /**
@@ -44,7 +44,7 @@ evaluations.post('/', {
 	tags: [ 'Evaluation' ]
 }, function(req, res) {
 	req.body.createdBy = req.user._id;
-	ModuleSubjectMemberEvaluationController.create(helpers.sendResult(res), req.member, req.body);
+	ModuleSubjectMemberEvaluationController.create(_helpers.sendResult(res), req.user, req.member, req.body);
 });
 
 /**
@@ -53,7 +53,7 @@ evaluations.post('/', {
 evaluations.delete('/:evaluationId', {
 	tags: [ 'Evaluation' ]
 }, function(req, res) {
-	ModuleSubjectMemberEvaluationController.delete(helpers.sendResult(res), req.member, req.params.evaluationId);
+	ModuleSubjectMemberEvaluationController.delete(_helpers.sendResult(res), req.user, req.member, req.params.evaluationId);
 });
 
 module.exports = evaluations;
