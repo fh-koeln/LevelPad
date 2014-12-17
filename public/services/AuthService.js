@@ -17,11 +17,11 @@ angular.module('levelPad').factory('AuthService', function ($rootScope, $q, $htt
 			data: credentials
 		}).success(function(user) {
 			changeUser(user);
-			$rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-			$rootScope.$broadcast(AUTH_EVENTS.loginRefreshed);
+			$rootScope.$broadcast(AUTH_EVENTS.loginSuccess, user);
+			$rootScope.$broadcast(AUTH_EVENTS.loginRefreshed, user);
 			deferred.resolve(user);
 		}).error(function(res) {
-			$rootScope.$broadcast(AUTH_EVENTS.loginFailed);
+			$rootScope.$broadcast(AUTH_EVENTS.loginFailed, res);
 			deferred.reject(res);
 		});
 
@@ -36,10 +36,10 @@ angular.module('levelPad').factory('AuthService', function ($rootScope, $q, $htt
 			url: '/api/users/me'
 		}).success(function(user) {
 			changeUser(user);
-			$rootScope.$broadcast(AUTH_EVENTS.loginRefreshed);
+			$rootScope.$broadcast(AUTH_EVENTS.loginRefreshed, user);
 			deferred.resolve(user);
 		}).error(function(res) {
-			$rootScope.$broadcast(AUTH_EVENTS.loginFailed);
+			$rootScope.$broadcast(AUTH_EVENTS.loginFailed, res);
 			deferred.reject(res);
 		});
 
@@ -55,15 +55,15 @@ angular.module('levelPad').factory('AuthService', function ($rootScope, $q, $htt
 			data: user
 		}).success(function(user) {
 			changeUser(user);
-			$rootScope.$broadcast(AUTH_EVENTS.loginRefreshed);
-			$rootScope.$broadcast(AUTH_EVENTS.signupSuccess);
+			$rootScope.$broadcast(AUTH_EVENTS.loginRefreshed, user);
+			$rootScope.$broadcast(AUTH_EVENTS.signupSuccess, user);
 			deferred.resolve(user);
 		}).error(function(res) {
 			changeUser({
 				username: '',
 				role: USER_ROLES.public
 			});
-			$rootScope.$broadcast(AUTH_EVENTS.signupFailed);
+			$rootScope.$broadcast(AUTH_EVENTS.signupFailed, res);
 			deferred.reject(res);
 		});
 
@@ -84,7 +84,7 @@ angular.module('levelPad').factory('AuthService', function ($rootScope, $q, $htt
 			$rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
 			deferred.resolve();
 		}).error(function(res) {
-			$rootScope.$broadcast(AUTH_EVENTS.logoutFailed);
+			$rootScope.$broadcast(AUTH_EVENTS.logoutFailed, res);
 			deferred.reject(res);
 		});
 

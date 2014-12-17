@@ -21,10 +21,10 @@ angular.module('levelPad').controller('SignupController', function($scope, $root
 	});
 
 	$rootScope.$on(AUTH_EVENTS.signupFailed, function(event, res) {
-		if (typeof res.data.errors === 'object') {
-			for (var errorName in res.data.errors) {
-				if (res.data.errors.hasOwnProperty(errorName)) {
-					AlertService.showError(res.data.errors[errorName].message, -1);
+		if (typeof res.errors === 'object') {
+			for (var errorName in res.errors) {
+				if (res.errors.hasOwnProperty(errorName)) {
+					AlertService.showError(res.errors[errorName].message, -1);
 				}
 			}
 		} else {
