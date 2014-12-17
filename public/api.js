@@ -98,6 +98,18 @@ angular.module('levelPad').service('Evaluation', ['RestfulResource', function(Re
 }]);
 
 /**
+ * Provides a Module -> Subject -> Member -> Comment REST API.
+ */
+angular.module('levelPad').service('Comment', ['RestfulResource', function(RestfulResource) {
+	return RestfulResource('/api/modules/:module/subjects/:subject/members/:member/comments/:comment', {
+		module: '@subject.module.slug',
+		subject: '@subject.slug',
+		member: '@_id',
+		comment: '@_id'
+	});
+}]);
+
+/**
  * Provides an API which contains all models as dictionary.
  */
 angular.module('levelPad').service('API', ['User', 'Module', 'Subject', 'Task', function(User, Module, Subject, Task) {

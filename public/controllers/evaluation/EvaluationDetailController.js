@@ -10,7 +10,6 @@ angular.module('levelPad').controller('EvaluationDetailController', [
 		$scope.module = $routeParams.module;
 		$scope.$location = $location;
 		$scope.evaluation = new Evaluation();
-		$scope.showComments = 0;
 		
 		
 		function objectFindByKey(array, key, value) {
@@ -32,7 +31,7 @@ angular.module('levelPad').controller('EvaluationDetailController', [
 					Grade.prepareMember($scope);
 				}
 			)}
-			
+			console.log($scope.member);
 			var taskId = $routeParams.task || $scope.taskId;
 			if (taskId) {
 				$scope.task = Task.get({
