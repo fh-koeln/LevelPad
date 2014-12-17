@@ -13,12 +13,16 @@ angular.module('levelPad').controller('LevelListController', [
 	$scope.update = function () {
 		Level.query({ module: $routeParams.module, subject: $routeParams.subject, task: $routeParams.task }, function(levels) {
 			$scope.levels = levels;
+			$scope.levels.sort( function(a, b){
+				return a.rank > b.rank
+			});
 		}, function() {
 			alert('Could not load levels.');
 		});
 	};
 	$scope.update();
-
+	
+		
 	$scope.showCreateDialog = function() {
 		var dialog = new DialogService('/:module/:subject/tasks/:task/levels/new');
 		dialog.scope.submit = function() {
@@ -58,16 +62,19 @@ angular.module('levelPad').controller('LevelListController', [
             end = ui.item.index();
 
         $scope.levels.splice(end, 0, $scope.levels.splice(start, 1)[0]);
-
-        for(var index in $scope.levels) {
-        	$scope.levels[index].rank = parseInt(index,10)+1;
-			$scope.levels[index].$save({
+		console.log($scope.levels);
+		var index=0;
+        angular.forEach($scope.levels, function(level) {
+			console.log(index);
+        	level.rank = index+1;
+			level.$save({
 				module: $routeParams.module,
 				subject: $routeParams.subject,
 				task: $routeParams.task,
-				level: $scope.levels[index]._id
+				level: level._id
 			});
-      	}
+			index++;
+      	});
 		$scope.$apply();
     };
 

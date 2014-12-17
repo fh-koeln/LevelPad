@@ -214,6 +214,7 @@ angular.module('levelPad').factory('Grade', [function() {
 						task.level = null;
 					}
 				}
+
 			});
 		},
 		 prepareMemberList: function prepareMemberList($scope, member) {
