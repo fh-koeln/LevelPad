@@ -45,7 +45,7 @@
 					<input type="checkbox" ng-model="showComments" value="1"> <span class="head-font-normal">Kommentare einblenden</span>
 				</label>
 				<div data-ng-show="showComments == 1" data-ng-init="comments='add'">
-					<a class="interaction-link" data-ng-click="comments='new'" data-ng-class="{'hidden': comments=='new'}" >+ Kommentar hinzufügen</a>
+					<a class="add-comment" data-ng-click="comments='new'" data-ng-class="{'hidden': comments=='new'}" >+ Kommentar hinzufügen</a>
 					<div class="new-comment" data-ng-class="{'hidden': comments=='add'}" >
 						<div class="bubble">
 							<div class="comment-text">
@@ -56,14 +56,14 @@
 									<tbody>
 										<tr>
 										<td class="comment-tool-column">
-											<a class="interaction-link">
+											<a class="interaction-link add-comment">
 												<span class="glyphicon glyphicon-ok"></span> 
 												<span class="hidden-sm">speichern</span>
 												<span class="hidden-lg hidden-md hidden-xs">speich.</span>
 											</a>
 										</td>
 										<td class="comment-tool-column">
-											<a class="interaction-link" data-ng-click="comments='add'">
+											<a class="interaction-link add-comment" data-ng-click="comments='add'">
 												<span class="glyphicon glyphicon-remove"></span> 
 												<span class="hidden-sm">abbrechen</span>
 												<span class="hidden-lg hidden-md hidden-xs">abbr.</span>
@@ -72,14 +72,14 @@
 									</tr>
 									<tr>
 										<td class="comment-tool-column">
-											<a class="interaction-link">
+											<a class="add-comment">
 												<span class="glyphicon glyphicon-trash"></span> 
 												<span class="hidden-sm">löschen</span>
 												<span class="hidden-lg hidden-md hidden-xs">lösch.</span>
 											</a>
 										</td>
 										<td class="comment-tool-column">
-											<span class="table-comment-interaction">
+											<span class="table-comment-interaction add-comment">
 												<input type="checkbox" name="private"> 
 												<span class="">intern</span>
 											</span>
@@ -90,6 +90,20 @@
 							</div>
 						</div>
 					</div>
+					
+					<div data-ng-repeat="comment in member.comments" class="comments">
+						<div class="bubble-comment">
+							TEXT
+						</div>
+						<div class="comment-author">
+							VORNAME <span class="head-font-bold">NACHNAME</span> - 
+							<span class="comment-inline">
+								DATE - TIME 
+								<span class="glyphicon glyphicon-pencil comment-edit"></span>
+							</span>
+						</div>
+					</div>
+					
 					<div class="comments">
 						<div class="bubble-comment">
 							Die Lösung ist ganz in Ordnung. Allerdings fehlen noch ein paar Dinge bis zur “Besten Lösung”.

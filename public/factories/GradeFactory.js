@@ -44,7 +44,11 @@ angular.module('levelPad').factory('Grade', [function() {
 					task.level = level;
 				}
 				if(task.level.isMinimum == true){
-					absGrade+= (3/(countMin-1) * (task.level.rank -1) +1) * task.weight;
+					if(countMin!=1){
+						absGrade+= (3/(countMin-1) * (task.level.rank -1) +1) * task.weight;
+					}else{
+						absGrade+= 1 * task.weight;
+					}
 				}
 				else{
 					absGrade+= 5 * task.weight;
@@ -82,7 +86,11 @@ angular.module('levelPad').factory('Grade', [function() {
 					task.level = level;
 				}
 				if(task.level.isMinimum == true){
-					relGrade+= (3/(countMin-1) * (task.level.rank -1) +1) * task.weight;
+					if(countMin!=1){
+						relGrade+= (3/(countMin-1) * (task.level.rank -1) +1) * task.weight;
+					}else{
+						relGrade+= 1 * task.weight;
+					}
 				}
 				else{
 					relGrade+= 5 * task.weight;
@@ -214,6 +222,7 @@ angular.module('levelPad').factory('Grade', [function() {
 						task.level = null;
 					}
 				}
+
 			});
 		},
 		 prepareMemberList: function prepareMemberList($scope, member) {

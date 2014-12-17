@@ -16,7 +16,7 @@
 		</tr>
 	</thead>
 	<tbody class="table-drag-drop" ui-sortable="sortableOptions">
-		<tr data-ng-repeat="level in levels | orderBy:'rank'" class="item" data-ng-class="level.isMinimum == true ? 'positive-row' : 'negative-row'">
+		<tr data-ng-repeat="level in levels" class="item" data-ng-class="level.isMinimum == true ? 'positive-row' : 'negative-row'">
 			<td>
 				<span class="levels-row">
 					<span class="glyphicon glyphicon-play collapse-icon" ng-click="isOpen1 = !isOpen1" data-ng-class="{ 'collapse-icon-clicked': isOpen1 }"></span>
@@ -31,7 +31,8 @@
 			</td>
 			<td class="drag-handle">
 				<div class="text-right">
-					<span class="glyphicon glyphicon-align-justify interaction-color myHandle"  data-ng-class="{ 'hidden': isOpen1 }"></span>
+					<span class="glyphicon glyphicon-align-justify interaction-color myHandle"  
+						  data-ng-class="{ 'hidden': isOpen1 }"></span>
 				</div>
 			</td>
 		</tr>
