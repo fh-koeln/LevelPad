@@ -8,6 +8,7 @@ angular.module('levelPad').controller('EvaluationDetailController', [
 		
 		$scope.subject = CurrentSubject;
 		$scope.module = $routeParams.module;
+		$scope.$location = $location;
 		$scope.evaluation = new Evaluation();
 		$scope.showComments = 0;
 		
@@ -98,7 +99,13 @@ angular.module('levelPad').controller('EvaluationDetailController', [
 			}
 		};
 		
-		$scope.save = $scope._save;
+		$scope.save = function(){
+			$scope._save().then(function() {
+				$location.path('/'+$routeParams.module+'/'+$routeParams.subject+'/members/'+$routeParams.member);
+			}, function () {
+					alert('Speichern fehlgeschlagen!');
+			});
+		};
 	
 		//Pie Chart Magic
 		$scope.options = ChartOption;

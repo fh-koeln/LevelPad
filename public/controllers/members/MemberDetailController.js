@@ -19,7 +19,7 @@ angular.module('levelPad').controller('MemberDetailController', [
 				}
 			)}
 		};
-
+		
 		$scope.update();
 
 		//Pie Chart Magic

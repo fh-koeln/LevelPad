@@ -70,7 +70,7 @@
                 Matrikelnr.
             </th>
             <th class="col-sm-2 col-md-2 hidden-xs text-center">
-                <span data-ng-show="showRating == 1">Artefakte (Anz)</span>
+                <span data-ng-show="showRating == 1">Artefakte ({{subject.tasks.length}})</span>
             </th>
             <th class="col-sm-2 col-md-2 hidden-xs text-center">
                 <span data-ng-show="showRating == 1">relative Note</span>
@@ -98,24 +98,24 @@
             <td class="col-sm-2 col-md-2 hidden-xs text-center">
                 <span data-ng-show="showRating == 1">
 					<div class="medium-circle">
-    					<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
-						<span class="circle-text">4</span>
+    					<canvas tc-chartjs-pie chart-options="options" chart-data="member._artefacts"></canvas>
+						<span class="circle-text">{{member._artefacts[0].value}}</span>
 					</div>
 				</span>
             </td>
             <td class="col-sm-2 col-md-2 hidden-xs text-center">
                 <span data-ng-show="showRating == 1">
 					<div class="medium-circle">
-    					<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
-						<span class="circle-text">2,0</span>
+    					<canvas tc-chartjs-pie chart-options="options" chart-data="(5-member._relGrade[0].value)<=4 ? member._relGrade : member._noneRelGrade"></canvas>
+						<span class="circle-text">{{5-member._relGrade[0].value}}</span>
 					</div>
 				</span>
             </td>
             <td class="col-sm-2 col-md-2 hidden-xs text-center">
                 <span data-ng-show="showRating == 1">
 					<div class="medium-circle">
-    					<canvas tc-chartjs-pie chart-options="options" chart-data="data"></canvas>
-						<span class="circle-text">4,0</span>
+    					<canvas tc-chartjs-pie chart-options="options" chart-data="(5-member._absGrade[0].value)<=4 ? member._absGrade : member._noneAbsGrade"></canvas>
+						<span class="circle-text">{{5-member._absGrade[0].value}}</span>
 					</div>
 				</span>
             </td>
