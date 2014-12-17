@@ -15,7 +15,7 @@ semesters.get('/', {
 	description: 'Get some semesters',
 	tags: [ 'Misc' ],
 }, function (req, res) {
-	SemesterController.list(_helpers.sendResult(res));
+	SemesterController.list(_helpers.sendResult(res), req.user);
 });
 
 module.exports = semesters;

@@ -6,6 +6,7 @@ var UserController = require('../../controllers/UserController'),
 	expect = require('chai').expect,
 	should = require('should'),
 //	sinon = require('sinon'),
+	users = require('../users'),
 	db = require('../db'),
 	async = require('async');
 
@@ -34,7 +35,7 @@ describe('UserController', function() {
 				expect(user).property('role', 'administrator');
 
 				done();
-			}, filter);
+			}, users.admin1, filter);
 		});
 	});
 
@@ -51,7 +52,7 @@ describe('UserController', function() {
 				expect(user).property('role', 'administrator');
 
 				done();
-			}, 'admin1');
+			}, users.admin1, 'admin1');
 		});
 
 		it('should fail for an unknown user (unknownuser)', function(done) {
@@ -64,7 +65,7 @@ describe('UserController', function() {
 				expect(err).property('entity_name', 'User');
 
 				done();
-			}, 'unknownuser');
+			}, users.admin1, 'unknownuser');
 		});
 	});
 
@@ -96,7 +97,7 @@ describe('UserController', function() {
 						expect(user).property('role', 'student'); // @todo: This will fail if default role will be switched to student
 
 						next(err, user);
-					}, userdata);
+					}, users.admin1, userdata);
 				},
 				function(next) {
 					User.findOne({ username: userdata.username.toLowerCase() }, function(err, user) {
@@ -131,7 +132,7 @@ describe('UserController', function() {
 				expect(err.errors).property('lastname');
 
 				done();
-			}, userdata);
+			}, users.admin1, userdata);
 		});
 
 		it('should fail if user has no username', function(done) {
@@ -151,7 +152,7 @@ describe('UserController', function() {
 				expect(err.errors).property('username');
 
 				done();
-			}, userdata);
+			}, users.admin1, userdata);
 		});
 
 		it('should fail for an already known user (admin1)', function(done) {
@@ -168,7 +169,7 @@ describe('UserController', function() {
 				err.should.have.property('name').and.be.equal('AlreadyInUseError');
 
 				done();
-			}, userdata);
+			}, users.admin1, userdata);
 		});
 
 		it('should fail for an already known email (student1)', function(done) {
@@ -186,7 +187,7 @@ describe('UserController', function() {
 				err.should.have.property('arg1').and.be.equal('email');
 
 				done();
-			}, userdata);
+			}, users.admin1, userdata);
 		});
 
 		it('should fail for an already known studentNumber (student1)', function(done) {
@@ -204,7 +205,7 @@ describe('UserController', function() {
 				err.should.have.property('arg1').and.be.equal('studentNumber');
 
 				done();
-			}, userdata);
+			}, users.admin1, userdata);
 		});
 	});
 
@@ -224,7 +225,7 @@ describe('UserController', function() {
 						assert.isNull(err, 'Error should be null');
 						assert.isNotNull(user, 'User should be not null');
 						next(err);
-					}, 'admin1', newuserdata);
+					}, users.admin1, 'admin1', newuserdata);
 				},
 				function(next) {
 					User.findOne({ username: 'admin1' }, function(err, user) {
@@ -268,7 +269,7 @@ describe('UserController', function() {
 						expect(user).property('role', 'administrator');
 
 						next(err);
-					}, 'admin1', newuserdata);
+					}, users.admin1, 'admin1', newuserdata);
 				},
 				function(next) {
 					User.findOne({ username: 'admin1' }, function(err, user) {
@@ -313,7 +314,7 @@ describe('UserController', function() {
 						assert.isUndefined(user, 'User should be undefined');
 
 						next(null);
-					}, 'student1', newuserdata);
+					}, users.admin1, 'student1', newuserdata);
 				},
 				function(next) {
 					User.findOne({ username: 'student1' }, function(err, user) {
@@ -359,7 +360,7 @@ describe('UserController', function() {
 						assert.isUndefined(user, 'User should be undefined');
 
 						next(null);
-					}, 'student1', newuserdata);
+					}, users.admin1, 'student1', newuserdata);
 				},
 				function(next) {
 					User.findOne({ username: 'student1' }, function(err, user) {
@@ -410,7 +411,7 @@ describe('UserController', function() {
 						expect(user).property('role', 'administrator');
 
 						next(err);
-					}, 'admin1', newuserdata);
+					}, users.admin1, 'admin1', newuserdata);
 				},
 				function(next) {
 					User.findOne({ username: 'admin1' }, function(err, user) {
@@ -435,7 +436,7 @@ describe('UserController', function() {
 				assert.isNotNull(err, 'Error should be not null');
 				assert.isNull(user, 'User should be null');
 				done();
-			}, 'unknownuser', userdata);
+			}, users.admin1, 'unknownuser', userdata);
 		});
 	});
 
@@ -445,7 +446,7 @@ describe('UserController', function() {
 				assert.isNull(err, 'Error should be null');
 				assert.isNotNull(user, 'User should be not null');
 				done();
-			}, 'admin1');
+			}, users.admin1, 'admin1');
 		});
 
 		it('should fail for an unknown user (unknownuser)', function(done) {
@@ -453,7 +454,7 @@ describe('UserController', function() {
 				assert.isNotNull(err, 'Error should be not null');
 				assert.isNull(user, 'User should be null');
 				done();
-			}, 'unknownuser');
+			}, users.admin1, 'unknownuser');
 		});
 	});
 

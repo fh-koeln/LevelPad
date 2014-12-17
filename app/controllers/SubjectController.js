@@ -7,10 +7,10 @@ var Subject = require('../models/Subject'),
  * List all subjects and apply an optional filter.
  *
  * @param callback
- * @param module
+ * @param authUser
  * @param filter
  */
-exports.list = function(callback, filter) {
+exports.list = function(callback, authUser, filter) {
 	async.waterfall([
 		function(next) {
 

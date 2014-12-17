@@ -8,9 +8,10 @@ var Comment = require('../models/Comment'),
  * List all comments by member and apply an optional filter.
  *
  * @param callback
+ * @param authUser
  * @param member
  */
-exports.list = function(callback, member) {
+exports.list = function(callback, authUser, member) {
 	async.waterfall([
 		function(next) {
 			if (!member || !member._id) {
@@ -29,10 +30,11 @@ exports.list = function(callback, member) {
  * Find comment by member and comment id.
  *
  * @param callback
+ * @param authUser
  * @param member
  * @param commentId
  */
-exports.read = function(callback, member, commentId) {
+exports.read = function(callback, authUser, member, commentId) {
 	async.waterfall([
 		function(next) {
 			if (!member || !member._id) {
@@ -57,10 +59,11 @@ exports.read = function(callback, member, commentId) {
  * Create a new comment based on the given commentData.
  *
  * @param callback
+ * @param authUser
  * @param member
  * @param commentData
  */
-exports.create = function(callback, member, commentData) {
+exports.create = function(callback, authUser, member, commentData) {
 	async.waterfall([
 		function(next) {
 			if (!member || !member._id) {
@@ -105,13 +108,14 @@ exports.create = function(callback, member, commentData) {
  * Update an comment with given commentData.
  *
  * @param callback
+ * @param authUser
  * @param member
  * @param commentData
  */
-exports.update = function(callback, member, commentId, commentData) {
+exports.update = function(callback, authUser, member, commentId, commentData) {
 	async.waterfall([
 		function(next) {
-			exports.read(next, member, commentId);
+			exports.read(next, authUser, member, commentId);
 		},
 		function(comment, next) {
 			if (commentData.createdBy !== undefined) {
@@ -137,13 +141,14 @@ exports.update = function(callback, member, commentId, commentData) {
  * Remove an comment by member and comment id.
  *
  * @param callback
+ * @param authUser
  * @param member
  * @param commentId
  */
-exports.delete = function(callback, member, commentId) {
+exports.delete = function(callback, authUser, member, commentId) {
 	async.waterfall([
 		function(next) {
-			exports.read(next, member, commentId);
+			exports.read(next, authUser, member, commentId);
 		},
 		function(comment, next) {
 			comment.remove();

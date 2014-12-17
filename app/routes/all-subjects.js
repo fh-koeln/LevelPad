@@ -18,7 +18,7 @@ allSubjects.get('/', {
 	description: 'List all subjects and apply optional filter.',
 	tags: [ 'Subject' ],
 }, function (req, res) {
-	SubjectController.list(_helpers.sendResult(res), req.module);
+	SubjectController.list(_helpers.sendResult(res), req.user, req.module);
 });
 
 module.exports = allSubjects;

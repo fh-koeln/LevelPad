@@ -10,9 +10,10 @@ var Member = require('../models/Member'),
  * List all members by subject and apply an optional filter.
  *
  * @param callback
+ * @param authUser
  * @param subject
  */
-exports.list = function(callback, subject, queryArgs) {
+exports.list = function(callback, authUser, subject, queryArgs) {
 	async.waterfall([
 		function(next) {
 			if (!subject || !subject._id) {
@@ -41,10 +42,11 @@ exports.list = function(callback, subject, queryArgs) {
  * Find member by subject and member id.
  *
  * @param callback
+ * @param authUser
  * @param subject
  * @param memberId
  */
-exports.read = function(callback, subject, memberId) {
+exports.read = function(callback, authUser, subject, memberId) {
 	async.waterfall([
 		function(next) {
 			if (!subject || !subject._id) {
@@ -82,10 +84,11 @@ exports.read = function(callback, subject, memberId) {
  * Create a new member based on the given memberData.
  *
  * @param callback
+ * @param authUser
  * @param subject
  * @param memberData
  */
-exports.create = function(callback, subject, memberData) {
+exports.create = function(callback, authUser, subject, memberData) {
 		async.waterfall([
 			function(next) {
 				if (!subject || !subject._id) {
@@ -159,14 +162,15 @@ exports.create = function(callback, subject, memberData) {
  * Update the member with given memberData.
  *
  * @param callback
+ * @param authUser
  * @param subject
  * @param memberId
  * @param memberData
  */
-exports.update = function(callback, subject, memberId, memberData) {
+exports.update = function(callback, authUser, subject, memberId, memberData) {
 	async.waterfall([
 		function(next) {
-			exports.read(next, subject, memberId);
+			exports.read(next, authUser, subject, memberId);
 		},
 		function(member, next) {
 			if (memberData.role !== undefined) {
@@ -181,13 +185,14 @@ exports.update = function(callback, subject, memberId, memberData) {
  * Remove a member by subject and member id.
  *
  * @param callback
+ * @param authUser
  * @param subject
  * @param memberId
  */
-exports.delete = function(callback, subject, memberId) {
+exports.delete = function(callback, authUser, subject, memberId) {
 	async.waterfall([
 		function(next) {
-			exports.read(next, subject, memberId);
+			exports.read(next, authUser, subject, memberId);
 		},
 		function(member, next) {
 			member.remove(next);

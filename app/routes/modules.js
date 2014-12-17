@@ -18,7 +18,7 @@ modules.param('moduleSlug', function (req, res, next, moduleSlug) {
 
 		req.module = module;
 		next(err);
-	}, moduleSlug);
+	}, req.user, moduleSlug);
 });
 
 /**
@@ -29,7 +29,7 @@ modules.get('/', {
 	description: 'List all tasks and apply optional filter.',
 	tags: [ 'Module' ],
 }, function (req, res) {
-	ModuleController.list(_helpers.sendResult(res));
+	ModuleController.list(_helpers.sendResult(res), req.user);
 });
 
 /**
@@ -40,7 +40,7 @@ modules.post('/', {
 	description: 'Create a new module.',
 	tags: [ 'Module' ],
 }, function (req, res) {
-	ModuleController.create(_helpers.sendResult(res), req.body);
+	ModuleController.create(_helpers.sendResult(res), req.user, req.body);
 });
 
 /**
@@ -51,7 +51,7 @@ modules.get('/:moduleSlug', {
 	description: 'Get an existing module.',
 	tags: [ 'Module' ],
 }, function (req, res) {
-	ModuleController.read(_helpers.sendResult(res), req.params.moduleSlug);
+	ModuleController.read(_helpers.sendResult(res), req.user, req.params.moduleSlug);
 });
 
 /**
@@ -62,7 +62,7 @@ modules.put('/:moduleSlug', {
 	description: 'Update an existing module.',
 	tags: [ 'Module' ],
 }, function (req, res) {
-	ModuleController.update(_helpers.sendResult(res), req.params.moduleSlug, req.body);
+	ModuleController.update(_helpers.sendResult(res), req.user, req.params.moduleSlug, req.body);
 });
 
 /**
@@ -73,7 +73,7 @@ modules.delete('/:moduleSlug', {
 	description: 'Delete an existing module.',
 	tags: [ 'Module' ],
 }, function (req, res) {
-	ModuleController.delete(_helpers.sendResult(res), req.params.moduleSlug);
+	ModuleController.delete(_helpers.sendResult(res), req.user, req.params.moduleSlug);
 });
 
 /**

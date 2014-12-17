@@ -5,16 +5,17 @@ var Subject = require('../models/Subject'),
 	Member = require('../models/Member'),
 	async = require('async'),
 	errors = require('common-errors'),
-	moduleSubjectMemberController = require('./ModuleSubjectMemberController');
+	ModuleSubjectMemberController = require('./ModuleSubjectMemberController');
 
 /**
  * List all subjects by module and apply an optional filter.
  *
  * @param callback
+ * @param authUser
  * @param module
  * @param filter
  */
-exports.list = function(callback, user, module, filter) {
+exports.list = function(callback, authUser, module, filter) {
 	async.waterfall([
 		function(next) {
 			if (typeof module === 'string') {
@@ -42,11 +43,11 @@ exports.list = function(callback, user, module, filter) {
  * Find subject by module and subject slug.
  *
  * @param callback
+ * @param authUser
  * @param module
- * @param year
- * @param semester
+ * @param slug
  */
-exports.read = function(callback, user, module, slug) {
+exports.read = function(callback, authUser, module, slug) {
 	async.waterfall([
 		function(next) {
 			if (typeof module === 'string') {
@@ -65,8 +66,8 @@ exports.read = function(callback, user, module, slug) {
 					return next(new errors.NotFoundError('Subject'));
 				}
 
-				if (user.role !== 'administrator') {
-					Member.findOne({ user: user._id, subject: subject._id }, function(err, member){
+				if (authUser.role !== 'administrator') {
+					Member.findOne({ user: authUser._id, subject: subject._id }, function(err, member){
 						if (member && member.role === 'creator') {
 							return next(err, subject);
 						} else {
@@ -86,12 +87,11 @@ exports.read = function(callback, user, module, slug) {
  * Create a new subject based on the given subjectData.
  *
  * @param callback
+ * @param authUser
  * @param module
- * @param year
- * @param semester
  * @param subjectdata
  */
-exports.create = function(callback, user, module, subjectData) {
+exports.create = function(callback, authUser, module, subjectData) {
 
 	async.waterfall([
 		function(next) {
@@ -149,7 +149,7 @@ exports.create = function(callback, user, module, subjectData) {
 			subject.save(next);
 		},
 		function(subject, numberAffected, next) {
-			moduleSubjectMemberController.create(next, subject, {
+			ModuleSubjectMemberController.create(next, authUser, subject, {
 				id: subjectData.creator,
 				role: 'creator',
 				registrationPassword: subjectData.registrationPassword
@@ -166,19 +166,19 @@ exports.create = function(callback, user, module, subjectData) {
  * and the module slug ifself could not changed (currently).
  *
  * @param callback
+ * @param authUser
  * @param module
- * @param year
- * @param semester
+ * @param slug
  * @param subjectData
  */
-exports.update = function(callback, user, module, slug, subjectData) {
+exports.update = function(callback, authUser, module, slug, subjectData) {
 	// TODO: Verify that the ID and the slug is not changed!?
 //	subjectData.slug = subjectSlug;
 
 	// TODO: could we remove the find here and change the check based on the numberAffected callback argument?
 	async.waterfall([
 		function(next) {
-			exports.read(next, user, module, slug);
+			exports.read(next, authUser, module, slug);
 		},
 		function(subject, next) {
 			if (subjectData.status !== undefined) {
@@ -202,11 +202,11 @@ exports.update = function(callback, user, module, slug, subjectData) {
  * Remove a subject by module and subject.
  *
  * @param callback
+ * @param authUser
  * @param module
- * @param year
- * @param semester
+ * @param slug
  */
-exports.delete = function(callback, user, module, slug) {
+exports.delete = function(callback, authUser, module, slug) {
 
 	// TODO add force parameter and remove module with subjects only if this parameter is true.
 
@@ -216,7 +216,7 @@ exports.delete = function(callback, user, module, slug) {
 
 	async.waterfall([
 		function(next) {
-			exports.read(next, user, module, slug);
+			exports.read(next, authUser, module, slug);
 		},
 		function(subject, next) {
 			subject.remove(next);

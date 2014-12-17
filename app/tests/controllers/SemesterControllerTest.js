@@ -1,8 +1,8 @@
 'use strict';
 
 var SemesterController = require('../../controllers/SemesterController'),
-	assert = require('chai').assert,
-	expect = require('chai').expect;
+	expect = require('chai').expect,
+	users = require('../users');
 
 describe('SemesterController', function() {
 	describe('list', function() {
@@ -21,7 +21,7 @@ describe('SemesterController', function() {
 				expect(semester2).property('name', 'Wintersemester');
 
 				done(err);
-			});
+			}, users.admin1);
 		});
 	});
 

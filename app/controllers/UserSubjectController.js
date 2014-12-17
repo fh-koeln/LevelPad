@@ -10,9 +10,10 @@ var Member = require('../models/Member'),
  * List all subjects by user and apply an optional filter.
  *
  * @param callback
+ * @param authUser
  * @param user
  */
-exports.list = function(callback, user) {
+exports.list = function(callback, authUser, user) {
 	async.waterfall([
 		function(next) {
 			if (typeof user === 'string') {

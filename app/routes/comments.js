@@ -8,7 +8,7 @@ var express = require('express'),
 	swag = require('bo-swag'),
 	comments = swag.router(express.Router()),
 	ModuleSubjectMemberCommentController = require('../controllers/ModuleSubjectMemberCommentController'),
-	helpers = require('./_helpers');
+	_helpers = require('./_helpers');
 
 /**
  * Get all comments for the current member.
@@ -16,7 +16,7 @@ var express = require('express'),
 comments.get('/', {
 	tags: [ 'Comment' ]
 }, function(req, res) {
-	ModuleSubjectMemberCommentController.list(helpers.sendResult(res), req.member);
+	ModuleSubjectMemberCommentController.list(_helpers.sendResult(res), req.user, req.member);
 });
 
 /**
@@ -25,7 +25,7 @@ comments.get('/', {
 comments.get('/:commentId', {
 	tags: [ 'Comment' ]
 }, function(req, res) {
-	ModuleSubjectMemberCommentController.read(helpers.sendResult(res), req.member, req.params.commentId);
+	ModuleSubjectMemberCommentController.read(_helpers.sendResult(res), req.user, req.member, req.params.commentId);
 });
 
 /**
@@ -34,7 +34,7 @@ comments.get('/:commentId', {
 comments.put('/:commentId', {
 	tags: [ 'Comment' ]
 }, function(req, res) {
-	ModuleSubjectMemberCommentController.update(helpers.sendResult(res), req.member, req.params.commentId, req.body);
+	ModuleSubjectMemberCommentController.update(_helpers.sendResult(res), req.user, req.member, req.params.commentId, req.body);
 });
 
 /**
@@ -44,7 +44,7 @@ comments.post('/', {
 	tags: [ 'Comment' ]
 }, function(req, res) {
 	req.body.createdBy = req.user._id;
-	ModuleSubjectMemberCommentController.create(helpers.sendResult(res), req.member, req.body);
+	ModuleSubjectMemberCommentController.create(_helpers.sendResult(res), req.user, req.member, req.body);
 });
 
 /**
@@ -53,7 +53,7 @@ comments.post('/', {
 comments.delete('/:commentId', {
 	tags: [ 'Comment' ]
 }, function(req, res) {
-	ModuleSubjectMemberCommentController.delete(helpers.sendResult(res), req.member, req.params.commentId);
+	ModuleSubjectMemberCommentController.delete(_helpers.sendResult(res), req.user, req.member, req.params.commentId);
 });
 
 module.exports = comments;

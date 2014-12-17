@@ -8,7 +8,7 @@ var express = require('express'),
 	swag = require('bo-swag'),
 	levels = swag.router(express.Router()),
 	ModuleSubjectTaskLevelController = require('../controllers/ModuleSubjectTaskLevelController'),
-	helpers = require('./_helpers');
+	_helpers = require('./_helpers');
 
 /**
  * Get all levels for the current subject.
@@ -16,7 +16,7 @@ var express = require('express'),
 levels.get('/', {
 	tags: [ 'Level' ]
 }, function(req, res) {
-	ModuleSubjectTaskLevelController.list(helpers.sendResult(res), req.subject, req.task);
+	ModuleSubjectTaskLevelController.list(_helpers.sendResult(res), req.user, req.subject, req.task);
 });
 
 /**
@@ -25,7 +25,7 @@ levels.get('/', {
 levels.get('/:levelId', {
 	tags: [ 'Level' ]
 }, function(req, res) {
-	ModuleSubjectTaskLevelController.read(helpers.sendResult(res), req.subject, req.task, req.params.levelId);
+	ModuleSubjectTaskLevelController.read(_helpers.sendResult(res), req.user, req.subject, req.task, req.params.levelId);
 });
 
 /**
@@ -34,7 +34,7 @@ levels.get('/:levelId', {
 levels.put('/:levelId', {
 	tags: [ 'Level' ]
 }, function(req, res) {
-	ModuleSubjectTaskLevelController.update(helpers.sendResult(res), req.subject, req.task, req.params.levelId, req.body);
+	ModuleSubjectTaskLevelController.update(_helpers.sendResult(res), req.user, req.subject, req.task, req.params.levelId, req.body);
 });
 
 /**
@@ -43,7 +43,7 @@ levels.put('/:levelId', {
 levels.post('/', {
 	tags: [ 'Level' ]
 }, function(req, res) {
-	ModuleSubjectTaskLevelController.create(helpers.sendResult(res), req.subject, req.task, req.body);
+	ModuleSubjectTaskLevelController.create(_helpers.sendResult(res), req.user, req.subject, req.task, req.body);
 });
 
 /**
@@ -52,7 +52,7 @@ levels.post('/', {
 levels.delete('/:levelId', {
 	tags: [ 'Level' ]
 }, function(req, res) {
-	ModuleSubjectTaskLevelController.delete(helpers.sendResult(res), req.subject, req.task, req.params.levelId);
+	ModuleSubjectTaskLevelController.delete(_helpers.sendResult(res), req.user, req.subject, req.task, req.params.levelId);
 });
 
 module.exports = levels;

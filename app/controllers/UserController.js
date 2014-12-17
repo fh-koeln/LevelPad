@@ -8,9 +8,10 @@ var User = require('../models/User'),
  * List all users and apply optional filter.
  *
  * @param callback
+ * @param authUser
  * @param filter
  */
-exports.list = function(callback, filter) {
+exports.list = function(callback, authUser, filter) {
 	User.find(filter, callback);
 };
 
@@ -18,9 +19,10 @@ exports.list = function(callback, filter) {
  * Find user by username.
  *
  * @param callback
+ * @param authUser
  * @param username
  */
-exports.read = function(callback, username) {
+exports.read = function(callback, authUser, username) {
 	// TODO assert here that username is a string?
 	User.findOne({ username: username }, function(err, user) {
 		if (!err && !user) {
@@ -34,9 +36,10 @@ exports.read = function(callback, username) {
  * Create a new user based on the given userdata.
  *
  * @param callback
+ * @param authUser
  * @param userdata
  */
-exports.create = function(callback, userdata) {
+exports.create = function(callback, authUser, userdata) {
 	var user = new User(userdata);
 
 	async.waterfall([
@@ -96,13 +99,14 @@ exports.create = function(callback, userdata) {
  * and the username ifself could not changed (currently).
  *
  * @param callback
+ * @param authUser
  * @param username
  * @param userdata
  */
-exports.update = function(callback, username, userdata) {
+exports.update = function(callback, authUser, username, userdata) {
 	async.waterfall([
 		function(next) {
-			exports.read(next, username);
+			exports.read(next, authUser, username);
 		},
 		function(user, next) {
 			if (userdata.firstname !== undefined) {
@@ -158,12 +162,13 @@ exports.update = function(callback, username, userdata) {
  * Removes the user with the given username.
  *
  * @param callback
+ * @param authUser
  * @param username
  */
-exports.delete = function(callback, username) {
+exports.delete = function(callback, authUser, username) {
 	async.waterfall([
 		function(next) {
-			exports.read(next, username);
+			exports.read(next, authUser, username);
 		},
 		function(user, next) {
 			user.remove(next);
