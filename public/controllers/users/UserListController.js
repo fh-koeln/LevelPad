@@ -1,6 +1,6 @@
 /* global angular, alert */
 
-angular.module('levelPad').controller('UserListController', ['$scope', '$route', 'DialogService', 'User', function ($scope, $route, DialogService, User) {
+angular.module('levelPad').controller('UserListController', ['$scope', 'DialogService', 'User', function ($scope, DialogService, User) {
 	'use strict';
 
 	$scope.update = function() {

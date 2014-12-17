@@ -1,6 +1,6 @@
 /* global angular, alert */
 
-angular.module('levelPad').controller('ModuleListController', ['$scope', '$route', 'DialogService', 'Module', function ($scope, $route, DialogService, Module) {
+angular.module('levelPad').controller('ModuleListController', ['$scope', 'DialogService', 'Module', function ($scope, DialogService, Module) {
 	'use strict';
 
 	$scope.update = function() {

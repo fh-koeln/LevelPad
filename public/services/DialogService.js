@@ -1,5 +1,5 @@
 
-angular.module('levelPad').factory('DialogService', ['$route', '$rootScope', '$modal', function($route, $rootScope, $modal) {
+angular.module('levelPad').factory('DialogService', ['$rootScope', '$modal', function($rootScope, $modal) {
 	return function(url, scope) {
 		// Check if a route is existing for the given url
 		if (!$route.routes[url]) {

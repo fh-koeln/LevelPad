@@ -4,9 +4,9 @@ var app = angular.module('levelPad', [
 	'ngCookies',
 	'ngResource',
 	'ngSanitize',
-	'ngRoute',
 	'ui.bootstrap',
 	'ui',
+	'ui.router',
 	'tc.chartjs',
 	'btford.markdown'
 ]);
@@ -38,7 +38,7 @@ app.config(['$httpProvider', function($httpProvider) {
 	}]);
 }]);
 
-app.config(['$routeProvider', '$locationProvider', 'USER_ROLES', function($routeProvider, $locationProvider, USER_ROLES) {
+app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'USER_ROLES', function($stateProvider, $urlRouterProvider, $locationProvider, USER_ROLES) {
 
 	var defaultResolvers = {};
 
@@ -56,21 +56,22 @@ app.config(['$routeProvider', '$locationProvider', 'USER_ROLES', function($route
 
 	var routes = {
 		// Errors
-		'/403': {
+		'error403': {
 			templateUrl: 'views/errors/403.html'
 		},
-		'/404': {
+		'error404': {
 			templateUrl: 'views/errors/404.html'
 		},
-		'/500': {
+		'error500': {
 			templateUrl: 'views/errors/500.html'
 		},
-		'/503': {
+		'error503': {
 			templateUrl: 'views/errors/503.html'
 		},
 
 		// Login / Signup / Logout
-		'/signup': {
+		'signup': {
+			url: '/signup',
 			templateUrl: 'views/auth/signup-page.html',
 			controller: 'SignupController',
 			public: true,
@@ -82,7 +83,8 @@ app.config(['$routeProvider', '$locationProvider', 'USER_ROLES', function($route
 				}]
 			}
 		},
-		'/login': {
+		'login': {
+			url: '/login',
 			templateUrl: 'views/auth/login-page.html',
 			controller: 'LoginController',
 			public: true,
@@ -94,7 +96,8 @@ app.config(['$routeProvider', '$locationProvider', 'USER_ROLES', function($route
 				}]
 			}
 		},
-		'/logout': {
+		'logout': {
+			url: '/logout',
 			templateUrl: 'views/auth/logout-page.html',
 			controller: 'LogoutController',
 			resolve: {
@@ -107,169 +110,207 @@ app.config(['$routeProvider', '$locationProvider', 'USER_ROLES', function($route
 		},
 
 		// Misc
-		'/' : {
+		'dashboard' : {
+			url: '/',
 			templateUrl: 'views/dashboard/dashboard.html',
 			controller: 'DashboardController'
 		},
-		'/account': {
+		'account': {
+			url: '/account',
 			templateUrl: 'views/account.html',
-			controller: 'AccountController',
+			controller: 'AccountController'
 		},
 
 		// Administration -> Modules
-		'/modules': {
+		'modules.list': {
+			url: '/modules',
 			templateUrl: 'views/modules/list.html',
 			controller: 'ModuleListController',
 			authorizedRoles: [USER_ROLES.administrator]
 		},
-		'/modules/new': {
+		'modules.new': {
+			url: '/modules/new',
 			templateUrl: 'views/modules/edit.html',
 			controller: 'ModuleDetailController',
 			authorizedRoles: [USER_ROLES.administrator]
 		},
-		'/modules/:module': {
+		'modules.show': {
+			url: '/modules/:module',
 			templateUrl: 'views/modules/show.html',
 			controller: 'ModuleDetailController',
 			authorizedRoles: [USER_ROLES.administrator]
 		},
-		'/modules/:module/edit': {
+		'modules.edit': {
+			url: '/modules/:module/edit',
 			templateUrl: 'views/modules/edit.html',
 			controller: 'ModuleDetailController',
 			authorizedRoles: [USER_ROLES.administrator]
 		},
-		'/modules/:module/delete': {
+		'modules.delete': {
+			url: '/modules/:module/delete',
 			templateUrl: 'views/modules/delete.html',
 			controller: 'ModuleDetailController',
 			authorizedRoles: [USER_ROLES.administrator]
 		},
-		'/users': {
+
+		// Administration -> Users
+		'users.list': {
+			url: '/users',
 			templateUrl: 'views/users/list.html',
 			controller: 'UserListController',
 			authorizedRoles: [USER_ROLES.administrator]
 		},
-		'/users/new': {
+		'users.new': {
+			url: '/users/new',
 			templateUrl: 'views/users/edit.html',
 			controller: 'UserDetailController',
 			authorizedRoles: [USER_ROLES.administrator]
 		},
-		'/users/:username': {
+		'users.show': {
+			url: '/users/:username',
 			templateUrl: 'views/users/show.html',
 			controller: 'UserDetailController',
 			authorizedRoles: [USER_ROLES.administrator]
 		},
-		'/users/:username/edit': {
+		'users.edit': {
+			url: '/users/:username/edit',
 			templateUrl: 'views/users/edit.html',
 			controller: 'UserDetailController',
 			authorizedRoles: [USER_ROLES.administrator]
 		},
-		'/users/:username/delete': {
+		'users.delete': {
+			url: '/users/:username/delete',
 			templateUrl: 'views/users/delete.html',
 			controller: 'UserDetailController',
 			authorizedRoles: [USER_ROLES.administrator]
 		},
 
 		// Subjects
-		'/subjects': {
+		'subjects.list': {
+			url: '/subjects',
 			templateUrl: 'views/subjects/list.html',
 			controller: 'SubjectListController'
 		},
-		'/subjects/new': {
+		'subjects.new': {
+			url: '/subjects/new',
 			templateUrl: 'views/subjects/edit.html',
 			controller: 'SubjectDetailController'
 		},
-		'/subjects/:subject': {
+		'subjects.show': {
+			url: '/subjects/:subject',
 			templateUrl: 'views/subjects/show.html',
 			controller: 'SubjectDetailController'
 		},
-		'/subjects/:subject/edit': {
+		'subjects.edit': {
+			url: '/subjects/:subject/edit',
 			templateUrl: 'views/subjects/edit.html',
 			controller: 'SubjectDetailController'
 		},
-		'/subjects/:subject/delete': {
+		'subjects.delete': {
+			url: '/subjects/:subject/delete',
 			templateUrl: 'views/subjects/delete.html',
 			controller: 'SubjectDetailController'
 		},
 
-		// MAGIC RULES!!!!!!!
-		'/:module': {
+		// Modules direct "special short" URLs
+		'module.show': {
+			url: '/:module',
 			templateUrl: 'views/modules/show.html',
 			controller: 'ModuleDetailController'
 		},
-		'/:module/:subject': {
+		'module.subject.show': {
+			url: '/:module/:subject',
 			templateUrl: 'views/members/show.html',
 			controller: 'MemberDetailController'
 		},
-		'/:module/:subject/edit': {
+		'module.subject.edit': {
+			url: '/:module/:subject/edit',
 			templateUrl: 'views/subjects/edit.html',
 			controller: 'SubjectDetailController'
 		},
-		'/:module/:subject/join': {
+		'module.subject.join': {
+			url: '/:module/:subject/join',
 			templateUrl: 'views/subjects/join.html',
 			controller: 'SubjectJoinController'
 		},
 
 		// Subject -> Members
-		'/:module/:subject/members': {
+		'members.list': {
+			url: '/:module/:subject/members',
 			templateUrl: 'views/members/list.html',
 			controller: 'MemberListController'
 		},
-		'/:module/:subject/members/new': {
+		'members.new': {
+			url: '/:module/:subject/members/new',
 			templateUrl: 'views/members/edit.html',
 			controller: 'MemberListController'
 		},
-		'/:module/:subject/members/:member': {
+		'members.show': {
+			url: '/:module/:subject/members/:member',
 			templateUrl: 'views/members/show.html',
 			controller: 'MemberDetailController'
 		},
-		'/:module/:subject/members/:member/:task': {
+		'members.show.evaluation': {
+			url: '/:module/:subject/members/:member/:task',
 			templateUrl: 'views/evaluations/show.html',
 			controller: 'EvaluationDetailController'
 		},
 
 		// Subject -> Tasks
-		'/:module/:subject/tasks': {
+		'tasks.list': {
+			url: '/:module/:subject/tasks',
 			templateUrl: 'views/tasks/list.html',
 			controller: 'TaskListController'
 		},
-		'/:module/:subject/tasks/new': {
+		'tasks.new': {
+			url: '/:module/:subject/tasks/new',
 			templateUrl: 'views/tasks/edit.html',
 			controller: 'TaskDetailController'
 		},
-		'/:module/:subject/tasks/:task': {
+		'tasks.show': {
+			url: '/:module/:subject/tasks/:task',
 			templateUrl: 'views/tasks/show.html',
 			controller: 'TaskDetailController'
 		},
-		'/:module/:subject/tasks/:task/edit': {
+		'tasks.edit': {
+			url: '/:module/:subject/tasks/:task/edit',
 			templateUrl: 'views/tasks/edit.html',
 			controller: 'TaskDetailController'
 		},
-		'/:module/:subject/tasks/:task/delete': {
+		'tasks.delete': {
+			url: '/:module/:subject/tasks/:task/delete',
 			templateUrl: 'views/tasks/delete.html',
 			controller: 'TaskDetailController'
 		},
-		'/:module/:subject/tasks/import': {
+		'tasks.import': {
+			url: '/:module/:subject/tasks/import',
 			templateUrl: 'views/tasks/import.html',
 			controller: 'TaskImportController'
 		},
 
 		// Subject-> Tasks -> Level
-		'/:module/:subject/tasks/:task/levels': {
+		'level.list': {
+			url: '/:module/:subject/tasks/:task/levels',
 			templateUrl: 'views/levels/list.html',
 			controller: 'LevelListController'
 		},
-		'/:module/:subject/tasks/:task/levels/new': {
+		'level.new': {
+			url: '/:module/:subject/tasks/:task/levels/new',
 			templateUrl: 'views/levels/edit.html',
 			controller: 'LevelDetailController'
 		},
-		'/:module/:subject/tasks/:task/levels/:level': {
+		'level.show': {
+			url: '/:module/:subject/tasks/:task/levels/:level',
 			templateUrl: 'views/levels/show.html',
 			controller: 'LevelDetailController'
 		},
-		'/:module/:subject/tasks/:task/levels/:level/edit': {
+		'level.edit': {
+			url: '/:module/:subject/tasks/:task/levels/:level/edit',
 			templateUrl: 'views/levels/edit.html',
 			controller: 'LevelDetailController'
 		},
-		'/:module/:subject/tasks/:task/levels/:level/delete': {
+		'level.delete': {
+			url: '/:module/:subject/tasks/:task/levels/:level/delete',
 			templateUrl: 'views/levels/delete.html',
 			controller: 'LevelDetailController'
 		}
@@ -303,13 +344,20 @@ app.config(['$routeProvider', '$locationProvider', 'USER_ROLES', function($route
 
 		params.resolve = resolve;
 
-		$routeProvider.when(location, params);
+		$stateProvider.state(location, params);
 	});
 
-	// Fallback
-	$routeProvider.otherwise({
-		templateUrl: 'views/errors/404.html'
-	});
+	// TODO Fallback
+//	$urlRouterProvider.otherwise('views/errors/404.html');
 
 	$locationProvider.html5Mode(true);
+}]);
+
+app.run(['$rootScope', '$state', '$stateParams', function ($rootScope, $state, $stateParams) {
+	// It's very handy to add references to $state and $stateParams to the $rootScope
+	// so that you can access them from any scope within your applications.For example,
+	// <li ng-class="{ active: $state.includes('contacts.list') }"> will set the <li>
+	// to active whenever 'contacts.list' or one of its decendents is active.
+	$rootScope.$state = $state;
+	$rootScope.$stateParams = $stateParams;
 }]);

@@ -1,8 +1,8 @@
 /* global alert */
 
 angular.module('levelPad').controller('LevelDetailController', [
-	'$scope', '$route', '$routeParams', '$location', '$http', '$log', 'DialogService', 'Level',
-	function ($scope, $route, $routeParams, $location, $http, $log, DialogService, Level) {
+	'$scope', '$routeParams', '$location', '$http', '$log', 'DialogService', 'Level',
+	function ($scope, $routeParams, $location, $http, $log, DialogService, Level) {
 
 		'use strict';
 

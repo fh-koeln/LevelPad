@@ -1,8 +1,8 @@
 /* global alert */
 
 angular.module('levelPad').controller('ModuleDetailController', [
-	'$scope', '$routeParams', '$log', 'DialogService', 'Module', '$route',
-	function ($scope, $routeParams, $log, DialogService, Module, $route) {
+	'$scope', '$routeParams', '$log', 'DialogService', 'Module',
+	function ($scope, $routeParams, $log, DialogService, Module) {
 
 	'use strict';
 
@@ -11,7 +11,7 @@ angular.module('levelPad').controller('ModuleDetailController', [
 		var moduleSlug = $routeParams.module || $scope.moduleSlug;
 		if (moduleSlug) {
 			$scope.module = Module.get({
-				module: moduleSlug,
+				module: moduleSlug
 			}, function() {
 			});
 		} else {
