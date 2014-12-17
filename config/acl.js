@@ -54,61 +54,68 @@ module.exports.middleware = function middleware(req, res, next) {
 		return;
 	}
 
-
-	// Get all resources by current user role and compare to current path
-	acl.whatResources(req.user.role, function(err, resources) {
+	// Get all roles of current user role.
+	acl.userRoles(req.user.username, function(err, roles) {
 		if (err) {
 			res.status(500).json({error: 'Unexpected authorization error'});
 			return;
 		}
 
-		var keys, regexp, isMatch, result, username, resource, reqResource = '',
-			originalUrl = req.originalUrl,
-			apiPath = originalUrl.replace(/\/?api\/?/, '').split('?')[0];
-
-		for (resource in resources) {
-			keys = [];
-			regexp = pathToRegexp(resource, keys);
-			isMatch = regexp.test(apiPath);
-
-			if (isMatch) {
-				if (hasCurrentUserKey(keys)) {
-					// Get the requested user
-					result = regexp.exec(apiPath);
-					keys.map(function(key, i) {
-						if (key.name === 'currentUser') {
-							username = result[i + 1];
-						}
-					});
-
-					if (username !== req.user.username ) {
-						continue;
-					}
-				}
-
-				reqResource = resource;
-				break;
-			}
-		}
-
-		if (!reqResource) {
-			debug(req.user.username + ' with role ' + req.user.role + ' has no permissions for ' + apiPath);
-			res.status(403).json({error: 'Forbidden'});
-			return;
-		}
-
-		acl.isAllowed(req.user.username, reqResource, req.method, function(err, result) {
+		// Get all resources by roles and compare to current path
+		acl.whatResources(roles, function(err, resources) {
 			if (err) {
 				res.status(500).json({error: 'Unexpected authorization error'});
 				return;
 			}
-			if (result) {
-				next();
-			} else {
-				debug(req.user.username + ' with role ' + req.user.role + ' is not allowed to access resource ' + reqResource + ' via ' + req.method );
+
+			var keys, regexp, isMatch, result, username, resource, reqResource = '',
+				originalUrl = req.originalUrl,
+				apiPath = originalUrl.replace(/\/?api\/?/, '').split('?')[0];
+
+			for (resource in resources) {
+				keys = [];
+				regexp = pathToRegexp(resource, keys);
+				isMatch = regexp.test(apiPath);
+
+				if (isMatch) {
+					if (hasCurrentUserKey(keys)) {
+						// Get the requested user
+						result = regexp.exec(apiPath);
+						keys.map(function(key, i) {
+							if (key.name === 'currentUser') {
+								username = result[i + 1];
+							}
+						});
+
+						if (username !== req.user.username ) {
+							continue;
+						}
+					}
+
+					reqResource = resource;
+					break;
+				}
+			}
+
+			if (!reqResource) {
+				debug(req.user.username + ' with role ' + req.user.role + ' has no permissions for ' + apiPath);
 				res.status(403).json({error: 'Forbidden'});
 				return;
 			}
+
+			acl.isAllowed(req.user.username, reqResource, req.method, function(err, result) {
+				if (err) {
+					res.status(500).json({error: 'Unexpected authorization error'});
+					return;
+				}
+				if (result) {
+					next();
+				} else {
+					debug(req.user.username + ' with role ' + req.user.role + ' is not allowed to access resource ' + reqResource + ' via ' + req.method );
+					res.status(403).json({error: 'Forbidden'});
+					return;
+				}
+			});
 		});
 	});
 };
@@ -141,7 +148,8 @@ module.exports.debugRoute.get('/me/resources', function(req, res) {
  *
  * Existing roles are replaced by the new one.
  */
-module.exports.setRole = function setRole(user, role, callback) {
+module.exports.setRole = function(user, role, callback) {
+	var newRoles = [ role, user ]; // New role plus username as role
 	acl.userRoles(user, function(err, roles) {
 		if (err) {
 			callback(err);
@@ -150,29 +158,29 @@ module.exports.setRole = function setRole(user, role, callback) {
 				if (err) {
 					callback(err);
 				} else {
-					acl.addUserRoles(user, role, function(err) {
+					acl.addUserRoles(user, newRoles , function(err) {
 						callback(err);
 					});
 				}
 			});
 		} else {
-			acl.addUserRoles(user, role, function(err) {
+			acl.addUserRoles(user, newRoles, function(err) {
 				callback(err);
 			});
 		}
 	});
 };
 
-module.exports.removeRole = function setRole(user, callback) {
+module.exports.removeRole = function(user, role, callback) {
 	acl.userRoles(user, function(err, roles) {
 		if (err) {
 			callback(err);
 		} else if (roles && roles.length > 0) {
-			acl.removeUserRoles(user, roles, function(err) {
+			acl.removeUserRoles(user, role, function(err) {
 				if (err) {
 					callback(err);
 				} else {
-					callback(err);
+					callback(null);
 				}
 			});
 		} else {

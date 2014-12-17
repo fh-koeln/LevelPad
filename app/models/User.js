@@ -88,7 +88,7 @@ userSchema.statics.findByUsername = function (username, callback) {
 	this.findOne({ username: username }, callback);
 };
 
-userSchema.post('save', function(user) {
+/*userSchema.post('save', function(user) {
 	acl.setRole(user.username, user.role, function(err) {
 //		console.log(err);
 	});
@@ -98,6 +98,6 @@ userSchema.post('remove', function(user) {
 	acl.removeRole(user.username, function(err) {
 //		console.log(err);
 	});
-});
+});*/
 
 module.exports = mongoose.model('User', userSchema);
