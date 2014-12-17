@@ -30,6 +30,14 @@ function validateNamesLength(name) {
 	}
 }
 
+function validateUsernameReservedUsernames(username) {
+	if (username === 'guest' || username === 'student' || username === 'lecturer' || username === 'assistant' || username === 'administrator') {
+		return false;
+	} else {
+		return true;
+	}
+}
+
 function validateStudentNumber(studentNumber) {
 	if (!studentNumber) {
 		return false;
@@ -56,7 +64,8 @@ function validateEmail(email) {
 }
 
 var userNameValidations = [
-	{ validator: validateUsernameLength, msg: 'Der Benutzername ist ungültig.' }
+	{ validator: validateUsernameLength, msg: 'Der Benutzername ist ungültig.' },
+	{ validator: validateUsernameReservedUsernames, msg: 'Der Benutzername ist nicht erlaubt.' }
 ];
 
 var firstnameValidations = [
@@ -88,7 +97,7 @@ userSchema.statics.findByUsername = function (username, callback) {
 	this.findOne({ username: username }, callback);
 };
 
-userSchema.post('save', function(user) {
+/*userSchema.post('save', function(user) {
 	acl.setRole(user.username, user.role, function(err) {
 //		console.log(err);
 	});
@@ -98,6 +107,6 @@ userSchema.post('remove', function(user) {
 	acl.removeRole(user.username, function(err) {
 //		console.log(err);
 	});
-});
+});*/
 
 module.exports = mongoose.model('User', userSchema);

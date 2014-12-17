@@ -146,8 +146,8 @@ exports.create = function(callback, authUser, subject, memberData) {
 					if (user.role === 'student') {
 						var resources = [
 							'modules/' + subject.module.slug + '/subjects/' + subject.slug,
-							'modules/' + subject.module.slug + '/subjects/' + subject.slug + 'tasks',
-							'modules/' + subject.module.slug + '/subjects/' + subject.slug + 'tasks/:task',
+							'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/tasks',
+							'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/tasks/:task',
 						];
 						acl.allow(user.username, resources, ['GET']);
 					}

@@ -2,7 +2,8 @@
 
 var User = require('../models/User'),
 	async = require('async'),
-	errors = require('common-errors');
+	errors = require('common-errors'),
+	acl = require('../../config/acl');
 
 /**
  * List all users and apply optional filter.
@@ -90,6 +91,15 @@ exports.create = function(callback, authUser, userdata) {
 		},
 		function(user, next) {
 			user.save(next);
+		},
+		function(user, numberAffected, next) {
+			acl.setRole(user.username, user.role, function(err) {
+				if (err) {
+					return next(err);
+				}
+
+				next(null, user);
+			});
 		}
 	], callback);
 };
