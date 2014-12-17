@@ -199,6 +199,14 @@ a.levels-edit-icon{
     vertical-align: middle;
 }
 
+.add-comment{
+	color: #77aabb;
+}
+
+.add-comment:hover{
+	cursor: pointer;
+}
+
 .level-interaction-link{
 	color: #77aabb;
     vertical-align: middle;
