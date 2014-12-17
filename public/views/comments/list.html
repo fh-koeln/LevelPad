@@ -1,0 +1,91 @@
+<div>
+<label>
+	<input type="checkbox" ng-model="showComments" value="1"> <span class="head-font-normal">Kommentare einblenden</span>
+</label>
+<div data-ng-show="showComments == 1" data-ng-init="commentsHandle='add'">
+	<a class="add-comment" data-ng-click="commentsHandle='new'" data-ng-class="{'hidden': commentsHandle=='new'}" >+ Kommentar hinzufügen</a>
+	<div class="new-comment" data-ng-class="{'hidden': commentsHandle=='add'}" >
+		<div class="bubble">
+			<div class="comment-text">
+				<textarea class="comment-textarea" placeholder="Kommentar eingeben..."></textarea>
+			</div>
+			<div class="comment-tools">
+				<table class="table-tools">
+					<tbody>
+						<tr>
+						<td class="comment-tool-column">
+							<a class="interaction-link add-comment" data-ng-click="saveComment();">
+								<span class="glyphicon glyphicon-ok"></span> 
+								<span class="hidden-sm">speichern</span>
+								<span class="hidden-lg hidden-md hidden-xs">speich.</span>
+							</a>
+						</td>
+						<td class="comment-tool-column">
+							<a class="interaction-link add-comment" data-ng-click="comments='add'">
+								<span class="glyphicon glyphicon-remove"></span> 
+								<span class="hidden-sm">abbrechen</span>
+								<span class="hidden-lg hidden-md hidden-xs">abbr.</span>
+							</a>
+						</td>
+					</tr>
+					<tr>
+						<td class="comment-tool-column">
+							<a class="add-comment">
+								<span class="glyphicon glyphicon-trash"></span> 
+								<span class="hidden-sm">löschen</span>
+								<span class="hidden-lg hidden-md hidden-xs">lösch.</span>
+							</a>
+						</td>
+						<td class="comment-tool-column">
+							<span class="table-comment-interaction add-comment">
+								<input type="checkbox" name="private"> 
+								<span class="">intern</span>
+							</span>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div data-ng-repeat="comment in comments" class="comments">
+		<div class="bubble-comment">
+			{{comment.text}}
+		</div>
+		<div class="comment-author">
+			{{comment.createdBy}} <span class="head-font-bold">NACHNAME</span> - 
+			<span class="comment-inline">
+				{{comment.createdAt | date : 'dd.MM.yy - H:mm'}} 
+				<span class="glyphicon glyphicon-pencil comment-edit"></span>
+			</span>
+		</div>
+	</div>
+
+	<div class="comments">
+		<div class="bubble-comment">
+			Die Lösung ist ganz in Ordnung. Allerdings fehlen noch ein paar Dinge bis zur “Besten Lösung”.
+		</div>
+		<div class="comment-author">
+			Johannis <span class="head-font-bold">Bär</span> - 
+			<span class="comment-inline">
+				24.11.2014 - 19 Uhr 
+				<span class="glyphicon glyphicon-pencil comment-edit"></span>
+			</span>
+		</div>
+	</div>
+	<div class="comments">
+		<div class="bubble-comment">
+			Nice!
+		</div>
+		<div class="comment-author">
+			<span class="glyphicon glyphicon-lock comment-locked"></span>
+			Dushanthan <span class="head-font-bold">Thetsanamorthy</span> - 
+			<span class="comment-inline">
+				24.12.2014 - 20 Uhr 
+				<span class="glyphicon glyphicon-pencil comment-edit"></span>
+			</span>
+		</div>
+	</div>
+</div>
+
+</div>
