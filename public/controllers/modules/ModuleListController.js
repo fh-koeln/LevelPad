@@ -1,7 +1,9 @@
 /* global angular, alert */
 
-angular.module('levelPad').controller('ModuleListController', ['$scope', 'DialogService', 'Module', function ($scope, DialogService, Module) {
+angular.module('levelPad').controller('ModuleListController', ['$scope', '$stateParams', 'DialogService', 'Module', function ($scope, $stateParams, DialogService, Module) {
+
 	'use strict';
+	console.log('ModuleDetailController $stateParams', $stateParams);
 
 	$scope.update = function() {
 		$scope.modules = [];

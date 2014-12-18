@@ -1,18 +1,18 @@
 /* global angular, alert */
 
 angular.module('levelPad').controller('TaskDetailController', [
-	'$scope', '$routeParams', '$location', '$log', 'DialogService', 'Module', 'Subject', 'Task', 'CurrentModule', 'CurrentSubject', 'CurrentTask', 'ChartOption',
-	function ($scope, $routeParams, $location, $log, DialogService, Module, Subject, Task, CurrentModule, CurrentSubject, CurrentTask, ChartOption) {
+	'$scope', '$stateParams', '$location', '$log', 'DialogService', 'Module', 'Subject', 'Task', 'CurrentModule', 'CurrentSubject', 'CurrentTask', 'ChartOption',
+	function ($scope, $stateParams, $location, $log, DialogService, Module, Subject, Task, CurrentModule, CurrentSubject, CurrentTask, ChartOption) {
 
 		'use strict';
 		$scope.newValue = 0;
-		$scope.subject = $routeParams.subject;
-		$scope.module = $routeParams.module;
+		$scope.subject = $stateParams.subject;
+		$scope.module = $stateParams.module;
 
 		$scope.update = function() {
 			if($scope.usedPercent === undefined){
 				$scope.usedPercent = 0;
-				Task.query({ module: $routeParams.module, subject: $routeParams.subject }, function(tasks) {
+				Task.query({ module: $stateParams.module, subject: $stateParams.subject }, function(tasks) {
 					angular.forEach(tasks, function(task) {
 						$scope.usedPercent += task.weight;
 					});
@@ -22,11 +22,11 @@ angular.module('levelPad').controller('TaskDetailController', [
 				alert('Could not load tasks.');
 			});
 			}
-			if ($routeParams.task) {
+			if ($stateParams.task) {
 				$scope.task = Task.get({
-					module: $routeParams.module,
-					subject: $routeParams.subject,
-					task: $routeParams.task
+					module: $stateParams.module,
+					subject: $stateParams.subject,
+					task: $stateParams.task
 				}, function () {
 					prepareTask();
 				});
@@ -77,11 +77,11 @@ angular.module('levelPad').controller('TaskDetailController', [
 		}
 
 		$scope._save = function () {
-			return $scope.task.$save({ module: $routeParams.module, subject: $routeParams.subject });
+			return $scope.task.$save({ module: $stateParams.module, subject: $stateParams.subject });
 		};
 
 		$scope._delete = function () {
-			return $scope.task.$delete({ module: $routeParams.module, subject: $routeParams.subject, task: $routeParams.task });
+			return $scope.task.$delete({ module: $stateParams.module, subject: $stateParams.subject, task: $stateParams.task });
 		};
 
 
@@ -90,7 +90,7 @@ angular.module('levelPad').controller('TaskDetailController', [
 			dialog.scope.delete = function () {
 				this._delete().then(function() {
 					dialog.submit();
-					$location.path('/'+$routeParams.module+'/'+$routeParams.subject+'/tasks');
+					$location.path('/'+$stateParams.module+'/'+$stateParams.subject+'/tasks');
 				}, function () {
 					alert('Fehler!');
 				});

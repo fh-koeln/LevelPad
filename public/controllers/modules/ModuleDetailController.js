@@ -1,14 +1,14 @@
 /* global alert */
 
 angular.module('levelPad').controller('ModuleDetailController', [
-	'$scope', '$routeParams', '$log', 'DialogService', 'Module',
-	function ($scope, $routeParams, $log, DialogService, Module) {
+	'$scope', '$stateParams', '$log', 'DialogService', 'Module',
+	function ($scope, $stateParams, $log, DialogService, Module) {
 
 	'use strict';
-
+	console.log('ModuleDetailController $stateParams', $stateParams);
 
 	$scope.update = function() {
-		var moduleSlug = $routeParams.module || $scope.moduleSlug;
+		var moduleSlug = $stateParams.module || $scope.moduleSlug;
 		if (moduleSlug) {
 			$scope.module = Module.get({
 				module: moduleSlug

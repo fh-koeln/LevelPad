@@ -1,17 +1,17 @@
 
 angular.module('levelPad').provider('CurrentTask', function() {
-	this.$get = ['$routeParams', '$q', 'Task', function($routeParams, $q, Task) {
-		if (!$routeParams.module) {
+	this.$get = ['$stateParams', '$q', 'Task', function($stateParams, $q, Task) {
+		if (!$stateParams.module) {
 			return $q.reject('Route parameter module is not defined to get current task.');
-		} else if (!$routeParams.subject) {
+		} else if (!$stateParams.subject) {
 			return $q.reject('Route parameter subject is not defined to get current task.');
-		} else if (!$routeParams.task) {
+		} else if (!$stateParams.task) {
 			return $q.reject('Route parameter task is not defined to get current task.');
 		} else {
 			return Task.get({
-				module: $routeParams.module,
-				subject: $routeParams.subject,
-				task: $routeParams.task
+				module: $stateParams.module,
+				subject: $stateParams.subject,
+				task: $stateParams.task
 			});
 		}
 	}];

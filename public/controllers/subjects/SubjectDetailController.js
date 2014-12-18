@@ -1,8 +1,8 @@
 /* global alert */
 
 angular.module('levelPad').controller('SubjectDetailController', [
-	'$scope', '$routeParams', '$location', '$http', '$log', 'DialogService', 'Module', 'Subject', 'CurrentModule', 'CurrentSubject', 'ChartOption', 'AlertService',
-	function ($scope, $routeParams, $location, $http, $log, DialogService, Module, Subject, CurrentModule, CurrentSubject, ChartOption, AlertService) {
+	'$scope', '$stateParams', '$location', '$http', '$log', 'DialogService', 'Module', 'Subject', 'CurrentModule', 'CurrentSubject', 'ChartOption', 'AlertService',
+	function ($scope, $stateParams, $location, $http, $log, DialogService, Module, Subject, CurrentModule, CurrentSubject, ChartOption, AlertService) {
 
 		'use strict';
 
@@ -89,10 +89,10 @@ angular.module('levelPad').controller('SubjectDetailController', [
 		}
 
 		$scope.update = function() {
-			if ($routeParams.module && $routeParams.subject) {
+			if ($stateParams.module && $stateParams.subject) {
 				$scope.subject = Subject.get({
-					module: $routeParams.module,
-					subject: $routeParams.subject
+					module: $stateParams.module,
+					subject: $stateParams.subject
 				}, function() {
 					prepareSubject();
 				});
