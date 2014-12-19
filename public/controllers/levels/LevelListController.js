@@ -1,17 +1,17 @@
 /* global angular, alert */
 
 angular.module('levelPad').controller('LevelListController', [
-	'$scope', '$http', '$routeParams', '$location', '$log', 'Level', 'DialogService',
-	function ($scope, $http, $routeParams, $location, $log, Level, DialogService) {
+	'$scope', '$http', '$stateParams', '$location', '$log', 'Level', 'DialogService',
+	function ($scope, $http, $stateParams, $location, $log, Level, DialogService) {
 
 	'use strict';
 
-	$scope.subject = $routeParams.subject;
-	$scope.module = $routeParams.module;
-	$scope.task = $routeParams.task;
+	$scope.subject = $stateParams.subject;
+	$scope.module = $stateParams.module;
+	$scope.task = $stateParams.task;
 
 	$scope.update = function () {
-		Level.query({ module: $routeParams.module, subject: $routeParams.subject, task: $routeParams.task }, function(levels) {
+		Level.query({ module: $stateParams.module, subject: $stateParams.subject, task: $stateParams.task }, function(levels) {
 			$scope.levels = levels;
 			$scope.levels.sort( function(a, b){
 				return a.rank > b.rank
@@ -21,8 +21,8 @@ angular.module('levelPad').controller('LevelListController', [
 		});
 	};
 	$scope.update();
-	
-		
+
+
 	$scope.showCreateDialog = function() {
 		var dialog = new DialogService('/:module/:subject/tasks/:task/levels/new');
 		dialog.scope.submit = function() {
@@ -68,9 +68,9 @@ angular.module('levelPad').controller('LevelListController', [
 			console.log(index);
         	level.rank = index+1;
 			level.$save({
-				module: $routeParams.module,
-				subject: $routeParams.subject,
-				task: $routeParams.task,
+				module: $stateParams.module,
+				subject: $stateParams.subject,
+				task: $stateParams.task,
 				level: level._id
 			});
 			index++;

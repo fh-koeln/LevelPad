@@ -4,10 +4,11 @@ var app = angular.module('levelPad', [
 	'ngCookies',
 	'ngResource',
 	'ngSanitize',
-	'ngRoute',
 	'ui.bootstrap',
 	'ui',
+	'ui.router',
 	'tc.chartjs',
+	'ncy-angular-breadcrumb',
 	'btford.markdown'
 ]);
 
@@ -38,7 +39,7 @@ app.config(['$httpProvider', function($httpProvider) {
 	}]);
 }]);
 
-app.config(['$routeProvider', '$locationProvider', 'USER_ROLES', function($routeProvider, $locationProvider, USER_ROLES) {
+app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'USER_ROLES', function($stateProvider, $urlRouterProvider, $locationProvider, USER_ROLES) {
 
 	var defaultResolvers = {};
 
@@ -56,21 +57,22 @@ app.config(['$routeProvider', '$locationProvider', 'USER_ROLES', function($route
 
 	var routes = {
 		// Errors
-		'/403': {
+		'error403': {
 			templateUrl: 'views/errors/403.html'
 		},
-		'/404': {
+		'error404': {
 			templateUrl: 'views/errors/404.html'
 		},
-		'/500': {
+		'error500': {
 			templateUrl: 'views/errors/500.html'
 		},
-		'/503': {
+		'error503': {
 			templateUrl: 'views/errors/503.html'
 		},
 
 		// Login / Signup / Logout
-		'/signup': {
+		'signup': {
+			url: '/signup',
 			templateUrl: 'views/auth/signup-page.html',
 			controller: 'SignupController',
 			public: true,
@@ -82,7 +84,8 @@ app.config(['$routeProvider', '$locationProvider', 'USER_ROLES', function($route
 				}]
 			}
 		},
-		'/login': {
+		'login': {
+			url: '/login',
 			templateUrl: 'views/auth/login-page.html',
 			controller: 'LoginController',
 			public: true,
@@ -94,7 +97,8 @@ app.config(['$routeProvider', '$locationProvider', 'USER_ROLES', function($route
 				}]
 			}
 		},
-		'/logout': {
+		'logout': {
+			url: '/logout',
 			templateUrl: 'views/auth/logout-page.html',
 			controller: 'LogoutController',
 			resolve: {
@@ -107,169 +111,291 @@ app.config(['$routeProvider', '$locationProvider', 'USER_ROLES', function($route
 		},
 
 		// Misc
-		'/' : {
+		'dashboard' : {
+			url: '/',
 			templateUrl: 'views/dashboard/dashboard.html',
-			controller: 'DashboardController'
+			controller: 'DashboardController',
+			ncyBreadcrumb: {
+				label: 'Dashboard'
+			}
 		},
-		'/account': {
+		'account': {
+			url: '/account',
 			templateUrl: 'views/account.html',
 			controller: 'AccountController',
+			ncyBreadcrumb: {
+				label: 'u:{{ user.firstname }}'
+			}
 		},
 
 		// Administration -> Modules
-		'/modules': {
+		'modules': {
+			url: '/modules',
 			templateUrl: 'views/modules/list.html',
 			controller: 'ModuleListController',
-			authorizedRoles: [USER_ROLES.administrator]
+			authorizedRoles: [USER_ROLES.administrator],
+			ncyBreadcrumb: {
+				label: 'Veranstaltungsmodule'
+			}
 		},
-		'/modules/new': {
+		'modules.new': {
+			url: '/new',
 			templateUrl: 'views/modules/edit.html',
 			controller: 'ModuleDetailController',
-			authorizedRoles: [USER_ROLES.administrator]
+			authorizedRoles: [USER_ROLES.administrator],
+			ncyBreadcrumb: {
+				label: 'Anlegen'
+			}
 		},
-		'/modules/:module': {
+		'modules.detail': {
+			url: '/:module',
 			templateUrl: 'views/modules/show.html',
 			controller: 'ModuleDetailController',
-			authorizedRoles: [USER_ROLES.administrator]
+			resolve: {
+				module: ['Module', '$stateParams', function(Module, $stateParams) {
+					console.log('load module!');
+					return Module.get({ module: $stateParams.module });
+				}]
+			},
+			authorizedRoles: [USER_ROLES.administrator],
+			ncyBreadcrumb: {
+				label: '{{ module.shortName }}'
+			}
 		},
-		'/modules/:module/edit': {
+		'modules.detail.edit': {
+			url: '/edit',
 			templateUrl: 'views/modules/edit.html',
 			controller: 'ModuleDetailController',
-			authorizedRoles: [USER_ROLES.administrator]
+			authorizedRoles: [USER_ROLES.administrator],
+			ncyBreadcrumb: {
+				label: 'Bearbeiten'
+			}
 		},
-		'/modules/:module/delete': {
+		'modules.detail.delete': {
+			url: '/delete',
 			templateUrl: 'views/modules/delete.html',
 			controller: 'ModuleDetailController',
-			authorizedRoles: [USER_ROLES.administrator]
+			authorizedRoles: [USER_ROLES.administrator],
+			ncyBreadcrumb: {
+				label: 'Löschen'
+			}
 		},
-		'/users': {
+
+		// Administration -> Users
+		'users': {
+			url: '/users',
 			templateUrl: 'views/users/list.html',
 			controller: 'UserListController',
-			authorizedRoles: [USER_ROLES.administrator]
+			authorizedRoles: [USER_ROLES.administrator],
+			ncyBreadcrumb: {
+				label: 'Benutzer'
+			}
 		},
-		'/users/new': {
+		'users.new': {
+			url: '/new',
 			templateUrl: 'views/users/edit.html',
 			controller: 'UserDetailController',
-			authorizedRoles: [USER_ROLES.administrator]
+			authorizedRoles: [USER_ROLES.administrator],
+			ncyBreadcrumb: {
+				label: 'Anlegen'
+			}
 		},
-		'/users/:username': {
+		'users.detail': {
+			url: '/:username',
 			templateUrl: 'views/users/show.html',
 			controller: 'UserDetailController',
-			authorizedRoles: [USER_ROLES.administrator]
+			authorizedRoles: [USER_ROLES.administrator],
+			ncyBreadcrumb: {
+				label: '{{ user.firstname }}'
+			}
 		},
-		'/users/:username/edit': {
+		'users.detail.edit': {
+			url: '/edit',
 			templateUrl: 'views/users/edit.html',
 			controller: 'UserDetailController',
-			authorizedRoles: [USER_ROLES.administrator]
+			authorizedRoles: [USER_ROLES.administrator],
+			ncyBreadcrumb: {
+				label: 'Bearbeiten'
+			}
 		},
-		'/users/:username/delete': {
+		'users.detail.delete': {
+			url: '/delete',
 			templateUrl: 'views/users/delete.html',
 			controller: 'UserDetailController',
-			authorizedRoles: [USER_ROLES.administrator]
+			authorizedRoles: [USER_ROLES.administrator],
+			ncyBreadcrumb: {
+				label: 'Löschen'
+			}
 		},
 
 		// Subjects
-		'/subjects': {
+		'subjects': {
+			url: '/subjects',
 			templateUrl: 'views/subjects/list.html',
-			controller: 'SubjectListController'
+			controller: 'SubjectListController',
+			ncyBreadcrumb: {
+				label: 'Alle Veranstaltungen'
+			}
 		},
-		'/subjects/new': {
+		'subjects.new': {
+			url: '/new',
 			templateUrl: 'views/subjects/edit.html',
-			controller: 'SubjectDetailController'
+			controller: 'SubjectDetailController',
+			ncyBreadcrumb: {
+				label: 'Anlegen'
+			}
 		},
-		'/subjects/:subject': {
+		'subjects.detail': {
+			url: '/:subject',
 			templateUrl: 'views/subjects/show.html',
-			controller: 'SubjectDetailController'
+			controller: 'SubjectDetailController',
+			ncyBreadcrumb: {
+				label: '{{ subject.semester }} {{subject.year }}'
+			}
 		},
-		'/subjects/:subject/edit': {
+		'subjects.detail.edit': {
+			url: '/:subject/edit',
 			templateUrl: 'views/subjects/edit.html',
-			controller: 'SubjectDetailController'
+			controller: 'SubjectDetailController',
+			ncyBreadcrumb: {
+				label: 'Bearbeiten'
+			}
 		},
-		'/subjects/:subject/delete': {
+		'subjects.detail.delete': {
+			url: '/:subject/delete',
 			templateUrl: 'views/subjects/delete.html',
-			controller: 'SubjectDetailController'
+			controller: 'SubjectDetailController',
+			ncyBreadcrumb: {
+				label: 'Löschen'
+			}
 		},
 
-		// MAGIC RULES!!!!!!!
-		'/:module': {
+		// Modules direct "special short" URLs
+		'module': {
+			url: '/:module',
 			templateUrl: 'views/modules/show.html',
-			controller: 'ModuleDetailController'
+			controller: 'ModuleDetailController',
+			resolve: {
+				module: ['Module', '$stateParams', function(Module, $stateParams) {
+					console.log('load module!');
+					return Module.get({ module: $stateParams.module });
+				}]
+			},
+			ncyBreadcrumb: {
+				label: '{{ module.shortName }}'
+			}
 		},
-		'/:module/:subject': {
+		'module.subject': {
+			url: '/:subject',
 			templateUrl: 'views/members/show.html',
-			controller: 'MemberDetailController'
+			controller: 'MemberDetailController',
+			resolve: {
+				subject: ['Subject', '$stateParams', function(Subject, $stateParams) {
+					console.log('load module!');
+					return Subject.get({ module: $stateParams.module, subject: $stateParams.subject });
+				}]
+			},
+			ncyBreadcrumb: {
+				label: '{{ subject.semester }} {{ subject.year }}'
+			}
 		},
-		'/:module/:subject/edit': {
+		'module.subject.edit': {
+			url: '/edit',
 			templateUrl: 'views/subjects/edit.html',
-			controller: 'SubjectDetailController'
+			controller: 'SubjectDetailController',
+			ncyBreadcrumb: {
+				label: 'Bearbeiten'
+			}
 		},
-		'/:module/:subject/join': {
+		'module.subject.join': {
+			url: '/join',
 			templateUrl: 'views/subjects/join.html',
-			controller: 'SubjectJoinController'
+			controller: 'SubjectJoinController',
+			ncyBreadcrumb: {
+				label: 'Beitreten'
+			}
 		},
 
 		// Subject -> Members
-		'/:module/:subject/members': {
+		'module.subject.members': {
+			url: '/members',
 			templateUrl: 'views/members/list.html',
-			controller: 'MemberListController'
+			controller: 'MemberListController',
+			ncyBreadcrumb: {
+				label: 'u:{{ user.firstname }}'
+			}
 		},
-		'/:module/:subject/members/new': {
+		'module.subject.members.new': {
+			url: '/new',
 			templateUrl: 'views/members/edit.html',
 			controller: 'MemberListController'
 		},
-		'/:module/:subject/members/:member': {
+		'module.subject.members.show': {
+			url: '/:member',
 			templateUrl: 'views/members/show.html',
 			controller: 'MemberDetailController'
 		},
-		'/:module/:subject/members/:member/:task': {
+		'module.subject.members.show.evaluation': {
+			url: '/:task',
 			templateUrl: 'views/evaluations/show.html',
 			controller: 'EvaluationDetailController'
 		},
 
 		// Subject -> Tasks
-		'/:module/:subject/tasks': {
+		'module.subject.tasks': {
+			url: '/tasks',
 			templateUrl: 'views/tasks/list.html',
 			controller: 'TaskListController'
 		},
-		'/:module/:subject/tasks/new': {
+		'module.subject.tasks.new': {
+			url: '/new',
 			templateUrl: 'views/tasks/edit.html',
 			controller: 'TaskDetailController'
 		},
-		'/:module/:subject/tasks/:task': {
+		'module.subject.tasks.show': {
+			url: '/:task',
 			templateUrl: 'views/tasks/show.html',
 			controller: 'TaskDetailController'
 		},
-		'/:module/:subject/tasks/:task/edit': {
+		'module.subject.tasks.edit': {
+			url: '/:task/edit',
 			templateUrl: 'views/tasks/edit.html',
 			controller: 'TaskDetailController'
 		},
-		'/:module/:subject/tasks/:task/delete': {
+		'module.subject.tasks.delete': {
+			url: '/:task/delete',
 			templateUrl: 'views/tasks/delete.html',
 			controller: 'TaskDetailController'
 		},
-		'/:module/:subject/tasks/import': {
+		'module.subject.tasks.import': {
+			url: '/import',
 			templateUrl: 'views/tasks/import.html',
 			controller: 'TaskImportController'
 		},
 
 		// Subject-> Tasks -> Level
-		'/:module/:subject/tasks/:task/levels': {
+		'module.subject.tasks.show.levels': {
+			url: '/levels',
 			templateUrl: 'views/levels/list.html',
 			controller: 'LevelListController'
 		},
-		'/:module/:subject/tasks/:task/levels/new': {
+		'module.subject.tasks.show.levels.new': {
+			url: '/new',
 			templateUrl: 'views/levels/edit.html',
 			controller: 'LevelDetailController'
 		},
-		'/:module/:subject/tasks/:task/levels/:level': {
+		'module.subject.tasks.show.levels.show': {
+			url: '/:level',
 			templateUrl: 'views/levels/show.html',
 			controller: 'LevelDetailController'
 		},
-		'/:module/:subject/tasks/:task/levels/:level/edit': {
+		'module.subject.tasks.show.levels.edit': {
+			url: '/:level/edit',
 			templateUrl: 'views/levels/edit.html',
 			controller: 'LevelDetailController'
 		},
-		'/:module/:subject/tasks/:task/levels/:level/delete': {
+		'module.subject.tasks.show.levels.delete': {
+			url: '/:level/delete',
 			templateUrl: 'views/levels/delete.html',
 			controller: 'LevelDetailController'
 		}
@@ -303,13 +429,20 @@ app.config(['$routeProvider', '$locationProvider', 'USER_ROLES', function($route
 
 		params.resolve = resolve;
 
-		$routeProvider.when(location, params);
+		$stateProvider.state(location, params);
 	});
 
-	// Fallback
-	$routeProvider.otherwise({
-		templateUrl: 'views/errors/404.html'
-	});
+	// TODO Fallback
+//	$urlRouterProvider.otherwise('error404');
 
 	$locationProvider.html5Mode(true);
+}]);
+
+app.run(['$rootScope', '$state', '$stateParams', function ($rootScope, $state, $stateParams) {
+	// It's very handy to add references to $state and $stateParams to the $rootScope
+	// so that you can access them from any scope within your applications.For example,
+	// <li ng-class="{ active: $state.includes('contacts.list') }"> will set the <li>
+	// to active whenever 'contacts.list' or one of its decendents is active.
+	$rootScope.$state = $state;
+	$rootScope.$stateParams = $stateParams;
 }]);

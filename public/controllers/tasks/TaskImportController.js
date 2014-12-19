@@ -1,8 +1,8 @@
 /* global angular, alert */
 
 angular.module('levelPad').controller('TaskImportController', [
-	'$scope', '$routeParams', '$location', '$log', 'Module', 'Subject', 'Task', 'CurrentModule', 'CurrentSubject', 'CurrentTask',
-	function ($scope, $routeParams, $location, $log, Module, Subject, Task, CurrentModule, CurrentSubject, CurrentTask) {
+	'$scope', '$stateParams', '$location', '$log', 'Module', 'Subject', 'Task', 'CurrentModule', 'CurrentSubject', 'CurrentTask',
+	function ($scope, $stateParams, $location, $log, Module, Subject, Task, CurrentModule, CurrentSubject, CurrentTask) {
 
 		'use strict';
 		$scope.module = CurrentModule;
@@ -20,11 +20,11 @@ angular.module('levelPad').controller('TaskImportController', [
 				alert('Could not load modules.');
 			});
 		};
-        
+
 		$scope.update();
 
-        
-        
+
+
 		$scope.tasks = [
 			{
 				title: 'Hallo'

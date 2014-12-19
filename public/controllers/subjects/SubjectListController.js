@@ -1,8 +1,8 @@
 /* global angular, alert */
 
 angular.module('levelPad').controller('SubjectListController', [
-	'$scope', '$http', '$routeParams', '$location', '$log', 'Module', 'Subject', 'DialogService', 'AlertService',
-	function ($scope, $http, $routeParams, $location, $log, Module, Subject, DialogService, AlertService) {
+	'$scope', '$http', '$stateParams', '$location', '$log', 'Module', 'Subject', 'DialogService', 'AlertService',
+	function ($scope, $http, $stateParams, $location, $log, Module, Subject, DialogService, AlertService) {
 
 	'use strict';
 	$scope.subjects = [];

@@ -1,9 +1,10 @@
-<!-- ⟨ ⟩ ❮ ❯ -->
 <nav class="clearfix">
 	<a class="hidden-xs" href="/"><h1>LevelPad </h1></a>
 	<a class="hidden-md hidden-lg hidden-sm" href="/"><h1>LP</h1></a>
 
-	<h2 class="subtitle">Veranstaltungen</h2>
+	<h2 class="subtitle">todo</h2>
+
+	<div data-ncy-breadcrumb></div>
 
 	<ul class="menu-bar">
 		<li data-ng-hide="loggedIn" data-ng-class="{ active: $location.path() == '/login' }">
@@ -26,10 +27,10 @@
 					<li><a href="/">Dashboard</a></li>
 					<li><a href="/subjects">Alle Veranstaltungen</a></li>
 					<li data-access-roles="userRoles.administrator" class="divider"></li>
+					<li data-access-roles="userRoles.administrator" data-active-nav><a href="/modules">Administration</a></li>
+					<li data-access-roles="userRoles.administrator" class="divider"></li>
 					<li data-access-roles="[userRoles.administrator, userRoles.lecturer, userRoles.assistant, userRoles.student]" data-active-nav><a data-ng-href="/account">Account</a></li>
 					<li><a href="/logout" data-ng-click="logout(); $event.preventDefault();">Logout</a></li>
-					<li data-access-roles="userRoles.administrator" class="divider"></li>
-					<li data-access-roles="userRoles.administrator" data-active-nav><a href="/modules">Administration</a></li>
 				</ul>
 			</div>
 		</li>

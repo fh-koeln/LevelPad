@@ -1,4 +1,4 @@
-angular.module('levelPad').controller('NavigationController', ['$scope', '$rootScope', '$route', '$location', '$log', 'AuthService', 'AUTH_EVENTS', function ($scope, $rootScope, $route, $location, $log, AuthService, AUTH_EVENTS) {
+angular.module('levelPad').controller('NavigationController', ['$scope', '$rootScope', '$log', 'AuthService', 'AUTH_EVENTS', function ($scope, $rootScope, $log, AuthService, AUTH_EVENTS) {
 	'use strict';
 
 	$scope.user = AuthService.user;

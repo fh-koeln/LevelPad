@@ -1,17 +1,17 @@
 /* global angular, alert */
 
 angular.module('levelPad').controller('TaskListController', [
-	'$scope', '$routeParams', '$location', '$log', 'Module', 'Subject', 'Task', 'DialogService', 'CurrentModule', 'CurrentSubject', 'ChartOption',
-	function ($scope, $routeParams, $location, $log, Module, Subject, Task, DialogService, CurrentModule, CurrentSubject, ChartOption) {
+	'$scope', '$stateParams', '$location', '$log', 'Module', 'Subject', 'Task', 'DialogService', 'CurrentModule', 'CurrentSubject', 'ChartOption',
+	function ($scope, $stateParams, $location, $log, Module, Subject, Task, DialogService, CurrentModule, CurrentSubject, ChartOption) {
 
 	'use strict';
 
-	$scope.subject = $routeParams.subject;
-	$scope.module = $routeParams.module;
+	$scope.subject = $stateParams.subject;
+	$scope.module = $stateParams.module;
 
 	$scope.update = function() {
 		$scope.tasks = [];
-		Task.query({ module: $routeParams.module, subject: $routeParams.subject }, function(tasks) {
+		Task.query({ module: $stateParams.module, subject: $stateParams.subject }, function(tasks) {
 			angular.forEach(tasks, function(task) {
 				$scope.tasks.push(prepareTask(task));
 			});

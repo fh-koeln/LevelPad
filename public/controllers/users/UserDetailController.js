@@ -1,10 +1,10 @@
 
 angular.module('levelPad').controller('UserDetailController', [
-	'$scope', '$routeParams', '$log', 'DialogService', 'User',
-	function ($scope, $routeParams, $log, DialogService, User) {
+	'$scope', '$stateParams', '$log', 'DialogService', 'User',
+	function ($scope, $stateParams, $log, DialogService, User) {
 
 		'use strict';
-		console.log('UserDetailController: routeParams:', $routeParams);
+		console.log('UserDetailController: routeParams:', $stateParams);
 
 		$scope.roles = [
 			{ role: 'guest', name: 'Gast' },
@@ -17,9 +17,9 @@ angular.module('levelPad').controller('UserDetailController', [
 
 		$scope.update = function () {
 			// Get the current user
-			if (!$scope.user && $routeParams.username) {
+			if (!$scope.user && $stateParams.username) {
 				$scope.user = User.get({
-					username: $routeParams.username
+					username: $stateParams.username
 				}, function(user) {
 
 				}, function() {

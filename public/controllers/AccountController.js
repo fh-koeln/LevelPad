@@ -7,7 +7,7 @@ angular.module('levelPad').controller('AccountController', ['$scope', '$rootScop
 		studentNumber: AuthService.user ? AuthService.user.studentNumber : '',
 		firstname: AuthService.user ? AuthService.user.firstname : '',
 		lastname: AuthService.user ? AuthService.user.lastname : '',
-		role: AuthService.user ? AuthService.user.role : 'guest',
+		role: AuthService.user ? AuthService.user.role : 'guest'
 	};
 
 	$rootScope.$on(AUTH_EVENTS.loginRefreshed, function() {
