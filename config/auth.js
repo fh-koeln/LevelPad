@@ -3,7 +3,7 @@
 var passport = require('passport'),
 	DatabaseStrategy = require('./strategies/DatabaseStrategy'),
 	FHKIMAPStrategy = require('./strategies/FHKIMAPStrategy'),
-	acl = require('./acl').acl,
+	acl = require('./acl').instance,
 	User = require('../app/models/User');
 
 /**

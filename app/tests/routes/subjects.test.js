@@ -25,7 +25,7 @@ describe('Subjects API', function() {
 		], done);
 	});
 
-	it.skip('should return no subjects for guests', function(done) {
+	it('should return no subjects for guests', function(done) {
 		agents.student3
 			.get('/api/subjects')
 			.set('Accept', 'application/json')

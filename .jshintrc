@@ -20,6 +20,7 @@
 		"describe": false,
 		"it": false,
 		"before": false,
-		"beforeEach": false
+		"beforeEach": false,
+		"after": false,
 	}
 }

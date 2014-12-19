@@ -13,6 +13,6 @@ var evaluationSchema = new Schema({
 	level: { type: ObjectId, ref: 'Level', require: true }
 });
 
-evaluationSchema.index({ task: 1, level: 1}, { unique: true, sparse: true }); // sparse: Both fields are optional and can be null
+//evaluationSchema.index({ task: 1, level: 1}, { unique: true, sparse: true }); // sparse: Both fields are optional and can be null
 
 module.exports = mongoose.model('Evaluation', evaluationSchema);

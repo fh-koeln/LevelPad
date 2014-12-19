@@ -1,6 +1,7 @@
 'use strict';
 
 var async = require('async'),
+	acl = require('../../config/acl'),
 	User = require('../models/User'),
 	Module = require('../models/Module'),
 	Subject = require('../models/Subject'),
@@ -33,26 +34,69 @@ module.exports.clear = function(callback) {
 		},
 		function(next) {
 			User.remove(next);
-		}
+		},
+		function(next) {
+			User.remove(next);
+		},
+		function(next) {
+			acl.removeRoles(users.admin1.username, next);
+		},
+		function(next) {
+			acl.removeRoles(users.lecturer1.username, next);
+		},
+		function(next) {
+			acl.removeRoles(users.assistant1.username, next);
+		},
+		function(next) {
+			acl.removeRoles(users.student1.username, next);
+		},
+		function(next) {
+			acl.removeRoles(users.student2.username, next);
+		},
+		function(next) {
+			acl.removeRoles(users.student3.username, next);
+		},
+		function(next) {
+			//acl.removeAllowRules(acl.rules, next);
+			next();
+		},
 	], callback);
 };
 
 module.exports.initializeTestData = function(callback) {
 	async.series([
 		function(next) {
+			acl.addAllowRules(next);
+		},
+		function(next) {
 			new User(users.admin1).save(next);
+		},
+		function(next) {
+			acl.setRole(users.admin1.username, users.admin1.role, next);
 		},
 		function(next) {
 			new User(users.lecturer1).save(next);
 		},
 		function(next) {
+			acl.setRole(users.lecturer1.username, users.lecturer1.role, next);
+		},
+		function(next) {
 			new User(users.assistant1).save(next);
+		},
+		function(next) {
+			acl.setRole(users.assistant1.username, users.assistant1.role, next);
 		},
 		function(next) {
 			new User(users.student1).save(next);
 		},
 		function(next) {
+			acl.setRole(users.student1.username, users.student1.role, next);
+		},
+		function(next) {
 			new User(users.student2).save(next);
+		},
+		function(next) {
+			acl.setRole(users.student2.username, users.student2.role, next);
 		},
 		function(next) {
 			new Module(modules.wba1).save(next);
@@ -245,7 +289,7 @@ module.exports.initializeTestData = function(callback) {
 					});
 				},
 				function(module, callback) {
-					Subject.findOne({ slug: subjects.wba1Wise1415.slug, module: module._id }, function(err, subject) {
+					Subject.findOne({ slug: subjects.wba1Wise1415.slug, module: module._id }).populate('module').exec( function(err, subject) {
 						if (err) {
 							return callback(err);
 						}
@@ -272,38 +316,49 @@ module.exports.initializeTestData = function(callback) {
 							return callback(err);
 						}
 
-						callback(null, subject, member);
+						var resources = [
+							'modules/' + subject.module.slug + '/subjects/' + subject.slug,
+							'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/tasks',
+							'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/tasks/:task',
+						];
+						acl.instance.allow(lecturer.username, resources, ['GET'], function(err) {
+							if (err) {
+								return next(err);
+							}
+
+							callback(null, subject, member);
+						});
 					});
 				},
-				function(subject, member, callback) {
-					subject.members.push(member._id);
-					callback(null, subject);
+				function(subject, lecturer, callback) {
+					subject.members.push(lecturer._id);
+					callback(null, subject, lecturer);
 				},
-				function(subject, callback) {
+				function(subject, lecturer, callback) {
 					User.findOne({ username: users.student1.username }, function(err, student1) {
 						if (err) {
 							return callback(err);
 						}
 
-						callback(null, subject, student1);
+						callback(null, subject, lecturer, student1);
 					});
 				},
-				function(subject, student1, callback) {
+				function(subject, lecturer, student1, callback) {
 					var member = new Member();
 					member.user = student1._id;
 					member.subject = subject._id;
 					member.role = 'member';
 
 					var evaluation = new Evaluation();
-					evaluation.createdBy = '546a1b22c6da9447692f6df9';
-					evaluation.task = '146a1b22c6da9447692f6df9';
-					evaluation.level = '346a1b22c6da9442922f6df9';
+					evaluation.createdBy = lecturer._id;
+					evaluation.task = subject.tasks[0]._id;
+					evaluation.level = subject.tasks[0].levels[0]._id;
 
 					member.evaluations.push(evaluation);
 
 					var comment = new Comment();
-					comment.createdBy = '546a1b22c6da9447692f6df9';
-					comment.task = '146a1b22c6da9447692f6df9';
+					comment.createdBy = lecturer._id;
+					comment.task = subject.tasks[0]._id;
 					comment.text = 'Ein Kommentar';
 
 					member.comments.push(comment);
@@ -313,38 +368,48 @@ module.exports.initializeTestData = function(callback) {
 							return callback(err);
 						}
 
-						callback(null, subject, member);
+						var resources = [
+							'modules/' + subject.module.slug + '/subjects/' + subject.slug,
+							'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/tasks',
+							'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/tasks/:task',
+						];
+						acl.instance.allow(student1.username, resources, ['GET'], function(err) {
+							if (err) {
+								return next(err);
+							}
+
+							callback(null, subject, lecturer, member);
+						});
 					});
 				},
-				function(subject, member, callback) {
+				function(subject, lecturer, member, callback) {
 					subject.members.push(member._id);
-					callback(null, subject);
+					callback(null, subject, lecturer);
 				},
-				function(subject, callback) {
+				function(subject, lecturer, callback) {
 					User.findOne({ username: users.student2.username }, function(err, student2) {
 						if (err) {
 							return callback(err);
 						}
 
-						callback(null, subject, student2);
+						callback(null, subject, lecturer, student2);
 					});
 				},
-				function(subject, student2, callback) {
+				function(subject, lecturer, student2, callback) {
 					var member = new Member();
 					member.user = student2._id;
 					member.subject = subject._id;
 					member.role = 'member';
 
 					var evaluation = new Evaluation();
-					evaluation.createdBy = '546a1b22c6da9447692f6df9';
-					evaluation.task = '246a1b22c6da9447692f6df9';
-					evaluation.level = '346a1b22c6da9442922f6df9';
+					evaluation.createdBy = lecturer._id;
+					evaluation.task = subject.tasks[0]._id;
+					evaluation.level = subject.tasks[0].levels[0]._id;
 
 					member.evaluations.push(evaluation);
-
 					var comment = new Comment();
-					comment.createdBy = '546a1b22c6da9447692f6df9';
-					comment.task = '246a1b22c6da9447692f6df9';
+					comment.createdBy = lecturer._id;
+					comment.task = subject.tasks[0]._id;
 					comment.text = 'Irgendein Kommentar';
 
 					member.comments.push(comment);
@@ -354,7 +419,18 @@ module.exports.initializeTestData = function(callback) {
 							return callback(err);
 						}
 
-						callback(null, subject, member);
+						var resources = [
+							'modules/' + subject.module.slug + '/subjects/' + subject.slug,
+							'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/tasks',
+							'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/tasks/:task',
+						];
+						acl.instance.allow(student2.username, resources, ['GET'], function(err) {
+							if (err) {
+								return next(err);
+							}
+
+							callback(null, subject, member);
+						});
 					});
 				},
 				function(subject, member, callback) {

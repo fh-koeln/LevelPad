@@ -27,7 +27,7 @@ describe('User Subjects API', function() {
 		], done);
 	});
 
-	it.skip('should return no subjects at beginning for guests', function(done) {
+	it('should return no subjects at beginning for guests', function(done) {
 		agents.student3
 			.get('/api/users/' + users.student3.username + '/subjects')
 			.set('Accept', 'application/json')
