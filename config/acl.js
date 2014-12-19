@@ -12,7 +12,7 @@ var debug = require('debug')('acl'),
  * Create an ACL instance.
  * Roles are saved into MongoDB, documents have `acl-` as prefix.
  */
-module.exports.acl = acl = new acl(new acl.mongodbBackend(db.connection.db, 'acl-'));
+module.exports.instance = acl = new acl(new acl.mongodbBackend(db.connection.db, 'acl-'));
 
 /**
  * Helper fuction to check if a key and value exists.
@@ -189,117 +189,144 @@ module.exports.removeRole = function(user, role, callback) {
 	});
 };
 
-db.connection.on('connected', function() {
-	/**
-	 * Define default permissions for resources
-	 *
-		{resources: 'login', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
-		{resources: 'logout', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
-		{resources: 'users', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
-		{resources: 'users/me', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
-		{resources: 'users/:user', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
-		{resources: 'users/:user/subjects', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
-		{resources: 'users/:currentUser/subjects', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
-		{resources: 'subjects', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
-		{resources: 'modules', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
-		{resources: 'modules/:module', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
-		{resources: 'modules/:module/subjects', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
-		{resources: 'modules/:module/subjects/:subject', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
-		{resources: 'modules/:module/subjects/:subject/tasks', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
-		{resources: 'modules/:module/subjects/:subject/tasks/:task', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
-		{resources: 'modules/:module/subjects/:subject/tasks/:task/levels', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
-		{resources: 'modules/:module/subjects/:subject/tasks/:task/levels/:level', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
-		{resources: 'modules/:module/subjects/:subject/member', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
-		{resources: 'modules/:module/subjects/:subject/member/:member', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
-		{resources: 'modules/:module/subjects/:subject/member/:member/evaluations', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
-		{resources: 'modules/:module/subjects/:subject/member/:member/evaluations/:evaluation', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
-		{resources: 'modules/:module/subjects/:subject/member/:member/comments', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
-		{resources: 'modules/:module/subjects/:subject/member/:member/comments/:comment', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
-	 */
-
-	acl.allow([
-		{
-			roles: ['public'],
-			allows: [
-				{resources: 'login', permissions: ['POST']},
-				{resources: 'logout', permissions: ['POST']},
-			]
-		},
-		{
-			roles: ['guest'],
-			allows: [
-				{resources: 'login', permissions: ['POST']},
-				{resources: 'logout', permissions: ['POST']},
-				{resources: 'users', permissions: ['POST']},
-			]
-		},
-		{
-			roles: ['student'],
-			allows: [
-				{resources: 'login', permissions: ['POST']},
-				{resources: 'logout', permissions: ['POST']},
-				{resources: 'users/me', permissions: ['GET']},
-				{resources: 'users/:currentUser', permissions: ['GET', 'PUT']},
-				{resources: 'users/:currentUser/subjects', permissions: ['GET']},
-				{resources: 'subjects', permissions: ['GET']},
-				{resources: 'modules/:module/subjects/:subject/members', permissions: ['POST']},
-			]
-		},
-		{
-			roles: ['assistant'],
-			allows: [
-				{resources: 'login', permissions: ['POST']},
-				{resources: 'logout', permissions: ['POST']},
-				{resources: 'users/me', permissions: ['GET']},
-				{resources: 'users/:currentUser', permissions: ['GET', 'PUT']},
-				{resources: 'users/:currentUser/subjects', permissions: ['GET']},
-				{resources: 'subjects', permissions: ['GET']},
-			]
-		},
-		{
-			roles: ['lecturer'],
-			allows: [
-				{resources: 'login', permissions: ['POST']},
-				{resources: 'logout', permissions: ['POST']},
-				{resources: 'users/me', permissions: ['GET']},
-				{resources: 'users/:currentUser', permissions: ['GET', 'PUT']},
-				{resources: 'users/:currentUser/subjects', permissions: ['GET']},
-				{resources: 'years', permissions: ['GET']},
-				{resources: 'semesters', permissions: ['GET']},
-				{resources: 'subjects', permissions: ['GET']},
-				{resources: 'modules', permissions: ['GET']},
-				{resources: 'modules/:module', permissions: ['GET']},
-			]
-		},
-		{
-			roles: ['administrator'],
-			allows: [
-				{resources: 'login', permissions: ['POST']},
-				{resources: 'logout', permissions: ['POST']},
-				{resources: 'users', permissions: ['GET', 'POST']},
-				{resources: 'users/me', permissions: ['GET']},
-				{resources: 'users/:user', permissions: ['GET', 'PUT', 'DELETE']},
-				{resources: 'users/:user/subjects', permissions: ['GET']},
-				{resources: 'users/:currentUser/subjects', permissions: ['GET']},
-				{resources: 'years', permissions: ['GET']},
-				{resources: 'semesters', permissions: ['GET']},
-				{resources: 'subjects', permissions: ['GET']},
-				{resources: 'modules', permissions: ['GET', 'POST']},
-				{resources: 'modules/:module', permissions: ['GET', 'PUT', 'DELETE']},
-				{resources: 'modules/:module/subjects', permissions: ['GET', 'POST']},
-				{resources: 'modules/:module/subjects/:subject', permissions: ['GET', 'PUT', 'DELETE']},
-				{resources: 'modules/:module/subjects/:subject/members', permissions: ['GET', 'POST']},
-				{resources: 'modules/:module/subjects/:subject/members/:member', permissions: ['GET', 'PUT', 'DELETE']},
-				{resources: 'modules/:module/subjects/:subject/members/:member/evaluations', permissions: ['GET', 'POST']},
-				{resources: 'modules/:module/subjects/:subject/members/:member/evaluations/:evaluation', permissions: ['GET', 'PUT', 'DELETE']},
-				{resources: 'modules/:module/subjects/:subject/members/:member/comments', permissions: ['GET', 'POST']},
-				{resources: 'modules/:module/subjects/:subject/members/:member/comments/:comment', permissions: ['GET', 'PUT', 'DELETE']},
-				{resources: 'modules/:module/subjects/:subject/tasks', permissions: ['GET', 'POST']},
-				{resources: 'modules/:module/subjects/:subject/tasks/:task', permissions: ['GET', 'PUT', 'DELETE']},
-				{resources: 'modules/:module/subjects/:subject/tasks/:task/levels', permissions: ['GET', 'POST']},
-				{resources: 'modules/:module/subjects/:subject/tasks/:task/levels/:level', permissions: ['GET', 'PUT', 'DELETE']},
-			]
+module.exports.removeRoles = function(user, callback) {
+	acl.userRoles(user, function(err, roles) {
+		if (err) {
+			callback(err);
+		} else if (roles && roles.length > 0) {
+			acl.removeUserRoles(user, roles, function(err) {
+				if (err) {
+					callback(err);
+				} else {
+					callback(null);
+				}
+			});
+		} else {
+			callback(err);
 		}
-	]);
+	});
+};
 
+
+/**
+ * Default permissions and resources
+ *
+	{resources: 'login', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+	{resources: 'logout', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+	{resources: 'users', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+	{resources: 'users/me', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+	{resources: 'users/:user', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+	{resources: 'users/:user/subjects', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+	{resources: 'users/:currentUser/subjects', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+	{resources: 'subjects', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+	{resources: 'modules', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+	{resources: 'modules/:module', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+	{resources: 'modules/:module/subjects', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+	{resources: 'modules/:module/subjects/:subject', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+	{resources: 'modules/:module/subjects/:subject/tasks', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+	{resources: 'modules/:module/subjects/:subject/tasks/:task', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+	{resources: 'modules/:module/subjects/:subject/tasks/:task/levels', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+	{resources: 'modules/:module/subjects/:subject/tasks/:task/levels/:level', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+	{resources: 'modules/:module/subjects/:subject/member', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+	{resources: 'modules/:module/subjects/:subject/member/:member', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+	{resources: 'modules/:module/subjects/:subject/member/:member/evaluations', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+	{resources: 'modules/:module/subjects/:subject/member/:member/evaluations/:evaluation', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+	{resources: 'modules/:module/subjects/:subject/member/:member/comments', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+	{resources: 'modules/:module/subjects/:subject/member/:member/comments/:comment', permissions: ['GET', 'PUT', 'POST', 'DELETE']},
+ */
+module.exports.rules = [
+	{
+		roles: ['public'],
+		allows: [
+			{resources: 'login', permissions: ['POST']},
+			{resources: 'logout', permissions: ['POST']},
+		]
+	},
+	{
+		roles: ['guest'],
+		allows: [
+			{resources: 'login', permissions: ['POST']},
+			{resources: 'logout', permissions: ['POST']},
+			{resources: 'users', permissions: ['POST']},
+		]
+	},
+	{
+		roles: ['student'],
+		allows: [
+			{resources: 'login', permissions: ['POST']},
+			{resources: 'logout', permissions: ['POST']},
+			{resources: 'users/me', permissions: ['GET']},
+			{resources: 'users/:currentUser', permissions: ['GET', 'PUT']},
+			{resources: 'users/:currentUser/subjects', permissions: ['GET']},
+			{resources: 'subjects', permissions: ['GET']},
+			{resources: 'modules/:module/subjects/:subject/members', permissions: ['POST']},
+		]
+	},
+	{
+		roles: ['assistant'],
+		allows: [
+			{resources: 'login', permissions: ['POST']},
+			{resources: 'logout', permissions: ['POST']},
+			{resources: 'users/me', permissions: ['GET']},
+			{resources: 'users/:currentUser', permissions: ['GET', 'PUT']},
+			{resources: 'users/:currentUser/subjects', permissions: ['GET']},
+			{resources: 'subjects', permissions: ['GET']},
+		]
+	},
+	{
+		roles: ['lecturer'],
+		allows: [
+			{resources: 'login', permissions: ['POST']},
+			{resources: 'logout', permissions: ['POST']},
+			{resources: 'users/me', permissions: ['GET']},
+			{resources: 'users/:currentUser', permissions: ['GET', 'PUT']},
+			{resources: 'users/:currentUser/subjects', permissions: ['GET']},
+			{resources: 'years', permissions: ['GET']},
+			{resources: 'semesters', permissions: ['GET']},
+			{resources: 'subjects', permissions: ['GET']},
+			{resources: 'modules', permissions: ['GET']},
+			{resources: 'modules/:module', permissions: ['GET']},
+		]
+	},
+	{
+		roles: ['administrator'],
+		allows: [
+			{resources: 'login', permissions: ['POST']},
+			{resources: 'logout', permissions: ['POST']},
+			{resources: 'users', permissions: ['GET', 'POST']},
+			{resources: 'users/me', permissions: ['GET']},
+			{resources: 'users/:user', permissions: ['GET', 'PUT', 'DELETE']},
+			{resources: 'users/:user/subjects', permissions: ['GET']},
+			{resources: 'users/:currentUser/subjects', permissions: ['GET']},
+			{resources: 'years', permissions: ['GET']},
+			{resources: 'semesters', permissions: ['GET']},
+			{resources: 'subjects', permissions: ['GET']},
+			{resources: 'modules', permissions: ['GET', 'POST']},
+			{resources: 'modules/:module', permissions: ['GET', 'PUT', 'DELETE']},
+			{resources: 'modules/:module/subjects', permissions: ['GET', 'POST']},
+			{resources: 'modules/:module/subjects/:subject', permissions: ['GET', 'PUT', 'DELETE']},
+			{resources: 'modules/:module/subjects/:subject/members', permissions: ['GET', 'POST']},
+			{resources: 'modules/:module/subjects/:subject/members/:member', permissions: ['GET', 'PUT', 'DELETE']},
+			{resources: 'modules/:module/subjects/:subject/members/:member/evaluations', permissions: ['GET', 'POST']},
+			{resources: 'modules/:module/subjects/:subject/members/:member/evaluations/:evaluation', permissions: ['GET', 'PUT', 'DELETE']},
+			{resources: 'modules/:module/subjects/:subject/members/:member/comments', permissions: ['GET', 'POST']},
+			{resources: 'modules/:module/subjects/:subject/members/:member/comments/:comment', permissions: ['GET', 'PUT', 'DELETE']},
+			{resources: 'modules/:module/subjects/:subject/tasks', permissions: ['GET', 'POST']},
+			{resources: 'modules/:module/subjects/:subject/tasks/:task', permissions: ['GET', 'PUT', 'DELETE']},
+			{resources: 'modules/:module/subjects/:subject/tasks/:task/levels', permissions: ['GET', 'POST']},
+			{resources: 'modules/:module/subjects/:subject/tasks/:task/levels/:level', permissions: ['GET', 'PUT', 'DELETE']},
+		]
+	}
+];
+
+module.exports.addAllowRules = function(callback) {
+	acl.allow(module.exports.rules, callback);
+};
+
+module.exports.removeAllowRules = function(callback) {
+	//acl.removeAllow(module.exports.rules, callback); // removeAllow( role, resources, permissions, function(err) )
+};
+
+db.connection.on('connected', function() {
+	acl.allow(module.exports.rules);
 });

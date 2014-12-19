@@ -2,7 +2,7 @@
 var debug = require('debug')('DatabaseStrategy'),
 	LocalStrategy = require('passport-local').Strategy,
 	User = require('../../app/models/User'),
-	acl = require('../acl').acl;
+	acl = require('../acl').instance;
 
 module.exports = new LocalStrategy(function(username, password, done) {
 	debug('Search user ' + username + ' in database..');

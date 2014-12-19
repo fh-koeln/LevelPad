@@ -26,6 +26,12 @@ describe('Modules Subjects API', function() {
 		], done);
 	});
 
+	after(function(done) {
+		async.series([
+			db.clear
+		], done);
+	});
+
 	it('should return 403 when a guest wants to access module subjects', function(done) {
 		agents.student3
 			.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects')
@@ -42,12 +48,13 @@ describe('Modules Subjects API', function() {
 	});
 
 	// Needs ACL
-	it.skip('should return 200 when a student is a member of a module subject', function(done) {
+	it('should return 200 when a student is a member of a module subject', function(done) {
 		agents.student2
-			.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects')
+			.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug)
 			.set('Accept', 'application/json')
 			.end(function(err, res) {
 				should.not.exist(err);
+
 				res.should.have.status(200);
 				res.should.be.json;
 
@@ -57,10 +64,11 @@ describe('Modules Subjects API', function() {
 			});
 	});
 
+
 	// Needs ACL
-	it.skip('should return 200 when a lecture is a creator of a module subject', function(done) {
+	it('should return 200 when a lecture is a creator of a module subject', function(done) {
 		agents.lecturer1
-			.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects')
+			.get('/api/modules/' + subjects.wba1Wise1415.module.slug + '/subjects/' + subjects.wba1Wise1415.slug)
 			.set('Accept', 'application/json')
 			.end(function(err, res) {
 				should.not.exist(err);

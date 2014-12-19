@@ -4,7 +4,7 @@ var Member = require('../models/Member'),
 	User = require('../models/User'),
 	async = require('async'),
 	errors = require('common-errors'),
-	acl = require('../../config/acl').acl;
+	acl = require('../../config/acl').instance;
 
 /**
  * List all members by subject and apply an optional filter.
@@ -130,12 +130,12 @@ exports.create = function(callback, authUser, subject, memberData) {
 					if (err) {
 						return next(err);
 					}
+
 					subject.members.push(member._id);
 					subject.save(function(err, subject) {
 						next(null, member, subject);
 					});
 				});
-
 			},
 			function(member, subject, next) {
 				User.findById({_id: member.user}, function(err, user) {
@@ -143,16 +143,22 @@ exports.create = function(callback, authUser, subject, memberData) {
 						return next(err);
 					}
 
-					if (user.role === 'student') {
+					if (user.role === 'student' || user.role === 'lecturer') {
 						var resources = [
 							'modules/' + subject.module.slug + '/subjects/' + subject.slug,
 							'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/tasks',
 							'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/tasks/:task',
 						];
-						acl.allow(user.username, resources, ['GET']);
-					}
+						acl.allow(user.username, resources, ['GET'], function(err) {
+							if (err) {
+								return next(err);
+							}
 
-					next(null, member);
+							next(null, member);
+						});
+					} else {
+						next(null, member);
+					}
 				});
 			}
 		], callback);

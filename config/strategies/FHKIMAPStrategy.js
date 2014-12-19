@@ -2,7 +2,7 @@
 var LocalStrategy = require('passport-local').Strategy,
 	Imap = require('imap'),
 	User = require('../../app/models/User'),
-	acl = require('../acl').acl;
+	acl = require('../acl').instance;
 
 var checkCredentials = function(username, password, callback) {
 
