@@ -286,6 +286,7 @@ module.exports.rules = [
 			{resources: 'subjects', permissions: ['GET']},
 			{resources: 'modules', permissions: ['GET']},
 			{resources: 'modules/:module', permissions: ['GET']},
+			{resources: 'modules/:module/subjects', permissions: ['POST']},
 		]
 	},
 	{

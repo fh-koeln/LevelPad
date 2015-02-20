@@ -89,79 +89,125 @@ exports.read = function(callback, authUser, subject, memberId) {
  * @param memberData
  */
 exports.create = function(callback, authUser, subject, memberData) {
-		async.waterfall([
-			function(next) {
-				if (!subject || !subject._id) {
-					return next(new errors.NotFoundError('Subject'));
-				}
-
-				next(null, subject);
-			},
-			function(subject, next) {
-				if (subject.registrationPassword) {
-						if (!memberData.registrationPassword) {
-							return next(new errors.ArgumentNullError('registrationPassword'));
-					} else if (memberData.registrationPassword !== subject.registrationPassword) {
-							return next(new errors.AuthenticationRequiredError('Das eingegebene Passwort ist falsch.'));
-					}
-				}
-
-				next(null, subject);
-			},
-			function(subject, next) {
-				if (!memberData.id) {
-					return next(new errors.ArgumentNullError('id'));
-				}
-
-				if (!memberData.role) {
-					return next(new errors.ArgumentNullError('role'));
-				}
-
-				next(null, subject);
-			},
-			function(subject, next) {
-				var member = new Member();
-
-				member.user = memberData.id;
-				member.subject = subject._id;
-				member.role = memberData.role;
-
-				member.save(function(err) {
-					if (err) {
-						return next(err);
-					}
-
-					subject.members.push(member._id);
-					subject.save(function(err, subject) {
-						next(null, member, subject);
-					});
-				});
-			},
-			function(member, subject, next) {
-				User.findById({_id: member.user}, function(err, user) {
-					if (err) {
-						return next(err);
-					}
-
-					if (user.role === 'student' || user.role === 'lecturer') {
-						var resources = [
-							'modules/' + subject.module.slug + '/subjects/' + subject.slug,
-							'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/tasks',
-							'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/tasks/:task',
-						];
-						acl.allow(user.username, resources, ['GET'], function(err) {
-							if (err) {
-								return next(err);
-							}
-
-							next(null, member);
-						});
-					} else {
-						next(null, member);
-					}
-				});
+	async.waterfall([
+		function(next) {
+			if (!subject || !subject._id) {
+				return next(new errors.NotFoundError('Subject'));
 			}
-		], callback);
+
+			next(null, subject);
+		},
+		function(subject, next) {
+			if (subject.registrationPassword) {
+				if (!memberData.registrationPassword) {
+					return next(new errors.ArgumentNullError('registrationPassword'));
+				} else if (memberData.registrationPassword !== subject.registrationPassword) {
+					return next(new errors.AuthenticationRequiredError('Das eingegebene Passwort ist falsch.'));
+				}
+			}
+
+			next(null, subject);
+		},
+		function(subject, next) {
+			if (!memberData.id) {
+				return next(new errors.ArgumentNullError('id'));
+			}
+
+			if (!memberData.role) {
+				return next(new errors.ArgumentNullError('role'));
+			}
+
+			next(null, subject);
+		},
+		function(subject, next) {
+			User.findById(memberData.id, function(err, user) {
+				if (err) {
+					return next(err);
+				}
+
+				return next(null, subject, user);
+			});
+		},
+		function(subject, user, next) {
+			var member = new Member();
+
+			member.user = user._id;
+			member.subject = subject._id;
+			member.role = memberData.role;
+
+			member.save(function(err) {
+				if (err) {
+					return next(err);
+				}
+
+				subject.members.push(member._id);
+				subject.save(function(err, subject) {
+					next(null, member, subject, user);
+				});
+			});
+		},
+		function(member, subject, user, next) {
+			var aclRules;
+
+			if (memberData.role === 'creator') {
+				// Is allowed to read and update the subject. Also to create/read/update/delete tasks, levels, members, evaluations, and comments.
+				aclRules = [ {
+					roles: [user.username],
+					allows: [
+						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug, permissions: ['GET', 'PUT']},
+						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/members', permissions: ['GET', 'POST']},
+						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/members/:member', permissions: ['GET', 'PUT', 'DELETE']},
+						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/members/:member/evaluations', permissions: ['GET', 'POST']},
+						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/members/:member/evaluations/:evaluation', permissions: ['GET', 'PUT', 'DELETE']},
+						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/members/:member/comments', permissions: ['GET', 'POST']},
+						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/members/:member/comments/:comment', permissions: ['GET', 'PUT', 'DELETE']},
+						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/tasks', permissions: ['GET', 'POST']},
+						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/tasks/:task',  permissions: ['GET', 'PUT', 'DELETE']},
+						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/tasks/:task/levels', permissions: ['GET', 'POST']},
+						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/tasks/:task/levels/:level', permissions: ['GET', 'PUT', 'DELETE']},
+					]
+				} ];
+			} else if (memberData.role === 'assistant') {
+				// Is allowed to read the subject. Also to create/read/update/delete tasks, levels, members, evaluations, and comments.
+				aclRules = [ {
+					roles: [user.username],
+					allows: [
+						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug, permissions: ['GET']},
+						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/members', permissions: ['GET', 'POST']},
+						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/members/:member', permissions: ['GET', 'PUT', 'DELETE']},
+						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/members/:member/evaluations', permissions: ['GET', 'POST']},
+						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/members/:member/evaluations/:evaluation', permissions: ['GET', 'PUT', 'DELETE']},
+						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/members/:member/comments', permissions: ['GET', 'POST']},
+						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/members/:member/comments/:comment', permissions: ['GET', 'PUT', 'DELETE']},
+						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/tasks', permissions: ['GET', 'POST']},
+						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/tasks/:task',  permissions: ['GET', 'PUT', 'DELETE']},
+						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/tasks/:task/levels', permissions: ['GET', 'POST']},
+						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/tasks/:task/levels/:level', permissions: ['GET', 'PUT', 'DELETE']},
+					]
+				} ];
+			} else {
+				// Is allowed to read the subject and its tasks and levels.
+				aclRules = [ {
+					roles: [user.username],
+					allows: [
+						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug, permissions: ['GET']},
+						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/tasks', permissions: ['GET']},
+						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/tasks/:task', permissions: ['GET']},
+						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/tasks/:task/levels', permissions: ['GET']},
+						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/tasks/:task/levels/:level', permissions: ['GET']},
+					]
+				} ];
+			}
+
+			acl.allow(aclRules, function(err) {
+				if (err) {
+					return next(err);
+				}
+
+				next(null, member);
+			});
+		}
+	], callback);
 };
 
 /**

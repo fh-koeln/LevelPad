@@ -149,6 +149,9 @@ exports.create = function(callback, authUser, module, subjectData) {
 			subject.save(next);
 		},
 		function(subject, numberAffected, next) {
+			Subject.findById(subject._id).populate('module').exec(next);
+		},
+		function(subject, next) {
 			ModuleSubjectMemberController.create(next, authUser, subject, {
 				id: subjectData.creator,
 				role: 'creator',
@@ -156,7 +159,7 @@ exports.create = function(callback, authUser, module, subjectData) {
 			});
 		},
 		function(member, next) {
-			Subject.findOne({ _id: member.subject }).populate('module').exec(next);
+			Subject.findById(member.subject).populate('module').exec(next);
 		}
 	], callback);
 };
