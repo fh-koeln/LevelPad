@@ -43,6 +43,11 @@ OSX/Linux: `npm run-script test-cov` / Windows: `npm run-script test-cov-win`
 
 (Please remember that we already enabled production-mode on heroku with `heroku config:set NODE_ENV=production`.)
 
+## Docker
+
+With docker you can setup and link the project to a `mongodb` database. Or just use Docker Compose,
+formally known a fig, to setup a local LevelPad installation with just one command:  
+`fig up` or `docker-compose up`
 
 [travis-image]: https://img.shields.io/travis/fh-koeln/LevelPad/master.svg?style=flat-square
 [travis-url]: https://travis-ci.org/fh-koeln/LevelPad

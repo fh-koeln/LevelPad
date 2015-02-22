@@ -1,0 +1,13 @@
+app:
+  build: .
+  links:
+    - mongodb:mongodb
+  ports:
+    - 5000:5000
+  expose:
+    - 5000
+#  environment:
+#    MONGODB_HOST: mongodb
+
+mongodb:
+  image: mongo:latest
