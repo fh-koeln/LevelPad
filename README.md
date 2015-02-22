@@ -2,11 +2,7 @@
 
 Webapp zur Unterstützung einer Bewertung nach dem Niveaustufenmodell
 
-**Status**: In Entwicklung.
-
-## Niveaustufenmodell
-
-> TODO
+**Status**: Prototyp umgesetzt.
 
 ## Software components:
 
@@ -29,8 +25,7 @@ Implemented with the "MEAN-stack" (mongoDB, express, AngularJS, Node.js):
 * Frontend stack:
   [AngularJS](http://www.angularjs.org/),
   [Bootstrap](http://getbootstrap.com/)
-* Frontend tests:
-  TODO. :)
+* Frontend tests: TODO
 
 ## Commandline hints
 
