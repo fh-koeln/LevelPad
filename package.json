@@ -1,6 +1,6 @@
 {
   "name": "LevelPad",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "description": "Webapp zur Unterstützung einer Bewertung nach dem Niveaustufenmodell",
   "private": true,
   "scripts": {
