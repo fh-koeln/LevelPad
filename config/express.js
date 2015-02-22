@@ -44,11 +44,6 @@ module.exports = function(app) {
 	app.use(bodyParser.json());
 	app.use(require('connect-timeout')(10 * 1000));
 
-	// Live reload
-//	if (env === 'development') {
-//		app.use(require('connect-livereload')());
-//	}
-
 	// Disable caching of scripts for easier testing
 	if (env === 'development') {
 		app.use(function noCache(req, res, next) {
@@ -77,21 +72,6 @@ module.exports = function(app) {
 
 	// Static resources
 	app.use(favicon(path.join(__dirname, '../public', '/favicon.ico')));
-
-	// TODO remove this and later. It only adds the view name to all public/views files! :-)
-	app.use(function(req, res, next) {
-		if (req.path.indexOf('/views/') === 0) {
-			require('fs').readFile(__dirname + '/../public' + req.path, function (err, data) {
-				if (err) {
-					next(err);
-				} else {
-					res.send('<code>' + req.path + '</code>\n' + data);
-				}
-			});
-		} else {
-			next();
-		}
-	});
 
 	app.use(express.static(path.join(__dirname, '../public')));
 	app.use(express.static(path.join(__dirname, '../bower_components')));

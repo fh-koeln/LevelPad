@@ -69,28 +69,6 @@ module.exports = function(app) {
 		res.status(200).json(req.user);
 	});
 
-
-	/*app.post('/api/login', function(req, res, next) {
-		passport.authenticate(strategy, function(err, user, info) {
-			console.log(arguments);
-			if (err && err.message === 'Timed out while authenticating with server') {
-				res.status(401).json({});
-			} else if (err) {
-				return next(err);
-			}
-
-			if (info && info.message === 'Missing credentials') {
-				res.status(400).json(info);
-			}
-
-			if (!user) {
-				res.status(401).json(info);
-			}
-			console.log('200');
-			res.status(200).json(user);
-		})(req, res, next);
-	});*/
-
 	/**
 	 * POST /api/logout logouts the current user.
 	 */

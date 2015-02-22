@@ -5,12 +5,8 @@ var express = require('express'),
 	api = swag.router(express.Router()),
 	acl = require('../config/acl');
 
-// API is only available for authenticated users.
-if (process.env.ACL === 'disabled') {
-	console.log('ACL DISABLED!');
-} else {
-	api.use(acl.middleware);
-}
+// All API calls are checked by the ACLs.
+api.use(acl.middleware);
 
 // Primary resources
 api.use('/modules', require('../app/routes/modules'));
