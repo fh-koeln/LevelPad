@@ -12,7 +12,7 @@
 <!--
     Navbar für große Devices
 -->
-<ul class="nav nav-tabs hidden-xs " data-ng-init="filterStatus='test1'"> <!--Filterstatus muss geaendert werden fuer Aktiv und inaktive-->
+<ul class="nav nav-tabs hidden-xs " data-ng-init="filterStatus='test1'"> <!--Filterstatus muss geaendert werden für Aktiv und inaktive-->
 	<li class="col-md-2,5" data-ng-class="{ 'active': filterStatus=='test1' }"><a data-ng-click="test1">Teilnehmer {{ members.length }}</a></li> <!--Teilnehmerzahl dynamisch-->
 	<li class="col-md-2,5"  data-ng-class="{ 'active': filterStatus=='test2' }"><a href="/:module/:subject/tasks">Learning Outcomes</a></li>
     <li class="col-md-2,5"  data-ng-class="{ 'active': filterStatus=='test3' }"><a data-ng-click="test3">Einstellungen</a></li>

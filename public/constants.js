@@ -14,7 +14,7 @@ angular.module('levelPad').constant('AUTH_EVENTS', {
 angular.module('levelPad').constant('USER_ROLES', {
 	all: '*',
 	administrator: 'administrator',
-	lecture: 'lecture',
+	lecturer: 'lecturer',
 	assistent: 'assistent',
 	student: 'student',
 	guest: 'guest',
