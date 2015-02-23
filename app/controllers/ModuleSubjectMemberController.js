@@ -195,6 +195,11 @@ exports.create = function(callback, authUser, subject, memberData) {
 						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/tasks/:task', permissions: ['GET']},
 						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/tasks/:task/levels', permissions: ['GET']},
 						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/tasks/:task/levels/:level', permissions: ['GET']},
+						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/members/:member', permissions: ['GET']},
+						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/members/:member/evaluations', permissions: ['GET']},
+						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/members/:member/evaluations/:evaluation', permissions: ['GET']},
+						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/members/:member/comments', permissions: ['GET']},
+						{resources: 'modules/' + subject.module.slug + '/subjects/' + subject.slug + '/members/:member/comments/:comment', permissions: ['GET']},
 					]
 				} ];
 			}
