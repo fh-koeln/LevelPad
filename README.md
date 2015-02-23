@@ -45,8 +45,9 @@ OSX/Linux: `npm run-script test-cov` / Windows: `npm run-script test-cov-win`
 
 ## Docker
 
-With docker you can setup and link the project to a `mongodb` database. Or just use Docker Compose,
-formally known a fig, to setup a local LevelPad installation with just one command:  
+With [Docker](https://www.docker.com/) you can setup and link the project to a `mongodb` database.
+Or just use [Docker Compose](https://github.com/docker/fig), formerly known as
+[fig](http://www.fig.sh/), to setup a local LevelPad tnstallation with just one command:  
 `fig up` or `docker-compose up`
 
 [travis-image]: https://img.shields.io/travis/fh-koeln/LevelPad/master.svg?style=flat-square
