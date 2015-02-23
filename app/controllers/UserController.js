@@ -164,6 +164,15 @@ exports.update = function(callback, authUser, username, userdata) {
 		},
 		function(user, next) {
 			user.save(next);
+		},
+		function(user, numberAffected, next) {
+			acl.setRole(user.username, user.role, function(err) {
+				if (err) {
+					return next(err);
+				}
+
+				next(null, user);
+			});
 		}
 	], callback);
 };
